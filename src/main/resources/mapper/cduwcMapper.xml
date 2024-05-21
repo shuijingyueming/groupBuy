@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cduwcMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cduwc">
+    <id column="UWC001" jdbcType="INTEGER" property="uwc001" />
+    <result column="UWC002" jdbcType="INTEGER" property="uwc002" />
+    <result column="UWC003" jdbcType="VARCHAR" property="uwc003" />
+    <result column="UWC004" jdbcType="CHAR" property="uwc004" />
+    <result column="UWC005" jdbcType="TIMESTAMP" property="uwc005" />
+    <result column="UWC006" jdbcType="TIMESTAMP" property="uwc006" />
+    <result column="UWC007" jdbcType="INTEGER" property="uwc007" />
+    <result column="UWC008" jdbcType="VARCHAR" property="uwc008" />
+    <result column="UWC009" jdbcType="VARCHAR" property="uwc009" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UWC001, UWC002, UWC003, UWC004, UWC005, UWC006, UWC007, UWC008, UWC009
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cduwcExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cduwc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cduwc
+    where UWC001 = #{uwc001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cduwc
+    where UWC001 = #{uwc001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cduwcExample">
+    delete from cduwc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cduwc">
+    insert into cduwc (UWC001, UWC002, UWC003,
+                       UWC004, UWC005, UWC006,
+                       UWC007, UWC008, UWC009
+    )
+    values (#{uwc001,jdbcType=INTEGER}, #{uwc002,jdbcType=INTEGER}, #{uwc003,jdbcType=VARCHAR},
+            #{uwc004,jdbcType=CHAR}, #{uwc005,jdbcType=TIMESTAMP}, #{uwc006,jdbcType=TIMESTAMP},
+            #{uwc007,jdbcType=INTEGER}, #{uwc008,jdbcType=VARCHAR}, #{uwc009,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cduwc">
+    insert into cduwc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uwc001 != null">
+        UWC001,
+      </if>
+      <if test="uwc002 != null">
+        UWC002,
+      </if>
+      <if test="uwc003 != null">
+        UWC003,
+      </if>
+      <if test="uwc004 != null">
+        UWC004,
+      </if>
+      <if test="uwc005 != null">
+        UWC005,
+      </if>
+      <if test="uwc006 != null">
+        UWC006,
+      </if>
+      <if test="uwc007 != null">
+        UWC007,
+      </if>
+      <if test="uwc008 != null">
+        UWC008,
+      </if>
+      <if test="uwc009 != null">
+        UWC009,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uwc001 != null">
+        #{uwc001,jdbcType=INTEGER},
+      </if>
+      <if test="uwc002 != null">
+        #{uwc002,jdbcType=INTEGER},
+      </if>
+      <if test="uwc003 != null">
+        #{uwc003,jdbcType=VARCHAR},
+      </if>
+      <if test="uwc004 != null">
+        #{uwc004,jdbcType=CHAR},
+      </if>
+      <if test="uwc005 != null">
+        #{uwc005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uwc006 != null">
+        #{uwc006,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uwc007 != null">
+        #{uwc007,jdbcType=INTEGER},
+      </if>
+      <if test="uwc008 != null">
+        #{uwc008,jdbcType=VARCHAR},
+      </if>
+      <if test="uwc009 != null">
+        #{uwc009,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cduwcExample" resultType="java.lang.Long">
+    select count(*) from cduwc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cduwc
+    <set>
+      <if test="record.uwc001 != null">
+        UWC001 = #{record.uwc001,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwc002 != null">
+        UWC002 = #{record.uwc002,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwc003 != null">
+        UWC003 = #{record.uwc003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwc004 != null">
+        UWC004 = #{record.uwc004,jdbcType=CHAR},
+      </if>
+      <if test="record.uwc005 != null">
+        UWC005 = #{record.uwc005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uwc006 != null">
+        UWC006 = #{record.uwc006,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uwc007 != null">
+        UWC007 = #{record.uwc007,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwc008 != null">
+        UWC008 = #{record.uwc008,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwc009 != null">
+        UWC009 = #{record.uwc009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cduwc
+    set UWC001 = #{record.uwc001,jdbcType=INTEGER},
+    UWC002 = #{record.uwc002,jdbcType=INTEGER},
+    UWC003 = #{record.uwc003,jdbcType=VARCHAR},
+    UWC004 = #{record.uwc004,jdbcType=CHAR},
+    UWC005 = #{record.uwc005,jdbcType=TIMESTAMP},
+    UWC006 = #{record.uwc006,jdbcType=TIMESTAMP},
+    UWC007 = #{record.uwc007,jdbcType=INTEGER},
+    UWC008 = #{record.uwc008,jdbcType=VARCHAR},
+    UWC009 = #{record.uwc009,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cduwc">
+    update cduwc
+    <set>
+      <if test="uwc002 != null">
+        UWC002 = #{uwc002,jdbcType=INTEGER},
+      </if>
+      <if test="uwc003 != null">
+        UWC003 = #{uwc003,jdbcType=VARCHAR},
+      </if>
+      <if test="uwc004 != null">
+        UWC004 = #{uwc004,jdbcType=CHAR},
+      </if>
+      <if test="uwc005 != null">
+        UWC005 = #{uwc005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uwc006 != null">
+        UWC006 = #{uwc006,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uwc007 != null">
+        UWC007 = #{uwc007,jdbcType=INTEGER},
+      </if>
+      <if test="uwc008 != null">
+        UWC008 = #{uwc008,jdbcType=VARCHAR},
+      </if>
+      <if test="uwc009 != null">
+        UWC009 = #{uwc009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UWC001 = #{uwc001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cduwc">
+    update cduwc
+    set UWC002 = #{uwc002,jdbcType=INTEGER},
+        UWC003 = #{uwc003,jdbcType=VARCHAR},
+        UWC004 = #{uwc004,jdbcType=CHAR},
+        UWC005 = #{uwc005,jdbcType=TIMESTAMP},
+        UWC006 = #{uwc006,jdbcType=TIMESTAMP},
+        UWC007 = #{uwc007,jdbcType=INTEGER},
+        UWC008 = #{uwc008,jdbcType=VARCHAR},
+        UWC009 = #{uwc009,jdbcType=VARCHAR}
+    where UWC001 = #{uwc001,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectBydpid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cduwc
+    where UWC002 = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

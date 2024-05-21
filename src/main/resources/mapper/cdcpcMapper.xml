@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdcpcMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdcpc">
+    <id column="CPC001" jdbcType="VARCHAR" property="cpc001" />
+    <result column="CPC002" jdbcType="VARCHAR" property="cpc002" />
+    <result column="CPC003" jdbcType="VARCHAR" property="cpc003" />
+    <result column="CPC004" jdbcType="CHAR" property="cpc004" />
+    <result column="CPC005" jdbcType="TIMESTAMP" property="cpc005" />
+    <result column="CPC006" jdbcType="INTEGER" property="cpc006" />
+    <result column="CPC007" jdbcType="TIMESTAMP" property="cpc007" />
+    <result column="CPC008" jdbcType="VARCHAR" property="cpc008" />
+    <result column="CPC009" jdbcType="VARCHAR" property="cpc009" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.efx.quality.model.cdcpc"  extends="BaseResultMap">
+    <association property="cpb" column="CPC002" select="com.efx.quality.dao.cdcpbMapper.selectByPrimaryKey"/>
+    <association property="usn" column="CPC003" select="com.efx.quality.dao.cdusnMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.efx.quality.model.cdcpc"  extends="BaseResultMap">
+    <association property="cpb" column="CPC002" select="com.efx.quality.dao.cdcpbMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CPC001, CPC002, CPC003, CPC004, CPC005, CPC006, CPC007, CPC008, CPC009
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdcpcExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdcpc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdcpc
+    where CPC001 = #{cpc001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdcpc
+    where CPC001 = #{cpc001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdcpcExample">
+    delete from cdcpc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdcpc">
+    insert into cdcpc (CPC001, CPC002, CPC003, 
+      CPC004, CPC005, CPC006, 
+      CPC007, CPC008, CPC009
+      )
+    values (#{cpc001,jdbcType=VARCHAR}, #{cpc002,jdbcType=VARCHAR}, #{cpc003,jdbcType=VARCHAR}, 
+      #{cpc004,jdbcType=CHAR}, #{cpc005,jdbcType=TIMESTAMP}, #{cpc006,jdbcType=INTEGER}, 
+      #{cpc007,jdbcType=TIMESTAMP}, #{cpc008,jdbcType=VARCHAR}, #{cpc009,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdcpc">
+    insert into cdcpc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cpc001 != null">
+        CPC001,
+      </if>
+      <if test="cpc002 != null">
+        CPC002,
+      </if>
+      <if test="cpc003 != null">
+        CPC003,
+      </if>
+      <if test="cpc004 != null">
+        CPC004,
+      </if>
+      <if test="cpc005 != null">
+        CPC005,
+      </if>
+      <if test="cpc006 != null">
+        CPC006,
+      </if>
+      <if test="cpc007 != null">
+        CPC007,
+      </if>
+      <if test="cpc008 != null">
+        CPC008,
+      </if>
+      <if test="cpc009 != null">
+        CPC009,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cpc001 != null">
+        #{cpc001,jdbcType=VARCHAR},
+      </if>
+      <if test="cpc002 != null">
+        #{cpc002,jdbcType=VARCHAR},
+      </if>
+      <if test="cpc003 != null">
+        #{cpc003,jdbcType=VARCHAR},
+      </if>
+      <if test="cpc004 != null">
+        #{cpc004,jdbcType=CHAR},
+      </if>
+      <if test="cpc005 != null">
+        #{cpc005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpc006 != null">
+        #{cpc006,jdbcType=INTEGER},
+      </if>
+      <if test="cpc007 != null">
+        #{cpc007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpc008 != null">
+        #{cpc008,jdbcType=VARCHAR},
+      </if>
+      <if test="cpc009 != null">
+        #{cpc009,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdcpcExample" resultType="java.lang.Long">
+    select count(*) from cdcpc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdcpc
+    <set>
+      <if test="record.cpc001 != null">
+        CPC001 = #{record.cpc001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpc002 != null">
+        CPC002 = #{record.cpc002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpc003 != null">
+        CPC003 = #{record.cpc003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpc004 != null">
+        CPC004 = #{record.cpc004,jdbcType=CHAR},
+      </if>
+      <if test="record.cpc005 != null">
+        CPC005 = #{record.cpc005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cpc006 != null">
+        CPC006 = #{record.cpc006,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpc007 != null">
+        CPC007 = #{record.cpc007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cpc008 != null">
+        CPC008 = #{record.cpc008,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpc009 != null">
+        CPC009 = #{record.cpc009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdcpc
+    set CPC001 = #{record.cpc001,jdbcType=VARCHAR},
+      CPC002 = #{record.cpc002,jdbcType=VARCHAR},
+      CPC003 = #{record.cpc003,jdbcType=VARCHAR},
+      CPC004 = #{record.cpc004,jdbcType=CHAR},
+      CPC005 = #{record.cpc005,jdbcType=TIMESTAMP},
+      CPC006 = #{record.cpc006,jdbcType=INTEGER},
+      CPC007 = #{record.cpc007,jdbcType=TIMESTAMP},
+      CPC008 = #{record.cpc008,jdbcType=VARCHAR},
+      CPC009 = #{record.cpc009,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdcpc">
+    update cdcpc
+    <set>
+      <if test="cpc002 != null">
+        CPC002 = #{cpc002,jdbcType=VARCHAR},
+      </if>
+      <if test="cpc003 != null">
+        CPC003 = #{cpc003,jdbcType=VARCHAR},
+      </if>
+      <if test="cpc004 != null">
+        CPC004 = #{cpc004,jdbcType=CHAR},
+      </if>
+      <if test="cpc005 != null">
+        CPC005 = #{cpc005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpc006 != null">
+        CPC006 = #{cpc006,jdbcType=INTEGER},
+      </if>
+      <if test="cpc007 != null">
+        CPC007 = #{cpc007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpc008 != null">
+        CPC008 = #{cpc008,jdbcType=VARCHAR},
+      </if>
+      <if test="cpc009 != null">
+        CPC009 = #{cpc009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CPC001 = #{cpc001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdcpc">
+    update cdcpc
+    set CPC002 = #{cpc002,jdbcType=VARCHAR},
+      CPC003 = #{cpc003,jdbcType=VARCHAR},
+      CPC004 = #{cpc004,jdbcType=CHAR},
+      CPC005 = #{cpc005,jdbcType=TIMESTAMP},
+      CPC006 = #{cpc006,jdbcType=INTEGER},
+      CPC007 = #{cpc007,jdbcType=TIMESTAMP},
+      CPC008 = #{cpc008,jdbcType=VARCHAR},
+      CPC009 = #{cpc009,jdbcType=VARCHAR}
+    where CPC001 = #{cpc001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap2" parameterType="com.efx.quality.model.cdcpcExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdcpc
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="countByExamplehd" parameterType="com.efx.quality.model.cdcpcExample" resultType="java.lang.Long">
+    select count(*) from cdcpc left join cdcpb on cdcpc.cpc002=cdcpb.cpb001
+    <where>
+      <if test="cdcpcExample != null">
+        <foreach collection="cdcpcExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdcpbExample != null">
+        <foreach collection="cdcpbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectByExampleAndPagehd" resultMap="BaseResultMap2" parameterType="com.efx.quality.model.cdcpcExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdcpc left join cdcpb on cdcpc.cpc002=cdcpb.cpb001
+    <where>
+      <if test="cdcpcExample != null">
+        <foreach collection="cdcpcExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdcpbExample != null">
+        <foreach collection="cdcpbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    order by cpc005 desc
+  </select>
+  <sql id="ECExample_Where_Clause">
+    <if test="criteria.valid">
+      <foreach collection="criteria.criteria" item="criterion">
+        <choose>
+          <when test="criterion.noValue">
+            and ${criterion.condition}
+          </when>
+          <when test="criterion.singleValue">
+            and ${criterion.condition}
+            #{criterion.value}
+          </when>
+          <when test="criterion.betweenValue">
+            and ${criterion.condition} #{criterion.value} and
+            #{criterion.secondValue}
+          </when>
+          <when test="criterion.listValue">
+            and ${criterion.condition}
+            <foreach collection="criterion.value" item="listItem"
+                     open="(" close=")" separator=",">
+              #{listItem}
+            </foreach>
+          </when>
+        </choose>
+      </foreach>
+    </if>
+  </sql>
+</mapper>

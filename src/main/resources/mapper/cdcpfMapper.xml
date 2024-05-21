@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdcpfMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdcpf">
+    <id column="CPF001" jdbcType="INTEGER" property="cpf001" />
+    <result column="CPF002" jdbcType="INTEGER" property="cpf002" />
+    <result column="CPF003" jdbcType="VARCHAR" property="cpf003" />
+    <result column="CPF004" jdbcType="VARCHAR" property="cpf004" />
+    <result column="CPF005" jdbcType="VARCHAR" property="cpf005" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CPF001, CPF002, CPF003, CPF004, CPF005
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdcpfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdcpf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdcpf
+    where CPF001 = #{cpf001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdcpf
+    where CPF001 = #{cpf001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdcpfExample">
+    delete from cdcpf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdcpf">
+    insert into cdcpf (CPF001, CPF002, CPF003, 
+      CPF004, CPF005)
+    values (#{cpf001,jdbcType=INTEGER}, #{cpf002,jdbcType=INTEGER}, #{cpf003,jdbcType=VARCHAR}, 
+      #{cpf004,jdbcType=VARCHAR}, #{cpf005,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdcpf">
+    insert into cdcpf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cpf001 != null">
+        CPF001,
+      </if>
+      <if test="cpf002 != null">
+        CPF002,
+      </if>
+      <if test="cpf003 != null">
+        CPF003,
+      </if>
+      <if test="cpf004 != null">
+        CPF004,
+      </if>
+      <if test="cpf005 != null">
+        CPF005,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cpf001 != null">
+        #{cpf001,jdbcType=INTEGER},
+      </if>
+      <if test="cpf002 != null">
+        #{cpf002,jdbcType=INTEGER},
+      </if>
+      <if test="cpf003 != null">
+        #{cpf003,jdbcType=VARCHAR},
+      </if>
+      <if test="cpf004 != null">
+        #{cpf004,jdbcType=VARCHAR},
+      </if>
+      <if test="cpf005 != null">
+        #{cpf005,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdcpfExample" resultType="java.lang.Long">
+    select count(*) from cdcpf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdcpf
+    <set>
+      <if test="record.cpf001 != null">
+        CPF001 = #{record.cpf001,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpf002 != null">
+        CPF002 = #{record.cpf002,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpf003 != null">
+        CPF003 = #{record.cpf003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpf004 != null">
+        CPF004 = #{record.cpf004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpf005 != null">
+        CPF005 = #{record.cpf005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdcpf
+    set CPF001 = #{record.cpf001,jdbcType=INTEGER},
+      CPF002 = #{record.cpf002,jdbcType=INTEGER},
+      CPF003 = #{record.cpf003,jdbcType=VARCHAR},
+      CPF004 = #{record.cpf004,jdbcType=VARCHAR},
+      CPF005 = #{record.cpf005,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdcpf">
+    update cdcpf
+    <set>
+      <if test="cpf002 != null">
+        CPF002 = #{cpf002,jdbcType=INTEGER},
+      </if>
+      <if test="cpf003 != null">
+        CPF003 = #{cpf003,jdbcType=VARCHAR},
+      </if>
+      <if test="cpf004 != null">
+        CPF004 = #{cpf004,jdbcType=VARCHAR},
+      </if>
+      <if test="cpf005 != null">
+        CPF005 = #{cpf005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CPF001 = #{cpf001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdcpf">
+    update cdcpf
+    set CPF002 = #{cpf002,jdbcType=INTEGER},
+      CPF003 = #{cpf003,jdbcType=VARCHAR},
+      CPF004 = #{cpf004,jdbcType=VARCHAR},
+      CPF005 = #{cpf005,jdbcType=VARCHAR}
+    where CPF001 = #{cpf001,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdtycMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdtyc">
+    <id column="TYC001" jdbcType="INTEGER" property="tyc001" />
+    <result column="TYC002" jdbcType="VARCHAR" property="tyc002" />
+    <result column="TYC003" jdbcType="INTEGER" property="tyc003" />
+    <result column="TYC004" jdbcType="VARCHAR" property="tyc004" />
+    <result column="TYC005" jdbcType="VARCHAR" property="tyc005" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    TYC001, TYC002, TYC003, TYC004, TYC005
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdtycExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdtyc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdtyc
+    where TYC001 = #{tyc001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdtyc
+    where TYC001 = #{tyc001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdtycExample">
+    delete from cdtyc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdtyc">
+    insert into cdtyc (TYC001, TYC002, TYC003, 
+      TYC004, TYC005)
+    values (#{tyc001,jdbcType=INTEGER}, #{tyc002,jdbcType=VARCHAR}, #{tyc003,jdbcType=INTEGER}, 
+      #{tyc004,jdbcType=VARCHAR}, #{tyc005,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdtyc">
+    insert into cdtyc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tyc001 != null">
+        TYC001,
+      </if>
+      <if test="tyc002 != null">
+        TYC002,
+      </if>
+      <if test="tyc003 != null">
+        TYC003,
+      </if>
+      <if test="tyc004 != null">
+        TYC004,
+      </if>
+      <if test="tyc005 != null">
+        TYC005,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tyc001 != null">
+        #{tyc001,jdbcType=INTEGER},
+      </if>
+      <if test="tyc002 != null">
+        #{tyc002,jdbcType=VARCHAR},
+      </if>
+      <if test="tyc003 != null">
+        #{tyc003,jdbcType=INTEGER},
+      </if>
+      <if test="tyc004 != null">
+        #{tyc004,jdbcType=VARCHAR},
+      </if>
+      <if test="tyc005 != null">
+        #{tyc005,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdtycExample" resultType="java.lang.Long">
+    select count(*) from cdtyc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdtyc
+    <set>
+      <if test="record.tyc001 != null">
+        TYC001 = #{record.tyc001,jdbcType=INTEGER},
+      </if>
+      <if test="record.tyc002 != null">
+        TYC002 = #{record.tyc002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tyc003 != null">
+        TYC003 = #{record.tyc003,jdbcType=INTEGER},
+      </if>
+      <if test="record.tyc004 != null">
+        TYC004 = #{record.tyc004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tyc005 != null">
+        TYC005 = #{record.tyc005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdtyc
+    set TYC001 = #{record.tyc001,jdbcType=INTEGER},
+      TYC002 = #{record.tyc002,jdbcType=VARCHAR},
+      TYC003 = #{record.tyc003,jdbcType=INTEGER},
+      TYC004 = #{record.tyc004,jdbcType=VARCHAR},
+      TYC005 = #{record.tyc005,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdtyc">
+    update cdtyc
+    <set>
+      <if test="tyc002 != null">
+        TYC002 = #{tyc002,jdbcType=VARCHAR},
+      </if>
+      <if test="tyc003 != null">
+        TYC003 = #{tyc003,jdbcType=INTEGER},
+      </if>
+      <if test="tyc004 != null">
+        TYC004 = #{tyc004,jdbcType=VARCHAR},
+      </if>
+      <if test="tyc005 != null">
+        TYC005 = #{tyc005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TYC001 = #{tyc001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdtyc">
+    update cdtyc
+    set TYC002 = #{tyc002,jdbcType=VARCHAR},
+      TYC003 = #{tyc003,jdbcType=INTEGER},
+      TYC004 = #{tyc004,jdbcType=VARCHAR},
+      TYC005 = #{tyc005,jdbcType=VARCHAR}
+    where TYC001 = #{tyc001,jdbcType=INTEGER}
+  </update>
+</mapper>

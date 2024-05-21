@@ -1,0 +1,130 @@
+.model{
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    background:#00000066;
+    z-index:10000;
+    display: none;
+    overflow-y:auto;
+}
+.model .am{
+    width:80vw;
+    height: auto;
+    min-height: 100%;
+    background:#fff;
+    float:right;
+    right:-80vw;
+}
+.model .an{
+    animation: rmove 0.8s ease-out 0s 1 alternate forwards;
+}
+@keyframes rmove{
+    0%{right: -80vw;}
+    100%{right: 0px;}
+}
+.model .am .head{
+    width:80vw;
+    height:4%;
+    border-bottom:1px solid #ccc;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.model .am .head .t1{
+    font-size:15px;
+    font-weight: 900;
+    color:#333;
+    margin-left:20px;
+}
+.model .am .head .b1{
+    font-size:18px;
+    font-weight: 900;
+    color:#999;
+    margin-right:20px;
+    cursor:pointer;
+}
+.model .am .con{
+    width:96%;
+    height:90%;
+    margin-left:2%;
+    padding: 4% 2% 10% 2%;
+    overflow-x:hidden;
+    overflow-y:auto;
+    z-index:100;
+}
+.model .am .foot{
+    width:100%;
+    height:50px;
+    border-top:1px solid #ccc;
+    background:#FFF;
+    padding-left:520px;
+    padding-top:8px;
+}
+.logoimg{
+    width:100px;
+    height: 100px;
+}
+.bqdiv div img{
+    width:16px;
+    height:16px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.zdy-edit{
+    position: absolute;
+    top:0;
+    right:0;
+    width:100px;
+    height:36px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    font-size: 18px;
+    letter-spacing: 8px;
+}
+.jspan{
+	color:#001529;
+}
+.selectBox-place{
+   color:#666;
+}
+select:invalid { color: gray; }
+
+.btxz{
+	border:none;
+	background-color:#FFF;
+	color:#007bff;
+	/*border-bottom:1px solid #007bff;*/
+    text-decoration:underline;
+	padding-left:2px;
+	padding-right:2px;
+    margin:0 5px;
+}
+
+
+@font-face {
+    font-family: '李旭科毛笔行书';
+    src: url('李旭科毛笔行书.ttf') format('truetype');
+}
+@font-face {
+    font-family: '隶体';
+    src: url('隶体.ttf') format('truetype');
+}
+@font-face {
+    font-family: '新宋体';
+    src: url('新宋体.ttc') format('truetype');
+}
+@font-face {
+    font-family: '楷体';
+    src: url('楷体.ttf') format('truetype');
+}
+@font-face {
+    font-family: '黑体';
+    src: url('黑体.ttf') format('truetype');
+}
+
+
+

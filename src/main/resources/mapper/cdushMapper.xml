@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdushMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdush">
+    <id column="USH001" jdbcType="VARCHAR" property="ush001" />
+    <result column="USH002" jdbcType="VARCHAR" property="ush002" />
+    <result column="USH003" jdbcType="INTEGER" property="ush003" />
+    <result column="USH004" jdbcType="INTEGER" property="ush004" />
+    <result column="USH005" jdbcType="REAL" property="ush005" />
+    <result column="USH006" jdbcType="REAL" property="ush006" />
+    <result column="USH007" jdbcType="INTEGER" property="ush007" />
+    <result column="USH008" jdbcType="VARCHAR" property="ush008" />
+    <result column="USH009" jdbcType="VARCHAR" property="ush009" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USH001, USH002, USH003, USH004, USH005, USH006, USH007, USH008, USH009
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdushExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdush
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdush
+    where USH001 = #{ush001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdush
+    where USH001 = #{ush001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdushExample">
+    delete from cdush
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdush">
+    insert into cdush (USH001, USH002, USH003, 
+      USH004, USH005, USH006, USH007, 
+      USH008, USH009)
+    values (#{ush001,jdbcType=VARCHAR}, #{ush002,jdbcType=VARCHAR}, #{ush003,jdbcType=INTEGER}, 
+      #{ush004,jdbcType=INTEGER}, #{ush005,jdbcType=REAL}, #{ush006,jdbcType=REAL}, #{ush007,jdbcType=INTEGER}, 
+      #{ush008,jdbcType=VARCHAR}, #{ush009,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdush">
+    insert into cdush
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ush001 != null">
+        USH001,
+      </if>
+      <if test="ush002 != null">
+        USH002,
+      </if>
+      <if test="ush003 != null">
+        USH003,
+      </if>
+      <if test="ush004 != null">
+        USH004,
+      </if>
+      <if test="ush005 != null">
+        USH005,
+      </if>
+      <if test="ush006 != null">
+        USH006,
+      </if>
+      <if test="ush007 != null">
+        USH007,
+      </if>
+      <if test="ush008 != null">
+        USH008,
+      </if>
+      <if test="ush009 != null">
+        USH009,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ush001 != null">
+        #{ush001,jdbcType=VARCHAR},
+      </if>
+      <if test="ush002 != null">
+        #{ush002,jdbcType=VARCHAR},
+      </if>
+      <if test="ush003 != null">
+        #{ush003,jdbcType=INTEGER},
+      </if>
+      <if test="ush004 != null">
+        #{ush004,jdbcType=INTEGER},
+      </if>
+      <if test="ush005 != null">
+        #{ush005,jdbcType=REAL},
+      </if>
+      <if test="ush006 != null">
+        #{ush006,jdbcType=REAL},
+      </if>
+      <if test="ush007 != null">
+        #{ush007,jdbcType=INTEGER},
+      </if>
+      <if test="ush008 != null">
+        #{ush008,jdbcType=VARCHAR},
+      </if>
+      <if test="ush009 != null">
+        #{ush009,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdushExample" resultType="java.lang.Long">
+    select count(*) from cdush
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdush
+    <set>
+      <if test="record.ush001 != null">
+        USH001 = #{record.ush001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ush002 != null">
+        USH002 = #{record.ush002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ush003 != null">
+        USH003 = #{record.ush003,jdbcType=INTEGER},
+      </if>
+      <if test="record.ush004 != null">
+        USH004 = #{record.ush004,jdbcType=INTEGER},
+      </if>
+      <if test="record.ush005 != null">
+        USH005 = #{record.ush005,jdbcType=REAL},
+      </if>
+      <if test="record.ush006 != null">
+        USH006 = #{record.ush006,jdbcType=REAL},
+      </if>
+      <if test="record.ush007 != null">
+        USH007 = #{record.ush007,jdbcType=INTEGER},
+      </if>
+      <if test="record.ush008 != null">
+        USH008 = #{record.ush008,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ush009 != null">
+        USH009 = #{record.ush009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdush
+    set USH001 = #{record.ush001,jdbcType=VARCHAR},
+      USH002 = #{record.ush002,jdbcType=VARCHAR},
+      USH003 = #{record.ush003,jdbcType=INTEGER},
+      USH004 = #{record.ush004,jdbcType=INTEGER},
+      USH005 = #{record.ush005,jdbcType=REAL},
+      USH006 = #{record.ush006,jdbcType=REAL},
+      USH007 = #{record.ush007,jdbcType=INTEGER},
+      USH008 = #{record.ush008,jdbcType=VARCHAR},
+      USH009 = #{record.ush009,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdush">
+    update cdush
+    <set>
+      <if test="ush002 != null">
+        USH002 = #{ush002,jdbcType=VARCHAR},
+      </if>
+      <if test="ush003 != null">
+        USH003 = #{ush003,jdbcType=INTEGER},
+      </if>
+      <if test="ush004 != null">
+        USH004 = #{ush004,jdbcType=INTEGER},
+      </if>
+      <if test="ush005 != null">
+        USH005 = #{ush005,jdbcType=REAL},
+      </if>
+      <if test="ush006 != null">
+        USH006 = #{ush006,jdbcType=REAL},
+      </if>
+      <if test="ush007 != null">
+        USH007 = #{ush007,jdbcType=INTEGER},
+      </if>
+      <if test="ush008 != null">
+        USH008 = #{ush008,jdbcType=VARCHAR},
+      </if>
+      <if test="ush009 != null">
+        USH009 = #{ush009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USH001 = #{ush001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdush">
+    update cdush
+    set USH002 = #{ush002,jdbcType=VARCHAR},
+      USH003 = #{ush003,jdbcType=INTEGER},
+      USH004 = #{ush004,jdbcType=INTEGER},
+      USH005 = #{ush005,jdbcType=REAL},
+      USH006 = #{ush006,jdbcType=REAL},
+      USH007 = #{ush007,jdbcType=INTEGER},
+      USH008 = #{ush008,jdbcType=VARCHAR},
+      USH009 = #{ush009,jdbcType=VARCHAR}
+    where USH001 = #{ush001,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdush">
+    <id column="USH001" jdbcType="INTEGER" property="ush001" />
+    <result column="USH002" jdbcType="VARCHAR" property="ush002" />
+    <result column="USH003" jdbcType="VARCHAR" property="ush003" />
+    <result column="USH004" jdbcType="INTEGER" property="ush004" />
+    <result column="USH005" jdbcType="VARCHAR" property="ush005" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USH001, USH002, USH003, USH004, USH005
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdushExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdush
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdush
+    where USH001 = #{ush001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdush
+    where USH001 = #{ush001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdushExample">
+    delete from cdush
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdush">
+    insert into cdush (USH001, USH002, USH003, 
+      USH004, USH005)
+    values (#{ush001,jdbcType=INTEGER}, #{ush002,jdbcType=VARCHAR}, #{ush003,jdbcType=VARCHAR}, 
+      #{ush004,jdbcType=INTEGER}, #{ush005,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdush">
+    insert into cdush
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ush001 != null">
+        USH001,
+      </if>
+      <if test="ush002 != null">
+        USH002,
+      </if>
+      <if test="ush003 != null">
+        USH003,
+      </if>
+      <if test="ush004 != null">
+        USH004,
+      </if>
+      <if test="ush005 != null">
+        USH005,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ush001 != null">
+        #{ush001,jdbcType=INTEGER},
+      </if>
+      <if test="ush002 != null">
+        #{ush002,jdbcType=VARCHAR},
+      </if>
+      <if test="ush003 != null">
+        #{ush003,jdbcType=VARCHAR},
+      </if>
+      <if test="ush004 != null">
+        #{ush004,jdbcType=INTEGER},
+      </if>
+      <if test="ush005 != null">
+        #{ush005,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdushExample" resultType="java.lang.Long">
+    select count(*) from cdush
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select flushCache="true" id="selectByExampleAndPage" parameterType="com.efx.quality.model.cdushExample" resultMap="BaseResultMap" useCache="false">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdush
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdush
+    <set>
+      <if test="record.ush001 != null">
+        USH001 = #{record.ush001,jdbcType=INTEGER},
+      </if>
+      <if test="record.ush002 != null">
+        USH002 = #{record.ush002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ush003 != null">
+        USH003 = #{record.ush003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ush004 != null">
+        USH004 = #{record.ush004,jdbcType=INTEGER},
+      </if>
+      <if test="record.ush005 != null">
+        USH005 = #{record.ush005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdush
+    set USH001 = #{record.ush001,jdbcType=INTEGER},
+      USH002 = #{record.ush002,jdbcType=VARCHAR},
+      USH003 = #{record.ush003,jdbcType=VARCHAR},
+      USH004 = #{record.ush004,jdbcType=INTEGER},
+      USH005 = #{record.ush005,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdush">
+    update cdush
+    <set>
+      <if test="ush002 != null">
+        USH002 = #{ush002,jdbcType=VARCHAR},
+      </if>
+      <if test="ush003 != null">
+        USH003 = #{ush003,jdbcType=VARCHAR},
+      </if>
+      <if test="ush004 != null">
+        USH004 = #{ush004,jdbcType=INTEGER},
+      </if>
+      <if test="ush005 != null">
+        USH005 = #{ush005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USH001 = #{ush001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdush">
+    update cdush
+    set USH002 = #{ush002,jdbcType=VARCHAR},
+      USH003 = #{ush003,jdbcType=VARCHAR},
+      USH004 = #{ush004,jdbcType=INTEGER},
+      USH005 = #{ush005,jdbcType=VARCHAR}
+    where USH001 = #{ush001,jdbcType=INTEGER}
+  </update>
+</mapper>

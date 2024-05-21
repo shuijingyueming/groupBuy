@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cduwnMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cduwn">
+    <id column="UWN001" jdbcType="VARCHAR" property="uwn001" />
+    <result column="UWN002" jdbcType="VARCHAR" property="uwn002" />
+    <result column="UWN003" jdbcType="VARCHAR" property="uwn003" />
+    <result column="UWN004" jdbcType="CHAR" property="uwn004" />
+    <result column="UWN005" jdbcType="TIMESTAMP" property="uwn005" />
+    <result column="UWN006" jdbcType="TIMESTAMP" property="uwn006" />
+    <result column="UWN007" jdbcType="INTEGER" property="uwn007" />
+    <result column="UWN008" jdbcType="VARCHAR" property="uwn008" />
+    <result column="UWN009" jdbcType="INTEGER" property="uwn009" />
+    <result column="UWN010" jdbcType="VARCHAR" property="uwn010" />
+    <result column="UWN011" jdbcType="INTEGER" property="uwn011" />
+    <result column="UWN012" jdbcType="VARCHAR" property="uwn012" />
+    <result column="UWN013" jdbcType="VARCHAR" property="uwn013" />
+    <result column="UWN014" jdbcType="VARCHAR" property="uwn014" />
+    <result column="UWN015" jdbcType="VARCHAR" property="uwn015" />
+    <result column="UWN016" jdbcType="VARCHAR" property="uwn016" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.efx.quality.model.cduwn"  extends="BaseResultMap">
+    <association property="uwm" column="UWN002"  select="com.efx.quality.dao.cduwmMapper.selectByPrimaryKey"/>
+    <association property="usn" column="UWN003"  select="com.efx.quality.dao.cdusnMapper.selectByPrimaryKey1"/>
+    <association property="use" column="UWN007"  select="com.efx.quality.dao.cduseMapper.selectByPrimaryKey"/>
+    <association property="yhe" column="UWN011"  select="com.efx.quality.dao.cdyheMapper.selectByPrimaryKey"/>
+    <association property="usd" column="UWN009"  select="com.efx.quality.dao.cdusdMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UWN001, UWN002, UWN003, UWN004, UWN005, UWN006, UWN007, UWN008, UWN009, UWN010, UWN011, 
+    UWN012, UWN013, UWN014, UWN015, UWN016
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cduwnExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cduwn
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap1">
+    select 
+    <include refid="Base_Column_List" />
+    from cduwn
+    where UWN001 = #{uwn001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cduwn
+    where UWN001 = #{uwn001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cduwnExample">
+    delete from cduwn
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cduwn">
+    insert into cduwn (UWN001, UWN002, UWN003, 
+      UWN004, UWN005, UWN006, 
+      UWN007, UWN008, UWN009, 
+      UWN010, UWN011, UWN012, UWN013, UWN014, UWN015, UWN016
+      )
+    values (#{uwn001,jdbcType=VARCHAR}, #{uwn002,jdbcType=VARCHAR}, #{uwn003,jdbcType=VARCHAR}, 
+      #{uwn004,jdbcType=CHAR}, #{uwn005,jdbcType=VARCHAR}, #{uwn006,jdbcType=TIMESTAMP}, 
+      #{uwn007,jdbcType=INTEGER}, #{uwn008,jdbcType=VARCHAR}, #{uwn009,jdbcType=INTEGER}, 
+      #{uwn010,jdbcType=VARCHAR}, #{uwn011,jdbcType=INTEGER}, #{uwn012,jdbcType=VARCHAR},
+      #{uwn013,jdbcType=VARCHAR}, #{uwn014,jdbcType=VARCHAR}, #{uwn015,jdbcType=VARCHAR}, #{uwn016,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cduwn">
+    insert into cduwn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uwn001 != null">
+        UWN001,
+      </if>
+      <if test="uwn002 != null">
+        UWN002,
+      </if>
+      <if test="uwn003 != null">
+        UWN003,
+      </if>
+      <if test="uwn004 != null">
+        UWN004,
+      </if>
+      <if test="uwn005 != null">
+        UWN005,
+      </if>
+      <if test="uwn006 != null">
+        UWN006,
+      </if>
+      <if test="uwn007 != null">
+        UWN007,
+      </if>
+      <if test="uwn008 != null">
+        UWN008,
+      </if>
+      <if test="uwn009 != null">
+        UWN009,
+      </if>
+      <if test="uwn010 != null">
+        UWN010,
+      </if>
+      <if test="uwn011 != null">
+        UWN011,
+      </if>
+      <if test="uwn012 != null">
+        UWN012,
+      </if>
+      <if test="uwn013 != null">
+      UWN013,
+    </if>
+      <if test="uwn014 != null">
+      UWN014,
+    </if>
+      <if test="uwn015 != null">
+        UWN015,
+      </if>
+      <if test="uwn016 != null">
+        UWN016,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uwn001 != null">
+        #{uwn001,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn002 != null">
+        #{uwn002,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn003 != null">
+        #{uwn003,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn004 != null">
+        #{uwn004,jdbcType=CHAR},
+      </if>
+      <if test="uwn005 != null">
+        #{uwn005,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn006 != null">
+        #{uwn006,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uwn007 != null">
+        #{uwn007,jdbcType=INTEGER},
+      </if>
+      <if test="uwn008 != null">
+        #{uwn008,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn009 != null">
+        #{uwn009,jdbcType=INTEGER},
+      </if>
+      <if test="uwn010 != null">
+        #{uwn010,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn011 != null">
+        #{uwn011,jdbcType=INTEGER},
+      </if>
+      <if test="uwn012 != null">
+        #{uwn012,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn013 != null">
+        #{uwn013,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn014 != null">
+        #{uwn014,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn015 != null">
+        #{uwn015,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn016 != null">
+        #{uwn016,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cduwnExample" resultType="java.lang.Long">
+    select count(*) from cduwn
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cduwn
+    <set>
+      <if test="record.uwn001 != null">
+        UWN001 = #{record.uwn001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn002 != null">
+        UWN002 = #{record.uwn002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn003 != null">
+        UWN003 = #{record.uwn003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn004 != null">
+        UWN004 = #{record.uwn004,jdbcType=CHAR},
+      </if>
+      <if test="record.uwn005 != null">
+        UWN005 = #{record.uwn005,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn006 != null">
+        UWN006 = #{record.uwn006,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uwn007 != null">
+        UWN007 = #{record.uwn007,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwn008 != null">
+        UWN008 = #{record.uwn008,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn009 != null">
+        UWN009 = #{record.uwn009,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwn010 != null">
+        UWN010 = #{record.uwn010,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn011 != null">
+        UWN011 = #{record.uwn011,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwn012 != null">
+        UWN012 = #{record.uwn012,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn013 != null">
+        UWN013 = #{record.uwn013,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn014 != null">
+        UWN014 = #{record.uwn014,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn015 != null">
+        UWN015 = #{record.uwn015,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwn016 != null">
+        UWN016 = #{record.uwn016,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cduwn
+    set UWN001 = #{record.uwn001,jdbcType=VARCHAR},
+      UWN002 = #{record.uwn002,jdbcType=VARCHAR},
+      UWN003 = #{record.uwn003,jdbcType=VARCHAR},
+      UWN004 = #{record.uwn004,jdbcType=CHAR},
+      UWN005 = #{record.uwn005,jdbcType=VARCHAR},
+      UWN006 = #{record.uwn006,jdbcType=TIMESTAMP},
+      UWN007 = #{record.uwn007,jdbcType=INTEGER},
+      UWN008 = #{record.uwn008,jdbcType=VARCHAR},
+      UWN009 = #{record.uwn009,jdbcType=INTEGER},
+      UWN010 = #{record.uwn010,jdbcType=VARCHAR},
+      UWN011 = #{record.uwn011,jdbcType=INTEGER},
+      UWN012 = #{record.uwn012,jdbcType=VARCHAR},
+      UWN013 = #{record.uwn013,jdbcType=VARCHAR},
+      UWN014 = #{record.uwn014,jdbcType=VARCHAR},
+    UWN015 = #{record.uwn015,jdbcType=VARCHAR},
+    UWN016 = #{record.uwn016,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cduwn">
+    update cduwn
+    <set>
+      <if test="uwn002 != null">
+        UWN002 = #{uwn002,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn003 != null">
+        UWN003 = #{uwn003,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn004 != null">
+        UWN004 = #{uwn004,jdbcType=CHAR},
+      </if>
+      <if test="uwn005 != null">
+        UWN005 = #{uwn005,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn006 != null">
+        UWN006 = #{uwn006,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uwn007 != null">
+        UWN007 = #{uwn007,jdbcType=INTEGER},
+      </if>
+      <if test="uwn008 != null">
+        UWN008 = #{uwn008,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn009 != null">
+        UWN009 = #{uwn009,jdbcType=INTEGER},
+      </if>
+      <if test="uwn010 != null">
+        UWN010 = #{uwn010,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn011 != null">
+        UWN011 = #{uwn011,jdbcType=INTEGER},
+      </if>
+      <if test="uwn012 != null">
+        UWN012 = #{uwn012,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn013 != null">
+        UWN013 = #{uwn013,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn014 != null">
+        UWN014 = #{uwn014,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn015 != null">
+        UWN015 = #{uwn015,jdbcType=VARCHAR},
+      </if>
+      <if test="uwn016 != null">
+        UWN016 = #{uwn016,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UWN001 = #{uwn001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cduwn">
+    update cduwn
+    set UWN002 = #{uwn002,jdbcType=VARCHAR},
+      UWN003 = #{uwn003,jdbcType=VARCHAR},
+      UWN004 = #{uwn004,jdbcType=CHAR},
+      UWN005 = #{uwn005,jdbcType=VARCHAR},
+      UWN006 = #{uwn006,jdbcType=TIMESTAMP},
+      UWN007 = #{uwn007,jdbcType=INTEGER},
+      UWN008 = #{uwn008,jdbcType=VARCHAR},
+      UWN009 = #{uwn009,jdbcType=INTEGER},
+      UWN010 = #{uwn010,jdbcType=VARCHAR},
+      UWN011 = #{uwn011,jdbcType=INTEGER},
+      UWN012 = #{uwn012,jdbcType=VARCHAR},
+        UWN013 = #{uwn013,jdbcType=VARCHAR},
+        UWN014 = #{uwn014,jdbcType=VARCHAR},
+        UWN015 = #{uwn015,jdbcType=VARCHAR},
+        UWN016 = #{uwn016,jdbcType=VARCHAR}
+    where UWN001 = #{uwn001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.efx.quality.model.cduwnExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cduwn
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="countByExamplejd" parameterType="com.efx.quality.model.cduwnExample" resultType="java.lang.Long">
+    select count(*) from cduwn left join cduwm on cduwn.uwn002=cduwm.uwm001
+    <where>
+      <if test="cduwnExample != null">
+        <foreach collection="cduwnExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduwmExample != null">
+        <foreach collection="cduwmExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectByExampleAndPagejd" resultMap="BaseResultMap1" parameterType="com.efx.quality.model.cduwnExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cduwn left join cduwm on cduwn.uwn002=cduwm.uwm001
+    <where>
+      <if test="cduwnExample != null">
+        <foreach collection="cduwnExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduwmExample != null">
+        <foreach collection="cduwmExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    order by uwn006 desc
+  </select>
+  <sql id="ECExample_Where_Clause">
+    <if test="criteria.valid">
+      <foreach collection="criteria.criteria" item="criterion">
+        <choose>
+          <when test="criterion.noValue">
+            and ${criterion.condition}
+          </when>
+          <when test="criterion.singleValue">
+            and ${criterion.condition}
+            #{criterion.value}
+          </when>
+          <when test="criterion.betweenValue">
+            and ${criterion.condition} #{criterion.value} and
+            #{criterion.secondValue}
+          </when>
+          <when test="criterion.listValue">
+            and ${criterion.condition}
+            <foreach collection="criterion.value" item="listItem"
+                     open="(" close=")" separator=",">
+              #{listItem}
+            </foreach>
+          </when>
+        </choose>
+      </foreach>
+    </if>
+  </sql>
+</mapper>

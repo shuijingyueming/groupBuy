@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdlogMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdlog">
+    <id column="LOG001" jdbcType="VARCHAR" property="log001" />
+    <result column="LOG002" jdbcType="VARCHAR" property="log002" />
+    <result column="LOG003" jdbcType="TIMESTAMP" property="log003" />
+    <result column="LOG005" jdbcType="VARCHAR" property="log005" />
+    <result column="LOG006" jdbcType="VARCHAR" property="log006" />
+    <result column="LOG007" jdbcType="VARCHAR" property="log007" />
+    <result column="LOG008" jdbcType="VARCHAR" property="log008" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.fangx.model.cdlog">
+    <result column="LOG004" jdbcType="LONGVARCHAR" property="log004" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LOG001, LOG002, LOG003, LOG005, LOG006, LOG007, LOG008
+  </sql>
+  <sql id="Blob_Column_List">
+    LOG004
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.fangx.model.cdlogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.fangx.model.cdlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cdlog
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdlog
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdlogExample">
+    delete from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdlog">
+    insert into cdlog (LOG001, LOG002, LOG003, 
+      LOG005, LOG006, LOG007, 
+      LOG008, LOG004)
+    values (#{log001,jdbcType=VARCHAR}, #{log002,jdbcType=VARCHAR}, #{log003,jdbcType=TIMESTAMP}, 
+      #{log005,jdbcType=VARCHAR}, #{log006,jdbcType=VARCHAR}, #{log007,jdbcType=VARCHAR}, 
+      #{log008,jdbcType=VARCHAR}, #{log004,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdlog">
+    insert into cdlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="log001 != null">
+        LOG001,
+      </if>
+      <if test="log002 != null">
+        LOG002,
+      </if>
+      <if test="log003 != null">
+        LOG003,
+      </if>
+      <if test="log005 != null">
+        LOG005,
+      </if>
+      <if test="log006 != null">
+        LOG006,
+      </if>
+      <if test="log007 != null">
+        LOG007,
+      </if>
+      <if test="log008 != null">
+        LOG008,
+      </if>
+      <if test="log004 != null">
+        LOG004,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="log001 != null">
+        #{log001,jdbcType=VARCHAR},
+      </if>
+      <if test="log002 != null">
+        #{log002,jdbcType=VARCHAR},
+      </if>
+      <if test="log003 != null">
+        #{log003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="log005 != null">
+        #{log005,jdbcType=VARCHAR},
+      </if>
+      <if test="log006 != null">
+        #{log006,jdbcType=VARCHAR},
+      </if>
+      <if test="log007 != null">
+        #{log007,jdbcType=VARCHAR},
+      </if>
+      <if test="log008 != null">
+        #{log008,jdbcType=VARCHAR},
+      </if>
+      <if test="log004 != null">
+        #{log004,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdlogExample" resultType="java.lang.Long">
+    select count(*) from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdlog
+    <set>
+      <if test="record.log001 != null">
+        LOG001 = #{record.log001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log002 != null">
+        LOG002 = #{record.log002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log003 != null">
+        LOG003 = #{record.log003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.log005 != null">
+        LOG005 = #{record.log005,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log006 != null">
+        LOG006 = #{record.log006,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log007 != null">
+        LOG007 = #{record.log007,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log008 != null">
+        LOG008 = #{record.log008,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log004 != null">
+        LOG004 = #{record.log004,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update cdlog
+    set LOG001 = #{record.log001,jdbcType=VARCHAR},
+      LOG002 = #{record.log002,jdbcType=VARCHAR},
+      LOG003 = #{record.log003,jdbcType=TIMESTAMP},
+      LOG005 = #{record.log005,jdbcType=VARCHAR},
+      LOG006 = #{record.log006,jdbcType=VARCHAR},
+      LOG007 = #{record.log007,jdbcType=VARCHAR},
+      LOG008 = #{record.log008,jdbcType=VARCHAR},
+      LOG004 = #{record.log004,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdlog
+    set LOG001 = #{record.log001,jdbcType=VARCHAR},
+      LOG002 = #{record.log002,jdbcType=VARCHAR},
+      LOG003 = #{record.log003,jdbcType=TIMESTAMP},
+      LOG005 = #{record.log005,jdbcType=VARCHAR},
+      LOG006 = #{record.log006,jdbcType=VARCHAR},
+      LOG007 = #{record.log007,jdbcType=VARCHAR},
+      LOG008 = #{record.log008,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdlog">
+    update cdlog
+    <set>
+      <if test="log002 != null">
+        LOG002 = #{log002,jdbcType=VARCHAR},
+      </if>
+      <if test="log003 != null">
+        LOG003 = #{log003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="log005 != null">
+        LOG005 = #{log005,jdbcType=VARCHAR},
+      </if>
+      <if test="log006 != null">
+        LOG006 = #{log006,jdbcType=VARCHAR},
+      </if>
+      <if test="log007 != null">
+        LOG007 = #{log007,jdbcType=VARCHAR},
+      </if>
+      <if test="log008 != null">
+        LOG008 = #{log008,jdbcType=VARCHAR},
+      </if>
+      <if test="log004 != null">
+        LOG004 = #{log004,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fangx.model.cdlog">
+    update cdlog
+    set LOG002 = #{log002,jdbcType=VARCHAR},
+      LOG003 = #{log003,jdbcType=TIMESTAMP},
+      LOG005 = #{log005,jdbcType=VARCHAR},
+      LOG006 = #{log006,jdbcType=VARCHAR},
+      LOG007 = #{log007,jdbcType=VARCHAR},
+      LOG008 = #{log008,jdbcType=VARCHAR},
+      LOG004 = #{log004,jdbcType=LONGVARCHAR}
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdlog">
+    update cdlog
+    set LOG002 = #{log002,jdbcType=VARCHAR},
+      LOG003 = #{log003,jdbcType=TIMESTAMP},
+      LOG005 = #{log005,jdbcType=VARCHAR},
+      LOG006 = #{log006,jdbcType=VARCHAR},
+      LOG007 = #{log007,jdbcType=VARCHAR},
+      LOG008 = #{log008,jdbcType=VARCHAR}
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdlog">
+    <id column="LOG001" jdbcType="VARCHAR" property="log001" />
+    <result column="LOG002" jdbcType="VARCHAR" property="log002" />
+    <result column="LOG003" jdbcType="TIMESTAMP" property="log003" />
+    <result column="LOG004" jdbcType="LONGVARCHAR" property="log004" />
+    <result column="LOG005" jdbcType="VARCHAR" property="log005" />
+    <result column="LOG006" jdbcType="VARCHAR" property="log006" />
+    <result column="LOG007" jdbcType="VARCHAR" property="log007" />
+    <result column="LOG008" jdbcType="VARCHAR" property="log008" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LOG001, LOG002, LOG003,LOG004, LOG005, LOG006, LOG007, LOG008
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.efx.quality.model.cdlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdlog
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdlog
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdlogExample">
+    delete from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdlog">
+    insert into cdlog (LOG001, LOG002, LOG003,
+      LOG005, LOG006, LOG007, 
+      LOG008, LOG004)
+    values (#{log001,jdbcType=VARCHAR}, #{log002,jdbcType=VARCHAR}, #{log003,jdbcType=TIMESTAMP}, 
+      #{log005,jdbcType=VARCHAR}, #{log006,jdbcType=VARCHAR}, #{log007,jdbcType=VARCHAR}, 
+      #{log008,jdbcType=VARCHAR}, #{log004,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdlog">
+    insert into cdlog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="log001 != null">
+        LOG001,
+      </if>
+      <if test="log002 != null">
+        LOG002,
+      </if>
+      <if test="log003 != null">
+        LOG003,
+      </if>
+      <if test="log005 != null">
+        LOG005,
+      </if>
+      <if test="log006 != null">
+        LOG006,
+      </if>
+      <if test="log007 != null">
+        LOG007,
+      </if>
+      <if test="log008 != null">
+        LOG008,
+      </if>
+      <if test="log004 != null">
+        LOG004,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="log001 != null">
+        #{log001,jdbcType=VARCHAR},
+      </if>
+      <if test="log002 != null">
+        #{log002,jdbcType=VARCHAR},
+      </if>
+      <if test="log003 != null">
+        #{log003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="log005 != null">
+        #{log005,jdbcType=VARCHAR},
+      </if>
+      <if test="log006 != null">
+        #{log006,jdbcType=VARCHAR},
+      </if>
+      <if test="log007 != null">
+        #{log007,jdbcType=VARCHAR},
+      </if>
+      <if test="log008 != null">
+        #{log008,jdbcType=VARCHAR},
+      </if>
+      <if test="log004 != null">
+        #{log004,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdlogExample" resultType="java.lang.Long">
+    select count(*) from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select flushCache="true" id="selectByExampleAndPage" parameterType="com.efx.quality.model.cdlogExample" resultMap="BaseResultMap" useCache="false">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdlog
+    <set>
+      <if test="record.log001 != null">
+        LOG001 = #{record.log001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log002 != null">
+        LOG002 = #{record.log002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log003 != null">
+        LOG003 = #{record.log003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.log005 != null">
+        LOG005 = #{record.log005,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log006 != null">
+        LOG006 = #{record.log006,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log007 != null">
+        LOG007 = #{record.log007,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log008 != null">
+        LOG008 = #{record.log008,jdbcType=VARCHAR},
+      </if>
+      <if test="record.log004 != null">
+        LOG004 = #{record.log004,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update cdlog
+    set LOG001 = #{record.log001,jdbcType=VARCHAR},
+      LOG002 = #{record.log002,jdbcType=VARCHAR},
+      LOG003 = #{record.log003,jdbcType=TIMESTAMP},
+      LOG005 = #{record.log005,jdbcType=VARCHAR},
+      LOG006 = #{record.log006,jdbcType=VARCHAR},
+      LOG007 = #{record.log007,jdbcType=VARCHAR},
+      LOG008 = #{record.log008,jdbcType=VARCHAR},
+      LOG004 = #{record.log004,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdlog
+    set LOG001 = #{record.log001,jdbcType=VARCHAR},
+      LOG002 = #{record.log002,jdbcType=VARCHAR},
+      LOG003 = #{record.log003,jdbcType=TIMESTAMP},
+      LOG005 = #{record.log005,jdbcType=VARCHAR},
+      LOG006 = #{record.log006,jdbcType=VARCHAR},
+      LOG007 = #{record.log007,jdbcType=VARCHAR},
+      LOG008 = #{record.log008,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdlog">
+    update cdlog
+    <set>
+      <if test="log002 != null">
+        LOG002 = #{log002,jdbcType=VARCHAR},
+      </if>
+      <if test="log003 != null">
+        LOG003 = #{log003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="log005 != null">
+        LOG005 = #{log005,jdbcType=VARCHAR},
+      </if>
+      <if test="log006 != null">
+        LOG006 = #{log006,jdbcType=VARCHAR},
+      </if>
+      <if test="log007 != null">
+        LOG007 = #{log007,jdbcType=VARCHAR},
+      </if>
+      <if test="log008 != null">
+        LOG008 = #{log008,jdbcType=VARCHAR},
+      </if>
+      <if test="log004 != null">
+        LOG004 = #{log004,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.efx.quality.model.cdlog">
+    update cdlog
+    set LOG002 = #{log002,jdbcType=VARCHAR},
+      LOG003 = #{log003,jdbcType=TIMESTAMP},
+      LOG005 = #{log005,jdbcType=VARCHAR},
+      LOG006 = #{log006,jdbcType=VARCHAR},
+      LOG007 = #{log007,jdbcType=VARCHAR},
+      LOG008 = #{log008,jdbcType=VARCHAR},
+      LOG004 = #{log004,jdbcType=LONGVARCHAR}
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdlog">
+    update cdlog
+    set LOG002 = #{log002,jdbcType=VARCHAR},
+      LOG003 = #{log003,jdbcType=TIMESTAMP},
+      LOG005 = #{log005,jdbcType=VARCHAR},
+      LOG006 = #{log006,jdbcType=VARCHAR},
+      LOG007 = #{log007,jdbcType=VARCHAR},
+      LOG008 = #{log008,jdbcType=VARCHAR}
+    where LOG001 = #{log001,jdbcType=VARCHAR}
+  </update>
+</mapper>

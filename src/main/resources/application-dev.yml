@@ -1,0 +1,69 @@
+
+#server:
+#    port: 80
+#    max-http-header-size: 10240000
+#    tomcat:
+#      max-http-form-post-size: 10240000
+
+server:
+  port: 80
+#  ssl:
+#   key-store: classpath:xhh.nbefx.com.pfx
+#   key-store-password: 6qmc0rum
+#   key-store-type: PKCS12
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+#    url: jdbc:mysql://127.0.0.1:3306/xhhdata?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: Q1w2e3r4
+#    jdbcurl: 127.0.0.1
+    url: jdbc:mysql://192.168.1.5:3306/clzpsdata?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: ROOT
+    jdbcurl: 192.168.1.5
+    jdbcdk: 3306
+    dataname: clzpsdata
+
+    initial-size: 15
+    min-idle: 5
+    max-active: 80
+    max-wait: 60000
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    validation-query: SELECT 1 FROM DUAL
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    resources:
+      static-locations: classpath:/static/
+#mybatis plus
+mybatis-plus:
+  #指明mapper.xml扫描位置(classpath* 代表编译后类文件根目录)
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+  #指明实体扫描(多个package用逗号或者分号分隔)
+  typeAliasesPackage: com.fangx.model;
+  global-config:
+    #主键类型 0:数据库ID自增, 1:用户输入ID,2:全局唯一ID (数字类型唯一ID), 3:全局唯一ID UUID
+    id-type: 0
+    #字段策略(拼接sql时用于判断属性值是否拼接) 0:忽略判断,1:非NULL判断,2:非空判断
+    field-strategy: 2
+    #驼峰下划线转换含查询column及返回column(column下划线命名create_time，返回java实体是驼峰命名createTime，开启后自动转换否则保留原样)
+    db-column-underline: false
+    #是否动态刷新mapper
+    refresh-mapper: false
+    #数据库大写命名下划线转换
+    #capital-mode: true
+  configuration:
+    lazy-loading-enabled: true
+    aggressiveLazyLoading: false
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  config: classpath:logback-spring.xml

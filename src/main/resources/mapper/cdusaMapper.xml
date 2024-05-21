@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdusaMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdusa">
+    <id column="USA001" jdbcType="INTEGER" property="usa001" />
+    <result column="USA002" jdbcType="VARCHAR" property="usa002" />
+    <result column="USA003" jdbcType="INTEGER" property="usa003" />
+    <result column="USA004" jdbcType="VARCHAR" property="usa004" />
+    <result column="USA005" jdbcType="VARCHAR" property="usa005" />
+    <result column="USA006" jdbcType="VARCHAR" property="usa006" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USA001, USA002, USA003, USA004, USA005, USA006
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdusaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusa
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdusa
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdusaExample">
+    delete from cdusa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdusa">
+    insert into cdusa (USA001, USA002, USA003, 
+      USA004, USA005, USA006
+      )
+    values (#{usa001,jdbcType=INTEGER}, #{usa002,jdbcType=VARCHAR}, #{usa003,jdbcType=INTEGER}, 
+      #{usa004,jdbcType=VARCHAR}, #{usa005,jdbcType=VARCHAR}, #{usa006,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdusa">
+    insert into cdusa
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usa001 != null">
+        USA001,
+      </if>
+      <if test="usa002 != null">
+        USA002,
+      </if>
+      <if test="usa003 != null">
+        USA003,
+      </if>
+      <if test="usa004 != null">
+        USA004,
+      </if>
+      <if test="usa005 != null">
+        USA005,
+      </if>
+      <if test="usa006 != null">
+        USA006,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usa001 != null">
+        #{usa001,jdbcType=INTEGER},
+      </if>
+      <if test="usa002 != null">
+        #{usa002,jdbcType=VARCHAR},
+      </if>
+      <if test="usa003 != null">
+        #{usa003,jdbcType=INTEGER},
+      </if>
+      <if test="usa004 != null">
+        #{usa004,jdbcType=VARCHAR},
+      </if>
+      <if test="usa005 != null">
+        #{usa005,jdbcType=VARCHAR},
+      </if>
+      <if test="usa006 != null">
+        #{usa006,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdusaExample" resultType="java.lang.Long">
+    select count(*) from cdusa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdusa
+    <set>
+      <if test="record.usa001 != null">
+        USA001 = #{record.usa001,jdbcType=INTEGER},
+      </if>
+      <if test="record.usa002 != null">
+        USA002 = #{record.usa002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usa003 != null">
+        USA003 = #{record.usa003,jdbcType=INTEGER},
+      </if>
+      <if test="record.usa004 != null">
+        USA004 = #{record.usa004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usa005 != null">
+        USA005 = #{record.usa005,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usa006 != null">
+        USA006 = #{record.usa006,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdusa
+    set USA001 = #{record.usa001,jdbcType=INTEGER},
+      USA002 = #{record.usa002,jdbcType=VARCHAR},
+      USA003 = #{record.usa003,jdbcType=INTEGER},
+      USA004 = #{record.usa004,jdbcType=VARCHAR},
+      USA005 = #{record.usa005,jdbcType=VARCHAR},
+      USA006 = #{record.usa006,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdusa">
+    update cdusa
+    <set>
+      <if test="usa002 != null">
+        USA002 = #{usa002,jdbcType=VARCHAR},
+      </if>
+      <if test="usa003 != null">
+        USA003 = #{usa003,jdbcType=INTEGER},
+      </if>
+      <if test="usa004 != null">
+        USA004 = #{usa004,jdbcType=VARCHAR},
+      </if>
+      <if test="usa005 != null">
+        USA005 = #{usa005,jdbcType=VARCHAR},
+      </if>
+      <if test="usa006 != null">
+        USA006 = #{usa006,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdusa">
+    update cdusa
+    set USA002 = #{usa002,jdbcType=VARCHAR},
+      USA003 = #{usa003,jdbcType=INTEGER},
+      USA004 = #{usa004,jdbcType=VARCHAR},
+      USA005 = #{usa005,jdbcType=VARCHAR},
+      USA006 = #{usa006,jdbcType=VARCHAR}
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdusa">
+    <id column="USA001" jdbcType="INTEGER" property="usa001" />
+    <result column="USA002" jdbcType="VARCHAR" property="usa002" />
+    <result column="USA003" jdbcType="INTEGER" property="usa003" />
+    <result column="USA004" jdbcType="VARCHAR" property="usa004" />
+    <result column="USA005" jdbcType="INTEGER" property="usa005" />
+    <result column="USA006" jdbcType="VARCHAR" property="usa006" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USA001, USA002, USA003, USA004, USA005, USA006
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdusaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusa
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdusa
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdusaExample">
+    delete from cdusa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdusa">
+    insert into cdusa (USA001, USA002, USA003, 
+      USA004, USA005, USA006
+      )
+    values (#{usa001,jdbcType=INTEGER}, #{usa002,jdbcType=VARCHAR}, #{usa003,jdbcType=INTEGER}, 
+      #{usa004,jdbcType=VARCHAR}, #{usa005,jdbcType=INTEGER}, #{usa006,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="usa001" parameterType="com.efx.quality.model.cdusa" useGeneratedKeys="true">
+    insert into cdusa
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usa001 != null">
+        USA001,
+      </if>
+      <if test="usa002 != null">
+        USA002,
+      </if>
+      <if test="usa003 != null">
+        USA003,
+      </if>
+      <if test="usa004 != null">
+        USA004,
+      </if>
+      <if test="usa005 != null">
+        USA005,
+      </if>
+      <if test="usa006 != null">
+        USA006,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usa001 != null">
+        #{usa001,jdbcType=INTEGER},
+      </if>
+      <if test="usa002 != null">
+        #{usa002,jdbcType=VARCHAR},
+      </if>
+      <if test="usa003 != null">
+        #{usa003,jdbcType=INTEGER},
+      </if>
+      <if test="usa004 != null">
+        #{usa004,jdbcType=VARCHAR},
+      </if>
+      <if test="usa005 != null">
+        #{usa005,jdbcType=INTEGER},
+      </if>
+      <if test="usa006 != null">
+        #{usa006,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdusaExample" resultType="java.lang.Long">
+    select count(*) from cdusa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select flushCache="true" id="selectByExampleAndPage" parameterType="com.efx.quality.model.cdusaExample" resultMap="BaseResultMap" useCache="false">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusa
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdusa
+    <set>
+      <if test="record.usa001 != null">
+        USA001 = #{record.usa001,jdbcType=INTEGER},
+      </if>
+      <if test="record.usa002 != null">
+        USA002 = #{record.usa002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usa003 != null">
+        USA003 = #{record.usa003,jdbcType=INTEGER},
+      </if>
+      <if test="record.usa004 != null">
+        USA004 = #{record.usa004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usa005 != null">
+        USA005 = #{record.usa005,jdbcType=INTEGER},
+      </if>
+      <if test="record.usa006 != null">
+        USA006 = #{record.usa006,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdusa
+    set USA001 = #{record.usa001,jdbcType=INTEGER},
+      USA002 = #{record.usa002,jdbcType=VARCHAR},
+      USA003 = #{record.usa003,jdbcType=INTEGER},
+      USA004 = #{record.usa004,jdbcType=VARCHAR},
+      USA005 = #{record.usa005,jdbcType=INTEGER},
+      USA006 = #{record.usa006,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdusa">
+    update cdusa
+    <set>
+      <if test="usa002 != null">
+        USA002 = #{usa002,jdbcType=VARCHAR},
+      </if>
+      <if test="usa003 != null">
+        USA003 = #{usa003,jdbcType=INTEGER},
+      </if>
+      <if test="usa004 != null">
+        USA004 = #{usa004,jdbcType=VARCHAR},
+      </if>
+      <if test="usa005 != null">
+        USA005 = #{usa005,jdbcType=INTEGER},
+      </if>
+      <if test="usa006 != null">
+        USA006 = #{usa006,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdusa">
+    update cdusa
+    set USA002 = #{usa002,jdbcType=VARCHAR},
+      USA003 = #{usa003,jdbcType=INTEGER},
+      USA004 = #{usa004,jdbcType=VARCHAR},
+      USA005 = #{usa005,jdbcType=INTEGER},
+      USA006 = #{usa006,jdbcType=VARCHAR}
+    where USA001 = #{usa001,jdbcType=INTEGER}
+  </update>
+</mapper>

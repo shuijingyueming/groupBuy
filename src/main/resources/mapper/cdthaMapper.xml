@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdthaMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdtha">
+    <id column="THA001" jdbcType="INTEGER" property="tha001" />
+    <result column="THA002" jdbcType="LONGVARCHAR" property="tha002" />
+    <result column="THA003" jdbcType="VARCHAR" property="tha003" />
+    <result column="THA004" jdbcType="VARCHAR" property="tha004" />
+    <result column="THA005" jdbcType="INTEGER" property="tha005" />
+    <result column="THA006" jdbcType="INTEGER" property="tha006" />
+    <result column="THA007" jdbcType="INTEGER" property="tha007" />
+    <result column="THA008" jdbcType="INTEGER" property="tha008" />
+    <result column="THA009" jdbcType="INTEGER" property="tha009" />
+    <result column="THA010" jdbcType="INTEGER" property="tha010" />
+    <result column="THA011" jdbcType="VARCHAR" property="tha011" />
+    <result column="THA012" jdbcType="VARCHAR" property="tha012" />
+
+    <result column="THA013" jdbcType="VARCHAR" property="tha013" />
+    <result column="THA014" jdbcType="VARCHAR" property="tha014" />
+    <result column="THA015" jdbcType="VARCHAR" property="tha015" />
+    <result column="THA016" jdbcType="VARCHAR" property="tha016" />
+    <result column="THA017" jdbcType="VARCHAR" property="tha017" />
+    <result column="THA018" jdbcType="VARCHAR" property="tha018" />
+    <result column="THA019" jdbcType="VARCHAR" property="tha019" />
+    <result column="THA020" jdbcType="VARCHAR" property="tha020" />
+    <result column="THA021" jdbcType="VARCHAR" property="tha021" />
+    <result column="THA022" jdbcType="VARCHAR" property="tha022" />
+    <result column="THA023" jdbcType="VARCHAR" property="tha023" />
+    <result column="THA024" jdbcType="VARCHAR" property="tha024" />
+    <result column="THA025" jdbcType="VARCHAR" property="tha025" />
+    <result column="THA026" jdbcType="VARCHAR" property="tha026" />
+    <result column="THA027" jdbcType="VARCHAR" property="tha027" />
+    <result column="THA028" jdbcType="VARCHAR" property="tha028" />
+    <result column="THA029" jdbcType="VARCHAR" property="tha029" />
+    <result column="THA030" jdbcType="VARCHAR" property="tha030" />
+    <result column="THA031" jdbcType="VARCHAR" property="tha031" />
+    <result column="THA032" jdbcType="VARCHAR" property="tha032" />
+    <result column="THA033" jdbcType="VARCHAR" property="tha033" />
+    <result column="THA034" jdbcType="VARCHAR" property="tha034" />
+    <result column="THA035" jdbcType="VARCHAR" property="tha035" />
+    <result column="THA036" jdbcType="VARCHAR" property="tha036" />
+    <result column="THA037" jdbcType="VARCHAR" property="tha037" />
+    <result column="THA038" jdbcType="VARCHAR" property="tha038" />
+    <result column="THA039" jdbcType="VARCHAR" property="tha039" />
+    <result column="THA040" jdbcType="VARCHAR" property="tha040" />
+    <result column="THA041" jdbcType="VARCHAR" property="tha041" />
+    <result column="THA042" jdbcType="VARCHAR" property="tha042" />
+    <result column="THA043" jdbcType="VARCHAR" property="tha043" />
+    <result column="THA044" jdbcType="VARCHAR" property="tha044" />
+    <result column="THA045" jdbcType="INTEGER" property="tha045" />
+    <result column="THA046" jdbcType="INTEGER" property="tha046" />
+    <result column="THA047" jdbcType="INTEGER" property="tha047" />
+    <result column="THA048" jdbcType="INTEGER" property="tha048" />
+    <result column="THA049" jdbcType="INTEGER" property="tha049" />
+    <result column="THA050" jdbcType="INTEGER" property="tha050" />
+
+    <result column="THA051" jdbcType="TIMESTAMP" property="tha051" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.efx.quality.model.cdtha"  extends="BaseResultMap">
+    <association property="yhe" column="THA010" select="com.efx.quality.dao.cdyheMapper.selectByPrimaryKey1"/>
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.efx.quality.model.cdtha"  extends="BaseResultMap1">
+    <collection property="yhhlist" column="THA001"  select="com.efx.quality.dao.cdyhhMapper.selectByjzid"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    THA001, THA002, THA003, THA004, THA005, THA006, THA007, THA008, THA009, THA010
+    , THA011,THA012,THA013,THA014,THA015,THA016,THA017,THA018,THA019,THA020
+    ,THA021,THA022,THA023,THA024,THA025,THA026,THA027,THA028,THA029,THA030
+    ,THA031,THA032,THA033,THA034,THA035,THA036,THA037,THA038,THA039,THA040
+    ,THA041,THA042,THA043,THA044,THA045,THA046,THA047,THA048,THA049,THA050,THA051
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdthaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdtha
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+    select 
+    <include refid="Base_Column_List" />
+    from cdtha
+    where THA001 = #{tha001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdtha
+    where THA001 = #{tha001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdthaExample">
+    delete from cdtha
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdtha">
+    insert into cdtha (THA001, THA002, THA003, THA004, THA005, THA006, THA007, THA008, THA009, THA010,
+                       THA011,THA012,THA013,THA014,THA015,THA016,THA017,THA018,THA019,THA020,
+                       THA021,THA022,THA023,THA024,THA025,THA026,THA027,THA028,THA029,THA030,
+                       THA031,THA032,THA033,THA034,THA035,THA036,THA037,THA038,THA039,THA040,
+                       THA041,THA042,THA043,THA044,THA045,THA046,THA047,THA048,THA049,THA050,THA051
+      )
+    values (#{tha001,jdbcType=INTEGER}, #{tha002,jdbcType=LONGVARCHAR}, #{tha003,jdbcType=VARCHAR}, #{tha004,jdbcType=VARCHAR}, #{tha005,jdbcType=INTEGER},
+            #{tha006,jdbcType=INTEGER}, #{tha007,jdbcType=INTEGER}, #{tha008,jdbcType=INTEGER}, #{tha009,jdbcType=INTEGER}, #{tha010,jdbcType=INTEGER},
+            #{tha011,jdbcType=VARCHAR}, #{tha012,jdbcType=VARCHAR}, #{tha013,jdbcType=VARCHAR}, #{tha014,jdbcType=VARCHAR}, #{tha015,jdbcType=VARCHAR},
+            #{tha016,jdbcType=VARCHAR}, #{tha017,jdbcType=VARCHAR}, #{tha018,jdbcType=VARCHAR}, #{tha019,jdbcType=VARCHAR}, #{tha020,jdbcType=VARCHAR},
+            #{tha021,jdbcType=VARCHAR}, #{tha022,jdbcType=VARCHAR}, #{tha023,jdbcType=VARCHAR}, #{tha024,jdbcType=VARCHAR}, #{tha025,jdbcType=VARCHAR},
+            #{tha026,jdbcType=VARCHAR}, #{tha027,jdbcType=VARCHAR}, #{tha028,jdbcType=VARCHAR}, #{tha029,jdbcType=VARCHAR}, #{tha030,jdbcType=VARCHAR},
+            #{tha031,jdbcType=VARCHAR}, #{tha032,jdbcType=VARCHAR}, #{tha033,jdbcType=VARCHAR}, #{tha034,jdbcType=VARCHAR}, #{tha035,jdbcType=VARCHAR},
+            #{tha036,jdbcType=VARCHAR}, #{tha037,jdbcType=VARCHAR}, #{tha038,jdbcType=VARCHAR}, #{tha039,jdbcType=VARCHAR}, #{tha040,jdbcType=VARCHAR},
+            #{tha041,jdbcType=VARCHAR}, #{tha042,jdbcType=VARCHAR}, #{tha043,jdbcType=VARCHAR}, #{tha044,jdbcType=VARCHAR}, #{tha045,jdbcType=INTEGER},
+            #{tha046,jdbcType=INTEGER}, #{tha047,jdbcType=INTEGER}, #{tha048,jdbcType=INTEGER}, #{tha049,jdbcType=INTEGER}, #{tha050,jdbcType=INTEGER}, #{tha051,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdtha">
+    insert into cdtha
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tha001 != null">
+        THA001,
+      </if>
+      <if test="tha002 != null">
+        THA002,
+      </if>
+      <if test="tha003 != null">
+        THA003,
+      </if>
+      <if test="tha004 != null">
+        THA004,
+      </if>
+      <if test="tha005 != null">
+        THA005,
+      </if>
+      <if test="tha006 != null">
+        THA006,
+      </if>
+      <if test="tha007 != null">
+        THA007,
+      </if>
+      <if test="tha008 != null">
+        THA008,
+      </if>
+      <if test="tha009 != null">
+        THA009,
+      </if>
+      <if test="tha010 != null">
+        THA010,
+      </if>
+      <if test="tha011 != null">
+        THA011,
+      </if>
+      <if test="tha012 != null">
+        THA012,
+      </if>
+      <if test="tha013 != null">
+        THA013,
+      </if>
+      <if test="tha014 != null">
+        THA014,
+      </if>
+      <if test="tha015 != null">
+        THA015,
+      </if>
+      <if test="tha016 != null">
+        THA016,
+      </if>
+      <if test="tha017 != null">
+        THA017,
+      </if>
+      <if test="tha018 != null">
+        THA018,
+      </if>
+      <if test="tha019 != null">
+        THA019,
+      </if>
+      <if test="tha020 != null">
+        THA020,
+      </if>
+      <if test="tha021 != null">
+        THA021,
+      </if>
+      <if test="tha022 != null">
+        THA022,
+      </if>
+      <if test="tha023 != null">
+        THA023,
+      </if>
+      <if test="tha024 != null">
+        THA024,
+      </if>
+      <if test="tha025 != null">
+        THA025,
+      </if>
+      <if test="tha026 != null">
+        THA026,
+      </if>
+      <if test="tha027 != null">
+        THA027,
+      </if>
+      <if test="tha028 != null">
+        THA028,
+      </if>
+      <if test="tha029 != null">
+        THA029,
+      </if>
+      <if test="tha030 != null">
+        THA030,
+      </if>
+      <if test="tha031 != null">
+        THA031,
+      </if>
+      <if test="tha032 != null">
+        THA032,
+      </if>
+      <if test="tha033 != null">
+        THA033,
+      </if>
+      <if test="tha034 != null">
+        THA034,
+      </if>
+      <if test="tha035 != null">
+        THA035,
+      </if>
+      <if test="tha036 != null">
+        THA036,
+      </if>
+      <if test="tha037 != null">
+        THA037,
+      </if>
+      <if test="tha038 != null">
+        THA038,
+      </if>
+      <if test="tha039 != null">
+        THA039,
+      </if>
+      <if test="tha040 != null">
+        THA040,
+      </if>
+      <if test="tha041 != null">
+        THA041,
+      </if>
+      <if test="tha042 != null">
+        THA042,
+      </if>
+      <if test="tha043 != null">
+        THA043,
+      </if>
+      <if test="tha044 != null">
+        THA044,
+      </if>
+      <if test="tha045 != null">
+        THA045,
+      </if>
+      <if test="tha046 != null">
+        THA046,
+      </if>
+      <if test="tha047 != null">
+        THA047,
+      </if>
+      <if test="tha048 != null">
+        THA048,
+      </if>
+      <if test="tha049 != null">
+        THA049,
+      </if>
+      <if test="tha050 != null">
+        THA050,
+      </if>
+      <if test="tha051 != null">
+        THA051,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tha001 != null">
+        #{tha001,jdbcType=INTEGER},
+      </if>
+      <if test="tha002 != null">
+        #{tha002,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tha003 != null">
+        #{tha003,jdbcType=VARCHAR},
+      </if>
+      <if test="tha004 != null">
+        #{tha004,jdbcType=VARCHAR},
+      </if>
+      <if test="tha005 != null">
+        #{tha005,jdbcType=INTEGER},
+      </if>
+      <if test="tha006 != null">
+        #{tha006,jdbcType=INTEGER},
+      </if>
+      <if test="tha007 != null">
+        #{tha007,jdbcType=INTEGER},
+      </if>
+      <if test="tha008 != null">
+        #{tha008,jdbcType=INTEGER},
+      </if>
+      <if test="tha009 != null">
+        #{tha009,jdbcType=INTEGER},
+      </if>
+      <if test="tha010 != null">
+        #{tha010,jdbcType=INTEGER},
+      </if>
+      <if test="tha011 != null">
+        #{tha011,jdbcType=VARCHAR},
+      </if>
+      <if test="tha012 != null">
+        #{tha012,jdbcType=VARCHAR},
+      </if>
+      <if test="tha013 != null">
+        #{tha013,jdbcType=VARCHAR},
+      </if>
+      <if test="tha014 != null">
+        #{tha014,jdbcType=VARCHAR},
+      </if>
+      <if test="tha015 != null">
+        #{tha015,jdbcType=VARCHAR},
+      </if>
+      <if test="tha016 != null">
+        #{tha016,jdbcType=VARCHAR},
+      </if>
+      <if test="tha017 != null">
+        #{tha017,jdbcType=VARCHAR},
+      </if>
+      <if test="tha018 != null">
+        #{tha018,jdbcType=VARCHAR},
+      </if>
+      <if test="tha019 != null">
+        #{tha019,jdbcType=VARCHAR},
+      </if>
+      <if test="tha020 != null">
+        #{tha020,jdbcType=VARCHAR},
+      </if>
+      <if test="tha021 != null">
+        #{tha021,jdbcType=VARCHAR},
+      </if>
+      <if test="tha022 != null">
+        #{tha022,jdbcType=VARCHAR},
+      </if>
+      <if test="tha023 != null">
+        #{tha023,jdbcType=VARCHAR},
+      </if>
+      <if test="tha024 != null">
+        #{tha024,jdbcType=VARCHAR},
+      </if>
+      <if test="tha025 != null">
+        #{tha025,jdbcType=VARCHAR},
+      </if>
+      <if test="tha026 != null">
+        #{tha026,jdbcType=VARCHAR},
+      </if>
+      <if test="tha027 != null">
+        #{tha027,jdbcType=VARCHAR},
+      </if>
+      <if test="tha028 != null">
+        #{tha028,jdbcType=VARCHAR},
+      </if>
+      <if test="tha029 != null">
+        #{tha029,jdbcType=VARCHAR},
+      </if>
+      <if test="tha030 != null">
+        #{tha030,jdbcType=VARCHAR},
+      </if>
+      <if test="tha031 != null">
+        #{tha031,jdbcType=VARCHAR},
+      </if>
+      <if test="tha032 != null">
+        #{tha032,jdbcType=VARCHAR},
+      </if>
+      <if test="tha033 != null">
+        #{tha033,jdbcType=VARCHAR},
+      </if>
+      <if test="tha034 != null">
+        #{tha034,jdbcType=VARCHAR},
+      </if>
+      <if test="tha035 != null">
+        #{tha035,jdbcType=VARCHAR},
+      </if>
+      <if test="tha036 != null">
+        #{tha036,jdbcType=VARCHAR},
+      </if>
+      <if test="tha037 != null">
+        #{tha037,jdbcType=VARCHAR},
+      </if>
+      <if test="tha038 != null">
+        #{tha038,jdbcType=VARCHAR},
+      </if>
+      <if test="tha039 != null">
+        #{tha039,jdbcType=VARCHAR},
+      </if>
+      <if test="tha040 != null">
+        #{tha040,jdbcType=VARCHAR},
+      </if>
+      <if test="tha041 != null">
+        #{tha041,jdbcType=VARCHAR},
+      </if>
+      <if test="tha042 != null">
+        #{tha042,jdbcType=VARCHAR},
+      </if>
+      <if test="tha043 != null">
+        #{tha043,jdbcType=VARCHAR},
+      </if>
+      <if test="tha044 != null">
+        #{tha044,jdbcType=VARCHAR},
+      </if>
+      <if test="tha045 != null">
+        #{tha045,jdbcType=INTEGER},
+      </if>
+      <if test="tha046 != null">
+        #{tha046,jdbcType=INTEGER},
+      </if>
+      <if test="tha047 != null">
+        #{tha047,jdbcType=INTEGER},
+      </if>
+      <if test="tha048 != null">
+        #{tha048,jdbcType=INTEGER},
+      </if>
+      <if test="tha049 != null">
+        #{tha049,jdbcType=INTEGER},
+      </if>
+      <if test="tha050 != null">
+        #{tha050,jdbcType=INTEGER},
+      </if>
+      <if test="tha051 != null">
+        #{tha051,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdthaExample" resultType="java.lang.Long">
+    select count(*) from cdtha
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdtha
+    <set>
+      <if test="record.tha001 != null">
+        THA001 = #{record.tha001,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha002 != null">
+        THA002 = #{record.tha002,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.tha003 != null">
+        THA003 = #{record.tha003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha004 != null">
+        THA004 = #{record.tha004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha005 != null">
+        THA005 = #{record.tha005,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha006 != null">
+        THA006 = #{record.tha006,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha007 != null">
+        THA007 = #{record.tha007,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha008 != null">
+        THA008 = #{record.tha008,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha009 != null">
+        THA009 = #{record.tha009,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha010 != null">
+        THA010 = #{record.tha010,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha011 != null">
+        THA011 = #{record.tha011,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha012 != null">
+        THA012 = #{record.tha012,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha013 != null">
+        THA013 = #{record.tha013,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha014 != null">
+        THA014 = #{record.tha014,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha015 != null">
+        THA015 = #{record.tha015,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha016 != null">
+        THA016 = #{record.tha016,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha017 != null">
+        THA017 = #{record.tha017,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha018 != null">
+        THA018 = #{record.tha018,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha019 != null">
+        THA019 = #{record.tha019,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha020 != null">
+        THA020 = #{record.tha020,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha021 != null">
+        THA021 = #{record.tha021,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha022 != null">
+        THA022 = #{record.tha022,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha023 != null">
+        THA023 = #{record.tha023,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha024 != null">
+        THA024 = #{record.tha024,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha025 != null">
+        THA025 = #{record.tha025,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha026 != null">
+        THA026 = #{record.tha026,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha027 != null">
+        THA027 = #{record.tha027,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha028 != null">
+        THA028 = #{record.tha028,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha029 != null">
+        THA029 = #{record.tha029,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha030 != null">
+        THA030 = #{record.tha030,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha031 != null">
+        THA031 = #{record.tha031,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha032 != null">
+        THA032 = #{record.tha032,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha033 != null">
+        THA033 = #{record.tha033,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha034 != null">
+        THA034 = #{record.tha034,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha035 != null">
+        THA035 = #{record.tha035,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha036 != null">
+        THA036 = #{record.tha036,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha037 != null">
+        THA037 = #{record.tha037,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha038 != null">
+        THA038 = #{record.tha038,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha039 != null">
+        THA039 = #{record.tha039,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha040 != null">
+        THA040 = #{record.tha040,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha041 != null">
+        THA041 = #{record.tha041,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha042 != null">
+        THA042 = #{record.tha042,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha043 != null">
+        THA043 = #{record.tha043,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha044 != null">
+        THA044 = #{record.tha044,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tha045 != null">
+        THA045 = #{record.tha045,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha046 != null">
+        THA046 = #{record.tha046,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha047 != null">
+        THA047 = #{record.tha047,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha048 != null">
+        THA048 = #{record.tha048,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha049 != null">
+        THA049 = #{record.tha049,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha050 != null">
+        THA050 = #{record.tha050,jdbcType=INTEGER},
+      </if>
+      <if test="record.tha051 != null">
+        THA051 = #{record.tha051,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdtha
+    set THA001 = #{record.tha001,jdbcType=INTEGER},
+    THA002 = #{record.tha002,jdbcType=LONGVARCHAR},
+    THA003 = #{record.tha003,jdbcType=VARCHAR},
+    THA004 = #{record.tha004,jdbcType=VARCHAR},
+    THA005 = #{record.tha005,jdbcType=INTEGER},
+    THA006 = #{record.tha006,jdbcType=INTEGER},
+    THA007 = #{record.tha007,jdbcType=INTEGER},
+    THA008 = #{record.tha008,jdbcType=INTEGER},
+    THA009 = #{record.tha009,jdbcType=INTEGER},
+    THA010 = #{record.tha010,jdbcType=INTEGER},
+    THA011 = #{record.tha011,jdbcType=VARCHAR},
+    THA012 = #{record.tha012,jdbcType=VARCHAR},
+    THA013 = #{record.tha013,jdbcType=VARCHAR},
+    THA014 = #{record.tha014,jdbcType=VARCHAR},
+    THA015 = #{record.tha015,jdbcType=VARCHAR},
+    THA016 = #{record.tha016,jdbcType=VARCHAR},
+    THA017 = #{record.tha017,jdbcType=VARCHAR},
+    THA018 = #{record.tha018,jdbcType=VARCHAR},
+    THA019 = #{record.tha019,jdbcType=VARCHAR},
+    THA020 = #{record.tha020,jdbcType=VARCHAR},
+    THA021 = #{record.tha021,jdbcType=VARCHAR},
+    THA022 = #{record.tha022,jdbcType=VARCHAR},
+    THA023 = #{record.tha023,jdbcType=VARCHAR},
+    THA024 = #{record.tha024,jdbcType=VARCHAR},
+    THA025 = #{record.tha025,jdbcType=VARCHAR},
+    THA026 = #{record.tha026,jdbcType=VARCHAR},
+    THA027 = #{record.tha027,jdbcType=VARCHAR},
+    THA028 = #{record.tha028,jdbcType=VARCHAR},
+    THA029 = #{record.tha029,jdbcType=VARCHAR},
+    THA030 = #{record.tha030,jdbcType=VARCHAR},
+    THA031 = #{record.tha031,jdbcType=VARCHAR},
+    THA032 = #{record.tha032,jdbcType=VARCHAR},
+    THA033 = #{record.tha033,jdbcType=VARCHAR},
+    THA034 = #{record.tha034,jdbcType=VARCHAR},
+    THA035 = #{record.tha035,jdbcType=VARCHAR},
+    THA036 = #{record.tha036,jdbcType=VARCHAR},
+    THA037 = #{record.tha037,jdbcType=VARCHAR},
+    THA038 = #{record.tha038,jdbcType=VARCHAR},
+    THA039 = #{record.tha039,jdbcType=VARCHAR},
+    THA040 = #{record.tha040,jdbcType=VARCHAR},
+    THA041 = #{record.tha041,jdbcType=VARCHAR},
+    THA042 = #{record.tha042,jdbcType=VARCHAR},
+    THA043 = #{record.tha043,jdbcType=VARCHAR},
+    THA044 = #{record.tha044,jdbcType=VARCHAR},
+    THA045 = #{record.tha045,jdbcType=INTEGER},
+    THA046 = #{record.tha046,jdbcType=INTEGER},
+    THA047 = #{record.tha047,jdbcType=INTEGER},
+    THA048 = #{record.tha048,jdbcType=INTEGER},
+    THA049 = #{record.tha049,jdbcType=INTEGER},
+    THA050 = #{record.tha050,jdbcType=INTEGER},
+    THA051 = #{record.tha051,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdtha">
+    update cdtha
+    <set>
+      <if test="tha002 != null">
+        THA002 = #{tha002,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="tha003 != null">
+        THA003 = #{tha003,jdbcType=VARCHAR},
+      </if>
+      <if test="tha004 != null">
+        THA004 = #{tha004,jdbcType=VARCHAR},
+      </if>
+      <if test="tha005 != null">
+        THA005 = #{tha005,jdbcType=INTEGER},
+      </if>
+      <if test="tha006 != null">
+        THA006 = #{tha006,jdbcType=INTEGER},
+      </if>
+      <if test="tha007 != null">
+        THA007 = #{tha007,jdbcType=INTEGER},
+      </if>
+      <if test="tha008 != null">
+        THA008 = #{tha008,jdbcType=INTEGER},
+      </if>
+      <if test="tha009 != null">
+        THA009 = #{tha009,jdbcType=INTEGER},
+      </if>
+      <if test="tha010 != null">
+        THA010 = #{tha010,jdbcType=INTEGER},
+      </if>
+      <if test="tha011 != null">
+        THA011 = #{tha011,jdbcType=VARCHAR},
+      </if>
+      <if test="tha012 != null">
+        THA012 = #{tha012,jdbcType=VARCHAR},
+      </if>
+      <if test="tha013 != null">
+        THA013 = #{tha013,jdbcType=VARCHAR},
+      </if>
+      <if test="tha014 != null">
+        THA014 = #{tha014,jdbcType=VARCHAR},
+      </if>
+      <if test="tha015 != null">
+        THA015 = #{tha015,jdbcType=VARCHAR},
+      </if>
+      <if test="tha016 != null">
+        THA016 = #{tha016,jdbcType=VARCHAR},
+      </if>
+      <if test="tha017 != null">
+        THA017 = #{tha017,jdbcType=VARCHAR},
+      </if>
+      <if test="tha018 != null">
+        THA018 = #{tha018,jdbcType=VARCHAR},
+      </if>
+      <if test="tha019 != null">
+        THA019 = #{tha019,jdbcType=VARCHAR},
+      </if>
+      <if test="tha020 != null">
+        THA020 = #{tha020,jdbcType=VARCHAR},
+      </if>
+      <if test="tha021 != null">
+        THA021 = #{tha021,jdbcType=VARCHAR},
+      </if>
+      <if test="tha022 != null">
+        THA022 = #{tha022,jdbcType=VARCHAR},
+      </if>
+      <if test="tha023 != null">
+        THA023 = #{tha023,jdbcType=VARCHAR},
+      </if>
+      <if test="tha024 != null">
+        THA024 = #{tha024,jdbcType=VARCHAR},
+      </if>
+      <if test="tha025 != null">
+        THA025 = #{tha025,jdbcType=VARCHAR},
+      </if>
+      <if test="tha026 != null">
+        THA026 = #{tha026,jdbcType=VARCHAR},
+      </if>
+      <if test="tha027 != null">
+        THA027 = #{tha027,jdbcType=VARCHAR},
+      </if>
+      <if test="tha028 != null">
+        THA028 = #{tha028,jdbcType=VARCHAR},
+      </if>
+      <if test="tha029 != null">
+        THA029 = #{tha029,jdbcType=VARCHAR},
+      </if>
+      <if test="tha030 != null">
+        THA030 = #{tha030,jdbcType=VARCHAR},
+      </if>
+      <if test="tha031 != null">
+        THA031 = #{tha031,jdbcType=VARCHAR},
+      </if>
+      <if test="tha032 != null">
+        THA032 = #{tha032,jdbcType=VARCHAR},
+      </if>
+      <if test="tha033 != null">
+        THA033 = #{tha033,jdbcType=VARCHAR},
+      </if>
+      <if test="tha034 != null">
+        THA034 = #{tha034,jdbcType=VARCHAR},
+      </if>
+      <if test="tha035 != null">
+        THA035 = #{tha035,jdbcType=VARCHAR},
+      </if>
+      <if test="tha036 != null">
+        THA036 = #{tha036,jdbcType=VARCHAR},
+      </if>
+      <if test="tha037 != null">
+        THA037 = #{tha037,jdbcType=VARCHAR},
+      </if>
+      <if test="tha038 != null">
+        THA038 = #{tha038,jdbcType=VARCHAR},
+      </if>
+      <if test="tha039 != null">
+        THA039 = #{tha039,jdbcType=VARCHAR},
+      </if>
+      <if test="tha040 != null">
+        THA040 = #{tha040,jdbcType=VARCHAR},
+      </if>
+      <if test="tha041 != null">
+        THA041 = #{tha041,jdbcType=VARCHAR},
+      </if>
+      <if test="tha042 != null">
+        THA042 = #{tha042,jdbcType=VARCHAR},
+      </if>
+      <if test="tha043 != null">
+        THA043 = #{tha043,jdbcType=VARCHAR},
+      </if>
+      <if test="tha044 != null">
+        THA044 = #{tha044,jdbcType=VARCHAR},
+      </if>
+      <if test="tha045 != null">
+        THA045 = #{tha045,jdbcType=INTEGER},
+      </if>
+      <if test="tha046 != null">
+        THA046 = #{tha046,jdbcType=INTEGER},
+      </if>
+      <if test="tha047 != null">
+        THA047 = #{tha047,jdbcType=INTEGER},
+      </if>
+      <if test="tha048 != null">
+        THA048 = #{tha048,jdbcType=INTEGER},
+      </if>
+      <if test="tha049 != null">
+        THA049 = #{tha049,jdbcType=INTEGER},
+      </if>
+      <if test="tha050 != null">
+        THA050 = #{tha050,jdbcType=INTEGER},
+      </if>
+      <if test="tha051 != null">
+        THA051 = #{tha051,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where THA001 = #{tha001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdtha">
+    update cdtha
+    set THA002 = #{tha002,jdbcType=LONGVARCHAR},
+      THA003 = #{tha003,jdbcType=VARCHAR},
+      THA004 = #{tha004,jdbcType=VARCHAR},
+      THA005 = #{tha005,jdbcType=INTEGER},
+      THA006 = #{tha006,jdbcType=INTEGER},
+      THA007 = #{tha007,jdbcType=INTEGER},
+      THA008 = #{tha008,jdbcType=INTEGER},
+      THA009 = #{tha009,jdbcType=INTEGER},
+      THA010 = #{tha010,jdbcType=INTEGER},
+      THA011 = #{tha011,jdbcType=VARCHAR},
+      THA012 = #{tha012,jdbcType=VARCHAR},
+        THA013 = #{tha013,jdbcType=VARCHAR},
+        THA014 = #{tha014,jdbcType=VARCHAR},
+        THA015 = #{tha015,jdbcType=VARCHAR},
+        THA016 = #{tha016,jdbcType=VARCHAR},
+        THA017 = #{tha017,jdbcType=VARCHAR},
+        THA018 = #{tha018,jdbcType=VARCHAR},
+        THA019 = #{tha019,jdbcType=VARCHAR},
+        THA020 = #{tha020,jdbcType=VARCHAR},
+        THA021 = #{tha021,jdbcType=VARCHAR},
+        THA022 = #{tha022,jdbcType=VARCHAR},
+        THA023 = #{tha023,jdbcType=VARCHAR},
+        THA024 = #{tha024,jdbcType=VARCHAR},
+        THA025 = #{tha025,jdbcType=VARCHAR},
+        THA026 = #{tha026,jdbcType=VARCHAR},
+        THA027 = #{tha027,jdbcType=VARCHAR},
+        THA028 = #{tha028,jdbcType=VARCHAR},
+        THA029 = #{tha029,jdbcType=VARCHAR},
+        THA030 = #{tha030,jdbcType=VARCHAR},
+        THA031 = #{tha031,jdbcType=VARCHAR},
+        THA032 = #{tha032,jdbcType=VARCHAR},
+        THA033 = #{tha033,jdbcType=VARCHAR},
+        THA034 = #{tha034,jdbcType=VARCHAR},
+        THA035 = #{tha035,jdbcType=VARCHAR},
+        THA036 = #{tha036,jdbcType=VARCHAR},
+        THA037 = #{tha037,jdbcType=VARCHAR},
+        THA038 = #{tha038,jdbcType=VARCHAR},
+        THA039 = #{tha039,jdbcType=VARCHAR},
+        THA040 = #{tha040,jdbcType=VARCHAR},
+        THA041 = #{tha041,jdbcType=VARCHAR},
+        THA042 = #{tha042,jdbcType=VARCHAR},
+        THA043 = #{tha043,jdbcType=VARCHAR},
+        THA044 = #{tha044,jdbcType=VARCHAR},
+        THA045 = #{tha045,jdbcType=INTEGER},
+        THA046 = #{tha046,jdbcType=INTEGER},
+        THA047 = #{tha047,jdbcType=INTEGER},
+        THA048 = #{tha048,jdbcType=INTEGER},
+        THA049 = #{tha049,jdbcType=INTEGER},
+        THA050 = #{tha050,jdbcType=INTEGER},
+        THA051 = #{tha051,jdbcType=TIMESTAMP}
+    where THA001 = #{tha001,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.efx.quality.model.cdthaExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdtha
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage1" resultMap="BaseResultMap2" parameterType="com.efx.quality.model.cdthaExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdtha
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

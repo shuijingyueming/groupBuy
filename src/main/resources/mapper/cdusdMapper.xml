@@ -1,0 +1,895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdusdMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdusd">
+    <id column="USD001" jdbcType="INTEGER" property="usd001" />
+    <result column="USD002" jdbcType="VARCHAR" property="usd002" />
+    <result column="USD003" jdbcType="VARCHAR" property="usd003" />
+    <result column="USD004" jdbcType="VARCHAR" property="usd004" />
+    <result column="USD005" jdbcType="INTEGER" property="usd005" />
+    <result column="USD006" jdbcType="REAL" property="usd006" />
+    <result column="USD007" jdbcType="REAL" property="usd007" />
+    <result column="USD008" jdbcType="INTEGER" property="usd008" />
+    <result column="USD009" jdbcType="REAL" property="usd009" />
+    <result column="USD010" jdbcType="TIMESTAMP" property="usd010" />
+    <result column="USD011" jdbcType="VARCHAR" property="usd011" />
+    <result column="USD012" jdbcType="VARCHAR" property="usd012" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USD001, USD002, USD003, USD004, USD005, USD006, USD007, USD008, USD009, USD010, USD011, 
+    USD012
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdusdExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusd
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdusd
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdusdExample">
+    delete from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdusd">
+    insert into cdusd (USD001, USD002, USD003, 
+      USD004, USD005, USD006, 
+      USD007, USD008, USD009, USD010, 
+      USD011, USD012)
+    values (#{usd001,jdbcType=INTEGER}, #{usd002,jdbcType=VARCHAR}, #{usd003,jdbcType=VARCHAR}, 
+      #{usd004,jdbcType=VARCHAR}, #{usd005,jdbcType=INTEGER}, #{usd006,jdbcType=REAL}, 
+      #{usd007,jdbcType=REAL}, #{usd008,jdbcType=INTEGER}, #{usd009,jdbcType=REAL}, #{usd010,jdbcType=TIMESTAMP}, 
+      #{usd011,jdbcType=VARCHAR}, #{usd012,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdusd">
+    insert into cdusd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usd001 != null">
+        USD001,
+      </if>
+      <if test="usd002 != null">
+        USD002,
+      </if>
+      <if test="usd003 != null">
+        USD003,
+      </if>
+      <if test="usd004 != null">
+        USD004,
+      </if>
+      <if test="usd005 != null">
+        USD005,
+      </if>
+      <if test="usd006 != null">
+        USD006,
+      </if>
+      <if test="usd007 != null">
+        USD007,
+      </if>
+      <if test="usd008 != null">
+        USD008,
+      </if>
+      <if test="usd009 != null">
+        USD009,
+      </if>
+      <if test="usd010 != null">
+        USD010,
+      </if>
+      <if test="usd011 != null">
+        USD011,
+      </if>
+      <if test="usd012 != null">
+        USD012,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usd001 != null">
+        #{usd001,jdbcType=INTEGER},
+      </if>
+      <if test="usd002 != null">
+        #{usd002,jdbcType=VARCHAR},
+      </if>
+      <if test="usd003 != null">
+        #{usd003,jdbcType=VARCHAR},
+      </if>
+      <if test="usd004 != null">
+        #{usd004,jdbcType=VARCHAR},
+      </if>
+      <if test="usd005 != null">
+        #{usd005,jdbcType=INTEGER},
+      </if>
+      <if test="usd006 != null">
+        #{usd006,jdbcType=REAL},
+      </if>
+      <if test="usd007 != null">
+        #{usd007,jdbcType=REAL},
+      </if>
+      <if test="usd008 != null">
+        #{usd008,jdbcType=INTEGER},
+      </if>
+      <if test="usd009 != null">
+        #{usd009,jdbcType=REAL},
+      </if>
+      <if test="usd010 != null">
+        #{usd010,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd011 != null">
+        #{usd011,jdbcType=VARCHAR},
+      </if>
+      <if test="usd012 != null">
+        #{usd012,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdusdExample" resultType="java.lang.Long">
+    select count(*) from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdusd
+    <set>
+      <if test="record.usd001 != null">
+        USD001 = #{record.usd001,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd002 != null">
+        USD002 = #{record.usd002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd003 != null">
+        USD003 = #{record.usd003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd004 != null">
+        USD004 = #{record.usd004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd005 != null">
+        USD005 = #{record.usd005,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd006 != null">
+        USD006 = #{record.usd006,jdbcType=REAL},
+      </if>
+      <if test="record.usd007 != null">
+        USD007 = #{record.usd007,jdbcType=REAL},
+      </if>
+      <if test="record.usd008 != null">
+        USD008 = #{record.usd008,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd009 != null">
+        USD009 = #{record.usd009,jdbcType=REAL},
+      </if>
+      <if test="record.usd010 != null">
+        USD010 = #{record.usd010,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usd011 != null">
+        USD011 = #{record.usd011,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd012 != null">
+        USD012 = #{record.usd012,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdusd
+    set USD001 = #{record.usd001,jdbcType=INTEGER},
+      USD002 = #{record.usd002,jdbcType=VARCHAR},
+      USD003 = #{record.usd003,jdbcType=VARCHAR},
+      USD004 = #{record.usd004,jdbcType=VARCHAR},
+      USD005 = #{record.usd005,jdbcType=INTEGER},
+      USD006 = #{record.usd006,jdbcType=REAL},
+      USD007 = #{record.usd007,jdbcType=REAL},
+      USD008 = #{record.usd008,jdbcType=INTEGER},
+      USD009 = #{record.usd009,jdbcType=REAL},
+      USD010 = #{record.usd010,jdbcType=TIMESTAMP},
+      USD011 = #{record.usd011,jdbcType=VARCHAR},
+      USD012 = #{record.usd012,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdusd">
+    update cdusd
+    <set>
+      <if test="usd002 != null">
+        USD002 = #{usd002,jdbcType=VARCHAR},
+      </if>
+      <if test="usd003 != null">
+        USD003 = #{usd003,jdbcType=VARCHAR},
+      </if>
+      <if test="usd004 != null">
+        USD004 = #{usd004,jdbcType=VARCHAR},
+      </if>
+      <if test="usd005 != null">
+        USD005 = #{usd005,jdbcType=INTEGER},
+      </if>
+      <if test="usd006 != null">
+        USD006 = #{usd006,jdbcType=REAL},
+      </if>
+      <if test="usd007 != null">
+        USD007 = #{usd007,jdbcType=REAL},
+      </if>
+      <if test="usd008 != null">
+        USD008 = #{usd008,jdbcType=INTEGER},
+      </if>
+      <if test="usd009 != null">
+        USD009 = #{usd009,jdbcType=REAL},
+      </if>
+      <if test="usd010 != null">
+        USD010 = #{usd010,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd011 != null">
+        USD011 = #{usd011,jdbcType=VARCHAR},
+      </if>
+      <if test="usd012 != null">
+        USD012 = #{usd012,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdusd">
+    update cdusd
+    set USD002 = #{usd002,jdbcType=VARCHAR},
+      USD003 = #{usd003,jdbcType=VARCHAR},
+      USD004 = #{usd004,jdbcType=VARCHAR},
+      USD005 = #{usd005,jdbcType=INTEGER},
+      USD006 = #{usd006,jdbcType=REAL},
+      USD007 = #{usd007,jdbcType=REAL},
+      USD008 = #{usd008,jdbcType=INTEGER},
+      USD009 = #{usd009,jdbcType=REAL},
+      USD010 = #{usd010,jdbcType=TIMESTAMP},
+      USD011 = #{usd011,jdbcType=VARCHAR},
+      USD012 = #{usd012,jdbcType=VARCHAR}
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdusd">
+    <id column="USD001" jdbcType="INTEGER" property="usd001" />
+    <result column="USD002" jdbcType="VARCHAR" property="usd002" />
+    <result column="USD003" jdbcType="VARCHAR" property="usd003" />
+    <result column="USD004" jdbcType="VARCHAR" property="usd004" />
+    <result column="USD005" jdbcType="VARCHAR" property="usd005" />
+    <result column="USD006" jdbcType="VARCHAR" property="usd006" />
+    <result column="USD007" jdbcType="TIMESTAMP" property="usd007" />
+    <result column="USD008" jdbcType="TIMESTAMP" property="usd008" />
+    <result column="USD009" jdbcType="INTEGER" property="usd009" />
+    <result column="USD010" jdbcType="INTEGER" property="usd010" />
+    <result column="USD011" jdbcType="TIMESTAMP" property="usd011" />
+    <result column="USD012" jdbcType="VARCHAR" property="usd012" />
+    <result column="USD013" jdbcType="VARCHAR" property="usd013" />
+    <result column="USD014" jdbcType="CHAR" property="usd014" />
+    <result column="USD015" jdbcType="VARCHAR" property="usd015" />
+    <result column="USD016" jdbcType="DECIMAL" property="usd016" />
+    <result column="USD017" jdbcType="INTEGER" property="usd017" />
+    <result column="USD018" jdbcType="INTEGER" property="usd018" />
+    <result column="USD019" jdbcType="TIMESTAMP" property="usd019" />
+    <result column="USD020" jdbcType="VARCHAR" property="usd020" />
+    <result column="USD021" jdbcType="VARCHAR" property="usd021" />
+    <result column="USD022" jdbcType="VARCHAR" property="usd022" />
+    <association column="USD018" property="use" select="com.efx.quality.dao.cduseMapper.selectByPrimaryKey1" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap1" type="com.efx.quality.model.cdusd">
+    <association column="USD009" property="usg" select="com.efx.quality.dao.cdusgMapper.selectByPrimaryKey" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap2" type="com.efx.quality.model.cdusd">
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <result column="stnum" jdbcType="INTEGER" property="stnum" />
+    <result column="xynum" jdbcType="INTEGER" property="xynum" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap3" type="com.efx.quality.model.cdusd">
+    <collection column="USD001" property="usclist" select="com.efx.quality.dao.cduscMapper.selectByPrimaryKey2" />
+  </resultMap>
+  <resultMap id="BaseResultMap4" type="com.efx.quality.model.cdusd">
+    <id column="USD001" jdbcType="INTEGER" property="usd001" />
+    <result column="USD002" jdbcType="VARCHAR" property="usd002" />
+    <result column="USD009" jdbcType="INTEGER" property="usd009" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USD001, USD002, USD003, USD004, USD005, USD006, USD007, USD008, USD009, USD010, USD011, 
+    USD012, USD013, USD014, USD015, USD016, USD017, USD018, USD019, USD020, USD021, USD022
+  </sql>
+  <sql id="Base_Column_List2">
+    USD001, USD002, USD003, USD004, USD005, USD006, USD007, USD008, USD009, USD010, USD011,
+    USD012, USD013, USD014, USD015, USD016, USD017, USD018, USD019, USD020, USD021, USD022
+    ,(select sum(usl007) from cdusl where usl003=USD001) as num
+    ,(select count(*) from cdusn where usn005=USD001 and usn013='A') as stnum
+    ,(select count(*) from cduwn where uwn009=USD001 and uwn004='B') as xynum
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdusdExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusd
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+    select
+    <include refid="Base_Column_List" />
+    from cdusd
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey3" parameterType="java.lang.Integer" resultMap="BaseResultMap4">
+    select
+    <include refid="Base_Column_List" />
+    from cdusd
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdusd
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdusdExample">
+    delete from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdusd">
+    insert into cdusd (USD001, USD002, USD003, 
+      USD004, USD005, USD006, 
+      USD007, USD008, USD009, 
+      USD010, USD011, USD012, 
+      USD013, USD014, USD015, 
+      USD016, USD017, USD018, 
+      USD019, USD020, USD021, 
+      USD022)
+    values (#{usd001,jdbcType=INTEGER}, #{usd002,jdbcType=VARCHAR}, #{usd003,jdbcType=VARCHAR}, 
+      #{usd004,jdbcType=VARCHAR}, #{usd005,jdbcType=VARCHAR}, #{usd006,jdbcType=VARCHAR}, 
+      #{usd007,jdbcType=TIMESTAMP}, #{usd008,jdbcType=TIMESTAMP}, #{usd009,jdbcType=INTEGER}, 
+      #{usd010,jdbcType=INTEGER}, #{usd011,jdbcType=TIMESTAMP}, #{usd012,jdbcType=VARCHAR}, 
+      #{usd013,jdbcType=VARCHAR}, #{usd014,jdbcType=CHAR}, #{usd015,jdbcType=VARCHAR}, 
+      #{usd016,jdbcType=DECIMAL}, #{usd017,jdbcType=INTEGER}, #{usd018,jdbcType=INTEGER}, 
+      #{usd019,jdbcType=TIMESTAMP}, #{usd020,jdbcType=VARCHAR}, #{usd021,jdbcType=VARCHAR}, 
+      #{usd022,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="usd001" parameterType="com.efx.quality.model.cdusd" useGeneratedKeys="true">
+    insert into cdusd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usd001 != null">
+        USD001,
+      </if>
+      <if test="usd002 != null">
+        USD002,
+      </if>
+      <if test="usd003 != null">
+        USD003,
+      </if>
+      <if test="usd004 != null">
+        USD004,
+      </if>
+      <if test="usd005 != null">
+        USD005,
+      </if>
+      <if test="usd006 != null">
+        USD006,
+      </if>
+      <if test="usd007 != null">
+        USD007,
+      </if>
+      <if test="usd008 != null">
+        USD008,
+      </if>
+      <if test="usd009 != null">
+        USD009,
+      </if>
+      <if test="usd010 != null">
+        USD010,
+      </if>
+      <if test="usd011 != null">
+        USD011,
+      </if>
+      <if test="usd012 != null">
+        USD012,
+      </if>
+      <if test="usd013 != null">
+        USD013,
+      </if>
+      <if test="usd014 != null">
+        USD014,
+      </if>
+      <if test="usd015 != null">
+        USD015,
+      </if>
+      <if test="usd016 != null">
+        USD016,
+      </if>
+      <if test="usd017 != null">
+        USD017,
+      </if>
+      <if test="usd018 != null">
+        USD018,
+      </if>
+      <if test="usd019 != null">
+        USD019,
+      </if>
+      <if test="usd020 != null">
+        USD020,
+      </if>
+      <if test="usd021 != null">
+        USD021,
+      </if>
+      <if test="usd022 != null">
+        USD022,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usd001 != null">
+        #{usd001,jdbcType=INTEGER},
+      </if>
+      <if test="usd002 != null">
+        #{usd002,jdbcType=VARCHAR},
+      </if>
+      <if test="usd003 != null">
+        #{usd003,jdbcType=VARCHAR},
+      </if>
+      <if test="usd004 != null">
+        #{usd004,jdbcType=VARCHAR},
+      </if>
+      <if test="usd005 != null">
+        #{usd005,jdbcType=VARCHAR},
+      </if>
+      <if test="usd006 != null">
+        #{usd006,jdbcType=VARCHAR},
+      </if>
+      <if test="usd007 != null">
+        #{usd007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd008 != null">
+        #{usd008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd009 != null">
+        #{usd009,jdbcType=INTEGER},
+      </if>
+      <if test="usd010 != null">
+        #{usd010,jdbcType=INTEGER},
+      </if>
+      <if test="usd011 != null">
+        #{usd011,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd012 != null">
+        #{usd012,jdbcType=VARCHAR},
+      </if>
+      <if test="usd013 != null">
+        #{usd013,jdbcType=VARCHAR},
+      </if>
+      <if test="usd014 != null">
+        #{usd014,jdbcType=CHAR},
+      </if>
+      <if test="usd015 != null">
+        #{usd015,jdbcType=VARCHAR},
+      </if>
+      <if test="usd016 != null">
+        #{usd016,jdbcType=DECIMAL},
+      </if>
+      <if test="usd017 != null">
+        #{usd017,jdbcType=INTEGER},
+      </if>
+      <if test="usd018 != null">
+        #{usd018,jdbcType=INTEGER},
+      </if>
+      <if test="usd019 != null">
+        #{usd019,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd020 != null">
+        #{usd020,jdbcType=VARCHAR},
+      </if>
+      <if test="usd021 != null">
+        #{usd021,jdbcType=VARCHAR},
+      </if>
+      <if test="usd022 != null">
+        #{usd022,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdusdExample" resultType="java.lang.Long">
+    select count(*) from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select flushCache="true" id="selectByExampleAndPage" parameterType="com.efx.quality.model.cdusdExample" resultMap="BaseResultMap1" useCache="false">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdusd
+    <set>
+      <if test="record.usd001 != null">
+        USD001 = #{record.usd001,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd002 != null">
+        USD002 = #{record.usd002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd003 != null">
+        USD003 = #{record.usd003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd004 != null">
+        USD004 = #{record.usd004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd005 != null">
+        USD005 = #{record.usd005,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd006 != null">
+        USD006 = #{record.usd006,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd007 != null">
+        USD007 = #{record.usd007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usd008 != null">
+        USD008 = #{record.usd008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usd009 != null">
+        USD009 = #{record.usd009,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd010 != null">
+        USD010 = #{record.usd010,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd011 != null">
+        USD011 = #{record.usd011,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usd012 != null">
+        USD012 = #{record.usd012,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd013 != null">
+        USD013 = #{record.usd013,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd014 != null">
+        USD014 = #{record.usd014,jdbcType=CHAR},
+      </if>
+      <if test="record.usd015 != null">
+        USD015 = #{record.usd015,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd016 != null">
+        USD016 = #{record.usd016,jdbcType=DECIMAL},
+      </if>
+      <if test="record.usd017 != null">
+        USD017 = #{record.usd017,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd018 != null">
+        USD018 = #{record.usd018,jdbcType=INTEGER},
+      </if>
+      <if test="record.usd019 != null">
+        USD019 = #{record.usd019,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usd020 != null">
+        USD020 = #{record.usd020,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd021 != null">
+        USD021 = #{record.usd021,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usd022 != null">
+        USD022 = #{record.usd022,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdusd
+    set USD001 = #{record.usd001,jdbcType=INTEGER},
+      USD002 = #{record.usd002,jdbcType=VARCHAR},
+      USD003 = #{record.usd003,jdbcType=VARCHAR},
+      USD004 = #{record.usd004,jdbcType=VARCHAR},
+      USD005 = #{record.usd005,jdbcType=VARCHAR},
+      USD006 = #{record.usd006,jdbcType=VARCHAR},
+      USD007 = #{record.usd007,jdbcType=TIMESTAMP},
+      USD008 = #{record.usd008,jdbcType=TIMESTAMP},
+      USD009 = #{record.usd009,jdbcType=INTEGER},
+      USD010 = #{record.usd010,jdbcType=INTEGER},
+      USD011 = #{record.usd011,jdbcType=TIMESTAMP},
+      USD012 = #{record.usd012,jdbcType=VARCHAR},
+      USD013 = #{record.usd013,jdbcType=VARCHAR},
+      USD014 = #{record.usd014,jdbcType=CHAR},
+      USD015 = #{record.usd015,jdbcType=VARCHAR},
+      USD016 = #{record.usd016,jdbcType=DECIMAL},
+      USD017 = #{record.usd017,jdbcType=INTEGER},
+      USD018 = #{record.usd018,jdbcType=INTEGER},
+      USD019 = #{record.usd019,jdbcType=TIMESTAMP},
+      USD020 = #{record.usd020,jdbcType=VARCHAR},
+      USD021 = #{record.usd021,jdbcType=VARCHAR},
+      USD022 = #{record.usd022,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdusd">
+    update cdusd
+    <set>
+      <if test="usd002 != null">
+        USD002 = #{usd002,jdbcType=VARCHAR},
+      </if>
+      <if test="usd003 != null">
+        USD003 = #{usd003,jdbcType=VARCHAR},
+      </if>
+      <if test="usd004 != null">
+        USD004 = #{usd004,jdbcType=VARCHAR},
+      </if>
+      <if test="usd005 != null">
+        USD005 = #{usd005,jdbcType=VARCHAR},
+      </if>
+      <if test="usd006 != null">
+        USD006 = #{usd006,jdbcType=VARCHAR},
+      </if>
+      <if test="usd007 != null">
+        USD007 = #{usd007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd008 != null">
+        USD008 = #{usd008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd009 != null">
+        USD009 = #{usd009,jdbcType=INTEGER},
+      </if>
+      <if test="usd010 != null">
+        USD010 = #{usd010,jdbcType=INTEGER},
+      </if>
+      <if test="usd011 != null">
+        USD011 = #{usd011,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd012 != null">
+        USD012 = #{usd012,jdbcType=VARCHAR},
+      </if>
+      <if test="usd013 != null">
+        USD013 = #{usd013,jdbcType=VARCHAR},
+      </if>
+      <if test="usd014 != null">
+        USD014 = #{usd014,jdbcType=CHAR},
+      </if>
+      <if test="usd015 != null">
+        USD015 = #{usd015,jdbcType=VARCHAR},
+      </if>
+      <if test="usd016 != null">
+        USD016 = #{usd016,jdbcType=DECIMAL},
+      </if>
+      <if test="usd017 != null">
+        USD017 = #{usd017,jdbcType=INTEGER},
+      </if>
+      <if test="usd018 != null">
+        USD018 = #{usd018,jdbcType=INTEGER},
+      </if>
+      <if test="usd019 != null">
+        USD019 = #{usd019,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usd020 != null">
+        USD020 = #{usd020,jdbcType=VARCHAR},
+      </if>
+      <if test="usd021 != null">
+        USD021 = #{usd021,jdbcType=VARCHAR},
+      </if>
+      <if test="usd022 != null">
+        USD022 = #{usd022,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdusd">
+    update cdusd
+    set USD002 = #{usd002,jdbcType=VARCHAR},
+      USD003 = #{usd003,jdbcType=VARCHAR},
+      USD004 = #{usd004,jdbcType=VARCHAR},
+      USD005 = #{usd005,jdbcType=VARCHAR},
+      USD006 = #{usd006,jdbcType=VARCHAR},
+      USD007 = #{usd007,jdbcType=TIMESTAMP},
+      USD008 = #{usd008,jdbcType=TIMESTAMP},
+      USD009 = #{usd009,jdbcType=INTEGER},
+      USD010 = #{usd010,jdbcType=INTEGER},
+      USD011 = #{usd011,jdbcType=TIMESTAMP},
+      USD012 = #{usd012,jdbcType=VARCHAR},
+      USD013 = #{usd013,jdbcType=VARCHAR},
+      USD014 = #{usd014,jdbcType=CHAR},
+      USD015 = #{usd015,jdbcType=VARCHAR},
+      USD016 = #{usd016,jdbcType=DECIMAL},
+      USD017 = #{usd017,jdbcType=INTEGER},
+      USD018 = #{usd018,jdbcType=INTEGER},
+      USD019 = #{usd019,jdbcType=TIMESTAMP},
+      USD020 = #{usd020,jdbcType=VARCHAR},
+      USD021 = #{usd021,jdbcType=VARCHAR},
+      USD022 = #{usd022,jdbcType=VARCHAR}
+    where USD001 = #{usd001,jdbcType=INTEGER}
+  </update>
+  <select id="selectByjdid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select USD001
+    from cdusd
+    where USD009 = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByExamplexhh" parameterType="com.efx.quality.model.cdusdExample" resultMap="BaseResultMap2">
+    select
+    <include refid="Base_Column_List2" />
+    from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+      order by num desc
+  </select>
+  <select id="selectByPrimaryKey2" parameterType="java.lang.Integer" resultMap="BaseResultMap3">
+    select
+    <include refid="Base_Column_List" />
+    from cdusd
+    where USD009 = #{id,jdbcType=INTEGER} and USD021='A'
+  </select>
+
+  <select id="selectByExample1" parameterType="com.efx.quality.model.cdusdExample" resultMap="BaseResultMap3">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleid" parameterType="com.efx.quality.model.cdusdExample" resultType="java.lang.Integer">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

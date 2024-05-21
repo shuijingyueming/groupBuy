@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdusbMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdusb">
+    <id column="USB001" jdbcType="INTEGER" property="usb001" />
+    <result column="USB002" jdbcType="VARCHAR" property="usb002" />
+    <result column="USB003" jdbcType="INTEGER" property="usb003" />
+    <result column="USB004" jdbcType="INTEGER" property="usb004" />
+    <result column="USB005" jdbcType="CHAR" property="usb005" />
+    <result column="USB006" jdbcType="INTEGER" property="usb006" />
+    <result column="USB007" jdbcType="VARCHAR" property="usb007" />
+    <result column="USB008" jdbcType="VARCHAR" property="usb008" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USB001, USB002, USB003, USB004, USB005, USB006, USB007, USB008
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdusbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusb
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdusb
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdusbExample">
+    delete from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdusb">
+    insert into cdusb (USB001, USB002, USB003, 
+      USB004, USB005, USB006, 
+      USB007, USB008)
+    values (#{usb001,jdbcType=INTEGER}, #{usb002,jdbcType=VARCHAR}, #{usb003,jdbcType=INTEGER}, 
+      #{usb004,jdbcType=INTEGER}, #{usb005,jdbcType=CHAR}, #{usb006,jdbcType=INTEGER}, 
+      #{usb007,jdbcType=VARCHAR}, #{usb008,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdusb">
+    insert into cdusb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usb001 != null">
+        USB001,
+      </if>
+      <if test="usb002 != null">
+        USB002,
+      </if>
+      <if test="usb003 != null">
+        USB003,
+      </if>
+      <if test="usb004 != null">
+        USB004,
+      </if>
+      <if test="usb005 != null">
+        USB005,
+      </if>
+      <if test="usb006 != null">
+        USB006,
+      </if>
+      <if test="usb007 != null">
+        USB007,
+      </if>
+      <if test="usb008 != null">
+        USB008,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usb001 != null">
+        #{usb001,jdbcType=INTEGER},
+      </if>
+      <if test="usb002 != null">
+        #{usb002,jdbcType=VARCHAR},
+      </if>
+      <if test="usb003 != null">
+        #{usb003,jdbcType=INTEGER},
+      </if>
+      <if test="usb004 != null">
+        #{usb004,jdbcType=INTEGER},
+      </if>
+      <if test="usb005 != null">
+        #{usb005,jdbcType=CHAR},
+      </if>
+      <if test="usb006 != null">
+        #{usb006,jdbcType=INTEGER},
+      </if>
+      <if test="usb007 != null">
+        #{usb007,jdbcType=VARCHAR},
+      </if>
+      <if test="usb008 != null">
+        #{usb008,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdusbExample" resultType="java.lang.Long">
+    select count(*) from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdusb
+    <set>
+      <if test="record.usb001 != null">
+        USB001 = #{record.usb001,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb002 != null">
+        USB002 = #{record.usb002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usb003 != null">
+        USB003 = #{record.usb003,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb004 != null">
+        USB004 = #{record.usb004,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb005 != null">
+        USB005 = #{record.usb005,jdbcType=CHAR},
+      </if>
+      <if test="record.usb006 != null">
+        USB006 = #{record.usb006,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb007 != null">
+        USB007 = #{record.usb007,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usb008 != null">
+        USB008 = #{record.usb008,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdusb
+    set USB001 = #{record.usb001,jdbcType=INTEGER},
+      USB002 = #{record.usb002,jdbcType=VARCHAR},
+      USB003 = #{record.usb003,jdbcType=INTEGER},
+      USB004 = #{record.usb004,jdbcType=INTEGER},
+      USB005 = #{record.usb005,jdbcType=CHAR},
+      USB006 = #{record.usb006,jdbcType=INTEGER},
+      USB007 = #{record.usb007,jdbcType=VARCHAR},
+      USB008 = #{record.usb008,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdusb">
+    update cdusb
+    <set>
+      <if test="usb002 != null">
+        USB002 = #{usb002,jdbcType=VARCHAR},
+      </if>
+      <if test="usb003 != null">
+        USB003 = #{usb003,jdbcType=INTEGER},
+      </if>
+      <if test="usb004 != null">
+        USB004 = #{usb004,jdbcType=INTEGER},
+      </if>
+      <if test="usb005 != null">
+        USB005 = #{usb005,jdbcType=CHAR},
+      </if>
+      <if test="usb006 != null">
+        USB006 = #{usb006,jdbcType=INTEGER},
+      </if>
+      <if test="usb007 != null">
+        USB007 = #{usb007,jdbcType=VARCHAR},
+      </if>
+      <if test="usb008 != null">
+        USB008 = #{usb008,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdusb">
+    update cdusb
+    set USB002 = #{usb002,jdbcType=VARCHAR},
+      USB003 = #{usb003,jdbcType=INTEGER},
+      USB004 = #{usb004,jdbcType=INTEGER},
+      USB005 = #{usb005,jdbcType=CHAR},
+      USB006 = #{usb006,jdbcType=INTEGER},
+      USB007 = #{usb007,jdbcType=VARCHAR},
+      USB008 = #{usb008,jdbcType=VARCHAR}
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdusb">
+    <id column="USB001" jdbcType="INTEGER" property="usb001" />
+    <result column="USB002" jdbcType="VARCHAR" property="usb002" />
+    <result column="USB003" jdbcType="CHAR" property="usb003" />
+    <result column="USB004" jdbcType="INTEGER" property="usb004" />
+    <result column="USB005" jdbcType="INTEGER" property="usb005" />
+    <result column="USB006" jdbcType="INTEGER" property="usb006" />
+    <result column="USB007" jdbcType="VARCHAR" property="usb007" />
+    <result column="USB008" jdbcType="VARCHAR" property="usb008" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap1" type="com.efx.quality.model.cdusb">
+    <result column="num" jdbcType="INTEGER" property="num" />
+    <association column="USB005" property="usc" select="com.efx.quality.dao.cduscMapper.selectByPrimaryKey1" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap2" type="com.efx.quality.model.cdusb">
+    <result column="stnum" jdbcType="INTEGER" property="stnum" />
+    <association column="USB005" property="usc" select="com.efx.quality.dao.cduscMapper.selectByPrimaryKey1" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap3" type="com.efx.quality.model.cdusb">
+    <result column="num" jdbcType="INTEGER" property="num" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap4" type="com.efx.quality.model.cdusb">
+    <association column="USB005" property="usc" select="com.efx.quality.dao.cduscMapper.selectByPrimaryKey1" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap5" type="com.efx.quality.model.cdusb">
+    <result column="stnum" jdbcType="INTEGER" property="stnum" />
+    <result column="rjnum" jdbcType="DECIMAL" property="rjnum" />
+    <association column="USB005" property="usc" select="com.efx.quality.dao.cduscMapper.selectByPrimaryKey1" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="BaseResultMap6" type="com.efx.quality.model.cdusb">
+    <result column="znum" jdbcType="INTEGER" property="znum" />
+    <association column="USB005" property="usc" select="com.efx.quality.dao.cduscMapper.selectByPrimaryKey1" />
+  </resultMap>
+  <resultMap id="BaseResultMap7" type="com.efx.quality.model.cdusb">
+    <id column="USB001" jdbcType="INTEGER" property="usb001" />
+    <result column="USB002" jdbcType="VARCHAR" property="usb002" />
+    <result column="USB004" jdbcType="INTEGER" property="usb004" />
+    <result column="USB005" jdbcType="INTEGER" property="usb005" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USB001, USB002, USB003, USB004, USB005, USB006, USB007, USB008
+  </sql>
+  <sql id="Base_Column_List1">
+    USB001, USB002, USB003, USB004, USB005, USB006, USB007, USB008,(select count(*) from cdusn where usn006=USB001 AND USN013='A') as stnum
+  </sql>
+  <sql id="Base_Column_List2">
+    USB001, USB002, USB003, USB004, USB005, USB006, USB007, USB008,(select sum(usl007) from cdusl where usl005=USB001) as num
+  </sql>
+  <sql id="Base_Column_List3">
+    USB001, USB002, USB003, USB004, USB005, USB006, USB007, USB008
+        ,(select count(*) from cdusn where usn006=USB001 AND USN013='A') as stnum
+        ,((select sum(usl007) from cdusl where usl005=USB001)/(select count(*) from cdusn where usn006=USB001 AND USN013='A')) as rjnum
+  </sql>
+  <sql id="Base_Column_List4">
+    USB001, USB002, USB003, USB004, USB005, USB006, USB007, USB008
+        ,(select count(*) from cdusn where usn006=USB001 AND USN013='A') as znum
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdusbExample" resultMap="BaseResultMap1">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusb
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+    select
+    <include refid="Base_Column_List1" />
+    from cdusb
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey4" parameterType="java.lang.Integer" resultMap="BaseResultMap4">
+    select
+    <include refid="Base_Column_List" />
+    from cdusb
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdusb
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdusbExample">
+    delete from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdusb">
+    insert into cdusb (USB001, USB002, USB003, 
+      USB004, USB005, USB006, 
+      USB007, USB008)
+    values (#{usb001,jdbcType=INTEGER}, #{usb002,jdbcType=VARCHAR}, #{usb003,jdbcType=CHAR}, 
+      #{usb004,jdbcType=INTEGER}, #{usb005,jdbcType=INTEGER}, #{usb006,jdbcType=INTEGER}, 
+      #{usb007,jdbcType=VARCHAR}, #{usb008,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="usb001" parameterType="com.efx.quality.model.cdusb" useGeneratedKeys="true">
+    insert into cdusb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usb001 != null">
+        USB001,
+      </if>
+      <if test="usb002 != null">
+        USB002,
+      </if>
+      <if test="usb003 != null">
+        USB003,
+      </if>
+      <if test="usb004 != null">
+        USB004,
+      </if>
+      <if test="usb005 != null">
+        USB005,
+      </if>
+      <if test="usb006 != null">
+        USB006,
+      </if>
+      <if test="usb007 != null">
+        USB007,
+      </if>
+      <if test="usb008 != null">
+        USB008,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usb001 != null">
+        #{usb001,jdbcType=INTEGER},
+      </if>
+      <if test="usb002 != null">
+        #{usb002,jdbcType=VARCHAR},
+      </if>
+      <if test="usb003 != null">
+        #{usb003,jdbcType=CHAR},
+      </if>
+      <if test="usb004 != null">
+        #{usb004,jdbcType=INTEGER},
+      </if>
+      <if test="usb005 != null">
+        #{usb005,jdbcType=INTEGER},
+      </if>
+      <if test="usb006 != null">
+        #{usb006,jdbcType=INTEGER},
+      </if>
+      <if test="usb007 != null">
+        #{usb007,jdbcType=VARCHAR},
+      </if>
+      <if test="usb008 != null">
+        #{usb008,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdusbExample" resultType="java.lang.Long">
+    select count(*) from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdusb
+    <set>
+      <if test="record.usb001 != null">
+        USB001 = #{record.usb001,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb002 != null">
+        USB002 = #{record.usb002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usb003 != null">
+        USB003 = #{record.usb003,jdbcType=CHAR},
+      </if>
+      <if test="record.usb004 != null">
+        USB004 = #{record.usb004,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb005 != null">
+        USB005 = #{record.usb005,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb006 != null">
+        USB006 = #{record.usb006,jdbcType=INTEGER},
+      </if>
+      <if test="record.usb007 != null">
+        USB007 = #{record.usb007,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usb008 != null">
+        USB008 = #{record.usb008,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdusb
+    set USB001 = #{record.usb001,jdbcType=INTEGER},
+      USB002 = #{record.usb002,jdbcType=VARCHAR},
+      USB003 = #{record.usb003,jdbcType=CHAR},
+      USB004 = #{record.usb004,jdbcType=INTEGER},
+      USB005 = #{record.usb005,jdbcType=INTEGER},
+      USB006 = #{record.usb006,jdbcType=INTEGER},
+      USB007 = #{record.usb007,jdbcType=VARCHAR},
+      USB008 = #{record.usb008,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdusb">
+    update cdusb
+    <set>
+      <if test="usb002 != null">
+        USB002 = #{usb002,jdbcType=VARCHAR},
+      </if>
+      <if test="usb003 != null">
+        USB003 = #{usb003,jdbcType=CHAR},
+      </if>
+      <if test="usb004 != null">
+        USB004 = #{usb004,jdbcType=INTEGER},
+      </if>
+      <if test="usb005 != null">
+        USB005 = #{usb005,jdbcType=INTEGER},
+      </if>
+      <if test="usb006 != null">
+        USB006 = #{usb006,jdbcType=INTEGER},
+      </if>
+      <if test="usb007 != null">
+        USB007 = #{usb007,jdbcType=VARCHAR},
+      </if>
+      <if test="usb008 != null">
+        USB008 = #{usb008,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdusb">
+    update cdusb
+    set USB002 = #{usb002,jdbcType=VARCHAR},
+      USB003 = #{usb003,jdbcType=CHAR},
+      USB004 = #{usb004,jdbcType=INTEGER},
+      USB005 = #{usb005,jdbcType=INTEGER},
+      USB006 = #{usb006,jdbcType=INTEGER},
+      USB007 = #{usb007,jdbcType=VARCHAR},
+      USB008 = #{usb008,jdbcType=VARCHAR}
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </update>
+  <select flushCache="true" id="selectByExampleAndPage" parameterType="com.efx.quality.model.cdusbExample" resultMap="BaseResultMap6" useCache="false">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List4" />
+    from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="countByExamplejg" parameterType="com.efx.quality.model.cdusbExample" resultType="java.lang.Long">
+    select count(*) from cdusb left join cdusd on cdusb.usb004=cdusd.usd001 left join cdusc on cdusb.usb005=cdusc.usc001
+    <where>
+      <if test="cdusbExample != null">
+        <foreach collection="cdusbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdusdExample != null">
+        <foreach collection="cdusdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select flushCache="true" id="selectByExampleAndPagejg" parameterType="com.efx.quality.model.cdusbExample" resultMap="BaseResultMap2" useCache="false">
+    select
+    <include refid="Base_Column_List1" />
+    from cdusb left join cdusd on cdusb.usb004=cdusd.usd001 left join cdusc on cdusb.usb005=cdusc.usc001
+    <where>
+      <if test="cdusbExample != null">
+        <foreach collection="cdusbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdusdExample != null">
+        <foreach collection="cdusdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <sql id="ECExample_Where_Clause">
+    <if test="criteria.valid">
+      <foreach collection="criteria.criteria" item="criterion">
+        <choose>
+          <when test="criterion.noValue">
+            and ${criterion.condition}
+          </when>
+          <when test="criterion.singleValue">
+            and ${criterion.condition}
+            #{criterion.value}
+          </when>
+          <when test="criterion.betweenValue">
+            and ${criterion.condition} #{criterion.value} and
+            #{criterion.secondValue}
+          </when>
+          <when test="criterion.listValue">
+            and ${criterion.condition}
+            <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+              #{listItem}
+            </foreach>
+          </when>
+        </choose>
+      </foreach>
+    </if>
+  </sql>
+  <select id="selectByExamplexhh" parameterType="com.efx.quality.model.cdusbExample" resultMap="BaseResultMap3">
+    select
+    <include refid="Base_Column_List2" />
+        from cdusb left join cdusd on cdusb.usb004=cdusd.usd001
+    <where>
+      <if test="cdusbExample != null">
+        <foreach collection="cdusbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdusdExample != null">
+        <foreach collection="cdusdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+order by num desc
+  </select>
+  <select id="selectByPrimaryKey2" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cdusb
+    where USB005 = #{usb001,jdbcType=INTEGER} AND USB003='A'
+  </select>
+  <insert flushCache="true" id="insertBatch">
+    insert into cdusb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      USB002, USB003,
+      USB004, USB005, USB006,
+      USB007, USB008
+    </trim>
+    <foreach collection="list" item="item" separator="union">
+      select
+       #{item.usb002,jdbcType=VARCHAR}, #{item.usb003,jdbcType=CHAR},
+      #{item.usb004,jdbcType=INTEGER}, #{item.usb005,jdbcType=INTEGER}, #{item.usb006,jdbcType=INTEGER},
+      #{item.usb007,jdbcType=VARCHAR}, #{item.usb008,jdbcType=VARCHAR}
+    </foreach>
+  </insert>
+
+  <select flushCache="true" id="selectByExamplebj" parameterType="com.efx.quality.model.cdusbExample" resultMap="BaseResultMap4" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdusb  left join cdusc on cdusb.usb005=cdusc.usc001
+    <where>
+      <if test="cdusbExample != null">
+        <foreach collection="cdusbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectByExample1" parameterType="com.efx.quality.model.cdusbExample" resultMap="BaseResultMap5">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List3" />
+    from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByExampleid" parameterType="com.efx.quality.model.cdusbExample" resultType="java.lang.Integer">
+    select usb001 from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey2" parameterType="java.lang.Integer" resultMap="BaseResultMap7">
+    select
+    <include refid="Base_Column_List1" />
+    from cdusb
+    where USB001 = #{usb001,jdbcType=INTEGER}
+  </select>
+</mapper>

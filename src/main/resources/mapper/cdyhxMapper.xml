@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdyhxMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdyhx">
+    <id column="YHX001" jdbcType="INTEGER" property="yhx001" />
+    <result column="YHX002" jdbcType="INTEGER" property="yhx002" />
+    <result column="YHX003" jdbcType="INTEGER" property="yhx003" />
+    <result column="YHX004" jdbcType="INTEGER" property="yhx004" />
+    <result column="YHX005" jdbcType="CHAR" property="yhx005" />
+    <result column="YHX006" jdbcType="VARCHAR" property="yhx006" />
+    <result column="YHX007" jdbcType="VARCHAR" property="yhx007" />
+    <result column="YHX008" jdbcType="TIMESTAMP" property="yhx008" />
+    <result column="YHX009" jdbcType="TIMESTAMP" property="yhx009" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.efx.quality.model.cdyhx"  extends="BaseResultMap">
+    <association property="tha" column="YHX002" select="com.efx.quality.dao.cdthaMapper.selectByPrimaryKey"/>
+    <association property="use" column="YHX004" select="com.efx.quality.dao.cduseMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    YHX001, YHX002, YHX003, YHX004, YHX005, YHX006, YHX007, YHX008, YHX009
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdyhxExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdyhx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdyhx
+    where YHX001 = #{yhx001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdyhx
+    where YHX001 = #{yhx001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdyhxExample">
+    delete from cdyhx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdyhx">
+    insert into cdyhx (YHX001, YHX002, YHX003, 
+      YHX004, YHX005, YHX006, 
+      YHX007, YHX008, YHX009
+      )
+    values (#{yhx001,jdbcType=INTEGER}, #{yhx002,jdbcType=INTEGER}, #{yhx003,jdbcType=INTEGER}, 
+      #{yhx004,jdbcType=INTEGER}, #{yhx005,jdbcType=CHAR}, #{yhx006,jdbcType=VARCHAR}, 
+      #{yhx007,jdbcType=VARCHAR}, #{yhx008,jdbcType=TIMESTAMP}, #{yhx009,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdyhx">
+    insert into cdyhx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yhx001 != null">
+        YHX001,
+      </if>
+      <if test="yhx002 != null">
+        YHX002,
+      </if>
+      <if test="yhx003 != null">
+        YHX003,
+      </if>
+      <if test="yhx004 != null">
+        YHX004,
+      </if>
+      <if test="yhx005 != null">
+        YHX005,
+      </if>
+      <if test="yhx006 != null">
+        YHX006,
+      </if>
+      <if test="yhx007 != null">
+        YHX007,
+      </if>
+      <if test="yhx008 != null">
+        YHX008,
+      </if>
+      <if test="yhx009 != null">
+        YHX009,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yhx001 != null">
+        #{yhx001,jdbcType=INTEGER},
+      </if>
+      <if test="yhx002 != null">
+        #{yhx002,jdbcType=INTEGER},
+      </if>
+      <if test="yhx003 != null">
+        #{yhx003,jdbcType=INTEGER},
+      </if>
+      <if test="yhx004 != null">
+        #{yhx004,jdbcType=INTEGER},
+      </if>
+      <if test="yhx005 != null">
+        #{yhx005,jdbcType=CHAR},
+      </if>
+      <if test="yhx006 != null">
+        #{yhx006,jdbcType=VARCHAR},
+      </if>
+      <if test="yhx007 != null">
+        #{yhx007,jdbcType=VARCHAR},
+      </if>
+      <if test="yhx008 != null">
+        #{yhx008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yhx009 != null">
+        #{yhx009,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdyhxExample" resultType="java.lang.Long">
+    select count(*) from cdyhx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdyhx
+    <set>
+      <if test="record.yhx001 != null">
+        YHX001 = #{record.yhx001,jdbcType=INTEGER},
+      </if>
+      <if test="record.yhx002 != null">
+        YHX002 = #{record.yhx002,jdbcType=INTEGER},
+      </if>
+      <if test="record.yhx003 != null">
+        YHX003 = #{record.yhx003,jdbcType=INTEGER},
+      </if>
+      <if test="record.yhx004 != null">
+        YHX004 = #{record.yhx004,jdbcType=INTEGER},
+      </if>
+      <if test="record.yhx005 != null">
+        YHX005 = #{record.yhx005,jdbcType=CHAR},
+      </if>
+      <if test="record.yhx006 != null">
+        YHX006 = #{record.yhx006,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yhx007 != null">
+        YHX007 = #{record.yhx007,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yhx008 != null">
+        YHX008 = #{record.yhx008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yhx009 != null">
+        YHX009 = #{record.yhx009,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdyhx
+    set YHX001 = #{record.yhx001,jdbcType=INTEGER},
+      YHX002 = #{record.yhx002,jdbcType=INTEGER},
+      YHX003 = #{record.yhx003,jdbcType=INTEGER},
+      YHX004 = #{record.yhx004,jdbcType=INTEGER},
+      YHX005 = #{record.yhx005,jdbcType=CHAR},
+      YHX006 = #{record.yhx006,jdbcType=VARCHAR},
+      YHX007 = #{record.yhx007,jdbcType=VARCHAR},
+      YHX008 = #{record.yhx008,jdbcType=TIMESTAMP},
+      YHX009 = #{record.yhx009,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdyhx">
+    update cdyhx
+    <set>
+      <if test="yhx002 != null">
+        YHX002 = #{yhx002,jdbcType=INTEGER},
+      </if>
+      <if test="yhx003 != null">
+        YHX003 = #{yhx003,jdbcType=INTEGER},
+      </if>
+      <if test="yhx004 != null">
+        YHX004 = #{yhx004,jdbcType=INTEGER},
+      </if>
+      <if test="yhx005 != null">
+        YHX005 = #{yhx005,jdbcType=CHAR},
+      </if>
+      <if test="yhx006 != null">
+        YHX006 = #{yhx006,jdbcType=VARCHAR},
+      </if>
+      <if test="yhx007 != null">
+        YHX007 = #{yhx007,jdbcType=VARCHAR},
+      </if>
+      <if test="yhx008 != null">
+        YHX008 = #{yhx008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yhx009 != null">
+        YHX009 = #{yhx009,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where YHX001 = #{yhx001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdyhx">
+    update cdyhx
+    set YHX002 = #{yhx002,jdbcType=INTEGER},
+      YHX003 = #{yhx003,jdbcType=INTEGER},
+      YHX004 = #{yhx004,jdbcType=INTEGER},
+      YHX005 = #{yhx005,jdbcType=CHAR},
+      YHX006 = #{yhx006,jdbcType=VARCHAR},
+      YHX007 = #{yhx007,jdbcType=VARCHAR},
+      YHX008 = #{yhx008,jdbcType=TIMESTAMP}
+    where YHX001 = #{yhx001,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.efx.quality.model.cdyhxExample" flushCache="true" useCache="false">
+  select
+  <if test="distinct" >
+    distinct
+  </if>
+  <include refid="Base_Column_List" />
+  from cdyhx
+  <if test="_parameter != null" >
+    <include refid="Example_Where_Clause" />
+  </if>
+  <if test="orderByClause != null" >
+    order by ${orderByClause}
+  </if>
+</select>
+
+  <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+    select
+    <include refid="Base_Column_List" />
+    from cdyhx
+    where YHX001 = #{yhx001,jdbcType=INTEGER}
+  </select>
+  <select id="countByExamplemb" parameterType="com.efx.quality.model.cdyhxExample" resultType="java.lang.Integer">
+    select count(*) from cdyhx left join cdtha on cdyhx.yhx002=cdtha.tha001
+    <where>
+      <if test="cdyhxExample != null">
+        <foreach collection="cdyhxExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdthaExample != null">
+        <foreach collection="cdthaExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectByExamplemb" parameterType="com.efx.quality.model.cdyhxExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cdyhx left join cdtha on cdyhx.yhx002=cdtha.tha001
+    <where>
+      <if test="cdyhxExample != null">
+        <foreach collection="cdyhxExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdthaExample != null">
+        <foreach collection="cdthaExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    order by yhx008 desc
+  </select>
+  <select id="selectByExampleAndPagemb" resultMap="BaseResultMap1" parameterType="com.efx.quality.model.cdyhxExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdyhx left join cdtha on cdyhx.yhx002=cdtha.tha001
+    <where>
+      <if test="cdyhxExample != null">
+        <foreach collection="cdyhxExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdthaExample != null">
+        <foreach collection="cdthaExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+      order by yhx008 desc
+  </select>
+  <sql id="ECExample_Where_Clause">
+    <if test="criteria.valid">
+      <foreach collection="criteria.criteria" item="criterion">
+        <choose>
+          <when test="criterion.noValue">
+            and ${criterion.condition}
+          </when>
+          <when test="criterion.singleValue">
+            and ${criterion.condition}
+            #{criterion.value}
+          </when>
+          <when test="criterion.betweenValue">
+            and ${criterion.condition} #{criterion.value} and
+            #{criterion.secondValue}
+          </when>
+          <when test="criterion.listValue">
+            and ${criterion.condition}
+            <foreach collection="criterion.value" item="listItem"
+                     open="(" close=")" separator=",">
+              #{listItem}
+            </foreach>
+          </when>
+        </choose>
+      </foreach>
+    </if>
+  </sql>
+</mapper>

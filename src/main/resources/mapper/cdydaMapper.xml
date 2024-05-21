@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdydaMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdyda">
+    <id column="YDA001" jdbcType="VARCHAR" property="yda001" />
+    <result column="YDA002" jdbcType="INTEGER" property="yda002" />
+    <result column="YDA003" jdbcType="VARCHAR" property="yda003" />
+    <result column="YDA004" jdbcType="INTEGER" property="yda004" />
+    <result column="YDA005" jdbcType="TIMESTAMP" property="yda005" />
+    <result column="YDA006" jdbcType="CHAR" property="yda006" />
+    <result column="YDA007" jdbcType="TIMESTAMP" property="yda007" />
+    <result column="YDA008" jdbcType="INTEGER" property="yda008" />
+    <result column="YDA009" jdbcType="INTEGER" property="yda009" />
+    <result column="YDA010" jdbcType="VARCHAR" property="yda010" />
+    <result column="YDA011" jdbcType="VARCHAR" property="yda011" />
+    <result column="YDA012" jdbcType="VARCHAR" property="yda012" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.efx.quality.model.cdyda"  extends="BaseResultMap">
+    <association property="uss" column="YDA004" select="com.efx.quality.dao.cdussMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.efx.quality.model.cdyda"  extends="BaseResultMap">
+    <association property="yhk" column="YDA008" select="com.efx.quality.dao.cdyhkMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="BaseResultMap3" type="com.efx.quality.model.cdyda"  extends="BaseResultMap1">
+    <association property="yhk" column="YDA008" select="com.efx.quality.dao.cdyhkMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    YDA001, YDA002, YDA003, YDA004, YDA005, YDA006, YDA007, YDA008, YDA009, YDA010, YDA011, 
+    YDA012
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdydaExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdyda
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdyda
+    where YDA001 = #{yda001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdyda
+    where YDA001 = #{yda001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdydaExample">
+    delete from cdyda
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdyda" useGeneratedKeys="true" keyProperty="yda001">
+    insert into cdyda (YDA001, YDA002, YDA003, 
+      YDA004, YDA005, YDA006, 
+      YDA007, YDA008, YDA009, 
+      YDA010, YDA011, YDA012
+      )
+    values (#{yda001,jdbcType=VARCHAR}, #{yda002,jdbcType=INTEGER}, #{yda003,jdbcType=VARCHAR}, 
+      #{yda004,jdbcType=INTEGER}, #{yda005,jdbcType=TIMESTAMP}, #{yda006,jdbcType=CHAR}, 
+      #{yda007,jdbcType=TIMESTAMP}, #{yda008,jdbcType=INTEGER}, #{yda009,jdbcType=INTEGER}, 
+      #{yda010,jdbcType=VARCHAR}, #{yda011,jdbcType=VARCHAR}, #{yda012,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdyda" useGeneratedKeys="true" keyProperty="yda001">
+    insert into cdyda
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yda001 != null">
+        YDA001,
+      </if>
+      <if test="yda002 != null">
+        YDA002,
+      </if>
+      <if test="yda003 != null">
+        YDA003,
+      </if>
+      <if test="yda004 != null">
+        YDA004,
+      </if>
+      <if test="yda005 != null">
+        YDA005,
+      </if>
+      <if test="yda006 != null">
+        YDA006,
+      </if>
+      <if test="yda007 != null">
+        YDA007,
+      </if>
+      <if test="yda008 != null">
+        YDA008,
+      </if>
+      <if test="yda009 != null">
+        YDA009,
+      </if>
+      <if test="yda010 != null">
+        YDA010,
+      </if>
+      <if test="yda011 != null">
+        YDA011,
+      </if>
+      <if test="yda012 != null">
+        YDA012,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yda001 != null">
+        #{yda001,jdbcType=VARCHAR},
+      </if>
+      <if test="yda002 != null">
+        #{yda002,jdbcType=INTEGER},
+      </if>
+      <if test="yda003 != null">
+        #{yda003,jdbcType=VARCHAR},
+      </if>
+      <if test="yda004 != null">
+        #{yda004,jdbcType=INTEGER},
+      </if>
+      <if test="yda005 != null">
+        #{yda005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yda006 != null">
+        #{yda006,jdbcType=CHAR},
+      </if>
+      <if test="yda007 != null">
+        #{yda007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yda008 != null">
+        #{yda008,jdbcType=INTEGER},
+      </if>
+      <if test="yda009 != null">
+        #{yda009,jdbcType=INTEGER},
+      </if>
+      <if test="yda010 != null">
+        #{yda010,jdbcType=VARCHAR},
+      </if>
+      <if test="yda011 != null">
+        #{yda011,jdbcType=VARCHAR},
+      </if>
+      <if test="yda012 != null">
+        #{yda012,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdydaExample" resultType="java.lang.Long">
+    select count(*) from cdyda
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdyda
+    <set>
+      <if test="record.yda001 != null">
+        YDA001 = #{record.yda001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yda002 != null">
+        YDA002 = #{record.yda002,jdbcType=INTEGER},
+      </if>
+      <if test="record.yda003 != null">
+        YDA003 = #{record.yda003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yda004 != null">
+        YDA004 = #{record.yda004,jdbcType=INTEGER},
+      </if>
+      <if test="record.yda005 != null">
+        YDA005 = #{record.yda005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yda006 != null">
+        YDA006 = #{record.yda006,jdbcType=CHAR},
+      </if>
+      <if test="record.yda007 != null">
+        YDA007 = #{record.yda007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yda008 != null">
+        YDA008 = #{record.yda008,jdbcType=INTEGER},
+      </if>
+      <if test="record.yda009 != null">
+        YDA009 = #{record.yda009,jdbcType=INTEGER},
+      </if>
+      <if test="record.yda010 != null">
+        YDA010 = #{record.yda010,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yda011 != null">
+        YDA011 = #{record.yda011,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yda012 != null">
+        YDA012 = #{record.yda012,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdyda
+    set YDA001 = #{record.yda001,jdbcType=VARCHAR},
+      YDA002 = #{record.yda002,jdbcType=INTEGER},
+      YDA003 = #{record.yda003,jdbcType=VARCHAR},
+      YDA004 = #{record.yda004,jdbcType=INTEGER},
+      YDA005 = #{record.yda005,jdbcType=TIMESTAMP},
+      YDA006 = #{record.yda006,jdbcType=CHAR},
+      YDA007 = #{record.yda007,jdbcType=TIMESTAMP},
+      YDA008 = #{record.yda008,jdbcType=INTEGER},
+      YDA009 = #{record.yda009,jdbcType=INTEGER},
+      YDA010 = #{record.yda010,jdbcType=VARCHAR},
+      YDA011 = #{record.yda011,jdbcType=VARCHAR},
+      YDA012 = #{record.yda012,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdyda">
+    update cdyda
+    <set>
+      <if test="yda002 != null">
+        YDA002 = #{yda002,jdbcType=INTEGER},
+      </if>
+      <if test="yda003 != null">
+        YDA003 = #{yda003,jdbcType=VARCHAR},
+      </if>
+      <if test="yda004 != null">
+        YDA004 = #{yda004,jdbcType=INTEGER},
+      </if>
+      <if test="yda005 != null">
+        YDA005 = #{yda005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yda006 != null">
+        YDA006 = #{yda006,jdbcType=CHAR},
+      </if>
+      <if test="yda007 != null">
+        YDA007 = #{yda007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yda008 != null">
+        YDA008 = #{yda008,jdbcType=INTEGER},
+      </if>
+      <if test="yda009 != null">
+        YDA009 = #{yda009,jdbcType=INTEGER},
+      </if>
+      <if test="yda010 != null">
+        YDA010 = #{yda010,jdbcType=VARCHAR},
+      </if>
+      <if test="yda011 != null">
+        YDA011 = #{yda011,jdbcType=VARCHAR},
+      </if>
+      <if test="yda012 != null">
+        YDA012 = #{yda012,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where YDA001 = #{yda001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdyda">
+    update cdyda
+    set YDA002 = #{yda002,jdbcType=INTEGER},
+      YDA003 = #{yda003,jdbcType=VARCHAR},
+      YDA004 = #{yda004,jdbcType=INTEGER},
+      YDA005 = #{yda005,jdbcType=TIMESTAMP},
+      YDA006 = #{yda006,jdbcType=CHAR},
+      YDA007 = #{yda007,jdbcType=TIMESTAMP},
+      YDA008 = #{yda008,jdbcType=INTEGER},
+      YDA009 = #{yda009,jdbcType=INTEGER},
+      YDA010 = #{yda010,jdbcType=VARCHAR},
+      YDA011 = #{yda011,jdbcType=VARCHAR},
+      YDA012 = #{yda012,jdbcType=VARCHAR}
+    where YDA001 = #{yda001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExample1" parameterType="com.efx.quality.model.cdydaExample" resultMap="BaseResultMap1">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdyda
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample2" parameterType="com.efx.quality.model.cdydaExample" resultMap="BaseResultMap3">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdyda
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey1" parameterType="java.lang.String" resultMap="BaseResultMap2">
+    select
+    <include refid="Base_Column_List" />
+    from cdyda
+    where YDA001 = #{yda001,jdbcType=VARCHAR}
+  </select>
+</mapper>

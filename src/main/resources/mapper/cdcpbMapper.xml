@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdcpbMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdcpb">
+    <id column="CPB001" jdbcType="VARCHAR" property="cpb001" />
+    <result column="CPB002" jdbcType="INTEGER" property="cpb002" />
+    <result column="CPB003" jdbcType="VARCHAR" property="cpb003" />
+    <result column="CPB004" jdbcType="VARCHAR" property="cpb004" />
+    <result column="CPB005" jdbcType="TIMESTAMP" property="cpb005" />
+    <result column="CPB006" jdbcType="INTEGER" property="cpb006" />
+    <result column="CPB007" jdbcType="VARCHAR" property="cpb007" />
+    <result column="CPB008" jdbcType="TIMESTAMP" property="cpb008" />
+    <result column="CPB009" jdbcType="INTEGER" property="cpb009" />
+    <result column="CPB010" jdbcType="INTEGER" property="cpb010" />
+    <result column="CPB011" jdbcType="TIMESTAMP" property="cpb011" />
+    <result column="CPB012" jdbcType="CHAR" property="cpb012" />
+    <result column="CPB013" jdbcType="VARCHAR" property="cpb013" />
+    <result column="CPB014" jdbcType="TIMESTAMP" property="cpb014" />
+    <result column="CPB015" jdbcType="VARCHAR" property="cpb015" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.efx.quality.model.cdcpb"  extends="BaseResultMap">
+    <result column="sl" jdbcType="INTEGER" property="sl" />
+    <association property="use" column="CPB006" select="com.efx.quality.dao.cduseMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CPB001, CPB002, CPB003, CPB004, CPB005, CPB006, CPB007, CPB008, CPB009, CPB010, CPB011, 
+    CPB012, CPB013, CPB014, CPB015
+  </sql>
+  <sql id="Base_Column_List1">
+    CPB001, CPB002, CPB003, CPB004, CPB005, CPB006, CPB007, CPB008, CPB009, CPB010, CPB011,
+    CPB012, CPB013, CPB014, CPB015
+    ,(select sum(CPC006) from cdcpc where CPC002=CPB001) as sl
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdcpbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdcpb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdcpb
+    where CPB001 = #{cpb001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdcpb
+    where CPB001 = #{cpb001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdcpbExample">
+    delete from cdcpb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdcpb">
+    insert into cdcpb (CPB001, CPB002, CPB003, 
+      CPB004, CPB005, CPB006, 
+      CPB007, CPB008, CPB009, 
+      CPB010, CPB011, CPB012, 
+      CPB013, CPB014, CPB015
+      )
+    values (#{cpb001,jdbcType=VARCHAR}, #{cpb002,jdbcType=INTEGER}, #{cpb003,jdbcType=VARCHAR}, 
+      #{cpb004,jdbcType=VARCHAR}, #{cpb005,jdbcType=TIMESTAMP}, #{cpb006,jdbcType=INTEGER}, 
+      #{cpb007,jdbcType=VARCHAR}, #{cpb008,jdbcType=TIMESTAMP}, #{cpb009,jdbcType=INTEGER}, 
+      #{cpb010,jdbcType=INTEGER}, #{cpb011,jdbcType=TIMESTAMP}, #{cpb012,jdbcType=CHAR}, 
+      #{cpb013,jdbcType=VARCHAR}, #{cpb014,jdbcType=TIMESTAMP}, #{cpb015,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdcpb">
+    insert into cdcpb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cpb001 != null">
+        CPB001,
+      </if>
+      <if test="cpb002 != null">
+        CPB002,
+      </if>
+      <if test="cpb003 != null">
+        CPB003,
+      </if>
+      <if test="cpb004 != null">
+        CPB004,
+      </if>
+      <if test="cpb005 != null">
+        CPB005,
+      </if>
+      <if test="cpb006 != null">
+        CPB006,
+      </if>
+      <if test="cpb007 != null">
+        CPB007,
+      </if>
+      <if test="cpb008 != null">
+        CPB008,
+      </if>
+      <if test="cpb009 != null">
+        CPB009,
+      </if>
+      <if test="cpb010 != null">
+        CPB010,
+      </if>
+      <if test="cpb011 != null">
+        CPB011,
+      </if>
+      <if test="cpb012 != null">
+        CPB012,
+      </if>
+      <if test="cpb013 != null">
+        CPB013,
+      </if>
+      <if test="cpb014 != null">
+        CPB014,
+      </if>
+      <if test="cpb015 != null">
+        CPB015,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cpb001 != null">
+        #{cpb001,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb002 != null">
+        #{cpb002,jdbcType=INTEGER},
+      </if>
+      <if test="cpb003 != null">
+        #{cpb003,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb004 != null">
+        #{cpb004,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb005 != null">
+        #{cpb005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb006 != null">
+        #{cpb006,jdbcType=INTEGER},
+      </if>
+      <if test="cpb007 != null">
+        #{cpb007,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb008 != null">
+        #{cpb008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb009 != null">
+        #{cpb009,jdbcType=INTEGER},
+      </if>
+      <if test="cpb010 != null">
+        #{cpb010,jdbcType=INTEGER},
+      </if>
+      <if test="cpb011 != null">
+        #{cpb011,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb012 != null">
+        #{cpb012,jdbcType=CHAR},
+      </if>
+      <if test="cpb013 != null">
+        #{cpb013,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb014 != null">
+        #{cpb014,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb015 != null">
+        #{cpb015,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdcpbExample" resultType="java.lang.Long">
+    select count(*) from cdcpb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdcpb
+    <set>
+      <if test="record.cpb001 != null">
+        CPB001 = #{record.cpb001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpb002 != null">
+        CPB002 = #{record.cpb002,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpb003 != null">
+        CPB003 = #{record.cpb003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpb004 != null">
+        CPB004 = #{record.cpb004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpb005 != null">
+        CPB005 = #{record.cpb005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cpb006 != null">
+        CPB006 = #{record.cpb006,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpb007 != null">
+        CPB007 = #{record.cpb007,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpb008 != null">
+        CPB008 = #{record.cpb008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cpb009 != null">
+        CPB009 = #{record.cpb009,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpb010 != null">
+        CPB010 = #{record.cpb010,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpb011 != null">
+        CPB011 = #{record.cpb011,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cpb012 != null">
+        CPB012 = #{record.cpb012,jdbcType=CHAR},
+      </if>
+      <if test="record.cpb013 != null">
+        CPB013 = #{record.cpb013,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpb014 != null">
+        CPB014 = #{record.cpb014,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cpb015 != null">
+        CPB015 = #{record.cpb015,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdcpb
+    set CPB001 = #{record.cpb001,jdbcType=VARCHAR},
+      CPB002 = #{record.cpb002,jdbcType=INTEGER},
+      CPB003 = #{record.cpb003,jdbcType=VARCHAR},
+      CPB004 = #{record.cpb004,jdbcType=VARCHAR},
+      CPB005 = #{record.cpb005,jdbcType=TIMESTAMP},
+      CPB006 = #{record.cpb006,jdbcType=INTEGER},
+      CPB007 = #{record.cpb007,jdbcType=VARCHAR},
+      CPB008 = #{record.cpb008,jdbcType=TIMESTAMP},
+      CPB009 = #{record.cpb009,jdbcType=INTEGER},
+      CPB010 = #{record.cpb010,jdbcType=INTEGER},
+      CPB011 = #{record.cpb011,jdbcType=TIMESTAMP},
+      CPB012 = #{record.cpb012,jdbcType=CHAR},
+      CPB013 = #{record.cpb013,jdbcType=VARCHAR},
+      CPB014 = #{record.cpb014,jdbcType=TIMESTAMP},
+      CPB015 = #{record.cpb015,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdcpb">
+    update cdcpb
+    <set>
+      <if test="cpb002 != null">
+        CPB002 = #{cpb002,jdbcType=INTEGER},
+      </if>
+      <if test="cpb003 != null">
+        CPB003 = #{cpb003,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb004 != null">
+        CPB004 = #{cpb004,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb005 != null">
+        CPB005 = #{cpb005,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb006 != null">
+        CPB006 = #{cpb006,jdbcType=INTEGER},
+      </if>
+      <if test="cpb007 != null">
+        CPB007 = #{cpb007,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb008 != null">
+        CPB008 = #{cpb008,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb009 != null">
+        CPB009 = #{cpb009,jdbcType=INTEGER},
+      </if>
+      <if test="cpb010 != null">
+        CPB010 = #{cpb010,jdbcType=INTEGER},
+      </if>
+      <if test="cpb011 != null">
+        CPB011 = #{cpb011,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb012 != null">
+        CPB012 = #{cpb012,jdbcType=CHAR},
+      </if>
+      <if test="cpb013 != null">
+        CPB013 = #{cpb013,jdbcType=VARCHAR},
+      </if>
+      <if test="cpb014 != null">
+        CPB014 = #{cpb014,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cpb015 != null">
+        CPB015 = #{cpb015,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CPB001 = #{cpb001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdcpb">
+    update cdcpb
+    set CPB002 = #{cpb002,jdbcType=INTEGER},
+      CPB003 = #{cpb003,jdbcType=VARCHAR},
+      CPB004 = #{cpb004,jdbcType=VARCHAR},
+      CPB005 = #{cpb005,jdbcType=TIMESTAMP},
+      CPB006 = #{cpb006,jdbcType=INTEGER},
+      CPB007 = #{cpb007,jdbcType=VARCHAR},
+      CPB008 = #{cpb008,jdbcType=TIMESTAMP},
+      CPB009 = #{cpb009,jdbcType=INTEGER},
+      CPB010 = #{cpb010,jdbcType=INTEGER},
+      CPB011 = #{cpb011,jdbcType=TIMESTAMP},
+      CPB012 = #{cpb012,jdbcType=CHAR},
+      CPB013 = #{cpb013,jdbcType=VARCHAR},
+      CPB014 = #{cpb014,jdbcType=TIMESTAMP},
+      CPB015 = #{cpb015,jdbcType=VARCHAR}
+    where CPB001 = #{cpb001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.efx.quality.model.cdcpbExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List1" />
+    from cdcpb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

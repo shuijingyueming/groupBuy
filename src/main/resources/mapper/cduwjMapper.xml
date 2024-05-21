@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cduwjMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cduwj">
+    <id column="UWJ001" jdbcType="VARCHAR" property="uwj001" />
+    <result column="UWJ002" jdbcType="VARCHAR" property="uwj002" />
+    <result column="UWJ003" jdbcType="VARCHAR" property="uwj003" />
+    <result column="UWJ004" jdbcType="VARCHAR" property="uwj004" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UWJ001, UWJ002, UWJ003, UWJ004
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cduwjExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cduwj
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cduwj
+    where UWJ001 = #{uwj001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cduwj
+    where UWJ001 = #{uwj001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cduwjExample">
+    delete from cduwj
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cduwj">
+    insert into cduwj (UWJ001, UWJ002, UWJ003, 
+      UWJ004)
+    values (#{uwj001,jdbcType=VARCHAR}, #{uwj002,jdbcType=VARCHAR}, #{uwj003,jdbcType=VARCHAR}, 
+      #{uwj004,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cduwj">
+    insert into cduwj
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uwj001 != null">
+        UWJ001,
+      </if>
+      <if test="uwj002 != null">
+        UWJ002,
+      </if>
+      <if test="uwj003 != null">
+        UWJ003,
+      </if>
+      <if test="uwj004 != null">
+        UWJ004,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uwj001 != null">
+        #{uwj001,jdbcType=VARCHAR},
+      </if>
+      <if test="uwj002 != null">
+        #{uwj002,jdbcType=VARCHAR},
+      </if>
+      <if test="uwj003 != null">
+        #{uwj003,jdbcType=VARCHAR},
+      </if>
+      <if test="uwj004 != null">
+        #{uwj004,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cduwjExample" resultType="java.lang.Long">
+    select count(*) from cduwj
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cduwj
+    <set>
+      <if test="record.uwj001 != null">
+        UWJ001 = #{record.uwj001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwj002 != null">
+        UWJ002 = #{record.uwj002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwj003 != null">
+        UWJ003 = #{record.uwj003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwj004 != null">
+        UWJ004 = #{record.uwj004,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cduwj
+    set UWJ001 = #{record.uwj001,jdbcType=VARCHAR},
+      UWJ002 = #{record.uwj002,jdbcType=VARCHAR},
+      UWJ003 = #{record.uwj003,jdbcType=VARCHAR},
+      UWJ004 = #{record.uwj004,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cduwj">
+    update cduwj
+    <set>
+      <if test="uwj002 != null">
+        UWJ002 = #{uwj002,jdbcType=VARCHAR},
+      </if>
+      <if test="uwj003 != null">
+        UWJ003 = #{uwj003,jdbcType=VARCHAR},
+      </if>
+      <if test="uwj004 != null">
+        UWJ004 = #{uwj004,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UWJ001 = #{uwj001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cduwj">
+    update cduwj
+    set UWJ002 = #{uwj002,jdbcType=VARCHAR},
+      UWJ003 = #{uwj003,jdbcType=VARCHAR},
+      UWJ004 = #{uwj004,jdbcType=VARCHAR}
+    where UWJ001 = #{uwj001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByfkid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cduwj
+    where UWJ002 = #{uwj002,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cduwmMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cduwm">
+    <id column="UWM001" jdbcType="VARCHAR" property="uwm001" />
+    <result column="UWM002" jdbcType="VARCHAR" property="uwm002" />
+    <result column="UWM003" jdbcType="CHAR" property="uwm003" />
+    <result column="UWM004" jdbcType="INTEGER" property="uwm004" />
+    <result column="UWM005" jdbcType="INTEGER" property="uwm005" />
+    <result column="UWM006" jdbcType="INTEGER" property="uwm006" />
+    <result column="UWM007" jdbcType="INTEGER" property="uwm007" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.efx.quality.model.cduwm"  extends="BaseResultMap">
+    <result column="num" jdbcType="INTEGER" property="num" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UWM001, UWM002, UWM003, UWM004, UWM005, UWM006, UWM007
+  </sql>
+  <sql id="Base_Column_List1">
+    UWM001, UWM002, UWM003, UWM004, UWM005, UWM006, UWM007,(select count(*) from cduwn where uwm001=uwn002 and uwn003='B') AS num
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cduwmExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cduwm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cduwm
+    where UWM001 = #{uwm001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cduwm
+    where UWM001 = #{uwm001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cduwmExample">
+    delete from cduwm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cduwm">
+    insert into cduwm (UWM001, UWM002, UWM003, 
+      UWM004, UWM005, UWM006, 
+      UWM007)
+    values (#{uwm001,jdbcType=VARCHAR}, #{uwm002,jdbcType=VARCHAR}, #{uwm003,jdbcType=CHAR}, 
+      #{uwm004,jdbcType=INTEGER}, #{uwm005,jdbcType=INTEGER}, #{uwm006,jdbcType=INTEGER}, 
+      #{uwm007,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cduwm">
+    insert into cduwm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uwm001 != null">
+        UWM001,
+      </if>
+      <if test="uwm002 != null">
+        UWM002,
+      </if>
+      <if test="uwm003 != null">
+        UWM003,
+      </if>
+      <if test="uwm004 != null">
+        UWM004,
+      </if>
+      <if test="uwm005 != null">
+        UWM005,
+      </if>
+      <if test="uwm006 != null">
+        UWM006,
+      </if>
+      <if test="uwm007 != null">
+        UWM007,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uwm001 != null">
+        #{uwm001,jdbcType=VARCHAR},
+      </if>
+      <if test="uwm002 != null">
+        #{uwm002,jdbcType=VARCHAR},
+      </if>
+      <if test="uwm003 != null">
+        #{uwm003,jdbcType=CHAR},
+      </if>
+      <if test="uwm004 != null">
+        #{uwm004,jdbcType=INTEGER},
+      </if>
+      <if test="uwm005 != null">
+        #{uwm005,jdbcType=INTEGER},
+      </if>
+      <if test="uwm006 != null">
+        #{uwm006,jdbcType=INTEGER},
+      </if>
+      <if test="uwm007 != null">
+        #{uwm007,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cduwmExample" resultType="java.lang.Long">
+    select count(*) from cduwm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cduwm
+    <set>
+      <if test="record.uwm001 != null">
+        UWM001 = #{record.uwm001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwm002 != null">
+        UWM002 = #{record.uwm002,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uwm003 != null">
+        UWM003 = #{record.uwm003,jdbcType=CHAR},
+      </if>
+      <if test="record.uwm004 != null">
+        UWM004 = #{record.uwm004,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwm005 != null">
+        UWM005 = #{record.uwm005,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwm006 != null">
+        UWM006 = #{record.uwm006,jdbcType=INTEGER},
+      </if>
+      <if test="record.uwm007 != null">
+        UWM007 = #{record.uwm007,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cduwm
+    set UWM001 = #{record.uwm001,jdbcType=VARCHAR},
+      UWM002 = #{record.uwm002,jdbcType=VARCHAR},
+      UWM003 = #{record.uwm003,jdbcType=CHAR},
+      UWM004 = #{record.uwm004,jdbcType=INTEGER},
+      UWM005 = #{record.uwm005,jdbcType=INTEGER},
+      UWM006 = #{record.uwm006,jdbcType=INTEGER},
+      UWM007 = #{record.uwm007,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cduwm">
+    update cduwm
+    <set>
+      <if test="uwm002 != null">
+        UWM002 = #{uwm002,jdbcType=VARCHAR},
+      </if>
+      <if test="uwm003 != null">
+        UWM003 = #{uwm003,jdbcType=CHAR},
+      </if>
+      <if test="uwm004 != null">
+        UWM004 = #{uwm004,jdbcType=INTEGER},
+      </if>
+      <if test="uwm005 != null">
+        UWM005 = #{uwm005,jdbcType=INTEGER},
+      </if>
+      <if test="uwm006 != null">
+        UWM006 = #{uwm006,jdbcType=INTEGER},
+      </if>
+      <if test="uwm007 != null">
+        UWM007 = #{uwm007,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UWM001 = #{uwm001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cduwm">
+    update cduwm
+    set UWM002 = #{uwm002,jdbcType=VARCHAR},
+      UWM003 = #{uwm003,jdbcType=CHAR},
+      UWM004 = #{uwm004,jdbcType=INTEGER},
+      UWM005 = #{uwm005,jdbcType=INTEGER},
+      UWM006 = #{uwm006,jdbcType=INTEGER},
+      UWM007 = #{uwm007,jdbcType=INTEGER}
+    where UWM001 = #{uwm001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.efx.quality.model.cduwmExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cduwm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample1" parameterType="com.efx.quality.model.cduwmExample" resultMap="BaseResultMap1">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List1" />
+    from cduwm
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

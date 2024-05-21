@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.efx.quality.dao.cdydbMapper">
+  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdydb">
+    <id column="YDB001" jdbcType="VARCHAR" property="ydb001" />
+    <result column="YDB002" jdbcType="INTEGER" property="ydb002" />
+    <result column="YDB003" jdbcType="VARCHAR" property="ydb003" />
+    <result column="YDB004" jdbcType="INTEGER" property="ydb004" />
+    <result column="YDB005" jdbcType="VARCHAR" property="ydb005" />
+    <result column="YDB006" jdbcType="INTEGER" property="ydb006" />
+    <result column="YDB007" jdbcType="VARCHAR" property="ydb007" />
+    <result column="YDB008" jdbcType="VARCHAR" property="ydb008" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    YDB001, YDB002, YDB003, YDB004, YDB005, YDB006, YDB007, YDB008
+  </sql>
+  <select id="selectByExample" parameterType="com.efx.quality.model.cdydbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdydb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdydb
+    where YDB001 = #{ydb001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdydb
+    where YDB001 = #{ydb001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdydbExample">
+    delete from cdydb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efx.quality.model.cdydb">
+    insert into cdydb (YDB001, YDB002, YDB003, 
+      YDB004, YDB005, YDB006, 
+      YDB007, YDB008)
+    values (#{ydb001,jdbcType=VARCHAR}, #{ydb002,jdbcType=INTEGER}, #{ydb003,jdbcType=VARCHAR}, 
+      #{ydb004,jdbcType=INTEGER}, #{ydb005,jdbcType=VARCHAR}, #{ydb006,jdbcType=INTEGER}, 
+      #{ydb007,jdbcType=VARCHAR}, #{ydb008,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efx.quality.model.cdydb">
+    insert into cdydb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ydb001 != null">
+        YDB001,
+      </if>
+      <if test="ydb002 != null">
+        YDB002,
+      </if>
+      <if test="ydb003 != null">
+        YDB003,
+      </if>
+      <if test="ydb004 != null">
+        YDB004,
+      </if>
+      <if test="ydb005 != null">
+        YDB005,
+      </if>
+      <if test="ydb006 != null">
+        YDB006,
+      </if>
+      <if test="ydb007 != null">
+        YDB007,
+      </if>
+      <if test="ydb008 != null">
+        YDB008,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ydb001 != null">
+        #{ydb001,jdbcType=VARCHAR},
+      </if>
+      <if test="ydb002 != null">
+        #{ydb002,jdbcType=INTEGER},
+      </if>
+      <if test="ydb003 != null">
+        #{ydb003,jdbcType=VARCHAR},
+      </if>
+      <if test="ydb004 != null">
+        #{ydb004,jdbcType=INTEGER},
+      </if>
+      <if test="ydb005 != null">
+        #{ydb005,jdbcType=VARCHAR},
+      </if>
+      <if test="ydb006 != null">
+        #{ydb006,jdbcType=INTEGER},
+      </if>
+      <if test="ydb007 != null">
+        #{ydb007,jdbcType=VARCHAR},
+      </if>
+      <if test="ydb008 != null">
+        #{ydb008,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efx.quality.model.cdydbExample" resultType="java.lang.Long">
+    select count(*) from cdydb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdydb
+    <set>
+      <if test="record.ydb001 != null">
+        YDB001 = #{record.ydb001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ydb002 != null">
+        YDB002 = #{record.ydb002,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydb003 != null">
+        YDB003 = #{record.ydb003,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ydb004 != null">
+        YDB004 = #{record.ydb004,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydb005 != null">
+        YDB005 = #{record.ydb005,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ydb006 != null">
+        YDB006 = #{record.ydb006,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydb007 != null">
+        YDB007 = #{record.ydb007,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ydb008 != null">
+        YDB008 = #{record.ydb008,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdydb
+    set YDB001 = #{record.ydb001,jdbcType=VARCHAR},
+      YDB002 = #{record.ydb002,jdbcType=INTEGER},
+      YDB003 = #{record.ydb003,jdbcType=VARCHAR},
+      YDB004 = #{record.ydb004,jdbcType=INTEGER},
+      YDB005 = #{record.ydb005,jdbcType=VARCHAR},
+      YDB006 = #{record.ydb006,jdbcType=INTEGER},
+      YDB007 = #{record.ydb007,jdbcType=VARCHAR},
+      YDB008 = #{record.ydb008,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdydb">
+    update cdydb
+    <set>
+      <if test="ydb002 != null">
+        YDB002 = #{ydb002,jdbcType=INTEGER},
+      </if>
+      <if test="ydb003 != null">
+        YDB003 = #{ydb003,jdbcType=VARCHAR},
+      </if>
+      <if test="ydb004 != null">
+        YDB004 = #{ydb004,jdbcType=INTEGER},
+      </if>
+      <if test="ydb005 != null">
+        YDB005 = #{ydb005,jdbcType=VARCHAR},
+      </if>
+      <if test="ydb006 != null">
+        YDB006 = #{ydb006,jdbcType=INTEGER},
+      </if>
+      <if test="ydb007 != null">
+        YDB007 = #{ydb007,jdbcType=VARCHAR},
+      </if>
+      <if test="ydb008 != null">
+        YDB008 = #{ydb008,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where YDB001 = #{ydb001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdydb">
+    update cdydb
+    set YDB002 = #{ydb002,jdbcType=INTEGER},
+      YDB003 = #{ydb003,jdbcType=VARCHAR},
+      YDB004 = #{ydb004,jdbcType=INTEGER},
+      YDB005 = #{ydb005,jdbcType=VARCHAR},
+      YDB006 = #{ydb006,jdbcType=INTEGER},
+      YDB007 = #{ydb007,jdbcType=VARCHAR},
+      YDB008 = #{ydb008,jdbcType=VARCHAR}
+    where YDB001 = #{ydb001,jdbcType=VARCHAR}
+  </update>
+</mapper>
