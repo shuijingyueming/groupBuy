@@ -1,6 +1,6 @@
-package com.efx.quality.pub;
+package com.fangx.pub;
 
-import com.efx.quality.model.PubMessage;
+import com.fangx.model.PubMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -360,12 +360,12 @@ public class Datamsg {
             bufferedReader = new BufferedReader(inputStreamReader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(fileName+"xxxxx");
+//                System.out.println(fileName+"xxxxx");
                 printWriter.println(line);
             }
             printWriter.flush();
             if (process.waitFor() == 0) {// 0 表示线程正常终止。
-                System.out.println(fileName+"x");
+//                System.out.println(fileName+"x");
                 return true;
             }
         } catch (IOException e) {

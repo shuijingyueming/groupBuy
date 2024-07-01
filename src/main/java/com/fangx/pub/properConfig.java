@@ -1,4 +1,4 @@
-package com.efx.quality.pub;
+package com.fangx.pub;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

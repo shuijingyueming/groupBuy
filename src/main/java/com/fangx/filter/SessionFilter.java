@@ -1,4 +1,4 @@
-package com.efx.quality.filter;
+package com.fangx.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

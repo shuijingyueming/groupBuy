@@ -1,4 +1,4 @@
-package com.efx.quality.pub;
+package com.fangx.pub;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
