@@ -23,10 +23,11 @@ public class SessionFilter implements Filter {
         //是否需要过滤
         boolean needFilter = isNeedFilter(uri);
 
-
         if (!needFilter) {
             filterChain.doFilter(servletRequest, servletResponse);
-        } else {
+        } else if(uri.indexOf("/xhsgetticket")>0){
+            filterChain.doFilter(request, response);
+        }else {
             if (session != null && session.getAttribute("user") != null) {
                 filterChain.doFilter(request, response);
             } else {

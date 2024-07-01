@@ -5,7 +5,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.fangx.model.*;
 import com.fangx.pub.Datamsg;
 import com.fangx.until.EncrpytUtil;
+import com.fangx.wx.HttpGetUtil;
+import com.fangx.wx.PayUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -20,7 +31,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 @Controller
@@ -32,6 +43,50 @@ public class HTinfoController extends BaseController {
     @Autowired
     private TemplateEngine templateEngine;
 
+    @RequestMapping("/xhsgetticket")
+    public ModelAndView xhsgetticket(HttpServletRequest request, HttpServletResponse resp) throws Exception {
+        //获取商家CODE（ticket）码
+        String code = request.getParameter("code");
+        System.out.println("商家ticket:"+code);
+        String timestamp = new Date().getTime()+"";
+        String prm = "oauth.getAccessToken?appId=91d88fd22a0d442ea97a&timestamp="+timestamp+"&version=2.0";
+        String sign =  DigestUtils.md5Hex(PayUtils.getContentBytes(prm+"e49ab65b111e00bcd00dccfd5db04f15", "utf-8"));   ;
+        //组装
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("appId","91d88fd22a0d442ea97a");
+        params.put("version","2.0");
+        params.put("sign",sign);
+        params.put("timestamp",timestamp);
+        params.put("method","oauth.getAccessToken");
+        params.put("code",code);
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
+        HttpPost httpPost = new HttpPost("https://ark.xiaohongshu.com/ark/open_api/v3/common_controller"); // 接口
+        httpPost.addHeader(HTTP.CONTENT_TYPE, "application/json");
+        String body = JSON.toJSONString(params); // 必须是json模式的 post
+        StringEntity entity = new StringEntity(body);
+        entity.setContentType("application/json");
+        httpPost.setEntity(entity);
+        HttpResponse response = httpClient.execute(httpPost);
+        String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+        System.out.println("小红书返回:"+result);
+        net.sf.json.JSONObject obj = net.sf.json.JSONObject.fromObject(result);
+        net.sf.json.JSONObject data = obj.getJSONObject("data");
+        System.out.println("小红书返回access_token:"+data.getString("accessToken"));
+
+        ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        if (null == session.getAttribute("user")) {
+            mav.addObject("error", request.getParameter("error"));
+            session.setAttribute("dnumn", 0);
+            mav.setViewName("HTlogin");
+            return mav;
+        }else{
+            cduse use = useService.getByid(Decrypt(session.getAttribute("user").toString()));
+            mav.setViewName("redirect:/toHt/toHTindex");
+        }
+        return mav;
+    }
 
     @RequestMapping("/toHTindex")
     public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception{
