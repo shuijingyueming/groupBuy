@@ -21,6 +21,14 @@
     <result column="USF017" jdbcType="VARCHAR" property="usf017" />
     <result column="USF018" jdbcType="VARCHAR" property="usf018" />
   </resultMap>
+  <resultMap id="BaseResultMap1" type="com.fangx.model.cdusf"  extends="BaseResultMap">
+    <collection  property="usm"  column="USF004"  select="com.fangx.dao.cdusmMapper.selectByPrimaryKey"/>
+    <collection  property="yhe"  column="USF011"  select="com.fangx.dao.cdyheMapper.selectByPrimaryKey"/>
+    <collection  property="ysa"  column="USF012"  select="com.fangx.dao.cdysaMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.fangx.model.cdusf"  extends="BaseResultMap1">
+    <collection  property="usnlist"  column="USF001"  select="com.fangx.dao.cdusnMapper.selectBycpid"/>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -97,8 +105,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap2">
     select 
+    <include refid="Base_Column_List" />
+    from cdusf
+    where USF001 = #{usf001,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from cdusf
     where USF001 = #{usf001,jdbcType=INTEGER}
@@ -213,9 +227,7 @@
       <if test="usf009 != null">
         #{usf009,jdbcType=REAL},
       </if>
-      <if test="usf010 != null">
         #{usf010,jdbcType=INTEGER},
-      </if>
       <if test="usf011 != null">
         #{usf011,jdbcType=INTEGER},
       </if>
@@ -349,9 +361,7 @@
       <if test="usf005 != null">
         USF005 = #{usf005,jdbcType=REAL},
       </if>
-      <if test="usf006 != null">
         USF006 = #{usf006,jdbcType=REAL},
-      </if>
       <if test="usf007 != null">
         USF007 = #{usf007,jdbcType=VARCHAR},
       </if>
@@ -412,378 +422,21 @@
       USF018 = #{usf018,jdbcType=VARCHAR}
     where USF001 = #{usf001,jdbcType=INTEGER}
   </update>
-  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdusf">
-    <id column="USF001" jdbcType="INTEGER" property="usf001" />
-    <result column="USF002" jdbcType="VARCHAR" property="usf002" />
-    <result column="USF003" jdbcType="VARCHAR" property="usf003" />
-    <result column="USF004" jdbcType="INTEGER" property="usf004" />
-    <result column="USF005" jdbcType="INTEGER" property="usf005" />
-    <result column="USF006" jdbcType="TIMESTAMP" property="usf006" />
-    <result column="USF007" jdbcType="INTEGER" property="usf007" />
-    <result column="USF009" jdbcType="CHAR" property="usf009" />
-    <result column="USF010" jdbcType="VARCHAR" property="usf010" />
-    <result column="USF011" jdbcType="DECIMAL" property="usf011" />
-    <result column="USF012" jdbcType="VARCHAR" property="usf012" />
-    <result column="USF013" jdbcType="VARCHAR" property="usf013" />
-    <result column="USF014" jdbcType="VARCHAR" property="usf014" />
-    <result column="USF015" jdbcType="VARCHAR" property="usf015" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="BaseResultMap1" type="com.efx.quality.model.cdusf">
-    <association column="USF004" property="usd" select="com.efx.quality.dao.cdusdMapper.selectByPrimaryKey" />
-    <association column="USF005" property="usg" select="com.efx.quality.dao.cdusgMapper.selectByPrimaryKey" />
-    <collection column="USF001" property="usmlist" select="com.efx.quality.dao.cdusmMapper.selectBylsid" />
-    <collection column="USF001" property="usmlist1" select="com.efx.quality.dao.cdusmMapper.selectBylsid1" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    USF001, USF002, USF003, USF004, USF005, USF006, USF007, USF009, USF010, USF011, USF012, 
-    USF013, USF014, USF015
-  </sql>
-  <select id="selectByExample" parameterType="com.efx.quality.model.cdusfExample" resultMap="BaseResultMap">
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from cdusf
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cdusf
-    where USF001 = #{usf001,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cdusf
-    where USF001 = #{usf001,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdusfExample">
-    delete from cdusf
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.efx.quality.model.cdusf">
-    insert into cdusf (USF001, USF002, USF003, 
-      USF004, USF005, USF006, 
-      USF007, USF009, USF010, 
-      USF011, USF012, USF013, 
-      USF014, USF015)
-    values (#{usf001,jdbcType=INTEGER}, #{usf002,jdbcType=VARCHAR}, #{usf003,jdbcType=VARCHAR}, 
-      #{usf004,jdbcType=INTEGER}, #{usf005,jdbcType=INTEGER}, #{usf006,jdbcType=TIMESTAMP}, 
-      #{usf007,jdbcType=INTEGER}, #{usf009,jdbcType=CHAR}, #{usf010,jdbcType=VARCHAR}, 
-      #{usf011,jdbcType=DECIMAL}, #{usf012,jdbcType=VARCHAR}, #{usf013,jdbcType=VARCHAR}, 
-      #{usf014,jdbcType=VARCHAR}, #{usf015,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" keyProperty="usf001" parameterType="com.efx.quality.model.cdusf" useGeneratedKeys="true">
-    insert into cdusf
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="usf001 != null">
-        USF001,
-      </if>
-      <if test="usf002 != null">
-        USF002,
-      </if>
-      <if test="usf003 != null">
-        USF003,
-      </if>
-      <if test="usf004 != null">
-        USF004,
-      </if>
-      <if test="usf005 != null">
-        USF005,
-      </if>
-      <if test="usf006 != null">
-        USF006,
-      </if>
-      <if test="usf007 != null">
-        USF007,
-      </if>
-      <if test="usf009 != null">
-        USF009,
-      </if>
-      <if test="usf010 != null">
-        USF010,
-      </if>
-      <if test="usf011 != null">
-        USF011,
-      </if>
-      <if test="usf012 != null">
-        USF012,
-      </if>
-      <if test="usf013 != null">
-        USF013,
-      </if>
-      <if test="usf014 != null">
-        USF014,
-      </if>
-      <if test="usf015 != null">
-        USF015,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="usf001 != null">
-        #{usf001,jdbcType=INTEGER},
-      </if>
-      <if test="usf002 != null">
-        #{usf002,jdbcType=VARCHAR},
-      </if>
-      <if test="usf003 != null">
-        #{usf003,jdbcType=VARCHAR},
-      </if>
-      <if test="usf004 != null">
-        #{usf004,jdbcType=INTEGER},
-      </if>
-      <if test="usf005 != null">
-        #{usf005,jdbcType=INTEGER},
-      </if>
-      <if test="usf006 != null">
-        #{usf006,jdbcType=TIMESTAMP},
-      </if>
-      <if test="usf007 != null">
-        #{usf007,jdbcType=INTEGER},
-      </if>
-      <if test="usf009 != null">
-        #{usf009,jdbcType=CHAR},
-      </if>
-      <if test="usf010 != null">
-        #{usf010,jdbcType=VARCHAR},
-      </if>
-      <if test="usf011 != null">
-        #{usf011,jdbcType=DECIMAL},
-      </if>
-      <if test="usf012 != null">
-        #{usf012,jdbcType=VARCHAR},
-      </if>
-      <if test="usf013 != null">
-        #{usf013,jdbcType=VARCHAR},
-      </if>
-      <if test="usf014 != null">
-        #{usf014,jdbcType=VARCHAR},
-      </if>
-      <if test="usf015 != null">
-        #{usf015,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.efx.quality.model.cdusfExample" resultType="java.lang.Long">
-    select count(*) from cdusf
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update cdusf
-    <set>
-      <if test="record.usf001 != null">
-        USF001 = #{record.usf001,jdbcType=INTEGER},
-      </if>
-      <if test="record.usf002 != null">
-        USF002 = #{record.usf002,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usf003 != null">
-        USF003 = #{record.usf003,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usf004 != null">
-        USF004 = #{record.usf004,jdbcType=INTEGER},
-      </if>
-      <if test="record.usf005 != null">
-        USF005 = #{record.usf005,jdbcType=INTEGER},
-      </if>
-      <if test="record.usf006 != null">
-        USF006 = #{record.usf006,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.usf007 != null">
-        USF007 = #{record.usf007,jdbcType=INTEGER},
-      </if>
-      <if test="record.usf009 != null">
-        USF009 = #{record.usf009,jdbcType=CHAR},
-      </if>
-      <if test="record.usf010 != null">
-        USF010 = #{record.usf010,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usf011 != null">
-        USF011 = #{record.usf011,jdbcType=DECIMAL},
-      </if>
-      <if test="record.usf012 != null">
-        USF012 = #{record.usf012,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usf013 != null">
-        USF013 = #{record.usf013,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usf014 != null">
-        USF014 = #{record.usf014,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usf015 != null">
-        USF015 = #{record.usf015,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update cdusf
-    set USF001 = #{record.usf001,jdbcType=INTEGER},
-      USF002 = #{record.usf002,jdbcType=VARCHAR},
-      USF003 = #{record.usf003,jdbcType=VARCHAR},
-      USF004 = #{record.usf004,jdbcType=INTEGER},
-      USF005 = #{record.usf005,jdbcType=INTEGER},
-      USF006 = #{record.usf006,jdbcType=TIMESTAMP},
-      USF007 = #{record.usf007,jdbcType=INTEGER},
-      USF009 = #{record.usf009,jdbcType=CHAR},
-      USF010 = #{record.usf010,jdbcType=VARCHAR},
-      USF011 = #{record.usf011,jdbcType=DECIMAL},
-      USF012 = #{record.usf012,jdbcType=VARCHAR},
-      USF013 = #{record.usf013,jdbcType=VARCHAR},
-      USF014 = #{record.usf014,jdbcType=VARCHAR},
-      USF015 = #{record.usf015,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdusf">
-    update cdusf
-    <set>
-      <if test="usf002 != null">
-        USF002 = #{usf002,jdbcType=VARCHAR},
-      </if>
-      <if test="usf003 != null">
-        USF003 = #{usf003,jdbcType=VARCHAR},
-      </if>
-      <if test="usf004 != null">
-        USF004 = #{usf004,jdbcType=INTEGER},
-      </if>
-      <if test="usf005 != null">
-        USF005 = #{usf005,jdbcType=INTEGER},
-      </if>
-      <if test="usf006 != null">
-        USF006 = #{usf006,jdbcType=TIMESTAMP},
-      </if>
-      <if test="usf007 != null">
-        USF007 = #{usf007,jdbcType=INTEGER},
-      </if>
-      <if test="usf009 != null">
-        USF009 = #{usf009,jdbcType=CHAR},
-      </if>
-      <if test="usf010 != null">
-        USF010 = #{usf010,jdbcType=VARCHAR},
-      </if>
-      <if test="usf011 != null">
-        USF011 = #{usf011,jdbcType=DECIMAL},
-      </if>
-      <if test="usf012 != null">
-        USF012 = #{usf012,jdbcType=VARCHAR},
-      </if>
-      <if test="usf013 != null">
-        USF013 = #{usf013,jdbcType=VARCHAR},
-      </if>
-      <if test="usf014 != null">
-        USF014 = #{usf014,jdbcType=VARCHAR},
-      </if>
-      <if test="usf015 != null">
-        USF015 = #{usf015,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where USF001 = #{usf001,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdusf">
-    update cdusf
-    set USF002 = #{usf002,jdbcType=VARCHAR},
-      USF003 = #{usf003,jdbcType=VARCHAR},
-      USF004 = #{usf004,jdbcType=INTEGER},
-      USF005 = #{usf005,jdbcType=INTEGER},
-      USF006 = #{usf006,jdbcType=TIMESTAMP},
-      USF007 = #{usf007,jdbcType=INTEGER},
-      USF009 = #{usf009,jdbcType=CHAR},
-      USF010 = #{usf010,jdbcType=VARCHAR},
-      USF011 = #{usf011,jdbcType=DECIMAL},
-      USF012 = #{usf012,jdbcType=VARCHAR},
-      USF013 = #{usf013,jdbcType=VARCHAR},
-      USF014 = #{usf014,jdbcType=VARCHAR},
-      USF015 = #{usf015,jdbcType=VARCHAR}
-    where USF001 = #{usf001,jdbcType=INTEGER}
-  </update>
-  <select id="selectByExamplelj" parameterType="com.efx.quality.model.cdusfExample" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from cdusf join cdusm on cdusf.usf001=cdusm.usm002
-    <where>
-      <if test="cdusfExample != null">
-        <foreach collection="cdusfExample.oredCriteria" item="criteria" separator="or">
-          <include refid="ECExample_Where_Clause" />
-        </foreach>
-      </if>
-      <if test="cdusmExample != null">
-        <foreach collection="cdusmExample.oredCriteria" item="criteria" separator="or">
-          <include refid="ECExample_Where_Clause" />
-        </foreach>
-      </if>
-    </where>
-  </select>
+
   <sql id="ECExample_Where_Clause">
     <if test="criteria.valid">
       <foreach collection="criteria.criteria" item="criterion">
@@ -801,7 +454,8 @@
           </when>
           <when test="criterion.listValue">
             and ${criterion.condition}
-            <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+            <foreach collection="criterion.value" item="listItem"
+                     open="(" close=")" separator=",">
               #{listItem}
             </foreach>
           </when>
@@ -809,25 +463,58 @@
       </foreach>
     </if>
   </sql>
-  <select flushCache="true" id="selectByExampleAndPage" parameterType="com.efx.quality.model.cdusfExample" resultMap="BaseResultMap1" useCache="false">
+
+  <select id="countByExampleqs" parameterType="com.fangx.model.cdusfExample" resultType="java.lang.Long">
+    select count(*) from cdusf left join cdyha on cdusf.usf001=cdyha.yha002
+    <where>
+      <if test="cdusfExample != null">
+        <foreach collection="cdusfExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdyhaExample != null">
+        <foreach collection="cdyhaExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByExampleAndPageqs" resultMap="BaseResultMap" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
     select
-    <if test="distinct">
+    <include refid="Base_Column_List" />
+    from cdusf left join cdyha on cdusf.usf001=cdyha.yha002
+    <where>
+      <if test="cdusfExample != null">
+        <foreach collection="cdusfExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdyhaExample != null">
+        <foreach collection="cdyhaExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdusfExample != null">
+      <if test="cdusfExample.orderByClause != null">
+        order by ${cdusfExample.orderByClause}
+      </if>
+    </if>
+  </select>
+
+  <select id="selectByExampleAndPage2" resultMap="BaseResultMap2" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from cdusf
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey1" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
-    select
-    <include refid="Base_Column_List" />
-    from cdusf
-    where USF001 = #{usf001,jdbcType=INTEGER}
-  </select>
-
 </mapper>

@@ -208,4 +208,10 @@
       YSA005 = #{ysa005,jdbcType=VARCHAR}
     where YSA001 = #{ysa001,jdbcType=INTEGER}
   </update>
+  <select id="selectByflid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cdysa
+    where YSA003 = #{ysa001,jdbcType=INTEGER}
+  </select>
 </mapper>

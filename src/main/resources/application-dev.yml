@@ -8,17 +8,17 @@
 server:
   port: 80
 #  ssl:
-#   key-store: classpath:xhh.nbefx.com.pfx
-#   key-store-password: 6qmc0rum
+#   key-store: classpath:fx.nbefx.com.pfx
+#   key-store-password: dax7fvvg
 #   key-store-type: PKCS12
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-#    url: jdbc:mysql://127.0.0.1:3306/xhhdata?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://127.0.0.1:3306/clzpsdata?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
 #    username: root
-#    password: Q1w2e3r4
+#    password: Q1w2e3
 #    jdbcurl: 127.0.0.1
     url: jdbc:mysql://192.168.1.5:3306/clzpsdata?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root

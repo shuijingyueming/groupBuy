@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fangx.dao.cdusmMapper">
   <resultMap id="BaseResultMap" type="com.fangx.model.cdusm">
-    <result column="USM001" jdbcType="INTEGER" property="usm001" />
+    <id column="USM001" jdbcType="INTEGER" property="usm001" />
     <result column="USM002" jdbcType="VARCHAR" property="usm002" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -80,6 +80,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusm
+    where USM001 = #{usm001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdusm
+    where USM001 = #{usm001,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.fangx.model.cdusmExample">
     delete from cdusm
     <if test="_parameter != null">
@@ -137,373 +147,31 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <resultMap id="BaseResultMap" type="com.efx.quality.model.cdusm">
-    <id column="USM001" jdbcType="INTEGER" property="usm001" />
-    <result column="USM002" jdbcType="INTEGER" property="usm002" />
-    <result column="USM003" jdbcType="INTEGER" property="usm003" />
-    <result column="USM004" jdbcType="INTEGER" property="usm004" />
-    <result column="USM005" jdbcType="INTEGER" property="usm005" />
-    <result column="USM006" jdbcType="VARCHAR" property="usm006" />
-    <result column="USM007" jdbcType="VARCHAR" property="usm007" />
-    <result column="USM008" jdbcType="VARCHAR" property="usm008" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="BaseResultMap1" type="com.efx.quality.model.cdusm">
-    <association column="USM004" property="usb" select="com.efx.quality.dao.cdusbMapper.selectByPrimaryKey4" />
-    <association column="USM003" property="usc" select="com.efx.quality.dao.cduscMapper.selectByPrimaryKey" />
-  </resultMap>
-  <resultMap id="BaseResultMap2" type="com.efx.quality.model.cdusm">
-    <result column="USM004" jdbcType="INTEGER" property="usm004" />
-    <association column="USM004" property="usb" select="com.efx.quality.dao.cdusbMapper.selectByPrimaryKey4" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    USM001, USM002, USM003, USM004, USM005, USM006, USM007, USM008
-  </sql>
-  <sql id="Base_Column_List2">
-    distinct(USM004)
-  </sql>
-  <select id="selectByExample" parameterType="com.efx.quality.model.cdusmExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from cdusm
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from cdusm
-    where USM001 = #{usm001,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cdusm
-    where USM001 = #{usm001,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.efx.quality.model.cdusmExample">
-    delete from cdusm
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.efx.quality.model.cdusm">
-    insert into cdusm (USM001, USM002, USM003, 
-      USM004, USM005, USM006, 
-      USM007, USM008)
-    values (#{usm001,jdbcType=INTEGER}, #{usm002,jdbcType=INTEGER}, #{usm003,jdbcType=INTEGER}, 
-      #{usm004,jdbcType=INTEGER}, #{usm005,jdbcType=INTEGER}, #{usm006,jdbcType=VARCHAR}, 
-      #{usm007,jdbcType=VARCHAR}, #{usm008,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.efx.quality.model.cdusm">
-    insert into cdusm
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="usm001 != null">
-        USM001,
-      </if>
-      <if test="usm002 != null">
-        USM002,
-      </if>
-      <if test="usm003 != null">
-        USM003,
-      </if>
-      <if test="usm004 != null">
-        USM004,
-      </if>
-      <if test="usm005 != null">
-        USM005,
-      </if>
-      <if test="usm006 != null">
-        USM006,
-      </if>
-      <if test="usm007 != null">
-        USM007,
-      </if>
-      <if test="usm008 != null">
-        USM008,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="usm001 != null">
-        #{usm001,jdbcType=INTEGER},
-      </if>
-      <if test="usm002 != null">
-        #{usm002,jdbcType=INTEGER},
-      </if>
-      <if test="usm003 != null">
-        #{usm003,jdbcType=INTEGER},
-      </if>
-      <if test="usm004 != null">
-        #{usm004,jdbcType=INTEGER},
-      </if>
-      <if test="usm005 != null">
-        #{usm005,jdbcType=INTEGER},
-      </if>
-      <if test="usm006 != null">
-        #{usm006,jdbcType=VARCHAR},
-      </if>
-      <if test="usm007 != null">
-        #{usm007,jdbcType=VARCHAR},
-      </if>
-      <if test="usm008 != null">
-        #{usm008,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.efx.quality.model.cdusmExample" resultType="java.lang.Long">
-    select count(*) from cdusm
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update cdusm
-    <set>
-      <if test="record.usm001 != null">
-        USM001 = #{record.usm001,jdbcType=INTEGER},
-      </if>
-      <if test="record.usm002 != null">
-        USM002 = #{record.usm002,jdbcType=INTEGER},
-      </if>
-      <if test="record.usm003 != null">
-        USM003 = #{record.usm003,jdbcType=INTEGER},
-      </if>
-      <if test="record.usm004 != null">
-        USM004 = #{record.usm004,jdbcType=INTEGER},
-      </if>
-      <if test="record.usm005 != null">
-        USM005 = #{record.usm005,jdbcType=INTEGER},
-      </if>
-      <if test="record.usm006 != null">
-        USM006 = #{record.usm006,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usm007 != null">
-        USM007 = #{record.usm007,jdbcType=VARCHAR},
-      </if>
-      <if test="record.usm008 != null">
-        USM008 = #{record.usm008,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update cdusm
-    set USM001 = #{record.usm001,jdbcType=INTEGER},
-      USM002 = #{record.usm002,jdbcType=INTEGER},
-      USM003 = #{record.usm003,jdbcType=INTEGER},
-      USM004 = #{record.usm004,jdbcType=INTEGER},
-      USM005 = #{record.usm005,jdbcType=INTEGER},
-      USM006 = #{record.usm006,jdbcType=VARCHAR},
-      USM007 = #{record.usm007,jdbcType=VARCHAR},
-      USM008 = #{record.usm008,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.efx.quality.model.cdusm">
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdusm">
     update cdusm
     <set>
       <if test="usm002 != null">
-        USM002 = #{usm002,jdbcType=INTEGER},
-      </if>
-      <if test="usm003 != null">
-        USM003 = #{usm003,jdbcType=INTEGER},
-      </if>
-      <if test="usm004 != null">
-        USM004 = #{usm004,jdbcType=INTEGER},
-      </if>
-      <if test="usm005 != null">
-        USM005 = #{usm005,jdbcType=INTEGER},
-      </if>
-      <if test="usm006 != null">
-        USM006 = #{usm006,jdbcType=VARCHAR},
-      </if>
-      <if test="usm007 != null">
-        USM007 = #{usm007,jdbcType=VARCHAR},
-      </if>
-      <if test="usm008 != null">
-        USM008 = #{usm008,jdbcType=VARCHAR},
+        USM002 = #{usm002,jdbcType=VARCHAR},
       </if>
     </set>
     where USM001 = #{usm001,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.efx.quality.model.cdusm">
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdusm">
     update cdusm
-    set USM002 = #{usm002,jdbcType=INTEGER},
-      USM003 = #{usm003,jdbcType=INTEGER},
-      USM004 = #{usm004,jdbcType=INTEGER},
-      USM005 = #{usm005,jdbcType=INTEGER},
-      USM006 = #{usm006,jdbcType=VARCHAR},
-      USM007 = #{usm007,jdbcType=VARCHAR},
-      USM008 = #{usm008,jdbcType=VARCHAR}
+    set USM002 = #{usm002,jdbcType=VARCHAR}
     where USM001 = #{usm001,jdbcType=INTEGER}
   </update>
-  <select id="selectBylsid" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.fangx.model.cdusmExample" flushCache="true" useCache="false">
     select
-    <include refid="Base_Column_List" />
-    from cdusm
-    where USM002 = #{lsid,jdbcType=INTEGER} and USM006='A' order by usm006 desc,usm001
-  </select>
-  <select id="selectBylsid1" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
-    select
-    <include refid="Base_Column_List" />
-    from cdusm
-    where USM002 = #{lsid,jdbcType=INTEGER} and USM006='B' order by usm006 desc,usm001
-  </select>
-  <select id="selectbyllidnj" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select USB005
-    from cdusm LEFT JOIN cdusb ON cdusm.USM004=cdusb.USB001
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectbyllidbj" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-    select USM004
-    from cdusm
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample1" parameterType="com.efx.quality.model.cdusmExample" resultMap="BaseResultMap1">
-    select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
     from cdusm
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExamplenb" parameterType="com.efx.quality.model.cdusmExample" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from cdusm left join cdusc on cdusm.usm003=cdusc.usc001 left join cdusb on cdusm.usm004=cdusb.usb001
-    <where>
-      <if test="cdusmExample != null">
-        <foreach collection="cdusmExample.oredCriteria" item="criteria" separator="or">
-          <include refid="ECExample_Where_Clause" />
-        </foreach>
-      </if>
-      <if test="cdusbExample != null">
-        <foreach collection="cdusbExample.oredCriteria" item="criteria" separator="or">
-          <include refid="ECExample_Where_Clause" />
-        </foreach>
-      </if>
-      <if test="cduscExample != null">
-        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
-          <include refid="ECExample_Where_Clause" />
-        </foreach>
-      </if>
-    </where>
-  </select>
-  <sql id="ECExample_Where_Clause">
-    <if test="criteria.valid">
-      <foreach collection="criteria.criteria" item="criterion">
-        <choose>
-          <when test="criterion.noValue">
-            and ${criterion.condition}
-          </when>
-          <when test="criterion.singleValue">
-            and ${criterion.condition}
-            #{criterion.value}
-          </when>
-          <when test="criterion.betweenValue">
-            and ${criterion.condition} #{criterion.value} and
-            #{criterion.secondValue}
-          </when>
-          <when test="criterion.listValue">
-            and ${criterion.condition}
-            <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-              #{listItem}
-            </foreach>
-          </when>
-        </choose>
-      </foreach>
-    </if>
-  </sql>
-
-  <select id="selectByExampleid" parameterType="com.efx.quality.model.cdusmExample" resultMap="BaseResultMap2">
-    select
-    <include refid="Base_Column_List2" />
-    from cdusm
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>

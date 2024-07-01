@@ -55,7 +55,7 @@ p { line-height: 1.5em; }
 	font-size: 14px;
 	line-height: 1;
 	text-align: center;
-	color: #FFF;
+	color: #666;
 	margin-right: 0.5rem;
 }
 .dd-item > button:before { content: "\f067"; display: block; position: absolute; width: 100%; text-align: center; text-indent: 0;font-family:FontAwesome; }
