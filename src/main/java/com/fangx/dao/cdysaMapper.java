@@ -27,4 +27,5 @@ public interface cdysaMapper {
     int updateByPrimaryKeySelective(cdysa record);
 
     int updateByPrimaryKey(cdysa record);
+    cdysa selectByflid(Integer ysa001);
 }

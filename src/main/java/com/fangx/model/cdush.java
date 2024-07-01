@@ -1,6 +1,26 @@
 package com.fangx.model;
 
 public class cdush {
+    private cdyha yha;
+
+    public cdyha getYha() {
+        return yha;
+    }
+
+    public void setYha(cdyha yha) {
+        this.yha = yha;
+    }
+
+    private cdusf usf;
+
+    public cdusf getUsf() {
+        return usf;
+    }
+
+    public void setUsf(cdusf usf) {
+        this.usf = usf;
+    }
+
     private String ush001;
 
     private String ush002;

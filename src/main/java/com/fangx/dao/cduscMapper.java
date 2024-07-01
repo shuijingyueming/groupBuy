@@ -4,6 +4,7 @@ import com.fangx.model.cdusc;
 import com.fangx.model.cduscExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 public interface cduscMapper {
     long countByExample(cduscExample example);
@@ -20,6 +21,8 @@ public interface cduscMapper {
 
     cdusc selectByPrimaryKey(Integer usc001);
 
+    cdusc selectByPrimaryKey1(Integer usc001);
+
     int updateByExampleSelective(@Param("record") cdusc record, @Param("example") cduscExample example);
 
     int updateByExample(@Param("record") cdusc record, @Param("example") cduscExample example);
@@ -27,4 +30,6 @@ public interface cduscMapper {
     int updateByPrimaryKeySelective(cdusc record);
 
     int updateByPrimaryKey(cdusc record);
+
+    List<cdusc> selectByExampleAndPage(cduscExample example, RowBounds rowBounds);
 }

@@ -27,4 +27,6 @@ public interface cdyheMapper {
     int updateByPrimaryKeySelective(cdyhe record);
 
     int updateByPrimaryKey(cdyhe record);
+
+    List<cdyhe> selectByExample1(cdyheExample e1);
 }

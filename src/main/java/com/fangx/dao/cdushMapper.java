@@ -27,4 +27,12 @@ public interface cdushMapper {
     int updateByPrimaryKeySelective(cdush record);
 
     int updateByPrimaryKey(cdush record);
+
+    cdush selectByddid(String ush001);
+
+    Integer selectByyhdd(@Param("yhid")Integer yhid, @Param("qsid")String qsid);
+
+    List<cdush> selectByExample1(cdushExample e1);
+
+    Integer selectBycg(String qsid);
 }

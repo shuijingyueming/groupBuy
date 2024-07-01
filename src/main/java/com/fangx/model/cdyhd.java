@@ -3,6 +3,25 @@ package com.fangx.model;
 import java.util.Date;
 
 public class cdyhd {
+    private cdusd usd;
+    private cdusc usc;
+
+    public cdusd getUsd() {
+        return usd;
+    }
+
+    public void setUsd(cdusd usd) {
+        this.usd = usd;
+    }
+
+    public cdusc getUsc() {
+        return usc;
+    }
+
+    public void setUsc(cdusc usc) {
+        this.usc = usc;
+    }
+
     private String yhd001;
 
     private Integer yhd002;

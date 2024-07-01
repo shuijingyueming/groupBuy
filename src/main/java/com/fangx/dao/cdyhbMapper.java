@@ -27,4 +27,6 @@ public interface cdyhbMapper {
     int updateByPrimaryKeySelective(cdyhb record);
 
     int updateByPrimaryKey(cdyhb record);
+
+    cdyhb selectBygsid(Integer gsid);
 }

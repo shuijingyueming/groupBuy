@@ -1,4 +1,4 @@
-package com.efx.quality.config;/*
+package com.fangx.config;/*
 package com.efx.wm.config;
 
 import org.springframework.beans.factory.annotation.Value;

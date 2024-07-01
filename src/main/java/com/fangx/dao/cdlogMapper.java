@@ -4,6 +4,7 @@ import com.fangx.model.cdlog;
 import com.fangx.model.cdlogExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 public interface cdlogMapper {
     long countByExample(cdlogExample example);
@@ -15,8 +16,6 @@ public interface cdlogMapper {
     int insert(cdlog record);
 
     int insertSelective(cdlog record);
-
-    List<cdlog> selectByExampleWithBLOBs(cdlogExample example);
 
     List<cdlog> selectByExample(cdlogExample example);
 
@@ -33,4 +32,6 @@ public interface cdlogMapper {
     int updateByPrimaryKeyWithBLOBs(cdlog record);
 
     int updateByPrimaryKey(cdlog record);
+
+    List selectByExampleAndPage(cdlogExample example, RowBounds rowBounds);
 }

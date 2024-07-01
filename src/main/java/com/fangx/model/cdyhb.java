@@ -1,6 +1,15 @@
 package com.fangx.model;
 
 public class cdyhb {
+    private cdusb usb;
+
+    public cdusb getUsb() {
+        return usb;
+    }
+
+    public void setUsb(cdusb usb) {
+        this.usb = usb;
+    }
     private String yhb001;
 
     private Integer yhb002;

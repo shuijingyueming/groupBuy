@@ -685,6 +685,7 @@ public class cdyhcExample {
             return (Criteria) this;
         }
 
+
         public Criteria andYhc010IsNull() {
             addCriterion("YHC010 is null");
             return (Criteria) this;
@@ -695,52 +696,62 @@ public class cdyhcExample {
             return (Criteria) this;
         }
 
-        public Criteria andYhc010EqualTo(Float value) {
+        public Criteria andYhc010EqualTo(String value) {
             addCriterion("YHC010 =", value, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010NotEqualTo(Float value) {
+        public Criteria andYhc010NotEqualTo(String value) {
             addCriterion("YHC010 <>", value, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010GreaterThan(Float value) {
+        public Criteria andYhc010GreaterThan(String value) {
             addCriterion("YHC010 >", value, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010GreaterThanOrEqualTo(Float value) {
+        public Criteria andYhc010GreaterThanOrEqualTo(String value) {
             addCriterion("YHC010 >=", value, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010LessThan(Float value) {
+        public Criteria andYhc010LessThan(String value) {
             addCriterion("YHC010 <", value, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010LessThanOrEqualTo(Float value) {
+        public Criteria andYhc010LessThanOrEqualTo(String value) {
             addCriterion("YHC010 <=", value, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010In(List<Float> values) {
+        public Criteria andYhc010Like(String value) {
+            addCriterion("YHC010 like", value, "yhc010");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc010NotLike(String value) {
+            addCriterion("YHC010 not like", value, "yhc010");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc010In(List<String> values) {
             addCriterion("YHC010 in", values, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010NotIn(List<Float> values) {
+        public Criteria andYhc010NotIn(List<String> values) {
             addCriterion("YHC010 not in", values, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010Between(Float value1, Float value2) {
+        public Criteria andYhc010Between(String value1, String value2) {
             addCriterion("YHC010 between", value1, value2, "yhc010");
             return (Criteria) this;
         }
 
-        public Criteria andYhc010NotBetween(Float value1, Float value2) {
+        public Criteria andYhc010NotBetween(String value1, String value2) {
             addCriterion("YHC010 not between", value1, value2, "yhc010");
             return (Criteria) this;
         }
@@ -882,6 +893,11 @@ public class cdyhcExample {
 
         public Criteria andYhc012NotBetween(String value1, String value2) {
             addCriterion("YHC012 not between", value1, value2, "yhc012");
+            return (Criteria) this;
+        }
+
+        public Criteria andSql(String value) {
+            addCriterion(value);
             return (Criteria) this;
         }
     }

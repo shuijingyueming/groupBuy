@@ -3,7 +3,10 @@ package com.fangx.dao;
 import com.fangx.model.cdusa;
 import com.fangx.model.cdusaExample;
 import java.util.List;
+
+import com.fangx.model.cduse;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 public interface cdusaMapper {
     long countByExample(cdusaExample example);
@@ -27,4 +30,6 @@ public interface cdusaMapper {
     int updateByPrimaryKeySelective(cdusa record);
 
     int updateByPrimaryKey(cdusa record);
+
+    List<cduse> selectByExampleAndPage(cdusaExample example, RowBounds rowBounds);
 }

@@ -1,8 +1,39 @@
 package com.fangx.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class cdyhc {
+
+    private cdusc usc;
+    private cdusd usd;
+
+    private List<cdush> ushlist;
+
+    public cdusc getUsc() {
+        return usc;
+    }
+
+    public void setUsc(cdusc usc) {
+        this.usc = usc;
+    }
+
+    public cdusd getUsd() {
+        return usd;
+    }
+
+    public void setUsd(cdusd usd) {
+        this.usd = usd;
+    }
+
+    public List<cdush> getUshlist() {
+        return ushlist;
+    }
+
+    public void setUshlist(List<cdush> ushlist) {
+        this.ushlist = ushlist;
+    }
+
     private String yhc001;
 
     private Integer yhc002;
@@ -21,7 +52,7 @@ public class cdyhc {
 
     private String yhc009;
 
-    private Float yhc010;
+    private String yhc010;
 
     private String yhc011;
 
@@ -99,11 +130,11 @@ public class cdyhc {
         this.yhc009 = yhc009 == null ? null : yhc009.trim();
     }
 
-    public Float getYhc010() {
+    public String getYhc010() {
         return yhc010;
     }
 
-    public void setYhc010(Float yhc010) {
+    public void setYhc010(String yhc010) {
         this.yhc010 = yhc010;
     }
 

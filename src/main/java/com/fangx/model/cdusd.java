@@ -1,8 +1,29 @@
 package com.fangx.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class cdusd {
+    private List<cdyhb> yhblist;
+
+    public List<cdyhb> getYhblist() {
+        return yhblist;
+    }
+
+    public void setYhblist(List<cdyhb> yhblist) {
+        this.yhblist = yhblist;
+    }
+
+    private cdusb usb;
+
+    public cdusb getUsb() {
+        return usb;
+    }
+
+    public void setUsb(cdusb usb) {
+        this.usb = usb;
+    }
+
     private Integer usd001;
 
     private String usd002;

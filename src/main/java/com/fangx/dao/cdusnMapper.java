@@ -27,4 +27,6 @@ public interface cdusnMapper {
     int updateByPrimaryKeySelective(cdusn record);
 
     int updateByPrimaryKey(cdusn record);
+
+    cdusn selectBycpid(Integer usn001);
 }

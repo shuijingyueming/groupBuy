@@ -1,6 +1,7 @@
 package com.fangx.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class cdusbExample {
@@ -556,72 +557,62 @@ public class cdusbExample {
 
         public Criteria andUsb008IsNull() {
             addCriterion("USB008 is null");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
         public Criteria andUsb008IsNotNull() {
             addCriterion("USB008 is not null");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008EqualTo(String value) {
+        public Criteria andUsb008EqualTo(Date value) {
             addCriterion("USB008 =", value, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008NotEqualTo(String value) {
+        public Criteria andUsb008NotEqualTo(Date value) {
             addCriterion("USB008 <>", value, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008GreaterThan(String value) {
+        public Criteria andUsb008GreaterThan(Date value) {
             addCriterion("USB008 >", value, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008GreaterThanOrEqualTo(String value) {
+        public Criteria andUsb008GreaterThanOrEqualTo(Date value) {
             addCriterion("USB008 >=", value, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008LessThan(String value) {
+        public Criteria andUsb008LessThan(Date value) {
             addCriterion("USB008 <", value, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008LessThanOrEqualTo(String value) {
+        public Criteria andUsb008LessThanOrEqualTo(Date value) {
             addCriterion("USB008 <=", value, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008Like(String value) {
-            addCriterion("USB008 like", value, "usb008");
-            return (Criteria) this;
-        }
-
-        public Criteria andUsb008NotLike(String value) {
-            addCriterion("USB008 not like", value, "usb008");
-            return (Criteria) this;
-        }
-
-        public Criteria andUsb008In(List<String> values) {
+        public Criteria andUsb008In(List<Date> values) {
             addCriterion("USB008 in", values, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008NotIn(List<String> values) {
+        public Criteria andUsb008NotIn(List<Date> values) {
             addCriterion("USB008 not in", values, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008Between(String value1, String value2) {
+        public Criteria andUsb008Between(Date value1, Date value2) {
             addCriterion("USB008 between", value1, value2, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
 
-        public Criteria andUsb008NotBetween(String value1, String value2) {
+        public Criteria andUsb008NotBetween(Date value1, Date value2) {
             addCriterion("USB008 not between", value1, value2, "usb008");
-            return (Criteria) this;
+            return (Criteria)this;
         }
     }
 

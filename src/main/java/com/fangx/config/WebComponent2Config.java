@@ -1,6 +1,6 @@
-package com.efx.quality.config;
+package com.fangx.config;
 
-import com.efx.quality.filter.SessionFilter;
+import com.fangx.filter.SessionFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,10 @@ public class WebComponent2Config {
         // 添加我们写好的过滤器
         registration.setFilter(new SessionFilter());
         // 设置过滤器的URL模式
-       // registration.addUrlPatterns("/toHt/*");
-        
+        registration.addUrlPatterns("/toHt/*");
+        registration.addUrlPatterns("/toCo/*");
+        registration.addUrlPatterns("/toDi/*");
+        registration.addUrlPatterns("/toOr/*");
         registration.setName("sessionFilter");
         registration.setOrder(1);
         return registration;

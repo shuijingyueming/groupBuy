@@ -1,6 +1,19 @@
 package com.fangx.model;
 
+import java.util.List;
+
 public class cdyhe {
+
+    private List<cdysa> ysalist;
+
+    public List<cdysa> getYsalist() {
+        return ysalist;
+    }
+
+    public void setYsalist(List<cdysa> ysalist) {
+        this.ysalist = ysalist;
+    }
+
     private Integer yhe001;
 
     private String yhe002;

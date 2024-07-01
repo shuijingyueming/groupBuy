@@ -1,6 +1,76 @@
 package com.fangx.model;
 
+import java.util.List;
+
 public class cdusf {
+
+    private cdush ush;
+
+    public cdush getUsh() {
+        return ush;
+    }
+
+    public void setUsh(cdush ush) {
+        this.ush = ush;
+    }
+
+    private cdusm usm;
+    private cdyhe yhe;
+    private cdysa ysa;
+    private cdyha yha;
+
+    private Integer sl;
+
+    public Integer getSl() {
+        return sl;
+    }
+
+    public void setSl(Integer sl) {
+        this.sl = sl;
+    }
+
+    public cdusm getUsm() {
+        return usm;
+    }
+
+    public void setUsm(cdusm usm) {
+        this.usm = usm;
+    }
+
+    public cdyhe getYhe() {
+        return yhe;
+    }
+
+    public void setYhe(cdyhe yhe) {
+        this.yhe = yhe;
+    }
+
+    public cdysa getYsa() {
+        return ysa;
+    }
+
+    public void setYsa(cdysa ysa) {
+        this.ysa = ysa;
+    }
+
+    public cdyha getYha() {
+        return yha;
+    }
+
+    public void setYha(cdyha yha) {
+        this.yha = yha;
+    }
+
+    private List<cdusn> usnlist;
+
+    public List<cdusn> getUsnlist() {
+        return usnlist;
+    }
+
+    public void setUsnlist(List<cdusn> usnlist) {
+        this.usnlist = usnlist;
+    }
+
     private Integer usf001;
 
     private String usf002;

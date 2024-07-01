@@ -1,8 +1,58 @@
 package com.fangx.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class cdusc {
+
+    private String nr;
+    private String bz;
+
+    public String getNr() {
+        return nr;
+    }
+
+    public void setNr(String nr) {
+        this.nr = nr;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
+    }
+
+    private List<cdyhc> ddlist;
+    private List<cdusf> cplist;
+
+    public List<cdyhc> getDdlist() {
+        return ddlist;
+    }
+
+    public void setDdlist(List<cdyhc> ddlist) {
+        this.ddlist = ddlist;
+    }
+
+    public List<cdusf> getCplist() {
+        return cplist;
+    }
+
+    public void setCplist(List<cdusf> cplist) {
+        this.cplist = cplist;
+    }
+
+    private cdusd usd;
+
+    public cdusd getUsd() {
+        return usd;
+    }
+
+    public void setUsd(cdusd usd) {
+        this.usd = usd;
+    }
+
     private Integer usc001;
 
     private String usc002;

@@ -1,5 +1,7 @@
 package com.fangx.model;
 
+import java.util.Date;
+
 public class cdusb {
     private Integer usb001;
 
@@ -15,7 +17,7 @@ public class cdusb {
 
     private String usb007;
 
-    private String usb008;
+    private Date usb008;
 
     public Integer getUsb001() {
         return usb001;
@@ -73,12 +75,12 @@ public class cdusb {
         this.usb007 = usb007 == null ? null : usb007.trim();
     }
 
-    public String getUsb008() {
+    public Date getUsb008() {
         return usb008;
     }
 
-    public void setUsb008(String usb008) {
-        this.usb008 = usb008 == null ? null : usb008.trim();
+    public void setUsb008(Date usb008) {
+        this.usb008 = usb008;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.fangx.model.cdyhk;
 import com.fangx.model.cdyhkExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 public interface cdyhkMapper {
     long countByExample(cdyhkExample example);
@@ -27,4 +28,6 @@ public interface cdyhkMapper {
     int updateByPrimaryKeySelective(cdyhk record);
 
     int updateByPrimaryKey(cdyhk record);
+
+    List<cdyhk> selectByExampleAndPage(cdyhkExample example, RowBounds rowBounds);
 }

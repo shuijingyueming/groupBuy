@@ -27,4 +27,6 @@ public interface cdyhaMapper {
     int updateByPrimaryKeySelective(cdyha record);
 
     int updateByPrimaryKey(cdyha record);
+
+    cdyha selectByqscp(@Param("qsid") Integer qsid, @Param("cpid") Integer cpid);
 }
