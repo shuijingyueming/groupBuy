@@ -1,8 +1,7 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
-
-import com.efx.quality.model.PubMessage;
-import com.efx.quality.model.cdusn;
+import com.fangx.model.PubMessage;
+import com.fangx.model.cdusn;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
@@ -142,7 +141,7 @@ public class BaiduService {
      * groupName:(“sm_”+学校机构ID) 学生组 （"qm_"+街道id）街道
      * result返回:Y 成功 N 失败
      */
-    public static String del(cdusn user,String groupName) {
+    public static String del(cdusn user, String groupName) {
         // 请求url
         String url = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/delete";
         try{
@@ -153,7 +152,7 @@ public class BaiduService {
             map.put("log_id",timestamp);//请求标识码，随机数，唯一
             map.put("group_id", groupName);//人员组名
             map.put("user_id", user.getUsn001());//用户id
-            map.put("face_token", user.getUsn017());//需要删除的人脸图片token
+//            map.put("face_token", user.getUsn017());//需要删除的人脸图片token
 
             String param = GsonUtils.toJson(map);
             String result = HttpUtil.post(url, PubMessage.baidu_token, "application/json", param);

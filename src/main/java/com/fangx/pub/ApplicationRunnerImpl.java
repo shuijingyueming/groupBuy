@@ -339,7 +339,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
 
         //线程获取微信的token
-    /* new Thread(){
+    new Thread(){
             public void run(){
                 while (true){
                     try {
@@ -357,7 +357,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                     }
                 }
             }
-        }.start();*/
+        }.start();
 
     }
 
