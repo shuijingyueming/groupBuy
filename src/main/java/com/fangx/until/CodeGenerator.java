@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;

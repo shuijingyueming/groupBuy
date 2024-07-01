@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

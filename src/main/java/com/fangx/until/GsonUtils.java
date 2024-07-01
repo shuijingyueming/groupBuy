@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

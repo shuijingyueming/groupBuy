@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.google.zxing.*;

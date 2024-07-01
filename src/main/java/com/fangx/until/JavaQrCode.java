@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;

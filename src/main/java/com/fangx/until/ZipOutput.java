@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -98,8 +98,6 @@ public class ZipOutput {
 	
 	/**
 	* 根据输入的文件与输出流对文件进行打包
-	* @param File
-	* @param org.apache.tools.zip.ZipOutputStream
 	*/
 	private static void zipFile(File inputFile,ZipOutputStream ouputStream) {
 		try {

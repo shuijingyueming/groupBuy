@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

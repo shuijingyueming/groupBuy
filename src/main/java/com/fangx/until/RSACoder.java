@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 

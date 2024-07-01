@@ -1,4 +1,4 @@
-package com.efx.quality.until;
+package com.fangx.until;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -73,10 +73,10 @@ public class ParseDocument {
             doc = db.parse(url);
             System.out.println(doc);
         } catch (ParserConfigurationException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         } catch (SAXException | IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
 
@@ -154,13 +154,13 @@ public class ParseDocument {
             // 可随意指定文件的后缀,效果一样,但xml比较好解析,比如: E:\\person.txt等
             transformer.transform(new DOMSource(doc), new StreamResult(path));
         } catch (TransformerConfigurationException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         } catch (TransformerException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         } /*catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }*/
 
