@@ -116,7 +116,7 @@
                         <td>
                             <button th:onclick="toxq([[${item.yhc001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'L5#')>=0}">
-                                <th:block th:if="${item.yhc005=='Y'}">
+                                <th:block th:if="${item.yhc005=='A'||item.yhc005=='Y'}">
                                     <button th:onclick="totk([[${item.yhc001}]],[[${item.usc.usc002}]])" type="button" class="btn btn-primary btn-sm btxz">退货</button>
                                 </th:block>
                             </th:block>
@@ -137,6 +137,7 @@
         </div>
     </div>
     <!-- DataTable With Scroll Example Section Starts -->
+    
 </div>
 <!-- 详情滑动页 -->
 <div id="detail" class="model">
