@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdysbMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdysb">
+    <id column="YSB001" jdbcType="INTEGER" property="ysb001" />
+    <result column="YSB002" jdbcType="INTEGER" property="ysb002" />
+    <result column="YSB003" jdbcType="TIMESTAMP" property="ysb003" />
+    <result column="YSB004" jdbcType="TIMESTAMP" property="ysb004" />
+    <result column="YSB005" jdbcType="CHAR" property="ysb005" />
+    <result column="YSB006" jdbcType="INTEGER" property="ysb006" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    YSB001, YSB002, YSB003, YSB004, YSB005, YSB006
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdysbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdysb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdysb
+    where YSB001 = #{ysb001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdysb
+    where YSB001 = #{ysb001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdysbExample">
+    delete from cdysb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdysb">
+    insert into cdysb (YSB001, YSB002, YSB003, 
+      YSB004, YSB005, YSB006
+      )
+    values (#{ysb001,jdbcType=INTEGER}, #{ysb002,jdbcType=INTEGER}, #{ysb003,jdbcType=TIMESTAMP}, 
+      #{ysb004,jdbcType=TIMESTAMP}, #{ysb005,jdbcType=CHAR}, #{ysb006,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdysb">
+    insert into cdysb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ysb001 != null">
+        YSB001,
+      </if>
+      <if test="ysb002 != null">
+        YSB002,
+      </if>
+      <if test="ysb003 != null">
+        YSB003,
+      </if>
+      <if test="ysb004 != null">
+        YSB004,
+      </if>
+      <if test="ysb005 != null">
+        YSB005,
+      </if>
+      <if test="ysb006 != null">
+        YSB006,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ysb001 != null">
+        #{ysb001,jdbcType=INTEGER},
+      </if>
+      <if test="ysb002 != null">
+        #{ysb002,jdbcType=INTEGER},
+      </if>
+      <if test="ysb003 != null">
+        #{ysb003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ysb004 != null">
+        #{ysb004,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ysb005 != null">
+        #{ysb005,jdbcType=CHAR},
+      </if>
+      <if test="ysb006 != null">
+        #{ysb006,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdysbExample" resultType="java.lang.Long">
+    select count(*) from cdysb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdysb
+    <set>
+      <if test="record.ysb001 != null">
+        YSB001 = #{record.ysb001,jdbcType=INTEGER},
+      </if>
+      <if test="record.ysb002 != null">
+        YSB002 = #{record.ysb002,jdbcType=INTEGER},
+      </if>
+      <if test="record.ysb003 != null">
+        YSB003 = #{record.ysb003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ysb004 != null">
+        YSB004 = #{record.ysb004,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ysb005 != null">
+        YSB005 = #{record.ysb005,jdbcType=CHAR},
+      </if>
+      <if test="record.ysb006 != null">
+        YSB006 = #{record.ysb006,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdysb
+    set YSB001 = #{record.ysb001,jdbcType=INTEGER},
+      YSB002 = #{record.ysb002,jdbcType=INTEGER},
+      YSB003 = #{record.ysb003,jdbcType=TIMESTAMP},
+      YSB004 = #{record.ysb004,jdbcType=TIMESTAMP},
+      YSB005 = #{record.ysb005,jdbcType=CHAR},
+      YSB006 = #{record.ysb006,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdysb">
+    update cdysb
+    <set>
+      <if test="ysb002 != null">
+        YSB002 = #{ysb002,jdbcType=INTEGER},
+      </if>
+      <if test="ysb003 != null">
+        YSB003 = #{ysb003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ysb004 != null">
+        YSB004 = #{ysb004,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ysb005 != null">
+        YSB005 = #{ysb005,jdbcType=CHAR},
+      </if>
+      <if test="ysb006 != null">
+        YSB006 = #{ysb006,jdbcType=INTEGER},
+      </if>
+    </set>
+    where YSB001 = #{ysb001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdysb">
+    update cdysb
+    set YSB002 = #{ysb002,jdbcType=INTEGER},
+      YSB003 = #{ysb003,jdbcType=TIMESTAMP},
+      YSB004 = #{ysb004,jdbcType=TIMESTAMP},
+      YSB005 = #{ysb005,jdbcType=CHAR},
+      YSB006 = #{ysb006,jdbcType=INTEGER}
+    where YSB001 = #{ysb001,jdbcType=INTEGER}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap" parameterType="com.fangx.model.cdysbExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdysb
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
