@@ -1,4 +1,4 @@
-package com.efx.quality.wx;
+package com.fangx.wx;
 
 import org.jdom2.input.SAXBuilder;
 import org.xml.sax.InputSource;

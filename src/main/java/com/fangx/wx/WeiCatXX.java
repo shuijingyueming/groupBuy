@@ -1,4 +1,4 @@
-package com.efx.quality.wx;
+package com.fangx.wx;
 
 import net.sf.json.JSONObject;
 

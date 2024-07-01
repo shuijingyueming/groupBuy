@@ -1,4 +1,4 @@
-package com.efx.quality.wx;
+package com.fangx.wx;
 
 import java.io.BufferedReader;
 import java.io.IOException;

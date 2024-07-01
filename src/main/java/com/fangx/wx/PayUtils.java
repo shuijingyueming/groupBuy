@@ -1,4 +1,4 @@
-package com.efx.quality.wx;
+package com.fangx.wx;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpEntity;
@@ -268,7 +268,7 @@ public class PayUtils {
         try {     
             result=java.net.URLEncoder.encode(source, "UTF-8");     
         } catch (UnsupportedEncodingException e) {     
-            // TODO Auto-generated catch block     
+                 
             e.printStackTrace();     
         }     
         return result;     
@@ -276,8 +276,7 @@ public class PayUtils {
     /** 
      * 解析xml,返回第一级元素键值对。如果第一级元素有子节点，则此节点的值是子节点的xml数据。 
      * @param strxml 
-     * @return 
-     * @throws JDOMException 
+     * @return
      * @throws IOException 
      */  
     public static Map doXMLParse(String strxml) throws Exception {  
@@ -403,7 +402,6 @@ public class PayUtils {
             }
             return new String(buf);
         } catch (Exception e) {
-            // TODO: handle exception
             return null;
         }
     }

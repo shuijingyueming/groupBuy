@@ -1,7 +1,7 @@
-package com.efx.quality.wx;
+package com.fangx.wx;
 
 import com.alibaba.fastjson.JSON;
-import com.efx.quality.model.PubMessage;
+import com.fangx.model.PubMessage;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -318,6 +318,137 @@ public class WeiCatJK {
 			return false;
 		}
 	}
-	
-	
+
+	// 小程序付款
+	public static Map wxPay(Map<String, String> mp) {
+		try {
+			int total = 100;
+			int amount = (int) Math.round(total * Double.valueOf(mp.get("total_fee")));
+			// 生成的随机字符串
+//			String nonce_str = RandomStringGenerator.getRandomStringByLength(32);
+			// 获取客户端的ip地址
+			String spbill_create_ip = mp.get("spbill_create_ip");
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+			String time = df.format(new Date());
+			Random ne = new Random();
+			int guid = ne.nextInt(9999 - 1000 + 1) + 1000;
+			// 组装参数，用户生成统一下单接口的签名
+			Map<String, String> packageParams = new HashMap<String, String>();
+			packageParams.put("appid", mp.get("appid"));
+			packageParams.put("mch_id", mp.get("mch_id"));
+			packageParams.put("nonce_str", mp.get("nonce_str"));
+			packageParams.put("body", mp.get("body"));
+			packageParams.put("out_trade_no", mp.get("mch_id") + time + guid);// 商户订单号
+			packageParams.put("total_fee", String.valueOf(amount));// 支付金额，这边需要转成字符串类型，否则后面的签名会失败
+			packageParams.put("spbill_create_ip", spbill_create_ip);
+			packageParams.put("notify_url", mp.get("notify_url"));// 支付成功后的回调地址
+			packageParams.put("trade_type", "JSAPI");// 支付方式
+			packageParams.put("openid", mp.get("openid"));
+			String prestr = PayUtils.createLinkString(packageParams); // 把数组所有元素，按照'参数=参数值'的模式用'&'字符拼接成字符串
+			System.out.println(mp.get("openid")+"--支付金额--"+String.valueOf(amount));
+			// MD5运算生成签名，这里是第一次签名，用于调用统一下单接口
+			String mysign = PayUtils.sign(prestr, mp.get("mch_Key"), "utf-8")
+					.toUpperCase();
+
+			TreeMap<String, String> tmap1 = new TreeMap<String, String>();
+			tmap1.put("appid", mp.get("appid"));
+			tmap1.put("body", mp.get("body"));
+			tmap1.put("mch_id", mp.get("mch_id"));
+			tmap1.put("nonce_str", mp.get("nonce_str"));
+			tmap1.put("notify_url", mp.get("notify_url"));// 支付成功后的回调地址
+			tmap1.put("openid", mp.get("openid"));
+			tmap1.put("out_trade_no", mp.get("mch_id") + time + guid);// 商户订单号
+			tmap1.put("spbill_create_ip", spbill_create_ip);
+			tmap1.put("total_fee", String.valueOf(amount));// 支付金额，这边需要转成字符串类型，否则后面的签名会失败
+			tmap1.put("trade_type", "JSAPI");// 支付方式
+			tmap1.put("sign", mysign);// 支付方式
+			String xml = XMLUtils.getRequestXml(tmap1);
+
+			// System.out.println("调试模式_统一下单接口 请求XML数据：" + xml);
+
+			// 调用统一下单接口，并接受返回的结果
+			String result = PayUtils.httpRequest(
+					"https://api.mch.weixin.qq.com/pay/unifiedorder", "POST",
+					xml);
+
+			// 将解析结果存储在HashMap中
+			Map map = PayUtils.doXMLParse(result);
+
+			String return_code = (String) map.get("return_code");// 返回状态码
+			// System.out.println(return_code+"返回状态码 ");
+			Map<String, Object> response = new HashMap<String, Object>();// 返回给小程序端需要的参数
+			if (return_code == "SUCCESS" || return_code.equals(return_code)) {
+				String prepay_id = (String) map.get("prepay_id");// 返回的预付单信息
+				response.put("nonceStr", mp.get("nonce_str"));
+				response.put("package", "prepay_id=" + prepay_id);
+				Long timeStamp = System.currentTimeMillis() / 1000;
+				response.put("timeStamp", timeStamp + "");// 这边要将返回的时间戳转化成字符串，不然小程序端调用wx.requestPayment方法会报签名错误
+				// 拼接签名需要的参数
+				String stringSignTemp = "appId=" + mp.get("appid")
+						+ "&nonceStr=" + mp.get("nonce_str") + "&package=prepay_id="
+						+ prepay_id + "&signType=MD5&timeStamp=" + timeStamp
+						+ "";
+				// 再次签名，这个签名用于小程序端调用wx.requesetPayment方法
+				String paySign = PayUtils.sign(stringSignTemp,
+						mp.get("mch_Key"), "utf-8").toUpperCase();
+
+				response.put("paySign", paySign);
+			}
+
+			response.put("appid", mp.get("appid"));
+			return response;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// 小程序退款
+	public static Map wxRefund(Map<String, String> mp) {
+		try {
+			int total = 100;
+			int amount = (int) Math.round(total * Double.valueOf(mp.get("total_fee")));
+			int amount1 = (int) Math.round(total * Double.valueOf(mp.get("refund_fee")));
+//			System.out.println(amount1);
+			// 生成的随机字符串
+			String nonce_str = RandomStringGenerator.getRandomStringByLength(32);
+			SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+			String time = df.format(new Date());
+			Random ne = new Random();
+			int guid = ne.nextInt(9999 - 1000 + 1) + 1000;
+			// 组装参数，用户生成统一下单接口的签名
+			Map<String, String> packageParams = new HashMap<String, String>();
+			packageParams.put("appid", mp.get("appid"));
+			packageParams.put("mch_id", mp.get("mch_id"));
+			packageParams.put("nonce_str", nonce_str);
+			packageParams.put("out_trade_no", mp.get("out_trade_no"));// 商户订单号
+			packageParams.put("out_refund_no", mp.get("mch_id") + time + guid);// 商户订单号
+			packageParams.put("total_fee", String.valueOf(amount));// 支付的总金额，这边需要转成字符串类型，否则后面的签名会失败
+			packageParams.put("refund_fee", String.valueOf(amount1));// 需退款的金额，这边需要转成字符串类型，否则后面的签名会失败
+			String prestr = PayUtils.createLinkString(packageParams); // 把数组所有元素，按照'参数=参数值'的模式用'&'字符拼接成字符串
+			//System.out.println(prestr);
+			// MD5运算生成签名，这里是第一次签名，用于调用统一下单接口
+			String mysign = PayUtils.sign(prestr, mp.get("mch_Key"), "utf-8").toUpperCase();
+
+			TreeMap<String, String> tmap1 = new TreeMap<String, String>();
+			tmap1.put("appid", mp.get("appid"));
+			tmap1.put("mch_id", mp.get("mch_id"));
+			tmap1.put("nonce_str", nonce_str);
+			tmap1.put("out_trade_no", mp.get("out_trade_no"));// 商户订单号
+			tmap1.put("out_refund_no", mp.get("mch_id") + time + guid);// 商户订单号
+			tmap1.put("total_fee", String.valueOf(amount));// 支付的总金额，这边需要转成字符串类型，否则后面的签名会失败
+			tmap1.put("refund_fee", String.valueOf(amount1));// 需退款的金额，这边需要转成字符串类型，否则后面的签名会失败
+			tmap1.put("sign", mysign);// 支付方式
+			String xml = XMLUtils.getRequestXml(tmap1);
+			//System.out.println(xml);
+			// 调用统一下单接口，并接受返回的结果
+			String result = PayUtils.httpsRequest_AQZS("https://api.mch.weixin.qq.com/secapi/pay/refund", xml, mp.get("zsdz"), mp.get("mch_id"));
+//			System.out.println(result);
+			return PayUtils.doXMLParse(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

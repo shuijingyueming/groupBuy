@@ -1,4 +1,4 @@
-package com.efx.quality.wx;
+package com.fangx.wx;
 
 import net.sf.json.JSONObject;
 import org.apache.http.client.HttpClient;
@@ -24,7 +24,6 @@ public class WXGZH_util {
 	
 	/**
 	 * 公众号获取openID
-	 * @param request
 	 * @param response
 	 * @return
 	 * @throws IOException

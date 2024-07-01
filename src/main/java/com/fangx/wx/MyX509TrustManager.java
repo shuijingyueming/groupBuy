@@ -1,4 +1,4 @@
-package com.efx.quality.wx;
+package com.fangx.wx;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
