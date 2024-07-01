@@ -1,30 +1,30 @@
-package com.efx.quality.until;
+package com.fangx.until;
+
+import com.aliyun.oss.*;
+import com.aliyun.oss.model.*;
+import com.fangx.controller.BaseController;
+import com.fangx.controller.BaseController;
+import com.fangx.model.PubMessage;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.aliyun.oss.*;
-import com.aliyun.oss.model.*;
-import com.efx.quality.controller.BaseController;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.springframework.web.multipart.MultipartFile;
-
 
 public class OSSUtil extends BaseController {
 
 
-	private static String webendpoint="https://oss-cn-beijing.aliyuncs.com";//OSS外网访问
-	private static String aliendpoint="https://oss-cn-beijing-internal.aliyuncs.com";//OSS内网访问
+	private static String webendpoint="https://oss-cn-hangzhou.aliyuncs.com";//OSS外网访问
+	private static String aliendpoint="https://oss-cn-hangzhou-internal.aliyuncs.com";//OSS内网访问
 	private static String FORMATS = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-	private static String BucketName = "nbefx";
+	private static String BucketName = "fxtgoss";
+
 	
 	
 	/**
@@ -36,10 +36,7 @@ public class OSSUtil extends BaseController {
 	 */
 	public static String getFilePath(String type){
 		String path = "https://nbefx.oss-cn-beijing.aliyuncs.com/";
-		if(type.equals("A")) path = path + "quality/rongjia/act/";
-		else if(type.equals("B")) path = path + "quality/rongjia/ban/";
-		else if(type.equals("C")) path = path + "quality/rongjia/gg/";
-		else if(type.equals("D")) path = path + "quality/rongjia/shop/";
+		if(type.equals("A")) path = path + "shopimg/";
 		return path;	
 	}
 	
@@ -51,8 +48,8 @@ public class OSSUtil extends BaseController {
 	**/
 	public static OSS getsourceSet(String type){
 		// 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
-		String accessKeyId = "LTAISL8bC3OCBvcP";
-		String accessKeySecret = "uPSW45Wg5N6NAl6pETvRqMRzYQMasp";
+		String accessKeyId = PubMessage.getXxz().getXxz020();
+		String accessKeySecret = PubMessage.getXxz().getXxz021();
 		
 		// 创建ClientConfiguration实例，按照您的需要修改默认参数。
 		ClientConfiguration conf = new ClientConfiguration();
@@ -100,14 +97,12 @@ public class OSSUtil extends BaseController {
 	 * 返回数组：[0]:返回值,[1]:文件名称
 	 * @param pathName
 	 */
-	public static void deleteFile(String pathName,String filename){
+	public static void deleteFile(String filename,String pathName){
 		// 创建OSSClient实例。
 		OSS ossClient = OSSUtil.getsourceSet("N");
 		 String path="";
-		 if(pathName.equals("A")) path = path + "quality/rongjia/act/";
-         else if(pathName.equals("B")) path = path + "quality/rongjia/ban/";
-         else if(pathName.equals("C")) path = path + "quality/rongjia/gg/";
-         else if(pathName.equals("D")) path = path + "quality/rongjia/shop/";
+		 if(pathName.equals("A")) path = path + "shopimg/";
+         else path = pathName;
 		// 删除文件。
 		ossClient.deleteObject(BucketName, path+filename);
 		// 关闭OSSClient。
@@ -130,10 +125,8 @@ public class OSSUtil extends BaseController {
         String resultStr = null;
         String path="";
         String[] fo = new String[] { "", "" };
-        if(pathName.equals("A")) path = path + "quality/rongjia/act/";
-        else if(pathName.equals("B")) path = path + "quality/rongjia/ban/";
-        else if(pathName.equals("C")) path = path + "quality/rongjia/gg/";
-        else if(pathName.equals("D")) path = path + "quality/rongjia/shop/";
+        if(pathName.equals("A")) path = path + "shopimg/";
+        else if(pathName.equals("B")) path = path + "xqimg/";
 		else path = pathName;
         try {
             // 以输入流的形式上传文件
@@ -180,10 +173,8 @@ public class OSSUtil extends BaseController {
         String resultStr = null;
         String path="";
         String[] fo = new String[] { "", "" };
-        if(pathName.equals("A")) path = path + "quality/rongjia/act/";
-        else if(pathName.equals("B")) path = path + "quality/rongjia/ban/";
-        else if(pathName.equals("C")) path = path + "quality/rongjia/gg/";
-        else if(pathName.equals("D")) path = path + "quality/rongjia/shop/";
+        if(pathName.equals("A")) path = path + "shopimg/";
+        else if(pathName.equals("B")) path = path + "xqimg/";
 		else path = pathName;
      // 文件名
         String timefile = name;

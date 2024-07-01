@@ -92,7 +92,7 @@ public class WXController extends BaseController {
         String phone = request.getParameter("phone").toString().trim();
         if(phone!=null&&!phone.toString().isEmpty()){
             int sjs = (int)((Math.random()*9+1)*100000);
-            JSONObject json= SendSms.fasongdx(pro.getProperty("AccessKeyId"), pro.getProperty("AccessKeySecret"), phone, pro.getProperty("SignName"), sjs+"", pro.getProperty("Domain"), pro.getProperty("TemplateCode"));
+            JSONObject json= SendSms.fasongdx(PubMessage.getXxz().getXxz020(), PubMessage.getXxz().getXxz021(), phone, pro.getProperty("SignName"), sjs+"", pro.getProperty("Domain"), pro.getProperty("TemplateCode"));
 //            System.out.println(json);
             if("OK".equals(json.get("Code"))){
                 map.put("yzm", sjs);
