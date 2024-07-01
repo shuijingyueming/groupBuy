@@ -3,10 +3,18 @@ package com.fangx.controller;
 import com.alibaba.fastjson.JSON;
 import com.fangx.model.*;
 import com.fangx.until.SendSms;
+import com.fangx.wx.HttpGetUtil;
 import com.fangx.wx.PayUtils;
 import com.fangx.wx.RandomStringGenerator;
 import com.fangx.wx.WeiCatJK;
 import net.sf.json.JSONObject;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.protocol.HTTP;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 @Controller
@@ -665,4 +672,25 @@ public class WXController extends BaseController {
         result.put("item", item);
         return JSON.toJSONString(result);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/xhsgetticket", method = RequestMethod.POST)
+    public String xhsgetticket(String code) throws Exception {
+        //获取商家CODE（ticket）码
+        System.out.println("商家ticket:"+code);
+        //组装
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("ticket",code);
+        params.put("appid","91d88fd22a0d442ea97a");
+        params.put("secret","e49ab65b111e00bcd00dccfd5db04f15");
+        String requestUrl = HttpGetUtil.httpRequestToString("https://miniapp.xiaohongshu.com/api/rmp/tp/token", params);
+        System.out.println("返回字符串："+requestUrl);
+        JSONObject obj = JSONObject.fromObject(requestUrl);
+        JSONObject data = obj.getJSONObject("data");
+        System.out.println("返回access_token："+data.getString("access_token"));
+
+        return null;
+    }
+
+
 }
