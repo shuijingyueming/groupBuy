@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+
+    <title>平台账户信息管理</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables-http.min.css">
+    <link rel="stylesheet" href="assets/css/tables/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/demos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgridui.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="static/css/pubcss.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+</head>
+<input type="hidden" id="pages" name="pages" th:value="${pageobj.currentPage}" />
+<input type="hidden" id="counts" name="counts" th:value="${pageobj.pageCount}" />
+<input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
+<input type="hidden" th:value="${msg}" id="msg">
+<input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<body class="sidebar-mini fixed skin-blue">
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            角色管理<small></small>
+        </h1>
+
+        <ol class="breadcrumb">
+            <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li>账户管理</li>
+            <li class="active">角色管理</li>
+        </ol>
+    </section>
+    <!-- Serach Starts-->
+    <section class="content" id="wrhead">
+        <div class="cardbg" style="padding:1rem;">
+            <form>
+                <div class="form-row">
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control" placeholder="请输入角色名称">
+                    </div>
+                    <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Serach Content Ends-->
+    <!-- DataTable With Button Example Section Starts -->
+    <div class="card panel panel-default" id="wrapp">
+        <div class="jsgrid collapse show p-4" data-parent="#accordion">
+            <table id="roleexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                <thead>
+                <tr>
+<!--                   <th style="max-width:30px;"><input type="checkbox" id="chkbox"/></th>-->
+                    <th style="max-width:40px;">序号</th>
+                    <th>角色名称</th>
+                    <th style="color: #FFF;">操作</th>
+                </tr>
+                </thead>
+                <tbody th:switch = "${ pageobj.recordCount gt 0 }">
+                <th:block th:case="true">
+                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
+<!--                        <td><input type="checkbox" name="cbox" th:date-id="${item.usa001}"/></td>-->
+                        <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
+                        <td th:text="${item.usa002}"></td>
+                        <td>
+                            <!--<input th:onclick="toxq([[${item.usa001}]])" class="jsgrid-button jsgrid-search-button" type="button" title="详情">-->
+                            <!--  <th:block th:if=${session.user?.use002}=='admin'?true:(${#strings.isEmpty(session.user?.usf)}?false:${#strings.contains(session.user?.usf?.usf003,"F3")})>
+                                  <a href="javascript:void(0);" th:onclick= "'xgaixdd(\''+${xdd.xdd001}+'\')'">修改</a>
+                              </th:block>
+                              <th:block th:if=${session.user?.use002}=='admin'?true:(${#strings.isEmpty(session.user?.usf)}?false:${#strings.contains(session.user?.usf?.usf003,"F4")})>
+                                  <a href="javascript:void(0);" th:onclick= "'delxdd(\''+${xdd.xdd001}+'\')'">删除</a>
+                              </th:block>-->
+                            <th:block th:if="${session.umsg.jsqx=='admin'||session.umsg.jsqx=='school'||session.umsg.jsqx=='street'||#strings.indexOf(session.umsg.jsqx,'A1#')>=0}">
+                                <button th:onclick="edit([[${item.usa001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
+                            </th:block>
+                            <!--<th:block th:if="${session.umsg.jsqx=='admin'||session.umsg.jsqx=='school'||session.umsg.jsqx=='street'||#strings.indexOf(session.umsg.jsqx,'A1#')>=0}">
+                                <input th:onclick="del([[${item.usa001}]],[[${item.usa002}]])" class="jsgrid-button jsgrid-delete-button" type="button" title="删除">
+                            </th:block>-->
+                        </td>
+                    </tr>
+                </th:block>
+                <tr th:case="false">
+                   <!-- <td></td>--><td></td><td></td><td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="page jsgrid-pager-container" style="display: block;"></div>
+        </div>
+    </div>
+    <!-- DataTable With Scroll Example Section Starts -->
+</div>
+<!-- 详情滑动页 -->
+<div id="detail" class="model">
+    <div id="ddiv" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="dtitle" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <div id="xq">
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                    <button type="button" class="btn btn-outline-secondary" onclick="gb()">关闭</button>
+                    &nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
+<!-- 编辑滑动页 -->
+<div id="active" class="model">
+    <div id="adiv" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="mtitle" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <form class="layui-form" method="post" id="submitForm" action="toHt/xgjs"  enctype="multipart/form-data">
+                <input type="hidden" id="id" name="id" />
+                <input type="hidden" name="pages" th:value="${pageobj.currentPage}" />
+                <input type="hidden" name="name" th:value="${pageobj.othersql}" />
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>角色名称</label>
+                            <input id="t1" name="t1" type="text" lay-verify="required" class="form-control input-0" placeholder="请填写角色名称">
+                        </div>
+                    </div>
+                </div>
+                        <div class="row">
+                            <div class="col-md-10 col-xl-10">
+                                <div class="form-group">
+                                    <input id="A" value="A" type="checkbox" onclick="xz(this)"/>
+                                    <label class="layui-form-label clab" style="width:120px;">账户/角色管理</label>
+                                    <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                                    <input id="A1" value="A1" type="checkbox" name="qx"/>
+                                    <label for="A1" class="col-form-label clab">查看</label>
+                                    <input id="A2" value="A2" type="checkbox" name="qx"/>
+                                    <label for="A2" class="col-form-label clab">添加</label>
+                                    <input id="A3" value="A3" type="checkbox" name="qx"/>
+                                    <label for="A3" class="col-form-label clab">编辑</label>
+                                    <!--<input id="A4" value="A4" type="checkbox" name="qx"/>
+                                    <label for="A4" class="col-form-label clab">删除</label>-->
+                                    <input id="A5" value="A5" type="checkbox" name="qx"/>
+                                    <label for="A5" class="col-form-label clab">重置密码</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-xl-10">
+                                <div class="form-group">
+                                    <input id="C" value="C" type="checkbox" onclick="xz(this)"/>
+                                    <label class="layui-form-label clab" style="width:120px;">数据备份</label>
+                                    <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                                    <input id="C1" value="C1" type="checkbox" name="qx"/>
+                                    <label for="C1" class="col-form-label clab">查看</label>
+                                    <input id="C3" value="C3" type="checkbox" name="qx"/>
+                                    <label for="C3" class="col-form-label clab">编辑</label>
+                                    <input id="C6" value="C6" type="checkbox" name="qx"/>
+                                    <label for="C6" class="col-form-label clab">导出</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-xl-10">
+                                <div class="form-group">
+                                    <input id="B" value="B" type="checkbox" onclick="xz(this)"/>
+                                    <label class="layui-form-label clab" style="width:120px;">日志管理</label>
+                                    <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                                    <input id="B1" value="B1" type="checkbox" name="qx"/>
+                                    <label for="B1" class="col-form-label clab">查看</label>
+                                    <input id="B4" value="B4" type="checkbox" name="qx"/>
+                                    <label for="B4" class="col-form-label clab">删除</label>
+                                </div>
+                            </div>
+                        </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="E" value="E" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">分类管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="E1" value="E1" type="checkbox" name="qx"/>
+                            <label for="E1" class="col-form-label clab">查看</label>
+                            <input id="E2" value="E2" type="checkbox" name="qx"/>
+                            <label for="E2" class="col-form-label clab">添加</label>
+                            <input id="E3" value="E3" type="checkbox" name="qx"/>
+                            <label for="E3" class="col-form-label clab">编辑</label>
+                            <input id="E4" value="E4" type="checkbox" name="qx"/>
+                            <label for="E4" class="col-form-label clab">删除</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="F" value="F" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">单位管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="F1" value="F1" type="checkbox" name="qx"/>
+                            <label for="F1" class="col-form-label clab">查看</label>
+                            <input id="F2" value="F2" type="checkbox" name="qx"/>
+                            <label for="F2" class="col-form-label clab">添加</label>
+                            <input id="F3" value="F3" type="checkbox" name="qx"/>
+                            <label for="F3" class="col-form-label clab">编辑</label>
+<!--                            <input id="F4" value="F4" type="checkbox" name="qx"/>-->
+<!--                            <label for="F4" class="col-form-label clab">删除</label>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="G" value="G" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">菜品管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="G1" value="G1" type="checkbox" name="qx"/>
+                            <label for="G1" class="col-form-label clab">查看</label>
+                            <input id="G2" value="G2" type="checkbox" name="qx"/>
+                            <label for="G2" class="col-form-label clab">添加</label>
+                            <input id="G3" value="G3" type="checkbox" name="qx"/>
+                            <label for="G3" class="col-form-label clab">编辑</label>
+                            <input id="G7" value="G7" type="checkbox" name="qx"/>
+                            <label for="G7" class="col-form-label clab">状态</label>
+                            <input id="G8" value="G8" type="checkbox" name="qx"/>
+                            <label for="G8" class="col-form-label clab">销量状态</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="H" value="H" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">期数管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="H1" value="H1" type="checkbox" name="qx"/>
+                            <label for="H1" class="col-form-label clab">查看</label>
+                            <input id="H2" value="H2" type="checkbox" name="qx"/>
+                            <label for="H2" class="col-form-label clab">添加</label>
+                            <input id="H3" value="H3" type="checkbox" name="qx"/>
+                            <label for="H3" class="col-form-label clab">编辑</label>
+                            <input id="H5" value="H5" type="checkbox" name="qx"/>
+                            <label for="H5" class="col-form-label clab">导出</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="I" value="I" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">企业管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="I1" value="I1" type="checkbox" name="qx"/>
+                            <label for="I1" class="col-form-label clab">查看</label>
+                            <input id="I2" value="I2" type="checkbox" name="qx"/>
+                            <label for="I2" class="col-form-label clab">添加</label>
+                            <input id="I3" value="I3" type="checkbox" name="qx"/>
+                            <label for="I3" class="col-form-label clab">编辑</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="J" value="J" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">员工管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="J1" value="J1" type="checkbox" name="qx"/>
+                            <label for="J1" class="col-form-label clab">查看</label>
+                            <input id="J2" value="J2" type="checkbox" name="qx"/>
+                            <label for="J2" class="col-form-label clab">添加</label>
+                            <input id="J3" value="J3" type="checkbox" name="qx"/>
+                            <label for="J3" class="col-form-label clab">编辑</label>
+                            <input id="J7" value="J7" type="checkbox" name="qx"/>
+                            <label for="J7" class="col-form-label clab">状态</label>
+                            <input id="J6" value="J6" type="checkbox" name="qx"/>
+                            <label for="J6" class="col-form-label clab">充值</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="K" value="K" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">充值管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="K1" value="K1" type="checkbox" name="qx"/>
+                            <label for="K1" class="col-form-label clab">查看</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="K" value="K" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">充值管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="K1" value="K1" type="checkbox" name="qx"/>
+                            <label for="K1" class="col-form-label clab">查看</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="P" value="P" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">菜品临时库存管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="P1" value="P1" type="checkbox" name="qx"/>
+                            <label for="P1" class="col-form-label clab">查看</label>
+                            <input id="P2" value="P2" type="checkbox" name="qx"/>
+                            <label for="P2" class="col-form-label clab">添加</label>
+                            <input id="P3" value="P3" type="checkbox" name="qx"/>
+                            <label for="P3" class="col-form-label clab">编辑</label>
+                            <input id="P4" value="P4" type="checkbox" name="qx"/>
+                            <label for="P4" class="col-form-label clab">删除</label>
+                            <input id="P5" value="P5" type="checkbox" name="qx"/>
+                            <label for="P5" class="col-form-label clab">导入</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="Q" value="Q" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">临时配送管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="Q1" value="Q1" type="checkbox" name="qx"/>
+                            <label for="Q1" class="col-form-label clab">查看</label>
+                            <input id="Q2" value="Q2" type="checkbox" name="qx"/>
+                            <label for="Q2" class="col-form-label clab">添加</label>
+                            <input id="Q3" value="Q3" type="checkbox" name="qx"/>
+                            <label for="Q3" class="col-form-label clab">编辑</label>
+                            <input id="Q4" value="Q4" type="checkbox" name="qx"/>
+                            <label for="Q4" class="col-form-label clab">删除</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="M" value="M" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">对账管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="M1" value="M1" type="checkbox" name="qx"/>
+                            <label for="M1" class="col-form-label clab">查看</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                        <button type="button" class="btn btn-outline-secondary" onclick="clean()">取消</button>
+                        <button type="submit" lay-submit="" class="btn btn-success">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
+
+
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="assets/js/jquery/slim.min.js"></script>
+<!-- Popper.JS -->
+<script src="assets/js/jquery/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="assets/js/jquery/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- Page JS -->
+<script src="assets/js/tables/datatables.min.js"></script>
+<script src="assets/js/tables/dataTables.buttons.min.js"></script>
+<script src="assets/js/tables/jszip.min.js"></script>
+<script src="assets/js/tables/pdfmake.min.js"></script>
+<script src="assets/js/tables/vfs_fonts.js"></script>
+<script src="assets/js/tables/buttons.html5.min.js"></script>
+<script src="assets/js/tables/buttons.print.min.js"></script>
+<script src="assets/js/tables/datatable.js"></script>
+<!-- Theme JS -->
+<script src="assets/js/nanoscroller/nanoscroller.js"></script>
+<script src="assets/js/custom/theme.js"></script>
+<!-- validate JS 验证-->
+<script type="text/javascript" src="assets/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/validate-methods.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/localization/messages_zh.js"></script>
+<script src="pagejs/htfy.js"></script>
+<script src="pagejs/HTsel.js"></script>
+<script src="pagejs/role.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+
+    <title>平台账户信息管理</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables-http.min.css">
+    <link rel="stylesheet" href="assets/css/tables/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/demos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgridui.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="static/css/pubcss.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+    <script type="text/javascript" src="assets/js/cookie.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-1.8.3.min.js"></script>
+</head>
+<body class="sidebar-mini fixed skin-blue">
+<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable"
+     tabindex="-1" role="dialog" aria-describedby="detailsDialog" aria-labelledby="ui-id-1" style="height: 100%; width: 100%;">
+    <div class="ui-dialog-content ui-widget-content" style="padding:30px 30px 0 30px;">
+        <input type="hidden" id="id" name="id" th:value="${user.use001}">
+        <div class="details-form-field">
+            <label>用户名:</label><span style="float: right;" th:text="${user.use002}"></span>
+        </div>
+        <div class="details-form-field">
+            <label for="truename">真实姓名:</label>
+            <input class="input1" style="width:220px;" type="text" name="truename" id="truename" th:value="${user.use005}" autocomplete="off" />
+        </div>
+        <div class="details-form-field">
+            <label for="phone">联系电话:</label>
+            <input class="input1" style="width:220px;" type="text" name="phone" id="phone" th:value="${user.use007}" autocomplete="off"  />
+        </div>
+        <div class="details-form-field" style="margin:30px 0;">
+            <button type="submit" onclick="xgxx()">保存</button>
+        </div>
+    </div>
+    <div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div>
+</div>
+<script type="text/javascript">
+    function xgxx(){
+        var truename = $("#truename").val();
+        var phone = $("#phone").val();
+        $.ajax({
+            url:'toHt/updateUseXx',
+            data:{'truename':truename,'phone':phone},
+            type:'post',
+            async: false,
+            dataType:'json',
+            success:function(data) {
+                if(data.msg!="0"){
+                    if(data.msg=="1"){
+                        window.parent.parent.login("D");
+                    }else{
+                        layui.use('layer', function(){
+                            var layer = layui.layer;
+                            layer.ready(function(){
+                                layer.msg(data.msg);
+                            });
+                        });
+                    }
+                }else{
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.ready(function(){
+                            layer.msg("修改成功");
+                        });
+                    });
+
+                    setTimeout(function(){
+                        window.parent.parent.location.reload();
+                    },2000);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

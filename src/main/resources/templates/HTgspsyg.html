@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+
+    <title>平台账户信息管理</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, usdr-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables-http.min.css">
+    <link rel="stylesheet" href="assets/css/tables/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/demos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgridui.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="static/css/pubcss.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+</head>
+<input type="hidden" id="pages" name="pages" th:value="${pages}"/>
+<input type="hidden" id="name" name="name" th:value="${name}"/>
+<input type="hidden" id="phone" name="name" th:value="${phone}"/>
+<input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
+<input type="hidden" th:value="${msg}" id="msg">
+<input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<input type="hidden" id="gsid" name="gsid" th:value="${gsid}" />
+<body class="sidebar-mini fixed skin-blue">
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            配送单管理<small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li>采购配送管理</li>
+            <li class="active">配送单管理</li>
+        </ol>
+    </section>
+    <!-- Serach Starts-->
+    <section class="content" id="wrhead">
+        <div class="cardbg" style="padding:1rem;">
+            <form>
+                <div class="form-row">
+                    <div style="max-width: 78px;margin-top: 15px;" class="col-xl-2 col-lg-3">
+                        配送日期:
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="date" th:value="${date}" type="date" class="form-control" placeholder="请输入配送时间">
+                    </div>
+                    <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Serach Content Ends-->
+    <!-- DataTable With Button Example Section Starts -->
+    <div class="card panel panel-default" id="wrapp">
+        <div class="jsgrid collapse show p-4" data-parent="#accordion">
+            <table id="gspsygexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="max-width:40px;">序号</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>内容</th>
+                    <th>备注</th>
+                </tr>
+                </thead>
+                <tbody th:switch="${ yglist.size() gt 0 }">
+                <th:block th:case="true">
+                    <tr th:each="item,stat:${yglist}" style="border-bottom:1px solid #dee2e6;">
+                        <td th:text="${stat.index+1}"></td>
+                        <td th:text="${item.usc002}"></td>
+                        <td th:text="${item.usc015}"></td>
+                        <td th:text="${item.nr}"></td>
+                        <td th:text="${item.bz}"></td>
+                    </th:block>
+                </th:block>
+                <tr th:case="false">
+                    <td></td><td></td>
+                    <td></td><td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- DataTable With Scroll Example Section Starts -->
+</div>
+<script src="assets/js/jquery/slim.min.js"></script>
+<script src="assets/js/jquery/popper.min.js"></script>
+<script src="assets/js/jquery/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/tables/datatables.min.js"></script>
+<script src="assets/js/tables/dataTables.buttons.min.js"></script>
+<script src="assets/js/tables/jszip.min.js"></script>
+<script src="assets/js/tables/pdfmake.min.js"></script>
+<script src="assets/js/tables/vfs_fonts.js"></script>
+<script src="assets/js/tables/buttons.html5.min.js"></script>
+<script src="assets/js/tables/buttons.print.min.js"></script>
+<script src="assets/js/tables/datatable.js"></script>
+<script src="assets/js/nanoscroller/nanoscroller.js"></script>
+<script src="assets/js/custom/theme.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/validate-methods.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/localization/messages_zh.js"></script>
+<script src="pagejs/htfy.js"></script>
+<script src="pagejs/HTsel.js"></script>
+<script src="pagejs/HTgspsyg.js"></script>
+</body>
+</html>

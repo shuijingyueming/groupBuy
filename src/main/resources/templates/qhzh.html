@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+
+    <title>平台账户信息管理</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables-http.min.css">
+    <link rel="stylesheet" href="assets/css/tables/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/demos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgridui.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="static/css/pubcss.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+    <script type="text/javascript" src="assets/js/cookie.js"></script>
+    <script type="text/javascript" src="assets/js/index.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-1.8.3.min.js"></script>
+</head>
+<body class="sidebar-mini fixed skin-blue">
+<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable"
+     tabindex="-1" role="dialog" aria-describedby="detailsDialog" aria-labelledby="ui-id-1" style="height: 100%; width: 100%;">
+    <div class="ui-dialog-content ui-widget-content" style="padding:30px 30px 0 30px;">
+        <th:block th:if="${type.equals('A')}">
+            <div class="details-form-field">
+                <label for="username">账户名:</label>
+                <input class="input1" style="width:220px;" name="username" id="username" placeholder="账户名" type="text"  autocomplete="off"  />
+            </div>
+            <div class="details-form-field">
+                <label for="userpwd">密码:</label>
+                <input class="input1" style="width:220px;" type="password" name="userpwd" id="userpwd" autocomplete="off"  />
+            </div>
+            <div class="details-form-field" style="margin:30px 0;">
+                <button type="submit" onclick="login()">登录</button>
+            </div>
+        </th:block>
+        <th:block th:if="${type.equals('B')}">
+            <div class="details-form-field">
+                <label for="jiumm">旧密码:</label>
+                <input class="input1" style="width:220px;" name="jiumm" id="jiumm" type="password"  autocomplete="off"  />
+            </div>
+            <div class="details-form-field">
+                <label for="xinmm">新密码:</label>
+                <input class="input1" style="width:220px;" type="password" name="xinmm" id="xinmm" autocomplete="off"  />
+            </div>
+            <div class="details-form-field">
+                <label for="xinmm1">再次确认:</label>
+                <input class="input1" style="width:220px;" type="password" name="xinmm1" id="xinmm1" autocomplete="off"  />
+            </div>
+            <div class="details-form-field" style="margin:30px 0;">
+                <button type="submit" onclick="xgmima()">确定</button>
+            </div>
+        </th:block>
+    </div>
+    <div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div>
+    <div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div>
+</div>
+</body>
+</html>

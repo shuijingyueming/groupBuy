@@ -1,0 +1,244 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+
+    <title>平台账户信息管理</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, usdr-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables-http.min.css">
+    <link rel="stylesheet" href="assets/css/tables/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/demos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgridui.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="static/css/pubcss.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+</head>
+<input type="hidden" id="pages" name="pages" th:value="${pageobj.currentPage}"/>
+<input type="hidden" id="counts" name="counts" th:value="${pageobj.pageCount}"/>
+<input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
+<input type="hidden" th:value="${msg}" id="msg">
+<input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<body class="sidebar-mini fixed skin-blue">
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            企业管理<small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li>企业管理</li>
+            <li class="active">企业管理</li>
+        </ol>
+    </section>
+    <!-- Serach Starts-->
+    <section class="content" id="wrhead">
+        <div class="cardbg" style="padding:1rem;">
+            <form>
+                <div class="form-row">
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control"
+                               placeholder="请输入企业名称">
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="phone" th:value="${pageobj.othersql1}" type="text" class="form-control"
+                               placeholder="请输入企业电话">
+                    </div>
+                    <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Serach Content Ends-->
+    <!-- DataTable With Button Example Section Starts -->
+    <div class="card panel panel-default" id="wrapp">
+        <div class="jsgrid collapse show p-4" data-parent="#accordion">
+            <table id="gsexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                <input type="file" id="file1" name="file1" style="display: none" onchange="daoruwj1(this)"/>
+                <input type="hidden" id="gsid" name="gsid"/>
+                <thead>
+                <tr>
+                    <th style="max-width:40px;">序号</th>
+                    <th>企业名称</th>
+                    <th>企业地址</th>
+                    <th>企业电话</th>
+                    <th>期数</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody th:switch="${ pageobj.recordCount gt 0 }">
+                <th:block th:case="true">
+                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
+                        <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
+                        <td th:text="${item.usd002}"></td>
+                        <td th:text="${item.usd003}"></td>
+                        <td th:text="${item.usd004}"></td>
+                        <td>
+                            <th:block th:each="item1,stat:${item.yhblist}">
+                                [[${item1.usb.usb002}]]
+                            </th:block>
+                        </td>
+                        <td>
+                            <button th:onclick="toxq([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'I3#')>=0}">
+                                <button th:onclick="edit([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
+                                <button th:onclick="dryg([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">导入员工</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'J1#')>=0}">
+                                <button th:onclick="toyg([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">员工管理</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
+                                <button th:onclick="toczjl([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">充值管理</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
+                                <button th:onclick="todz([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">对账管理</button>
+                            </th:block>
+<!--                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">-->
+<!--                                <button th:onclick="tops([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz"> 临时配送管理-->
+<!--                                </button>-->
+<!--                            </th:block>-->
+                        </td>
+                    </th:block>
+                </th:block>
+                <tr th:case="false">
+                    <td></td><td></td>
+                    <td></td><td></td>
+                    <td></td><td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="page jsgrid-pager-container" style="display: block;">
+            </div>
+        </div>
+    </div>
+    <!-- DataTable With Scroll Example Section Starts -->
+</div>
+<!-- 详情滑动页 -->
+<div id="detail" class="model">
+    <div id="ddiv" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="dtitle" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <div id="xq">
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                    <button type="button" class="btn btn-outline-secondary" onclick="gb()">关闭</button>
+                    &nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
+<!-- 编辑滑动页 -->
+<div id="active" class="model">
+    <div id="adiv" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="mtitle" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <form method="post" id="submitForm" action="toCo/xggs" enctype="multipart/form-data">
+                <input type="hidden" id="id" name="id"/>
+                <input type="hidden" name="pages" th:value="${pageobj.currentPage}"/>
+                <input type="hidden" name="name" th:value="${pageobj.othersql}"/>
+                <input type="hidden" name="phone" th:value="${pageobj.othersql1}"/>
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>企业名称</label>
+                            <input lay-verify="required|name" id="t1" name="t1" type="text" class="form-control input-0"
+                                   placeholder="请填写企业名称">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <hr class="d-md-none">
+                        <div class="form-group">
+                            <label>企业地址</label>
+                            <input lay-verify="required" id="t2" name="t2" type="text" class="form-control input-3"
+                               placeholder="请填写企业地址">
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>企业电话</label>
+                            <input lay-verify="required" id="t3" name="t3" type="text" class="form-control input-1"
+                                   placeholder="请填写企业电话">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="">
+                    <div class="col-md-6 col-xl-4">
+                        <input type="hidden" id="t8" name="t8" lay-verify="t8" value="">
+                        <label>期数</label>
+                        <div class="form-group">
+                            <select id="t4" name="t4" class="form-control">
+                                <option value="" selected>请选择</option>
+                                <th:block th:each="item,stat:${usblist}">
+                                    <option th:value="${item.usb001}">[[${item.usb002}]]</option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xl-12">
+                        <div class="form-group bqdiv" id="alllzbzlx"></div>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                            <button type="button" class="btn btn-outline-secondary" onclick="clean()">取消</button>
+                            <button type="submit" lay-submit="" class="btn btn-success">提交</button>
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
+
+<script src="assets/js/jquery/slim.min.js"></script>
+<script src="assets/js/jquery/popper.min.js"></script>
+<script src="assets/js/jquery/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/tables/datatables.min.js"></script>
+<script src="assets/js/tables/dataTables.buttons.min.js"></script>
+<script src="assets/js/tables/jszip.min.js"></script>
+<script src="assets/js/tables/pdfmake.min.js"></script>
+<script src="assets/js/tables/vfs_fonts.js"></script>
+<script src="assets/js/tables/buttons.html5.min.js"></script>
+<script src="assets/js/tables/buttons.print.min.js"></script>
+<script src="assets/js/tables/datatable.js"></script>
+<script src="assets/js/nanoscroller/nanoscroller.js"></script>
+<script src="assets/js/custom/theme.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/validate-methods.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/localization/messages_zh.js"></script>
+<script src="pagejs/htfy.js"></script>
+<script src="pagejs/HTsel.js"></script>
+<script src="pagejs/HTgs.js"></script>
+</body>
+</html>

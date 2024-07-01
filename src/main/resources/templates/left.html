@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <title>left</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="assets/css/dashboard/dashboard2.css">
+    <link rel="stylesheet" href="assets/css/flag/flagicon.css">
+    <link rel="stylesheet" href="assets/css/maps/jqvmap.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <style>
+        .footdiv {
+            width: 230px;
+            heigth: 50px;
+            line-height: 50px;
+            text-align: center;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+        }
+
+    </style>
+</head>
+<body th:fragment="common_side">
+<aside class="main-sidebar">
+    <div class="nano">
+        <div class="nano-content">
+            <ul class="sidebar-menu" data-widget="tree" id="nav">
+                <li class="header"><a _href="toHt/indexi">控制台</a></li>
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'B1#')>=0||#strings.indexOf(session.umsg.jsqx,'C1#')>=0||#strings.indexOf(session.umsg.jsqx,'D1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>系统设置</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
+<!--                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'D1#')>=0}">-->
+<!--                                <li id="menu_a1"><a _href="toHt/wzxx">平台信息</a></li>-->
+<!--                            </th:block>-->
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'C1#')>=0}">
+                                <li id="menu_a2"><a _href="toHt/selsjbf">数据备份</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'B1#')>=0}">
+                                <li id="menu_a3"><a _href="toHt/log">日志信息</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'A1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>账户管理</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
+
+                            <li id="menu_a4"><a _href="toHt/role">角色设置</a></li>
+                            <li id="menu_a5"><a _href="toHt/staff">账户管理</a></li>
+
+                        </ul>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0||#strings.indexOf(session.umsg.jsqx,'E1#')>=0||#strings.indexOf(session.umsg.jsqx,'F1#')>=0||#strings.indexOf(session.umsg.jsqx,'G1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>菜品管理</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'E1#')>=0}">
+                                <li id="menu_b1"><a _href="toDi/tofl">分类管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'F1#')>=0}">
+                                <li id="menu_b2"><a _href="toDi/todw">单位管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G1#')>=0}">
+                                <li id="menu_b3"><a _href="toDi/tocp">菜品管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0}">
+                                <li id="menu_b4"><a _href="toDi/tocpls">菜品临时库存管理</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'O1#')>=0||#strings.indexOf(session.umsg.jsqx,'N1#')>=0||#strings.indexOf(session.umsg.jsqx,'H1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>采购配送管理</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
+                           <!-- <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'H1#')>=0}">
+                                <li id="menu_c1"><a _href="toDi/toqs">配送单管理</a></li>
+                            </th:block>-->
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'O1#')>=0}">
+                                <li id="menu_e3"><a _href="toOr/tocg">采购单管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'N1#')>=0}">
+                                <li id="menu_e4"><a _href="toOr/tops">配送单管理</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'Q1#')>=0||#strings.indexOf(session.umsg.jsqx,'I1#')>=0||#strings.indexOf(session.umsg.jsqx,'J1#')>=0||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>企业管理</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'Q1#')>=0}">
+                                <li id="menu_d4"><a _href="toCo/topsls">临时配送管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'I1#')>=0}">
+                                <li id="menu_d1"><a _href="toCo/togs">企业管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'J1#')>=0}">
+                                <li id="menu_d2"><a _href="toCo/togsyg">员工管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
+                                <li id="menu_d3"><a _href="toCo/tocz">充值记录管理</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'L1#')>=0||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>订单管理</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'L1#')>=0}">
+                                <li id="menu_e1"><a _href="toOr/todd">订单管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
+                                <li id="menu_e2"><a _href="toOr/todz">对账管理</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+        <!-- Footer Section Starts -->
+        <!--<div class="footdiv">
+            <P style="color: #999;">Copyright © 2023 易飞迅</P>
+        </div>-->
+        <!-- Footer Section Ends -->
+    </div>
+</aside>
+</body>
+</html>
+

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="assets/css/dashboard/dashboard2.css">
+    <link rel="stylesheet" href="assets/css/flag/flagicon.css">
+    <link rel="stylesheet" href="assets/css/maps/jqvmap.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.bootstrapmb.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="assets/css/elements/modals.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="assets/js/xadmin.js"></script>
+    <script type="text/javascript">
+        function tuichu() {
+            deleteCookie('tab_list');
+            deleteCookie('left_menu_father');
+            deleteCookie('left_menu_son');
+            window.location.href = "toHTtuichu";
+        }
+    </script>
+</head>
+<body class="sidebar-mini fixed skin-blue">
+<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="javascript:void(0);" class="logo" style="background-color:#001529;">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>P</b>AD</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>后台</b>管理
+            </span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Section Starts -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <span class="d-none d-sm-block" th:text="${session.umsg.uname}"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User Image Starts -->
+                            <li class="user-header">
+                                <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <p th:text="${session.umsg.uname}"></p>
+                                <p><small></small></p>
+                            </li>
+                            <!-- Menu Body Starts -->
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <a href="javascript:void(0);" onclick="x_admin_show1('个人信息','grxx',360,284)">个人信息</a>
+                                    </div>
+                                    <!--          <div class="col-4 text-center">
+                                                <a href="#">Sales</a>
+                                    </div>-->
+                                    <div class="col-4 text-center">
+                                        <a href="javascript:void(0);" onclick="x_admin_show1('修改密码','qhzh?type=B',400,300)">修改密码</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Menu Footer Starts -->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a onclick="x_admin_show1('切换帐号','qhzh?type=A',400,250)" class="btn btn-default btn-flat">切换账户</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="toHTtuichu" class="btn btn-default btn-flat">退出账号</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- User Account Section Ends -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+</div>
+</body>
+</html>

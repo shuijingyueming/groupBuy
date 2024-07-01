@@ -1,0 +1,408 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+
+    <title>平台账户信息管理</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, usmr-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables-http.min.css">
+    <link rel="stylesheet" href="assets/css/tables/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/demos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgridui.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="static/css/pubcss.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+
+    <!-- 富文本编辑器 -->
+    <link href="kindeditor/themes/default/default.css" rel="stylesheet" />
+    <script src="kindeditor/kindeditor-all-min.js"></script>
+    <script src="kindeditor/lang/zh_CN.js"></script>
+
+    <style>
+        .item{
+            clear:both;
+            position: relative;
+            margin:10px;
+            border:1px solid rgb(229, 229, 229);
+            padding:10px;
+        }
+        .closep{
+            position: absolute;
+            left:80%;
+            top:14px;
+            font-size:20px;
+            color:#FF0000;
+            font-weight:600;
+            cursor:pointer;
+        }
+        .inpchk{
+		  width:15px;
+		  height:15px;
+		}
+    </style>
+</head>
+<input type="hidden" id="pages" name="pages" th:value="${pageobj.currentPage}"/>
+<input type="hidden" id="counts" name="counts" th:value="${pageobj.pageCount}"/>
+<input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
+<input type="hidden" th:value="${msg}" id="msg">
+<input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<body class="sidebar-mini fixed skin-blue">
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            菜品管理<small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li>菜品管理</li>
+            <li class="active">菜品管理</li>
+        </ol>
+    </section>
+    <!-- Serach Starts-->
+    <section class="content" id="wrhead">
+        <div class="cardbg" style="padding:1rem;">
+            <form>
+                <div class="form-row">
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control" placeholder="请输入菜品名称">
+                    </div>
+                    <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Serach Content Ends-->
+    <!-- DataTable With Button Example Section Starts -->
+    <div class="card panel panel-default" id="wrapp">
+        <div class="jsgrid collapse show p-4" data-parent="#accordion">
+            <table id="cpexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="max-width:40px;">序号</th>
+                    <th>菜品名称</th>
+                    <th>单位名称</th>
+                    <th>一级分类</th>
+                    <th>二级分类</th>
+                    <th>原始价格</th>
+                    <th>优惠价格</th>
+                    <!--                    <th>累计销售数量</th>-->
+                    <!--                    <th>累计销售金额</th>-->
+                    <th>库存</th>
+                    <th>状态</th>
+                    <th>销量状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody th:switch="${ pageobj.recordCount gt 0 }">
+                <th:block th:case="true">
+                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
+                        <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
+                        <td th:text="${item.usf002}"></td>
+                        <td th:text="${item.usm!=null?item.usm.usm002:''}"></td>
+                        <td th:text="${item.yhe!=null?item.yhe.yhe002:''}"></td>
+                        <td th:text="${item.ysa!=null?item.ysa.ysa002:''}"></td>
+                        <td th:text="${item.usf005}"></td>
+                        <td th:text="${item.usf006}"></td>
+                        <!--                        <td th:text="${item.usf008}"></td>-->
+                        <!--                        <td th:text="${item.usf009}"></td>-->
+                        <td th:text="${item.usf010==null||item.usf010==0?'无限':item.usf010}"></td>
+                        <td th:text="${item.usf013=='A'?'上架':(item.usf013=='B'?'推荐':(item.usf013=='C'?'下架':''))}"></td>
+                        <td th:text="${item.usf016=='A'?'不显示':(item.usf016=='B'?'显示':'')}"></td>
+                        <td>
+                            <button th:onclick="toxq([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
+                                <button th:onclick="edit([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
+                                <button th:onclick="tokc([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">库存设置</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G7#')>=0}">
+                                <th:block th:if="${item.usf013=='C'}">
+                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">上架</button>
+                                </th:block>
+                                <th:block th:if="${item.usf013=='B'}">
+                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">不推荐</button>
+                                </th:block>
+                                <th:block th:if="${item.usf013!='B'}">
+                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">推荐</button>
+                                </th:block>
+                                <th:block th:if="${item.usf013!='C'}">
+                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['C']])" type="button" class="btn btn-primary btn-sm btxz">下架</button>
+                                </th:block>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G8#')>=0}">
+                                <th:block th:if="${item.usf016=='B'}">
+                                    <button th:onclick="xgztx([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">不显示</button>
+                                </th:block>
+                                <th:block th:if="${item.usf016=='A'}">
+                                    <button th:onclick="xgztx([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">显示</button>
+                                </th:block>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0}">
+                                <button th:onclick="tolskc([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz"> 临时库存管理
+                                </button>
+                            </th:block>
+                        </td>
+                    </tr>
+                </th:block>
+                <tr th:case="false">
+                    <td></td><td></td>
+                    <td></td><td></td>
+                    <td></td><td></td>
+                    <td></td><td></td>
+                    <!--                    <td></td><td></td>-->
+                    <td></td><td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="page jsgrid-pager-container" style="display: block;">
+            </div>
+        </div>
+    </div>
+    <!-- DataTable With Scroll Example Section Starts -->
+</div>
+<!-- 详情滑动页 -->
+<div id="detail" class="model">
+    <div id="ddiv" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="dtitle" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <div id="xq">
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                    <button type="button" class="btn btn-outline-secondary" onclick="gb()">关闭</button>
+                    &nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
+<!-- 编辑滑动页 -->
+<div id="active" class="model">
+    <div id="adiv" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="mtitle" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <form method="post" id="submitForm" action="toDi/xgcp" enctype="multipart/form-data">
+                <input type="hidden" id="id" name="id"/>
+                <input type="hidden" name="pages" th:value="${pageobj.currentPage}"/>
+                <input type="hidden" name="name" th:value="${pageobj.othersql}"/>
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>菜品名称</label>
+                            <input lay-verify="required|name" id="t1" name="t1" type="text" class="form-control input-0"
+                                   placeholder="请填写菜品名称">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <label>单位</label>
+                        <div class="form-group">
+                            <select id="t4" name="t4" class="form-control">
+                                <option value="" selected>请选择</option>
+                                <th:block th:each="item,stat:${usmlist}">
+                                    <option th:value="${item.usm001}">[[${item.usm002}]]</option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <label>一级分类</label>
+                        <div class="form-group">
+                            <select id="t11" name="t11" class="form-control">
+                                <option value="" selected>请选择</option>
+                                <th:block th:each="item,stat:${yhelist}">
+                                    <option th:value="${item.yhe001}">[[${item.yhe002}]]</option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <label>二级分类</label>
+                        <div class="form-group">
+                            <select id="t12" name="t12" class="form-control">
+                                <option value="" selected>请选择</option>
+                                <th:block th:each="item,stat:${ysalist}">
+                                    <option th:value="${item.ysa001}">[[${item.ysa002}]]</option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <!--  <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>库存数</label>
+                            <input lay-verify="required" id="t10" name="t10" type="number" class="form-control input-0"
+                                   placeholder="请填写库存数">
+                        </div>
+                    </div>-->
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>原始价格</label>
+                            <input lay-verify="required|name" id="t5" name="t5" type="number" class="form-control input-0"
+                                   placeholder="请填写原始价格">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>优惠价格</label>
+                            <input lay-verify="required|name" id="t6" name="t6" type="number" class="form-control input-0"
+                                   placeholder="请填写优惠价格">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>规格简介</label>
+                            <textarea id="t8" name="t8" lay-verify="required" style="width:500px;height:75px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>商品详情描述</label>
+                            <textarea id="t7" name="t7" lay-verify="required" style="width:350px;height:700px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:2px;">
+                    <div class="form-group">
+                        <div class="btcor">*</div>
+                        <label class="col-form-label" style="margin-left:10px;">图片<span style="margin-left:15px;"><font color="#ec8e26"><!--分辨率:414*280--></font></span>
+                            <button type="button" class="effect-btn btn btn-light" style="margin-left:30px;width:80px;" onclick="$('#t2').click();">选择文件</button>
+                        </label>
+                        <input type="hidden" id="delimg" name="delimg"/>
+                        <input type="file" id="t2" name="t2" style="display: none;" accept="image/x-png,image/jpg,image/jpeg" onchange="showpdtpgs('t2','#p4')" multiple/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10  col-sm-10"><div class="form-group">
+                        <div id="p4" style="display: flex;justify-content: start;align-items: center;flex-flow: row wrap;"></div>
+                    </div></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                        <button type="button" class="btn btn-outline-secondary" onclick="clean()">取消</button>
+<!--                        <button type="submit" lay-submit="" class="btn btn-success">提交</button>-->
+                        <button type="button" class="btn btn-success" onclick="save()">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
+<!-- 小红花滑动页 -->
+<div class="modal"id="modal-2">
+    <div class="modal-dialog"  style="left:-25%">
+        <div class="modal-content" style="border:1px solid #999;width:400px;height:260px;" >
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="font-size:15px;">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>库存量</label>
+                        <div class="form-group" style="display:flex:justify-content:center:align-items:center;">
+                            <input class="inpchk" id="r151" name="t15" value="A" type="radio" checked />
+                            <label for="r151" class="form-check-label">无限</label>
+                            <input class="inpchk" style="margin-left:20px;" id="r152" name="t15" value="B" type="radio" />
+                            <label for="r152" class="form-check-label">限量</label>
+                            <input lay-verify="required" id="t10" name="t10" type="number" class="form-control input-0" style="margin-top:20px;" placeholder="请填写库存数">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" >
+                    <input type="hidden" id="cpid" name="cpid"/>
+                    <button type="button" class="effect-btn btn btn-info mt-2 mr-2 sm-btn" onclick="xgtj()">提交</button>
+                    <button type="button" id="pass1" class="effect-btn btn btn-info mt-2 mr-2 sm-btn" data-dismiss="modal" aria-hidden="true" onclick="cancel_q()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/jquery/slim.min.js"></script>
+<script src="assets/js/jquery/popper.min.js"></script>
+<script src="assets/js/jquery/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/tables/datatables.min.js"></script>
+<script src="assets/js/tables/dataTables.buttons.min.js"></script>
+<script src="assets/js/tables/jszip.min.js"></script>
+<script src="assets/js/tables/pdfmake.min.js"></script>
+<script src="assets/js/tables/vfs_fonts.js"></script>
+<script src="assets/js/tables/buttons.html5.min.js"></script>
+<script src="assets/js/tables/buttons.print.min.js"></script>
+<script src="assets/js/tables/datatable.js"></script>
+<script src="assets/js/nanoscroller/nanoscroller.js"></script>
+<script src="assets/js/custom/theme.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/validate-methods.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/localization/messages_zh.js"></script>
+<script src="pagejs/htfy.js"></script>
+<script src="pagejs/HTsel.js"></script>
+<script src="pagejs/HTcp.js"></script>
+<script type="text/javascript">
+    var imglist=[];
+    var t4=[];
+    var formData = new FormData();
+    //富文本编辑器
+    $(function() {
+        KindEditor.ready(function (K) {
+            KE = K.create('#t7', {
+                allowFileManager: true, //浏览图片空间
+                filterMode: false, //HTML特殊代码过滤
+                uploadJson:"upload",
+                items : [
+                    'source', '|', 'undo', 'redo', '|', 'preview', /* "print", */
+                    'code', 'cut', 'copy', 'paste','plainpaste', 'wordpaste',
+                    '|', 'justifyleft', 'justifycenter', 'justifyright','justifyfull', 'insertorderedlist', 'insertunorderedlist',
+                    'indent', 'outdent', 'subscript','superscript', 'clearhtml', 'quickformat', 'selectall', '|',
+                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+                    /*  "multiimage", "flash", "media",  "insertfile",*/
+                      'table', 'hr', 'emoticons', /* "baidumap",  */ 'pagebreak',
+                    /* "anchor", "link", "unlink", "|","about" */
+                ],
+                afterBlur: function () { this.sync(); }, //编辑器失去焦点(blur)时执行的回调函数（将编辑器的HTML数据同步到textarea）
+                afterUpload: function (url, data, name) { //上传文件后执行的回调函数，必须为3个参数
+                    if (name == "image" || name == "multiimage") { //单个和批量上传图片时
+                        var img = new Image(); img.src = url;
+                        img.onload = function () { //图片必须加载完成才能获取尺寸
+                            if (img.width > 100) {
+                                KE.html(KE.html().replace('<img src="' + url + '"', '<img src="' + url + '" style="max-width:100%"'));
+                            }
+                        };
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

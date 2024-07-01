@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+    <title>方兴团购系统---后台管理</title>
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/custompages/login2.css"/>
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css"/>
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+</head>
+<body class="bg-login">
+<input type="hidden" name="dnum" th:value="${session.dnumn}">
+<input type="hidden" th:value="${error}" id="error">
+<input type="hidden" id="result2">
+<div class="wrapper">
+    <!-- Page Content Starts-->
+    <div class="content-wrapper">
+        <div class="mx-auto login">
+            <div class="login_wrapper">
+                <div class="animate form login_form">
+                    <section class="login_content">
+                        <form id="fromlogin" method="post" data-parsley-validate
+                              class="form-horizontal form-label-left">
+                            <h1>系统登录</h1>
+                            <div class="mb-3">
+                                <input name="username" placeholder="账户名" th:value="${uname}" type="text"
+                                       class="form-control" required="required" value="" autocomplete="off"
+                                       style="font-size: 14px;"/>
+                            </div>
+                            <div class="mb-3">
+                                <input name="userpwd" placeholder="密码" type="password" class="form-control"
+                                       autocomplete="off" required="required" value="" style="font-size: 14px;"/>
+                            </div>
+                            <div class="mb-3">
+                                <input name="ycode" placeholder="验证码" type="text" class="form-control"
+                                       autocomplete="off"
+                                       style="float:left;margin-right:20px;width:180px;font-size: 14px;"/>
+                                <img style="width: 100px;height:35px;" id="codeImg" alt="验证码" onclick="changeImg()"/>
+                            </div>
+                            <div>
+                                <input value="登录" lay-submit lay-filter="login" class="btn btn-success" type="submit"/>
+                            </div>
+                            <hr/>
+                            <div class="separator">
+                                <div>
+                                    <h1 style="font-size: 18px;"><a href="http://www.nbefx.com" target="_blank">
+                                        <image src="assets/logo.png" style="width:25px;height:26px;"></image>&nbsp;宁波易飞迅科技有限公司!</a>
+                                    </h1>
+                                    <p>©2023 易飞迅 版权所有.</p>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page Content Ends-->
+</div>
+
+<!-- Bootstrap JS -->
+<script src="assets/js/jquery/jquery.min.js"></script>
+<script src="http://cdn.bootstrapmb.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/js/js.js"></script>
+<script type="text/javascript">
+    var error = $("#error").val();
+    var layer;
+    $(function () {
+        if (error != '') {
+            if (error == 'D') {
+                layui.use('layer', function () {
+                    layer = layui.layer;
+                    layer.ready(function () {
+                        layer.msg("网站已关闭，请联系管理员!");
+                    });
+                });
+            } else {
+
+                layui.use('layer', function () {
+                    layer = layui.layer;
+                    layer.ready(function () {
+                        if ($("input[name='dnum']").val().trim() < 5) {
+                            layer.msg(error + " 还有" + (5 - $("input[name='dnum']").val().trim()) + "次机会");
+                        } else {
+                            layer.msg(error);
+                        }
+                    });
+                });
+            }
+        }
+
+        //加载二维码
+        setTimeout(changeImg, 1000);
+        //监听用户名称改变
+        $('input[name="username"]').on('change', function () {
+            changeImg();
+        });
+
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey("MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDXajYcIi2XXwXoKgH0JWxh1rgUdPjgJFAvmNitLQseMIhiF1vO+kNLHGCImQKcHScC4/UL1HJSY0dHsiOn8q5ydWFIt7UwxUddiSP5rjAoASYR6K6WKCkpUsPOk3a2/hm6t0DEyje9bLMuUjaTpylFBzkNfY1rp3iOtwNJkUd2nQIDAQAB");
+        var regex = new RegExp('(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,20}');
+
+        var isyz = false;
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(login)', function (data) {
+                var username = $("input[name='username']").val().trim();
+                var userpwd = $("input[type='password']").val();
+                var ycode = $("input[name='ycode']").val();
+                // if(username!=""&&userpwd!=""&&isyz){
+                //if(userpwd!=""&&!regex.test(userpwd)){
+                //	layer.msg("密码中必须包含字母、数字、特殊字符,至少8个字符，最多20个字符");
+                //}else if(ycode.length<4){
+                /*if (ycode.length < 4) { //todo
+                    layer.msg("验证码位数不足");
+                } else*/ if (username != "" && userpwd != "" && ycode != "") {
+                    // isyz = false;
+                    var params = [
+                        ["username", encrypt.encrypt(username)], ["userpwd", encrypt.encrypt(userpwd)], ["ycode", ycode]
+                    ];
+                    form_submit("checkLogin", "post", params, "_self");
+                } else {
+                    /*if (ycode == "") {
+                        layer.msg("请输入验证码");
+                    } else*/ if (username == "") {
+                        layer.msg("用户名不能为空");
+                    } else if (userpwd == "") {
+                        layer.msg("密码不能为空");
+                    }
+                }
+                return false;
+            });
+        });
+
+        //拖动验证
+        $(".inner").mousedown(function (e) {
+            var dx, os = $(".inner").offset(), _differ = $(".outer").width() - $(".inner").width();
+            $(document).mousemove(function (e) {
+                dx = e.pageX - os.left;
+                if (dx < 0) {
+                    dx = 0;
+                } else if (dx > _differ) {
+                    dx = _differ;
+                }
+                $(".filter-box").css('width', dx);
+                $(".inner").css("left", dx);
+            });
+            $(document).mouseup(function (e) {
+                $(document).off('mousemove');
+                $(document).off('mouseup');
+                dx = e.pageX - os.left;
+                if (dx < _differ) {
+                    isyz = false;
+                    SlideCheckFail();
+                } else if (dx >= _differ) {
+                    isyz = true;
+                    SlideCheckSuccess(_differ);
+                }
+            })
+        });
+    });
+
+    function changeImg() {
+        var imgSrc = $("#codeImg");
+        imgSrc.attr("src", chgUrl("/code.do"));
+    }
+
+    //加入时间戳，去缓存机制
+    function chgUrl(url) {
+        var timestamp = (new Date()).valueOf();
+        if ((url.indexOf("&") >= 0)) {
+            url = url + "&timestamp=" + timestamp + "&uname=" + $("input[name='username']").val().trim();
+        } else {
+            url = url + "?timestamp=" + timestamp + "&uname=" + $("input[name='username']").val().trim();
+        }
+        return url;
+    }
+</script>
+</body>
+</html>
