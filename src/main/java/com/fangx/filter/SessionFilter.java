@@ -25,7 +25,7 @@ public class SessionFilter implements Filter {
 
         if (!needFilter) {
             filterChain.doFilter(servletRequest, servletResponse);
-        } else if(uri.indexOf("/xhsgetticket")>0||uri.indexOf(".txt")>0){
+        } else if(uri.indexOf("/xhsgetticket")>0){
             filterChain.doFilter(request, response);
         }else {
             if (session != null && session.getAttribute("user") != null) {
