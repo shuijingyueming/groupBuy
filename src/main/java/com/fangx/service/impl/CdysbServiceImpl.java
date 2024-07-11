@@ -10,6 +10,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +28,19 @@ import java.util.function.Function;
 @Service
 public class CdysbServiceImpl implements CdysbService {
 
+    protected final static SimpleDateFormat TIMEMIAO = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     @Autowired
     private cdysbMapper ysbMapper;
 
     @Override
     public cdysb getByid(Integer id) {
         return ysbMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public cdysb getByid1(Integer id) {
+        return ysbMapper.selectByPrimaryKey1(id);
     }
 
     @Override
@@ -90,11 +99,144 @@ public class CdysbServiceImpl implements CdysbService {
     }
 
     @Override
-    public cdysb selectBycpid(String time, String time2) {
+    public cdysb selectBycpid(String time, String time2, String zt) {
         cdysbExample e1 = new cdysbExample();
         Criteria c = e1.createCriteria();
         if(time!=null)c.andSql("(DATE_FORMAT(ysb003,'%Y-%m-%d')='"+time+"')");
         if(time2!=null)c.andSql("(DATE_FORMAT(ysb004,'%Y-%m-%d')='"+time2+"')");
+        if(zt!=null)c.andYsb007EqualTo(zt);
+        e1.setOrderByClause("ysb003");
+        List<cdysb> list = ysbMapper.selectByExample(e1);
+        return list!=null&&list.size()>0?list.get(0):null;
+    }
+
+    @Override
+    public cdysb selectBycpid1(String time, String time2) {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        if(time!=null)c.andSql("(DATE_FORMAT(ysb003,'%Y-%m-%d')='"+time+"')");
+        if(time2!=null)c.andSql("(DATE_FORMAT(ysb004,'%Y-%m-%d')='"+time2+"')");
+        c.andYsb007EqualTo("A");
+        e1.setOrderByClause("ysb003");
+        List<cdysb> list = ysbMapper.selectByExample(e1);
+        return list!=null&&list.size()>0?list.get(0):null;
+    }
+    @Override
+    public List<cdysb> selectBycpid2(String time) {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        if(time!=null)c.andSql("(DATE_FORMAT(ysb003,'%Y-%m-%d')='"+time+"')");
+        c.andYsb007EqualTo("B");
+        e1.setOrderByClause("ysb003");
+        return  ysbMapper.selectByExample(e1);
+    }
+
+    @Override
+    public cdysb selectBygs(String time, List<Integer> list1) throws ParseException {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        c.andYsb003LessThanOrEqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb004GreaterThan(TIMEMIAO.parse(time+" 00:00:00"));
+        if(list1.size()>0){
+            String sql="";
+            sql+=" (";
+            for(Integer i:list1){
+                sql+=" DayOfWeek(ysb003) = "+i+" ";
+                sql+="or";
+            }
+            sql=sql.substring(0,sql.length()-2);
+            sql+=" )";
+            c.andSql(sql);
+            e1.setOrderByClause("ysb003");
+            List<cdysb> list = ysbMapper.selectByExample(e1);
+            return list!=null&&list.size()>0?list.get(0):null;
+        }
+        return null;
+    }
+
+    @Override
+    public cdysb selectBygs1(String time, List<Integer> list1) throws ParseException {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        c.andYsb003LessThanOrEqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb004GreaterThan(TIMEMIAO.parse(time+" 00:00:00"));
+        if(list1.size()>0){
+            String sql="";
+            sql+=" (";
+            for(Integer i:list1){
+                sql+=" DayOfWeek(ysb003) = "+i+" ";
+                sql+="or";
+            }
+            sql=sql.substring(0,sql.length()-2);
+            sql+=" )";
+            c.andSql(sql);
+            e1.setOrderByClause("ysb003");
+            List<cdysb> list = ysbMapper.selectByExample(e1);
+            return list!=null&&list.size()>0?list.get(0):null;
+        }
+        return null;
+    }
+
+    @Override
+    public cdysb selectBygs2(String time, List<Integer> list1, Integer gsid) throws ParseException {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        c.andYsb003LessThanOrEqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb004GreaterThan(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb007EqualTo("B");
+        c.andSql("((select count(*) from cdysd where ysd002=ysb001 and ysd003='"+gsid+"')>0)");
+        e1.setOrderByClause("ysb003");
+        if(list1.size()>0){
+            String sql="";
+            sql+=" (";
+            for(Integer i:list1){
+                sql+=" DayOfWeek(ysb003) = "+i+" ";
+                sql+="or";
+            }
+            sql=sql.substring(0,sql.length()-2);
+            sql+=" )";
+            c.andSql(sql);
+            e1.setOrderByClause("ysb003");
+            List<cdysb> list = ysbMapper.selectByExample(e1);
+            return list!=null&&list.size()>0?list.get(0):null;
+        }
+        return null;
+    }
+
+    @Override
+    public cdysb selectBygs3(String time, Integer gsid) throws ParseException {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        c.andYsb003LessThanOrEqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb004IsNull();
+        c.andYsb007EqualTo("B");
+        c.andSql("((select count(*) from cdysd where ysd002=ysb001 and ysd003='"+gsid+"')>0)");
+        e1.setOrderByClause("ysb003");
+        List<cdysb> list = ysbMapper.selectByExample(e1);
+        return list!=null&&list.size()>0?list.get(0):null;
+    }
+
+    @Override
+    public cdysb selectBygs4(String time, Integer gsid) throws ParseException {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        c.andYsb003EqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb004IsNull();
+        c.andYsb007EqualTo("B");
+        c.andSql("((select count(*) from cdysd where ysd002=ysb001 and ysd003='"+gsid+"')>0)");
+        e1.setOrderByClause("ysb003");
+        List<cdysb> list = ysbMapper.selectByExample(e1);
+        return list!=null&&list.size()>0?list.get(0):null;
+    }
+
+    @Override
+    public cdysb selectBygs5(String time, String zt, Integer gsid) throws ParseException {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        c.andYsb003LessThanOrEqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb004GreaterThan(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb007EqualTo(zt);
+        if(gsid!=null)c.andSql("((select count(*) from cdyhb left join cdusb on usb001=yhb002 where DayOfWeek(Ysb003)=usb003 and yhb003='"+gsid+"')>0)");
         e1.setOrderByClause("ysb003");
         List<cdysb> list = ysbMapper.selectByExample(e1);
         return list!=null&&list.size()>0?list.get(0):null;

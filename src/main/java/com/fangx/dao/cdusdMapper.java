@@ -3,6 +3,8 @@ package com.fangx.dao;
 import com.fangx.model.cdusd;
 import com.fangx.model.cdusdExample;
 import java.util.List;
+
+import com.fangx.model.cdyhbExample;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -32,4 +34,6 @@ public interface cdusdMapper {
     int updateByPrimaryKey(cdusd record);
 
     List<cdusd> selectByExampleAndPage(cdusdExample example, RowBounds rowBounds);
+
+    List<cdusd> selectByExample1(@Param("cdusdExample")cdusdExample e1, @Param("cdyhbExample")cdyhbExample e2);
 }

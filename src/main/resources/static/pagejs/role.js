@@ -197,37 +197,23 @@ function edit(id){
                     $("#t1").removeAttr("readonly")
                 }
                 if(item.usa004.indexOf("A1#A2#A3#A4#A5#")>=0)$("#A").prop("checked",true);
-
                 if(item.usa004.indexOf("B1#B4#")>=0)$("#B").prop("checked",true);
-                if(item.usa004.indexOf("C1#C2#C3#C6#")>=0)$("#C").prop("checked",true);
-                if(item.usa004.indexOf("D1#D3#")>=0)$("#D").prop("checked",true);
-                if($("#jstype").val()=="A"){
-                    if(item.usa004.indexOf("E1#E2#E3#E5#E8#")>=0)$("#E").prop("checked",true);
-                    if(item.usa004.indexOf("F1#F2#F3#F5#F8#")>=0)$("#F").prop("checked",true);
-                    if(item.usa004.indexOf("J1#")>=0)$("#J").prop("checked",true);
-                    if(item.usa004.indexOf("K1#K8#")>=0)$("#K").prop("checked",true);
-                }else if($("#jtype").val()=="A"){
-                    if(item.usa004.indexOf("F1#F3#")>=0)$("#F").prop("checked",true);
-                    if(item.usa004.indexOf("J1#J2#J3#J8#")>=0)$("#J").prop("checked",true);
-                    if(item.usa004.indexOf("K1#K2#K3#K4#K5#")>=0)$("#K").prop("checked",true);
-                    if(item.usa004.indexOf("I1#I2#I3#I8#I5#I6#")>=0)$("#I").prop("checked",true);
-                }else{
-                    if(item.usa004.indexOf("E1#E3#")>=0)$("#E").prop("checked",true);
-                    if(item.usa004.indexOf("F1#F2#F3#F8#F5#")>=0)$("#F").prop("checked",true);
-                    if(item.usa004.indexOf("K1#K8#")>=0)$("#K").prop("checked",true);
-                    if(item.usa004.indexOf("I1#I2#I3#I8#")>=0)$("#I").prop("checked",true);
-                }
-                if(item.usa004.indexOf("H1#H2#H3#H8#")>=0)$("#H").prop("checked",true);
+                if(item.usa004.indexOf("C1#C3#C6#")>=0)$("#C").prop("checked",true);
 
-                if(item.usa004.indexOf("K1#K2#K3#K8#")>=0)$("#K").prop("checked",true);
-                if(item.usa004.indexOf("L1#L2#L3#L4#L5#")>=0)$("#L").prop("checked",true);
-                if(item.usa004.indexOf("M1#M2#")>=0)$("#M").prop("checked",true);
-                if(item.usa004.indexOf("N1#N5#")>=0)$("#N").prop("checked",true);
-                if(item.usa004.indexOf("O1#O2#O3#O8#")>=0)$("#O").prop("checked",true);
-                if(item.usa004.indexOf("P1#P8#")>=0)$("#P").prop("checked",true);
-                if(item.usa004.indexOf("Q1#")>=0)$("#Q").prop("checked",true);
-                if(item.usa004.indexOf("R1#R2#R3#R5#R6#R7#")>=0)$("#R").prop("checked",true);
-                if(item.usa004.indexOf("W1#W7#")>=0)$("#W").prop("checked",true);
+                if(item.usa004.indexOf("E1#E2#E3#E4#")>=0)$("#E").prop("checked",true);
+                if(item.usa004.indexOf("F1#F2#F3#")>=0)$("#F").prop("checked",true);
+                if(item.usa004.indexOf("G1#G2#G3#G7#G8#")>=0)$("#G").prop("checked",true);
+                if(item.usa004.indexOf("I1#I2#I3#")>=0)$("#I").prop("checked",true);
+                if(item.usa004.indexOf("J1#J2#J3#J7#J6#")>=0)$("#J").prop("checked",true);
+
+                if(item.usa004.indexOf("K1#")>=0)$("#K").prop("checked",true);
+
+                if(item.usa004.indexOf("P1#P2#P3#P4#P5#")>=0)$("#P").prop("checked",true);
+                if(item.usa004.indexOf("Q1#Q2#Q3#Q4#")>=0)$("#Q").prop("checked",true);
+                if(item.usa004.indexOf("O1#O2#")>=0)$("#O").prop("checked",true);
+                if(item.usa004.indexOf("N1#N2#")>=0)$("#N").prop("checked",true);
+                if(item.usa004.indexOf("L1#L5#")>=0)$("#L").prop("checked",true);
+                if(item.usa004.indexOf("M1#")>=0)$("#M").prop("checked",true);
                 $("input[name='qx']").each(function(){
                     if(item.usa004.indexOf($(this).val())>=0){
                         $(this).prop("checked",true);

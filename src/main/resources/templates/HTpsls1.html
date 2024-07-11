@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getContextPath()}+'/'">
+
+    <title>平台账户信息管理</title>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, usdr-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/tables/datatables-http.min.css">
+    <link rel="stylesheet" href="assets/css/tables/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/demos.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgridui.css">
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="static/css/pubcss.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+</head>
+<input type="hidden" id="pages" name="pages" th:value="${pageobj.currentPage}"/>
+<input type="hidden" id="counts" name="counts" th:value="${pageobj.pageCount}"/>
+<input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
+<input type="hidden" th:value="${msg}" id="msg">
+<input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<body class="sidebar-mini fixed skin-blue">
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            配送日期调整<small></small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li>团购管理</li>
+            <li class="active">配送日期调整</li>
+        </ol>
+    </section>
+    <!-- Serach Starts-->
+    <section class="content" id="wrhead">
+        <div class="cardbg" style="padding:1rem;">
+            <form>
+                <div class="form-row">
+                    <div style="max-width: 100px;margin-top: 15px;" class="col-xl-2 col-lg-3">
+                        原配送日期:
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="date" th:value="${pageobj.othersql1}" type="date" class="form-control" placeholder="请输入原配送时间">
+                    </div>
+                    <div style="max-width: 78px;margin-top: 15px;" class="col-xl-2 col-lg-3">
+                        配送日期:
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="date1" th:value="${pageobj.othersql2}" type="date" class="form-control" placeholder="请输入配送时间">
+                    </div>
+                    <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Serach Content Ends-->
+    <!-- DataTable With Button Example Section Starts -->
+    <div class="card panel panel-default" id="wrapp">
+        <div class="jsgrid collapse show p-4" data-parent="#accordion">
+            <table id="pslsexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="max-width:40px;">序号</th>
+                    <th>原配送日期</th>
+                    <th>配送日期</th>
+                    <th>公司</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody th:switch="${ pageobj.recordCount gt 0 }">
+                <th:block th:case="true">
+                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
+                        <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
+                        <td th:text="${#dates.format(item.ysb003,'yyyy-MM-dd')}"></td>
+                        <td th:text="${item.ysb004!=null?#dates.format(item.ysb004,'yyyy-MM-dd'):''}"></td>
+                        <td>
+                            <th:block th:each="item1,stat1:${item.ysdlist}">
+                                [[${item1.usd.usd002}]]
+                            </th:block>
+                        </td>
+                        <td th:text="${item.ysb005=='A'?'已使用':(item.ysb005=='B'?'未使用':'')}"></td>
+                        <td>
+                            <th:block th:if="${item.ysb005=='B'}">
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
+                                <button th:onclick="edit([[${item.ysb001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G4#')>=0}">
+                                <button th:onclick="del([[${item.ysb001}]],[[${#dates.format(item.ysb004,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">删除</button>
+                            </th:block>
+                        </th:block>
+                        </td>
+                    </th:block>
+                </th:block>
+                <tr th:case="false">
+                    <td></td><td></td>
+                    <td></td><td></td>
+                    <td></td> <td></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="page jsgrid-pager-container" style="display: block;">
+            </div>
+        </div>
+    </div>
+    <!-- DataTable With Scroll Example Section Starts -->
+</div>
+<!-- 编辑滑动页 -->
+<div id="active" class="model">
+    <div id="adiv" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="mtitle" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <form method="post" id="submitForm" action="toCo/xgpsls1" enctype="multipart/form-data">
+                <input type="hidden" id="id" name="id"/>
+                <input type="hidden" name="date" th:value="${pageobj.othersql1}" />
+                <input type="hidden" name="date1" th:value="${pageobj.othersql2}" />
+                <input type="hidden" name="fhlx" th:value="${fhlx}" />
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>原配送日期</label>
+                            <input lay-verify="required|name" th:min="${#dates.format(time,'yyyy-MM-dd')}" id="t3" name="t3" type="date" class="form-control input-0"
+                                   placeholder="请填写原配送日期">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>配送日期</label>
+                        <div class="form-group" style="display:flex:justify-content:center:align-items:center;">
+                            <input class="inpchk" id="r61" name="t6" value="A" type="radio" checked />
+                            <label for="r61" class="form-check-label">有</label>
+                            <input class="inpchk" style="margin-left:20px;" id="r62" name="t6" value="B" type="radio" />
+                            <label for="r62" class="form-check-label">无</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ps">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>配送日期</label>
+                            <input lay-verify="required|name" th:min="${#dates.format(time,'yyyy-MM-dd')}" id="t4" name="t4" type="date" class="form-control input-0"
+                                   placeholder="请填写配送日期">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>范围</label>
+                        <div class="form-group" style="display:flex:justify-content:center:align-items:center;">
+                            <input class="inpchk" id="r71" name="t7" value="A" type="radio" checked />
+                            <label for="r71" class="form-check-label">全部</label>
+                            <input class="inpchk" style="margin-left:20px;" id="r72" name="t7" value="B" type="radio" />
+                            <label for="r72" class="form-check-label">部分</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row fw" style="display: none">
+                    <div class="col-md-6 col-xl-4">
+                        <input type="hidden" id="t8" name="t8" lay-verify="t8" value="">
+                        <label>公司</label>
+                        <div class="form-group">
+                            <select id="t9" name="t9" class="form-control">
+                                <option value="" selected>请选择</option>
+                                <th:block th:each="item,stat:${usdlist}">
+                                    <option th:value="${item.usd001}">[[${item.usd002}]]</option>
+                                </th:block>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row fw" style="display: none">
+                    <div class="col-md-12 col-xl-12">
+                        <div class="form-group bqdiv" id="alllzbzlx"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                        <button type="button" class="btn btn-outline-secondary" onclick="clean()">取消</button>
+                        <button type="submit" lay-submit="" class="btn btn-success">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
+<!-- 小红花滑动页 -->
+<div class="modal"id="modal-2">
+    <div class="modal-dialog"  style="left:-25%">
+        <div class="modal-content" style="border:1px solid #999;width:400px;height:260px;" >
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="font-size:15px;">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>配送日期</label>
+                        <div class="form-group">
+                            <input lay-verify="required|name" th:min="${#dates.format(time,'yyyy-MM-dd')}" id="time" name="time" type="date" class="form-control input-0"
+                                   placeholder="请填写配送日期">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="">
+                    <input type="file" id="file1" name="file1" style="display: none" onchange="daoruwj1(this)"/>
+                    <button type="button" class="effect-btn btn btn-info mt-2 mr-2 sm-btn" onclick="drkc()">导入</button>
+                    <button type="button" id="pass1" class="effect-btn btn btn-info mt-2 mr-2 sm-btn" data-dismiss="modal" aria-hidden="true" onclick="cancel_q()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/js/jquery/slim.min.js"></script>
+<script src="assets/js/jquery/popper.min.js"></script>
+<script src="assets/js/jquery/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/tables/datatables.min.js"></script>
+<script src="assets/js/tables/dataTables.buttons.min.js"></script>
+<script src="assets/js/tables/jszip.min.js"></script>
+<script src="assets/js/tables/pdfmake.min.js"></script>
+<script src="assets/js/tables/vfs_fonts.js"></script>
+<script src="assets/js/tables/buttons.html5.min.js"></script>
+<script src="assets/js/tables/buttons.print.min.js"></script>
+<script src="assets/js/tables/datatable.js"></script>
+<script src="assets/js/nanoscroller/nanoscroller.js"></script>
+<script src="assets/js/custom/theme.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/validate-methods.js"></script>
+<script type="text/javascript" src="assets/jquery-validate/localization/messages_zh.js"></script>
+<script src="pagejs/htfy.js"></script>
+<script src="pagejs/HTsel.js"></script>
+<script src="pagejs/HTpsls1.js"></script>
+</body>
+</html>

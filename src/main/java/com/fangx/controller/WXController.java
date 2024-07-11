@@ -3,28 +3,18 @@ package com.fangx.controller;
 import com.alibaba.fastjson.JSON;
 import com.fangx.model.*;
 import com.fangx.until.SendSms;
-import com.fangx.wx.HttpGetUtil;
 import com.fangx.wx.PayUtils;
 import com.fangx.wx.RandomStringGenerator;
 import com.fangx.wx.WeiCatJK;
 import net.sf.json.JSONObject;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.protocol.HTTP;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.*;
 
@@ -173,21 +163,32 @@ public class WXController extends BaseController {
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value = "/wxqs", method = RequestMethod.POST)
-    public String wxqs(HttpServletRequest request) throws Exception {
+    @RequestMapping(value = "/wxqs1", method = RequestMethod.POST)
+    public String wxqs1(HttpServletRequest request) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
         String gsid=request.getParameter("gsid");
         if(gsid!=null){
+            List<Integer> list=usbService.serachAllweek(Integer.valueOf(gsid));
             Date d=new Date();
             Calendar ca = Calendar.getInstance();
             ca.setTime(d);
-//            ca.add(Calendar.DAY_OF_MONTH,-3);
-            Integer i=getWeekDay(ca);
-            cdusb item=usbService.selectByweek(Integer.valueOf(gsid),i==7?0:i);
-            if(item==null)item=usbService.selectByweek1(Integer.valueOf(gsid),i==1?8:i);
+            //在临时日期之间
+            ca.add(Calendar.DAY_OF_MONTH,1);
+            cdysb ysb=ysbService.selectBygs(DATE.format(ca.getTime()),list);
+            if(ysb!=null){
+                ca.setTime(ysb.getYsb003());
+                cdusb item=usbService.selectByzq(getWeekDay(ca));
+                result.put("item", item);
+            }else{
+                ca.add(Calendar.DAY_OF_MONTH,-1);
+                Integer i=getWeekDay(ca);
+                cdusb item=usbService.selectByweek(Integer.valueOf(gsid),i==7?0:i);
+                if(item==null)item=usbService.selectByweek1(Integer.valueOf(gsid),i==1?8:i);
 //            ca.add(Calendar.DAY_OF_MONTH,7+item.getUsb003()-i);
 //            result.put("date", ca.getTime());
-            result.put("item", item);
+                result.put("item", item);
+            }
+
         }/*else{
             Date d=new Date();
             Calendar ca = Calendar.getInstance();
@@ -205,6 +206,99 @@ public class WXController extends BaseController {
 //            }
             result.put("list", list);
         }*/
+        return JSON.toJSONString(result);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/wxqs", method = RequestMethod.POST)
+    public String wxqs(HttpServletRequest request) throws Exception {
+        Map<String, Object> result = new HashMap<String, Object>();
+        String gsid=request.getParameter("gsid");
+        if(gsid!=null){
+            List<Integer> list=usbService.serachAllweek(Integer.valueOf(gsid));
+            Date d=new Date();
+            Calendar ca = Calendar.getInstance();
+            ca.setTime(d);
+            ca.set(Calendar.HOUR_OF_DAY, 12);
+            long current = System.currentTimeMillis();
+            long tomorrowzero1 = ca.getTimeInMillis();
+            long tomorrowzeroSeconds1 = (tomorrowzero1- current);
+//            System.out.println("离12点时间："+tomorrowzeroSeconds1+"秒");
+            if(tomorrowzeroSeconds1>0){
+                //全部 在临时日期之间
+                cdysb ysb=ysbService.selectBygs1(DATE.format(ca.getTime()),list);
+                if(ysb!=null&&ysb.getYsb004()!=null){
+                    ca.setTime(ysb.getYsb003());
+                    cdusb item=usbService.selectByzq(getWeekDay(ca));
+                    result.put("item", item);
+                }else{
+                    //个别 在临时日期之间
+                    ysb=ysbService.selectBygs2(DATE.format(ca.getTime()),list, Integer.valueOf(gsid));
+                    if(ysb!=null&&ysb.getYsb004()!=null){
+                        ca.setTime(ysb.getYsb003());
+                        cdusb item=usbService.selectByzq(getWeekDay(ca));
+                        result.put("item", item);
+                    }else{
+                        Integer i=getWeekDay(ca);
+                        cdusb item=usbService.selectByweek5(Integer.valueOf(gsid),i==7?0:i, null);
+                        if(item==null)item=usbService.selectByweek6(Integer.valueOf(gsid),i==1?8:i, null);
+                        cdysb ysb1=ysbService.selectBygs3(DATE.format(ca.getTime()),Integer.valueOf(gsid));
+                        if(ysb1!=null){
+                            if(list.size()==1){
+                                Calendar ca1 = Calendar.getInstance();
+                                ca1.setTime(ysb1.getYsb003());
+                                ca1.add(Calendar.DAY_OF_MONTH, 7);
+                                item=usbService.getBytime(DATE.format(ca1.getTime()));
+                            }else{
+                                Integer i1=item.getUsb001();
+                                item=usbService.selectByweek5(Integer.valueOf(gsid),i==7?0:i,i1);
+                                if(item==null)item=usbService.selectByweek6(Integer.valueOf(gsid),i==1?8:i,i1);
+                            }
+                        }
+                        result.put("item", item);
+                    }
+                }
+            }else{
+                //全部 在临时日期之间
+                ca.add(Calendar.DAY_OF_MONTH,1);
+                cdysb ysb=ysbService.selectBygs1(DATE.format(ca.getTime()),list);
+                if(ysb!=null&&ysb.getYsb004()!=null){
+                    ca.setTime(ysb.getYsb003());
+                    cdusb item=usbService.selectByzq(getWeekDay(ca));
+                    result.put("item", item);
+                }else{
+                    //个别 在临时日期之间
+                    ysb=ysbService.selectBygs2(DATE.format(ca.getTime()),list, Integer.valueOf(gsid));
+                    if(ysb!=null&&ysb.getYsb004()!=null){
+                        ca.setTime(ysb.getYsb003());
+                        cdusb item=usbService.selectByzq(getWeekDay(ca));
+                        result.put("item", item);
+                    }else{
+                        ca.add(Calendar.DAY_OF_MONTH,-1);
+                        Integer i=getWeekDay(ca);
+                        cdusb item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i, null);
+                        if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i, null);
+                        ca.add(Calendar.DAY_OF_MONTH,7+item.getUsb003()-i);
+                        cdysb ysb1=ysbService.selectBygs3(DATE.format(ca.getTime()),Integer.valueOf(gsid));
+                        if(ysb1!=null){
+                            if(list.size()==1){
+                                Calendar ca1 = Calendar.getInstance();
+                                ca1.setTime(ysb1.getYsb003());
+                                ca1.add(Calendar.DAY_OF_MONTH, 7);
+                                item=usbService.getBytime(DATE.format(ca1.getTime()));
+                            }else{
+                                Integer i1=item.getUsb001();
+                                item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i,i1);
+                                if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i,i1);
+                            }
+                        }
+                        result.put("item", item);
+                    }
+                }
+            }
+
+
+        }
         return JSON.toJSONString(result);
     }
 

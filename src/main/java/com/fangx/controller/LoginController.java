@@ -459,12 +459,19 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/pslsname",produces= MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
     public boolean pslsname(HttpServletRequest request,HttpServletResponse response){
         Integer id=request.getParameter("id").isEmpty()?0:Integer.valueOf(request.getParameter("id"));
-        cdysb item=ysbService.selectBycpid(request.getParameter("name"),request.getParameter("name1"));
-        if((id==0 && item!=null)||(id!=0 && item!=null && id!=item.getYsb001())){
+        String zt=request.getParameter("zt");
+
+        if(request.getParameter("name1")!=null&&request.getParameter("name1").isEmpty()){
             return false;
         }else{
-            return true;
+            cdysb item=ysbService.selectBycpid(request.getParameter("name"),request.getParameter("name1"),zt);
+            if(item!=null&&(id==0||(id!=0 && id!=item.getYsb001()))){
+                return false;
+            }else{
+                return true;
+            }
         }
+
     }
 
     /**
@@ -567,7 +574,7 @@ public class LoginController extends BaseController {
             InputStream in = file.getInputStream();
             String time=request.getParameter("time");
             String data=ExcelExport.getByExcelcp(in, file.getOriginalFilename(),usfService,yscService,time);
-            addLog(getUse(request).getUse002(),"导入了员工信息");
+            addLog(getUse(request).getUse002(),"导入了菜品信息");
             return data;
         } catch (Exception e) {
             e.printStackTrace();

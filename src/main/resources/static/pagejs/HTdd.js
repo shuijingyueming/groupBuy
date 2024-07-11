@@ -1,4 +1,8 @@
 var checked_item="";
+function reback(){
+    var params = [["fh",$("#fhlx").val()]];
+    form_submit("toOr/todz","post",params,"_self");
+}
 
 $(document).ready(function () {
     //菜单样式
@@ -24,6 +28,7 @@ function fanye(pageindex) {
 //翻页
 function usefanye(pageindex){
     var params = [["pages",pageindex],
+        ["date",$.trim($("#date").val())],
         ["start",$.trim($("#start").val())],
         ["end",$.trim($("#end").val())],
         ["zffs",$.trim($("#zffs").val())],
@@ -38,6 +43,7 @@ function usefanye(pageindex){
 
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
+        ["date",$.trim($("#date").val())],
         ["start",$.trim($("#start").val())],
         ["end",$.trim($("#end").val())],
         ["zffs",$.trim($("#zffs").val())],
@@ -54,6 +60,7 @@ function totk(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","T"], ["uname",uname],
             ["pages",$("#pages").val()],
+            ["date",$.trim($("#date").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
@@ -72,6 +79,7 @@ function del(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","D"], ["uname",uname],
             ["pages",$("#pages").val()],
+            ["date",$.trim($("#date").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
@@ -94,6 +102,7 @@ function delete_item(){
     if (r == true) {
         var params = [ ["id",checked_item], ["zt","AD"],
             ["pages",$("#pages").val()],
+            ["date",$.trim($("#date").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
@@ -154,11 +163,11 @@ function toxq(id){
                 html+= "<div class='row'><div class='col-md-11'>";
                 html+= "<div class='form-group'><label class='layui-form-label'></label>";
                 html+= "<div id='p4' style='display: flex;justify-content: start;align-items: center;flex-flow: row wrap;'>";
-                html+="<div class='item'>菜品 / 数量 / 价格 / 金额</div><br/>";
+                html+='<table style=\'width: 1000px;\'><thead><tr><th>菜品</th><th>数量</th><th>价格</th><th>金额</th></tr></thead> <tbody>';
                 for(var i=0;i<list.length;i++){
-                    html+="<div class='item'>"+list[i].usf.usf002+"/"+list[i].ush004+"/"+list[i].ush005+"/"+list[i].ush006+"</div><br/>";
+                    html+="<tr><th>"+list[i].usf.usf002+"</th><th>"+list[i].ush004+"</th><th>"+list[i].ush005+"</th><th>"+list[i].ush006+"</th></tr>";
                 }
-                html+= '</div></div></div>';
+                html+= '</tbody></table></div></div></div>';
                 $("#xq").append(html);
             },
             error:function(){}

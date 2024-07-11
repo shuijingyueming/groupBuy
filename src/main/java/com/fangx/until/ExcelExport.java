@@ -42,12 +42,12 @@ public class ExcelExport {
 	 * @param response
 	 *
 	 */
-	public static void ExcelexportXYQewm(HttpServletRequest request, HttpServletResponse response, List<String> ewmPath) {
+	public static void ExcelexportXYQewm(HttpServletRequest request, HttpServletResponse response, CdusfService usfService) {
 		// web浏览通过MIME类型判断文件是excel类型
 		response.setContentType("application/vnd.ms-excel;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
-		String fileName ="二维码导出.xls";// 下载的时候的文件名
-		String file="二维码导出";
+		String fileName ="菜品临时库存导入模板.xls";// 下载的时候的文件名
+		String file="菜品临时库存导入模板";
 
 		final String userAgent = request.getHeader("USER-AGENT");
 		String finalFileName = null;
@@ -78,24 +78,26 @@ public class ExcelExport {
 		sheet.setDefaultColumnWidth(25);
 		sheet.setDefaultRowHeightInPoints(20);
 		HSSFRow row = sheet.createRow(0);
-		HSSFCellStyle cellStyle4 = wb.createCellStyle();
-		cellStyle4.setAlignment(HSSFCellStyle.ALIGN_CENTER);// 设置单元格字体显示居中（左右方向）
-		cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);// 设置单元格字体显示居中(上下方向)
-		// 字体
-		HSSFFont fontStyle4 = wb.createFont();
-		fontStyle4.setFontName("宋体");
-		fontStyle4.setFontHeightInPoints((short) 24);//粗体显示
-		fontStyle4.setBold(true);
-		cellStyle4.setFont(fontStyle4);
-		CellRangeAddress sv1 = new CellRangeAddress((short) 0, (short) 0,(short) 0, (short) 1);
-		sheet.addMergedRegion(sv1);
-		HSSFCell cells = row.createCell((short) 0);// 合并单元格示例
-		cells.setCellValue(file);
-		cells.setCellStyle(cellStyle4);
 		// 字体
 		HSSFFont fontStyle = wb.createFont();
 		fontStyle.setFontHeightInPoints((short) 11);
+
+		HSSFCellStyle cellStyle1 = wb.createCellStyle();
+		cellStyle1.setLocked(true);
+		cellStyle1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		cellStyle1.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+//		cellStyle.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
+		cellStyle1.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+		cellStyle1.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		// 这里仅设置了底边边框，左边框、右边框和顶边框同理可设
+		cellStyle1.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cellStyle1.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cellStyle1.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cellStyle1.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cellStyle1.setFont(fontStyle);
+
 		HSSFCellStyle cellStyle = wb.createCellStyle();
+		cellStyle.setLocked(false);
 		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
 		cellStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		// 这里仅设置了底边边框，左边框、右边框和顶边框同理可设
@@ -104,32 +106,33 @@ public class ExcelExport {
 		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
 		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
 		cellStyle.setFont(fontStyle);
-		row=sheet.createRow(1);
+//		cellStyle.setDataFormat(wb.createDataFormat().getFormat("0"));
+		row=sheet.createRow(0);
 //		row.createCell(0).setCellValue("统计条件："+file);
-		row.createCell(0).setCellValue("导出时间："+sdf.format(new Date()));
-		row = sheet.createRow(2);
+//		row.createCell(0).setCellValue("导出时间："+sdf.format(new Date()));
 		// 创建HSSFCell对象
 		HSSFCell cell = row.createCell(0);
-		String[] s={"序号","标题","地址"};
+		String[] s={"序号","菜品名称","临时库存数"};
 		for(int j=0;j<=2;j++){
 			cell = row.createCell(j);
 			cell.setCellValue(s[j]);
-			cell.setCellStyle(cellStyle);
+			cell.setCellStyle(cellStyle1);
 		}
-		int rowNum=3;
-
-		for (int i = 0; i<ewmPath.size(); i++) {
+		int rowNum=1;
+		List<cdusf>list=usfService.serachAll();
+		for (int i = 0; i<list.size(); i++) {
 			row = sheet.createRow(rowNum);
-			String[] s1={String.valueOf((i + 1)),ewmPath.get(i).split("#")[0],ewmPath.get(i).split("#")[1]};
+			String[] s1={String.valueOf((i + 1)),list.get(i).getUsf002()};
 
 			for(int j=0;j<=2;j++){
 				cell = row.createCell(j);
-				cell.setCellValue(s1[j]);
-				cell.setCellStyle(cellStyle);
+				if(j<2)cell.setCellValue(s1[j]);
+				cell.setCellStyle(j<2?cellStyle1:cellStyle);
 			}
 
 			rowNum ++;
 		}
+		sheet.protectSheet("123456");
 		try {
 			wb.write(outt);
 			outt.close();
@@ -340,6 +343,10 @@ public class ExcelExport {
 		return fh.isEmpty()?"A":fh;
     }
 
+	public static boolean isNumeric(String str) {
+		return str.matches("-?\\d+(\\.\\d+)?");
+	}
+
 	public static String getByExcelcp(InputStream in, String fileName, CdusfService usfService, CdyscService yscService, String time) throws Exception {
 		String fh="";
 		ExcelImport exc = new ExcelImport();
@@ -359,27 +366,33 @@ public class ExcelExport {
 		for (int row_num = 1; row_num < sheet.getPhysicalNumberOfRows(); row_num++) {
 			row = sheet.getRow(row_num);
 			if (row != null) {
-				name = getValue(row.getCell(0));
-				kcsl=getValue(row.getCell(1)).replaceAll(" ","");
+				name = getValue(row.getCell(1));
+				kcsl=getValue(row.getCell(2)).replaceAll(" ","");
 				if (!name.isEmpty()||!kcsl.isEmpty()) {
 					usf=usfService.selectByName(name);
 					if(usf!=null){
 						if(!kcsl.isEmpty()){
-							item=yscService.selectBycpid(usf.getUsf001(),time);
-							if(item!=null){
-								item.setYsc006(Integer.valueOf(kcsl));
-								yscService.update(item);
+							if(isNumeric(kcsl)&&Integer.valueOf(kcsl)>=0){
+								item=yscService.selectBycpid(usf.getUsf001(),time);
+								if(item!=null){
+									item.setYsc006(Integer.valueOf(kcsl));
+									yscService.update(item);
+								}else{
+									item=new cdysc();
+									item.setYsc002(usf.getUsf001());
+									item.setYsc003(sdf2.parse(time));
+									item.setYsc005("B");
+									item.setYsc006(Integer.valueOf(kcsl));
+									yscService.insert(item);
+								}
 							}else{
-								item=new cdysc();
-								item.setYsc002(usf.getUsf001());
-								item.setYsc003(sdf2.parse(time));
-								item.setYsc006(Integer.valueOf(kcsl));
-								yscService.insert(item);
+								fh+="第"+(row_num+1)+"行导入不成功";
+								break;
 							}
-						}else{
+						}/*else{
 							fh+="第"+(row_num+1)+"行导入不成功";
 							break;
-						}
+						}*/
 					}else{
 						fh+="第"+(row_num+1)+"行导入不成功";
 						break;

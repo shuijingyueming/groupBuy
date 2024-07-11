@@ -43,7 +43,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
-            <li>菜品管理</li>
+            <li>调整管理</li>
             <li class="active">临时库存管理</li>
         </ol>
     </section>
@@ -84,6 +84,7 @@
                     </th:block>
                     <th>配送日期</th>
                     <th>临时库存数</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -96,12 +97,15 @@
                         </th:block>
                         <td th:text="${#dates.format(item.ysc003,'yyyy-MM-dd')}"></td>
                         <td th:text="${item.ysc006}"></td>
+                        <td th:text="${item.ysc005=='A'?'已使用':(item.ysc005=='B'?'未使用':'')}"></td>
                         <td>
+                            <th:block th:if="${item.ysc005=='B'}">
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
                                 <button th:onclick="edit([[${item.ysc001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
-                            </th:block>
+                                </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G4#')>=0}">
                                 <button th:onclick="del([[${item.ysc001}]],[[${#dates.format(item.ysc003,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">删除</button>
+                            </th:block>
                             </th:block>
                         </td>
                     </th:block>
@@ -109,6 +113,7 @@
                 <tr th:case="false">
                     <td></td><td></td>
                     <td></td><td></td>
+                    <td></td>
                     <th:block th:if="${fhlx==null||fhlx==''}">
                         <td></td>
                     </th:block>

@@ -75,7 +75,7 @@
                         </ul>
                     </li>
                 </th:block>
-                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0||#strings.indexOf(session.umsg.jsqx,'E1#')>=0||#strings.indexOf(session.umsg.jsqx,'F1#')>=0||#strings.indexOf(session.umsg.jsqx,'G1#')>=0}">
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'E1#')>=0||#strings.indexOf(session.umsg.jsqx,'F1#')>=0||#strings.indexOf(session.umsg.jsqx,'G1#')>=0}">
                     <li class="treeview">
                         <a >
                             <i class="fa fa-dashboard"></i> <span>菜品管理</span>
@@ -93,8 +93,51 @@
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G1#')>=0}">
                                 <li id="menu_b3"><a _href="toDi/tocp">菜品管理</a></li>
                             </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'I1#')>=0||#strings.indexOf(session.umsg.jsqx,'J1#')>=0||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>企业管理</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'I1#')>=0}">
+                                <li id="menu_d1"><a _href="toCo/togs">企业管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'J1#')>=0}">
+                                <li id="menu_d2"><a _href="toCo/togsyg">员工管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
+                                <li id="menu_d3"><a _href="toCo/tocz">充值记录管理</a></li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+
+                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0||#strings.indexOf(session.umsg.jsqx,'Q1#')>=0}">
+                    <li class="treeview">
+                        <a >
+                            <i class="fa fa-dashboard"></i> <span>团购管理</span>
+                            <span class="pull-right-container">
+									<i class="fa fa-angle-left pull-right"></i>
+								</span>
+                        </a>
+                        <ul class="treeview-menu">
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0}">
-                                <li id="menu_b4"><a _href="toDi/tocpls">菜品临时库存管理</a></li>
+                                <li id="menu_f1"><a _href="toDi/tocpls1">开团设置管理</a></li>
+                            </th:block>
+                           <!-- <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0}">
+                                <li id="menu_b4"><a _href="toDi/tocpls">临时库存管理</a></li>
+                            </th:block>-->
+                            <!--<th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'Q1#')>=0}">
+                                <li id="menu_d4"><a _href="toCo/topsls">配送日期调整</a></li>
+                            </th:block>-->
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'Q1#')>=0}">
+                                <li id="menu_d5"><a _href="toCo/topsls1">配送日期调整</a></li>
                             </th:block>
                         </ul>
                     </li>
@@ -108,38 +151,14 @@
 								</span>
                         </a>
                         <ul class="treeview-menu">
-                           <!-- <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'H1#')>=0}">
-                                <li id="menu_c1"><a _href="toDi/toqs">配送单管理</a></li>
-                            </th:block>-->
+                            <!-- <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'H1#')>=0}">
+                                 <li id="menu_c1"><a _href="toDi/toqs">配送单管理</a></li>
+                             </th:block>-->
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'O1#')>=0}">
                                 <li id="menu_e3"><a _href="toOr/tocg">采购单管理</a></li>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'N1#')>=0}">
                                 <li id="menu_e4"><a _href="toOr/tops">配送单管理</a></li>
-                            </th:block>
-                        </ul>
-                    </li>
-                </th:block>
-                <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'Q1#')>=0||#strings.indexOf(session.umsg.jsqx,'I1#')>=0||#strings.indexOf(session.umsg.jsqx,'J1#')>=0||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
-                    <li class="treeview">
-                        <a >
-                            <i class="fa fa-dashboard"></i> <span>企业管理</span>
-                            <span class="pull-right-container">
-									<i class="fa fa-angle-left pull-right"></i>
-								</span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'Q1#')>=0}">
-                                <li id="menu_d4"><a _href="toCo/topsls">临时配送管理</a></li>
-                            </th:block>
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'I1#')>=0}">
-                                <li id="menu_d1"><a _href="toCo/togs">企业管理</a></li>
-                            </th:block>
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'J1#')>=0}">
-                                <li id="menu_d2"><a _href="toCo/togsyg">员工管理</a></li>
-                            </th:block>
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
-                                <li id="menu_d3"><a _href="toCo/tocz">充值记录管理</a></li>
                             </th:block>
                         </ul>
                     </li>

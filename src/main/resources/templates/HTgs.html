@@ -90,8 +90,8 @@
                         <td th:text="${item.usd003}"></td>
                         <td th:text="${item.usd004}"></td>
                         <td>
-                            <th:block th:each="item1,stat:${item.yhblist}">
-                                [[${item1.usb.usb002}]]
+                            <th:block th:each="item1,stat1:${item.yhblist}">
+                                [[${item1.usb!=null?item1.usb.usb002:''}]]
                             </th:block>
                         </td>
                         <td>

@@ -1,8 +1,19 @@
 package com.fangx.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class cdusb {
+    private List<cdyhb> yhblist;
+
+    public List<cdyhb> getYhblist() {
+        return yhblist;
+    }
+
+    public void setYhblist(List<cdyhb> yhblist) {
+        this.yhblist = yhblist;
+    }
+
     private Integer usb001;
 
     private String usb002;

@@ -83,6 +83,22 @@
                     <div class="col-xl-2 col-lg-3 col-12">
                         <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control" placeholder="请输入菜品名称">
                     </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <select class="form-control" id="yjid" name="yjid" lay-filter="cpid" required>
+                            <option value="" selected>请选择一级分类</option>
+                            <th:block th:each="item,stat:${yhelist}">
+                                <option th:selected="${#strings.toString(item.yhe001)==pageobj.othersql2?true:false}" th:value="${item.yhe001}" >[[${item.yhe002}]]</option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <select class="form-control" id="ejid" name="ejid" lay-filter="cpid" required>
+                            <option value="" selected>请选择二级分类</option>
+                            <th:block th:each="item,stat:${ysalist}">
+                                <option th:selected="${#strings.toString(item.ysa001)==pageobj.othersql3?true:false}" th:value="${item.ysa001}" >[[${item.ysa002}]]</option>
+                            </th:block>
+                        </select>
+                    </div>
                     <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
                 </div>
             </form>
@@ -122,7 +138,7 @@
                         <td th:text="${item.usf006}"></td>
                         <!--                        <td th:text="${item.usf008}"></td>-->
                         <!--                        <td th:text="${item.usf009}"></td>-->
-                        <td th:text="${item.usf010==null||item.usf010==0?'无限':item.usf010}"></td>
+                        <td th:text="${item.usf010==null?'无限':item.usf010}"></td>
                         <td th:text="${item.usf013=='A'?'上架':(item.usf013=='B'?'推荐':(item.usf013=='C'?'下架':''))}"></td>
                         <td th:text="${item.usf016=='A'?'不显示':(item.usf016=='B'?'显示':'')}"></td>
                         <td>
@@ -208,6 +224,8 @@
                 <input type="hidden" id="id" name="id"/>
                 <input type="hidden" name="pages" th:value="${pageobj.currentPage}"/>
                 <input type="hidden" name="name" th:value="${pageobj.othersql}"/>
+                <input type="hidden" name="yjid" th:value="${pageobj.othersql2}"/>
+                <input type="hidden" name="ejid" th:value="${pageobj.othersql3}"/>
                 <div class="row">
                     <div class="col-md-6 col-xl-4">
                         <div class="form-group">

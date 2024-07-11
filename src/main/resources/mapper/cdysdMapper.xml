@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdysdMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdysd">
+    <id column="YSD001" jdbcType="INTEGER" property="ysd001" />
+    <result column="YSD002" jdbcType="INTEGER" property="ysd002" />
+    <result column="YSD003" jdbcType="INTEGER" property="ysd003" />
+    <result column="YSD004" jdbcType="TIMESTAMP" property="ysd004" />
+    <result column="YSD005" jdbcType="CHAR" property="ysd005" />
+    <result column="YSD006" jdbcType="INTEGER" property="ysd006" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.fangx.model.cdysd"  extends="BaseResultMap">
+    <association property="usd" column="YSD003" select="com.fangx.dao.cdusdMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    YSD001, YSD002, YSD003, YSD004, YSD005, YSD006
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdysdExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdysd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdysd
+    where YSD001 = #{ysd001,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cdysd
+    where YSD001 = #{ysd001,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdysdExample">
+    delete from cdysd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdysd">
+    insert into cdysd (YSD001, YSD002, YSD003, 
+      YSD004, YSD005, YSD006
+      )
+    values (#{ysd001,jdbcType=INTEGER}, #{ysd002,jdbcType=INTEGER}, #{ysd003,jdbcType=INTEGER}, 
+      #{ysd004,jdbcType=TIMESTAMP}, #{ysd005,jdbcType=CHAR}, #{ysd006,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdysd">
+    insert into cdysd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ysd001 != null">
+        YSD001,
+      </if>
+      <if test="ysd002 != null">
+        YSD002,
+      </if>
+      <if test="ysd003 != null">
+        YSD003,
+      </if>
+      <if test="ysd004 != null">
+        YSD004,
+      </if>
+      <if test="ysd005 != null">
+        YSD005,
+      </if>
+      <if test="ysd006 != null">
+        YSD006,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ysd001 != null">
+        #{ysd001,jdbcType=INTEGER},
+      </if>
+      <if test="ysd002 != null">
+        #{ysd002,jdbcType=INTEGER},
+      </if>
+      <if test="ysd003 != null">
+        #{ysd003,jdbcType=INTEGER},
+      </if>
+      <if test="ysd004 != null">
+        #{ysd004,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ysd005 != null">
+        #{ysd005,jdbcType=CHAR},
+      </if>
+      <if test="ysd006 != null">
+        #{ysd006,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdysdExample" resultType="java.lang.Long">
+    select count(*) from cdysd
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdysd
+    <set>
+      <if test="record.ysd001 != null">
+        YSD001 = #{record.ysd001,jdbcType=INTEGER},
+      </if>
+      <if test="record.ysd002 != null">
+        YSD002 = #{record.ysd002,jdbcType=INTEGER},
+      </if>
+      <if test="record.ysd003 != null">
+        YSD003 = #{record.ysd003,jdbcType=INTEGER},
+      </if>
+      <if test="record.ysd004 != null">
+        YSD004 = #{record.ysd004,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ysd005 != null">
+        YSD005 = #{record.ysd005,jdbcType=CHAR},
+      </if>
+      <if test="record.ysd006 != null">
+        YSD006 = #{record.ysd006,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdysd
+    set YSD001 = #{record.ysd001,jdbcType=INTEGER},
+      YSD002 = #{record.ysd002,jdbcType=INTEGER},
+      YSD003 = #{record.ysd003,jdbcType=INTEGER},
+      YSD004 = #{record.ysd004,jdbcType=TIMESTAMP},
+      YSD005 = #{record.ysd005,jdbcType=CHAR},
+      YSD006 = #{record.ysd006,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdysd">
+    update cdysd
+    <set>
+      <if test="ysd002 != null">
+        YSD002 = #{ysd002,jdbcType=INTEGER},
+      </if>
+      <if test="ysd003 != null">
+        YSD003 = #{ysd003,jdbcType=INTEGER},
+      </if>
+      <if test="ysd004 != null">
+        YSD004 = #{ysd004,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ysd005 != null">
+        YSD005 = #{ysd005,jdbcType=CHAR},
+      </if>
+      <if test="ysd006 != null">
+        YSD006 = #{ysd006,jdbcType=INTEGER},
+      </if>
+    </set>
+    where YSD001 = #{ysd001,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdysd">
+    update cdysd
+    set YSD002 = #{ysd002,jdbcType=INTEGER},
+      YSD003 = #{ysd003,jdbcType=INTEGER},
+      YSD004 = #{ysd004,jdbcType=TIMESTAMP},
+      YSD005 = #{ysd005,jdbcType=CHAR},
+      YSD006 = #{ysd006,jdbcType=INTEGER}
+    where YSD001 = #{ysd001,jdbcType=INTEGER}
+  </update>
+  <select id="selectBypsid" parameterType="java.lang.Integer" resultMap="BaseResultMap1">
+    select
+    <include refid="Base_Column_List" />
+    from cdysd
+    where YSD002 = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

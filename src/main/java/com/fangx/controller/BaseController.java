@@ -75,6 +75,9 @@ public class BaseController {
     @Autowired
     protected CdyscService yscService;
 
+    @Autowired
+    protected CdysdService ysdService;
+
     //静态公共时间格式对象     调用BaseController.DATE
     protected final static SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
     protected final static SimpleDateFormat DATE1 = new SimpleDateFormat("yyyyMM");
@@ -585,6 +588,34 @@ public class BaseController {
             return 1;
         }
         return 2;
+    }
+
+    protected Integer getWeekDay1(Calendar c){
+        if(c == null){
+            return 1;
+        }
+        if(Calendar.MONDAY == c.get(Calendar.DAY_OF_WEEK)){
+            return 1;
+        }
+        if(Calendar.TUESDAY == c.get(Calendar.DAY_OF_WEEK)){
+            return 2;
+        }
+        if(Calendar.WEDNESDAY == c.get(Calendar.DAY_OF_WEEK)){
+            return 3;
+        }
+        if(Calendar.THURSDAY == c.get(Calendar.DAY_OF_WEEK)){
+            return 4;
+        }
+        if(Calendar.FRIDAY == c.get(Calendar.DAY_OF_WEEK)){
+            return 5;
+        }
+        if(Calendar.SATURDAY == c.get(Calendar.DAY_OF_WEEK)){
+            return 6;
+        }
+        if(Calendar.SUNDAY == c.get(Calendar.DAY_OF_WEEK)){
+            return 7;
+        }
+        return 1;
     }
 
     /**

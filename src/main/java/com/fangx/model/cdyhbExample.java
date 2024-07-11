@@ -433,6 +433,8 @@ public class cdyhbExample {
             addCriterion("YHB005 not between", value1, value2, "yhb005");
             return (Criteria) this;
         }
+
+
     }
 
     public static class Criteria extends GeneratedCriteria {

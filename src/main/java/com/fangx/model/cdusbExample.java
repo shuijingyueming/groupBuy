@@ -614,6 +614,11 @@ public class cdusbExample {
             addCriterion("USB008 not between", value1, value2, "usb008");
             return (Criteria)this;
         }
+
+        public Criteria andSql(String value) {
+            addCriterion(value);
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

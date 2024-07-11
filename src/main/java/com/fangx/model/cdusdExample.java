@@ -874,6 +874,11 @@ public class cdusdExample {
             addCriterion("USD012 not between", value1, value2, "usd012");
             return (Criteria) this;
         }
+
+        public Criteria andSql(String value) {
+            addCriterion(value);
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

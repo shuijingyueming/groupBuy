@@ -65,11 +65,15 @@ public class CdusbServiceImpl implements CdusbService {
     }
 
     @Override
-    public List<cdusb> serachAll() {
+    public List<cdusb> serachAll(Integer gsid) {
         cdusbExample e1 = new cdusbExample();
         Criteria c = e1.createCriteria();
+        c.andUsb003IsNotNull();
+        cdyhbExample e2 = new cdyhbExample();
+        cdyhbExample.Criteria c1 = e2.createCriteria();
+        if(gsid!=null)c1.andYhb003EqualTo(gsid);
         e1.setOrderByClause("usb003");
-        return usbMapper.selectByExample(e1);
+        return usbMapper.selectByExamplegs(e1,e2);
     }
 
     @Override
@@ -89,6 +93,66 @@ public class CdusbServiceImpl implements CdusbService {
         cdusbExample e1 = new cdusbExample();
         Criteria c = e1.createCriteria();
         c.andUsb003LessThan(d);
+        c.andUsb003IsNotNull();
+        cdyhbExample e2 = new cdyhbExample();
+        cdyhbExample.Criteria c1 = e2.createCriteria();
+        if(gsid!=null)c1.andYhb003EqualTo(gsid);
+        e1.setOrderByClause("usb003");
+        List<cdusb> list = usbMapper.selectByExamplegs(e1,e2);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+
+    @Override
+    public cdusb selectByweek3(Integer gsid, Integer d, Integer id) {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        c.andUsb003GreaterThan(d +1);
+        if(id!=null)c.andUsb001NotEqualTo(id);
+        cdyhbExample e2 = new cdyhbExample();
+        cdyhbExample.Criteria c1 = e2.createCriteria();
+        if(gsid!=null)c1.andYhb003EqualTo(gsid);
+        e1.setOrderByClause("usb003");
+        List<cdusb> list = usbMapper.selectByExamplegs(e1,e2);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    @Override
+    public cdusb selectByweek4(Integer gsid, Integer d, Integer id) {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        c.andUsb003LessThan(d);
+        c.andUsb003IsNotNull();
+        if(id!=null)c.andUsb001NotEqualTo(id);
+        cdyhbExample e2 = new cdyhbExample();
+        cdyhbExample.Criteria c1 = e2.createCriteria();
+        if(gsid!=null)c1.andYhb003EqualTo(gsid);
+        e1.setOrderByClause("usb003");
+        List<cdusb> list = usbMapper.selectByExamplegs(e1,e2);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    @Override
+    public cdusb selectByweek5(Integer gsid, Integer d, Integer id) {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        c.andUsb003GreaterThan(d);
+        if(id!=null)c.andUsb001NotEqualTo(id);
+        cdyhbExample e2 = new cdyhbExample();
+        cdyhbExample.Criteria c1 = e2.createCriteria();
+        if(gsid!=null)c1.andYhb003EqualTo(gsid);
+        e1.setOrderByClause("usb003");
+        List<cdusb> list = usbMapper.selectByExamplegs(e1,e2);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    @Override
+    public cdusb selectByweek6(Integer gsid, Integer d, Integer id) {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        c.andUsb003LessThan(d+1);
+        c.andUsb003IsNotNull();
+        if(id!=null)c.andUsb001NotEqualTo(id);
         cdyhbExample e2 = new cdyhbExample();
         cdyhbExample.Criteria c1 = e2.createCriteria();
         if(gsid!=null)c1.andYhb003EqualTo(gsid);
@@ -135,6 +199,38 @@ public class CdusbServiceImpl implements CdusbService {
         return pageBean;
     }
 
+    @Override
+    public List<Integer> serachAllweek(Integer gsid) {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        cdyhbExample e2 = new cdyhbExample();
+        cdyhbExample.Criteria c1 = e2.createCriteria();
+        if(gsid!=null)c1.andYhb003EqualTo(gsid);
+        e1.setOrderByClause("usb003");
+        return usbMapper.selectByExampleweekgs(e1,e2);
+    }
+
+    @Override
+    public cdusb getBytime(String time) {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        if(time!=null)c.andSql("(DATE_FORMAT(usb008,'%Y-%m-%d')='"+time+"')");
+        List<cdusb> list = usbMapper.selectByExample(e1);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    @Override
+    public void delete(Integer id) {
+        usbMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<cdusb> serachBygs() {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        c.andUsb003IsNotNull();
+        return usbMapper.selectByExample1(e1);
+    }
 
     @Override
     public boolean saveBatch(Collection<cdusb> entityList, int batchSize) {

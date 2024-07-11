@@ -263,30 +263,57 @@ public class OrderController extends BaseController {
                     mav.addObject("msg","D");
                 }
             }
-            if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
-                pb.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
-            else
-                pb.setCurrentPage(1);
-            if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
-                pb.setOthersql(request.getParameter("name"));
-            }
-            if (request.getParameter("ygid") != null && !request.getParameter("ygid").isEmpty()) {
-                pb.setOthersql6(request.getParameter("ygid"));
-            }
-            if (request.getParameter("gsid") != null && !request.getParameter("gsid").isEmpty()) {
-                pb.setOthersql1(request.getParameter("gsid"));
-            }
-            if (request.getParameter("type") != null && !request.getParameter("type").isEmpty()) {
-                pb.setOthersql2(request.getParameter("type"));
-            }
-            if (request.getParameter("zffs") != null && !request.getParameter("zffs").isEmpty()) {
-                pb.setOthersql3(request.getParameter("zffs"));
-            }
-            if (request.getParameter("start") != null && !request.getParameter("start").isEmpty()) {
-                pb.setOthersql4(request.getParameter("start"));
-            }
-            if (request.getParameter("end") != null && !request.getParameter("end").isEmpty()) {
-                pb.setOthersql5(request.getParameter("end"));
+            if (request.getParameter("fh") != null && !request.getParameter("fh").isEmpty()) {
+                if (request.getParameter("fh").indexOf("DZ") >= 0) {
+                    PageBean pb1 = new PageBean();
+                    if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
+                        pb1.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
+                    else
+                        pb1.setCurrentPage(1);
+                    if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
+                        pb1.setOthersql(request.getParameter("name"));
+                    }
+                    if (request.getParameter("phone") != null && !request.getParameter("phone").isEmpty()) {
+                        pb1.setOthersql1(request.getParameter("phone"));
+                    }
+                    if (request.getParameter("gsid") != null && !request.getParameter("gsid").isEmpty()) {
+                        pb1.setOthersql2(request.getParameter("gsid"));
+                    }
+                    session.setAttribute("DZpb", pb1);
+                    pb.setCurrentPage(1);
+                    pb.setOthersql7(request.getParameter("date"));
+                }
+                mav.addObject("fhlx", request.getParameter("fh"));
+            } else {
+
+                if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
+                    pb.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
+                else
+                    pb.setCurrentPage(1);
+                if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
+                    pb.setOthersql(request.getParameter("name"));
+                }
+                if (request.getParameter("ygid") != null && !request.getParameter("ygid").isEmpty()) {
+                    pb.setOthersql6(request.getParameter("ygid"));
+                }
+                if (request.getParameter("gsid") != null && !request.getParameter("gsid").isEmpty()) {
+                    pb.setOthersql1(request.getParameter("gsid"));
+                }
+                if (request.getParameter("type") != null && !request.getParameter("type").isEmpty()) {
+                    pb.setOthersql2(request.getParameter("type"));
+                }
+                if (request.getParameter("zffs") != null && !request.getParameter("zffs").isEmpty()) {
+                    pb.setOthersql3(request.getParameter("zffs"));
+                }
+                if (request.getParameter("start") != null && !request.getParameter("start").isEmpty()) {
+                    pb.setOthersql4(request.getParameter("start"));
+                }
+                if (request.getParameter("end") != null && !request.getParameter("end").isEmpty()) {
+                    pb.setOthersql5(request.getParameter("end"));
+                }
+                if (request.getParameter("date") != null && !request.getParameter("date").isEmpty()) {
+                    pb.setOthersql7(request.getParameter("date"));
+                }
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", yhcService.selectPageBean(pb));
@@ -355,11 +382,11 @@ public class OrderController extends BaseController {
             }
             PageBean pb = new PageBean();
             if (request.getParameter("fh") != null && !request.getParameter("fh").isEmpty()) {
-//                if (request.getParameter("fh").indexOf("YG") >= 0) {
-//                    pb = (PageBean) session.getAttribute("YGpb");
-//                    session.removeAttribute("YGpb");
-//                    mav.addObject("fhlx", request.getParameter("fh").replace("YG", ""));
-//                }else {
+                if (request.getParameter("fh").indexOf("DZ") >= 0) {
+                    pb = (PageBean) session.getAttribute("DZpb");
+                    session.removeAttribute("DZpb");
+                    mav.addObject("fhlx", request.getParameter("fh").replace("DZ", ""));
+                }else {
                     if (request.getParameter("fh").indexOf("GS") >= 0) {
                         PageBean pb1 = new PageBean();
                         if (request.getParameter("pages") != null && !request.getParameter("pages").toString().isEmpty())
@@ -377,7 +404,7 @@ public class OrderController extends BaseController {
                         pb.setOthersql2(request.getParameter("id"));
                     }
                     mav.addObject("fhlx", request.getParameter("fh"));
-//                }
+                }
             } else {
                 if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
                     pb.setCurrentPage(Integer.valueOf(request.getParameter("pages")));

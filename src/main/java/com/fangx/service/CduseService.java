@@ -29,4 +29,5 @@ public interface CduseService extends IService<cduse> {
 
     cduse selectByName(String name);
 
+    void delete(int id);
 }

@@ -11,6 +11,9 @@
     <result column="USB007" jdbcType="VARCHAR" property="usb007" />
     <result column="USB008" jdbcType="TIMESTAMP" property="usb008" />
   </resultMap>
+  <resultMap id="BaseResultMap1" type="com.fangx.model.cdusb"  extends="BaseResultMap">
+    <collection  property="yhblist"  column="USB001"  select="com.fangx.dao.cdyhbMapper.selectByqsid"/>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -238,9 +241,7 @@
       <if test="usb007 != null">
         USB007 = #{usb007,jdbcType=VARCHAR},
       </if>
-      <if test="usb008 != null">
         USB008 = #{usb008,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where USB001 = #{usb001,jdbcType=INTEGER}
   </update>
@@ -315,4 +316,36 @@
       </foreach>
     </if>
   </sql>
+  <select id="selectByExampleweekgs" parameterType="com.fangx.model.cdusbExample"  resultType="java.lang.Integer">
+    select usb003 from cdusb left join cdyhb on cdusb.usb001=cdyhb.yhb002
+    <where>
+      <if test="cdusbExample != null">
+        <foreach collection="cdusbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdyhbExample != null">
+        <foreach collection="cdyhbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdusbExample.orderByClause != null" >
+      order by ${cdusbExample.orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample1" parameterType="com.fangx.model.cdusbExample" resultMap="BaseResultMap1">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
 </mapper>

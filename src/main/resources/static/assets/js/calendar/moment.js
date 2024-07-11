@@ -924,7 +924,7 @@
     // LOCALES
 
     var MONTHS_IN_FORMAT = /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/;
-    var defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
+    var defaultLocaleMonthsShort = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
 
     function localeMonths(m, format) {
         if (!m) {
@@ -935,7 +935,7 @@
             this._months[(this._months.isFormat || MONTHS_IN_FORMAT).test(format) ? 'format' : 'standalone'][m.month()];
     }
 
-    var defaultLocaleMonthsShort = '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_');
+    var defaultLocaleMonths = '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_');
 
     function localeMonthsShort(m, format) {
         if (!m) {

@@ -62,7 +62,7 @@
                         配送日期:
                     </div>
                     <div class="col-xl-2 col-lg-3 col-12">
-                        <input id="dat1" th:value="${pageobj.othersql2}" type="date1" class="form-control" placeholder="请输入配送时间">
+                        <input id="date1" th:value="${pageobj.othersql2}" type="date" class="form-control" placeholder="请输入配送时间">
                     </div>
                     <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
                 </div>
@@ -91,20 +91,21 @@
                         <td th:text="${#dates.format(item.ysb004,'yyyy-MM-dd')}"></td>
                         <td th:text="${item.ysb005=='A'?'已使用':(item.ysb005=='B'?'未使用':'')}"></td>
                         <td>
+                            <th:block th:if="${item.ysb005=='B'}">
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
-                                <th:block th:if="${item.ysb005=='B'}">
                                 <button th:onclick="edit([[${item.ysb001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
-                                </th:block>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G4#')>=0}">
                                 <button th:onclick="del([[${item.ysb001}]],[[${#dates.format(item.ysb004,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">删除</button>
                             </th:block>
+                        </th:block>
                         </td>
                     </th:block>
                 </th:block>
                 <tr th:case="false">
                     <td></td><td></td>
                     <td></td><td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>

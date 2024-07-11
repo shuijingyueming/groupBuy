@@ -63,7 +63,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 while (true) {
                     try {
                         Thread.sleep(3000);
-                        List<cdusb> list= usbService.serachAll();
+                        List<cdusb> list= usbService.serachAll(null);
                         if(list.size()==0){
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(new Date());
@@ -224,33 +224,85 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                         System.out.println("订单结单："+i);
                         cdusb item=usbService.selectByweek2(i);
                         if(item!=null){
-                            yhcService.updateByqsid(calendar.getTime());
-                            yhaService.deleteByqsid(item.getUsb001());
+                            yhcService.updateByqsid(calendar.getTime());//订单结单
                             List<cdusf> list=usfService.serachAll();
                             cdyha yha=new cdyha();
                             calendar.add(Calendar.DAY_OF_MONTH, 7);
-                            cdysb ysb=ysbService.selectBycpid(sf1.format(calendar.getTime()),null);
+//                            cdysb ysb=ysbService.selectBycpid(sf1.format(calendar.getTime()),null);
+                            cdysb ysb=ysbService.selectBycpid1(sf1.format(calendar.getTime()),null);
                             if(ysb!=null){
                                 item.setUsb008(ysb.getYsb004());
                                 ysb.setYsb005("A");
                                 ysbService.update(ysb);
                             }
-                            if(!item.getUsb008().equals(calendar.getTime())&&sf1.parse(sf1.format(item.getUsb008())).before(sf1.parse(sf1.format(calendar.getTime())))){
-                                if(ysb==null)item.setUsb008(calendar.getTime());
+                            if(item.getUsb008()==null||!item.getUsb008().equals(calendar.getTime())){
+                                if(ysb==null){
+                                    item.setUsb008(calendar.getTime());
+                                }else if(item.getUsb008()==null){
+                                    calendar.add(Calendar.DAY_OF_MONTH, 7);
+                                    item.setUsb008(calendar.getTime());
+                                    calendar.add(Calendar.DAY_OF_MONTH, -7);
+                                }
+                                cdusb usb=usbService.getBytime(sf1.format(item.getUsb008()));
                                 usbService.update(item);
-                                for(cdusf usf:list){
-                                    cdysc ysc=yscService.selectBycpid(usf.getUsf001(),sf1.format(item.getUsb008()));
-                                    yha.setYha002(usf.getUsf001());
-                                    yha.setYha003(item.getUsb001());
-                                    yha.setYha004(ysc!=null?ysc.getYsc006():usf.getUsf010());
-                                    yha.setYha005(usf.getUsf010()==0&ysc==null?"P":"C");
-                                    yha.setYha006(0);
-                                    yhaService.insert(yha);
-                                    if(ysc!=null)yscService.delete(ysc.getYsc001());
+                                yhaService.deleteByqsid(item.getUsb001());
+                                if(usb!=null&&usb.getUsb001()!=item.getUsb001()){
+                                    yhaService.updatebyqsid(usb.getUsb001(),item.getUsb001());
+                                    usbService.delete(usb.getUsb001());
+                                }else{
+                                    for(cdusf usf:list){
+                                        cdysc ysc=yscService.selectBycpid(usf.getUsf001(),sf1.format(item.getUsb008()));
+                                        yha.setYha002(usf.getUsf001());
+                                        yha.setYha003(item.getUsb001());
+                                        yha.setYha004(ysc!=null?ysc.getYsc006():(usf.getUsf010()!=null?usf.getUsf010():0));
+                                        yha.setYha005(usf.getUsf010()==null&ysc==null?"P":"C");
+                                        yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
+                                        yhaService.insert(yha);
+                                        if(ysc!=null){
+                                            ysc.setYsc005("A");
+                                            yscService.update(ysc);
+//                                        yscService.delete(ysc.getYsc001());
+                                        }
+                                    }
                                 }
                             }else{
                                 System.out.println("订单已结单");
                             }
+                            List<cdysb> l=ysbService.selectBycpid2(sf1.format(calendar.getTime()));
+                            if(l.size()>0){
+                                Calendar ca = Calendar.getInstance();
+                                for(cdysb y:l){
+                                    if(y.getYsb004()==null){
+                                        ca.setTime(y.getYsb003());
+                                        ca.add(Calendar.DAY_OF_MONTH, 7);
+                                    }else{
+                                        ca.setTime(y.getYsb004());
+                                    }
+                                    cdusb usb=usbService.getBytime(sf1.format(ca.getTime()));
+                                    if(usb==null){
+                                        usb=new cdusb();
+                                        usb.setUsb008(ca.getTime());
+                                        usb=usbService.insert(usb);
+                                        for(cdusf usf:list){
+                                            cdysc ysc=yscService.selectBycpid(usf.getUsf001(),sf1.format(item.getUsb008()));
+                                            yha.setYha002(usf.getUsf001());
+                                            yha.setYha003(usb.getUsb001());
+                                            yha.setYha004(ysc!=null?ysc.getYsc006():usf.getUsf010());
+                                            yha.setYha005(usf.getUsf010()==0&ysc==null?"P":"C");
+                                            yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
+                                            yhaService.insert(yha);
+                                            if(ysc!=null){
+                                                ysc.setYsc005("A");
+                                                yscService.update(ysc);
+//                                        yscService.delete(ysc.getYsc001());
+                                            }
+                                        }
+                                    }
+                                    y.setYsb005("A");
+                                    ysbService.update(y);
+                                }
+                            }
+                            calendar.add(Calendar.DAY_OF_MONTH, -7);
                         }
                         long tomorrowzero = calendar.getTimeInMillis();
                         long tomorrowzeroSeconds = (tomorrowzero- current);
@@ -260,6 +312,72 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 }
             }
         }.start();
+
+        /*new Thread(){
+            public void run(){
+                this.setName("dayddjd");
+                while (true) {
+                    try {
+                        Thread.sleep(6000);
+                        long current = System.currentTimeMillis();// 当前时间毫秒数
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(new Date());
+                        calendar.set(Calendar.HOUR_OF_DAY, 12);
+                        calendar.set(Calendar.MINUTE, 0);
+                        calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.MILLISECOND, 0);
+                        long tomorrowzero1 = calendar.getTimeInMillis();
+                        long tomorrowzeroSeconds1 = (tomorrowzero1- current);
+                        System.out.println("离12点时间："+tomorrowzeroSeconds1+"秒");
+                        if(tomorrowzeroSeconds1>0)Thread.sleep(tomorrowzeroSeconds1);
+                        calendar.add(Calendar.DAY_OF_MONTH, 1);
+                        int i=getWeekDay(calendar);
+                        System.out.println("订单结单："+i);
+                        cdusb item=usbService.selectByweek2(i);
+                        if(item!=null){
+                            yhcService.updateByqsid(calendar.getTime());//订单结单
+                            List<cdusf> list=usfService.serachAll();
+                            cdyha yha=new cdyha();
+                            calendar.add(Calendar.DAY_OF_MONTH, 7);
+                            cdysb ysb=ysbService.selectBycpid(sf1.format(calendar.getTime()),null);
+                            if(ysb!=null){
+                                item.setUsb008(ysb.getYsb004());
+                                ysb.setYsb005("A");
+                                ysbService.update(ysb);
+                            }
+                            if(!item.getUsb008().equals(calendar.getTime())){
+                                if(ysb==null){
+                                    item.setUsb008(calendar.getTime());
+                                }
+                                usbService.update(item);
+                                yhaService.deleteByqsid(item.getUsb001());
+                                for(cdusf usf:list){
+                                    cdysc ysc=yscService.selectBycpid(usf.getUsf001(),sf1.format(item.getUsb008()));
+                                    yha.setYha002(usf.getUsf001());
+                                    yha.setYha003(item.getUsb001());
+                                    yha.setYha004(ysc!=null?ysc.getYsc006():usf.getUsf010());
+                                    yha.setYha005(usf.getUsf010()==0&ysc==null?"P":"C");
+                                    yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
+                                    yhaService.insert(yha);
+                                    if(ysc!=null){
+                                        ysc.setYsc005("A");
+                                        yscService.update(ysc);
+//                                        yscService.delete(ysc.getYsc001());
+                                    }
+                                }
+                            }else{
+                                System.out.println("订单已结单");
+                            }
+                            calendar.add(Calendar.DAY_OF_MONTH, -7);
+                        }
+                        long tomorrowzero = calendar.getTimeInMillis();
+                        long tomorrowzeroSeconds = (tomorrowzero- current);
+                        System.out.println("离结单时间："+tomorrowzeroSeconds+"秒");
+                        Thread.sleep(tomorrowzeroSeconds);
+                    } catch (Exception e) { }
+                }
+            }
+        }.start();*/
 
         //数据备份
         new Thread(){
@@ -276,6 +394,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                         calendar.set(Calendar.MILLISECOND, 0);
                         long tomorrowzero = calendar.getTimeInMillis();
                         long tomorrowzeroSeconds = (tomorrowzero- current);
+                        PubMessage.setXxz(xxz);
                         //按天算+早上2：00,睡眠毫秒数
                         Thread.sleep(((xxz.getXxz014()-1)*86400000)+tomorrowzeroSeconds);
                         if (Datamsg.exportDatabaseTool(config.getJdbcurl(), config.getJdbcdk(),
@@ -339,7 +458,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
 
         //线程获取微信的token
-    new Thread(){
+        new Thread(){
             public void run(){
                 while (true){
                     try {

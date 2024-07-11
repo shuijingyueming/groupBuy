@@ -4,6 +4,16 @@ import java.util.List;
 
 public class cdusf {
 
+    private cdysc ysc;
+
+    public cdysc getYsc() {
+        return ysc;
+    }
+
+    public void setYsc(cdysc ysc) {
+        this.ysc = ysc;
+    }
+
     private cdush ush;
 
     public cdush getUsh() {

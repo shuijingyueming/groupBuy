@@ -86,6 +86,21 @@ public class CdyhaServiceImpl implements CdyhaService {
     }
 
     @Override
+    public void updatebyqsid(Integer uid, Integer id) {
+        cdyha yha=new cdyha();
+        yha.setYha003(id);
+        cdyhaExample e1 = new cdyhaExample();
+        Criteria c = e1.createCriteria();
+        c.andYha003EqualTo(uid);
+        yhaMapper.updateByExampleSelective(yha,e1);
+    }
+
+    @Override
+    public cdyha selectByqscp(Integer qsid, Integer cpid) {
+        return yhaMapper.selectByqscp(qsid,cpid);
+    }
+
+    @Override
     public void delete(Integer id) {
         yhaMapper.deleteByPrimaryKey(id);
     }

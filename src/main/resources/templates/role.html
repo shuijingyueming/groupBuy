@@ -90,9 +90,9 @@
                             <th:block th:if="${session.umsg.jsqx=='admin'||session.umsg.jsqx=='school'||session.umsg.jsqx=='street'||#strings.indexOf(session.umsg.jsqx,'A1#')>=0}">
                                 <button th:onclick="edit([[${item.usa001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
                             </th:block>
-                            <!--<th:block th:if="${session.umsg.jsqx=='admin'||session.umsg.jsqx=='school'||session.umsg.jsqx=='street'||#strings.indexOf(session.umsg.jsqx,'A1#')>=0}">
-                                <input th:onclick="del([[${item.usa001}]],[[${item.usa002}]])" class="jsgrid-button jsgrid-delete-button" type="button" title="删除">
-                            </th:block>-->
+                            <th:block th:if="${session.umsg.jsqx=='admin'||session.umsg.jsqx=='school'||session.umsg.jsqx=='street'||#strings.indexOf(session.umsg.jsqx,'A1#')>=0}">
+                                <button th:onclick="del([[${item.usa001}]],[[${item.usa002}]])" type="button" class="btn btn-primary btn-sm btxz">删除</button>
+                            </th:block>
                         </td>
                     </tr>
                 </th:block>
@@ -155,8 +155,8 @@
                                     <label for="A2" class="col-form-label clab">添加</label>
                                     <input id="A3" value="A3" type="checkbox" name="qx"/>
                                     <label for="A3" class="col-form-label clab">编辑</label>
-                                    <!--<input id="A4" value="A4" type="checkbox" name="qx"/>
-                                    <label for="A4" class="col-form-label clab">删除</label>-->
+                                    <input id="A4" value="A4" type="checkbox" name="qx"/>
+                                    <label for="A4" class="col-form-label clab">删除</label>
                                     <input id="A5" value="A5" type="checkbox" name="qx"/>
                                     <label for="A5" class="col-form-label clab">重置密码</label>
                                 </div>
@@ -243,7 +243,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-md-10 col-xl-10">
                         <div class="form-group">
                             <input id="H" value="H" type="checkbox" onclick="xz(this)"/>
@@ -259,7 +259,7 @@
                             <label for="H5" class="col-form-label clab">导出</label>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="row">
                     <div class="col-md-10 col-xl-10">
                         <div class="form-group">
@@ -298,18 +298,7 @@
                     <div class="col-md-10 col-xl-10">
                         <div class="form-group">
                             <input id="K" value="K" type="checkbox" onclick="xz(this)"/>
-                            <label class="layui-form-label clab" style="width:120px;">充值管理</label>
-                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
-                            <input id="K1" value="K1" type="checkbox" name="qx"/>
-                            <label for="K1" class="col-form-label clab">查看</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 col-xl-10">
-                        <div class="form-group">
-                            <input id="K" value="K" type="checkbox" onclick="xz(this)"/>
-                            <label class="layui-form-label clab" style="width:120px;">充值管理</label>
+                            <label class="layui-form-label clab" style="width:120px;">充值记录管理</label>
                             <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
                             <input id="K1" value="K1" type="checkbox" name="qx"/>
                             <label for="K1" class="col-form-label clab">查看</label>
@@ -320,12 +309,12 @@
                     <div class="col-md-10 col-xl-10">
                         <div class="form-group">
                             <input id="P" value="P" type="checkbox" onclick="xz(this)"/>
-                            <label class="layui-form-label clab" style="width:120px;">菜品临时库存管理</label>
+                            <label class="layui-form-label clab" style="width:130px;">开团设置管理</label>
                             <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
                             <input id="P1" value="P1" type="checkbox" name="qx"/>
                             <label for="P1" class="col-form-label clab">查看</label>
-                            <input id="P2" value="P2" type="checkbox" name="qx"/>
-                            <label for="P2" class="col-form-label clab">添加</label>
+<!--                            <input id="P2" value="P2" type="checkbox" name="qx"/>-->
+<!--                            <label for="P2" class="col-form-label clab">添加</label>-->
                             <input id="P3" value="P3" type="checkbox" name="qx"/>
                             <label for="P3" class="col-form-label clab">编辑</label>
                             <input id="P4" value="P4" type="checkbox" name="qx"/>
@@ -339,7 +328,7 @@
                     <div class="col-md-10 col-xl-10">
                         <div class="form-group">
                             <input id="Q" value="Q" type="checkbox" onclick="xz(this)"/>
-                            <label class="layui-form-label clab" style="width:120px;">临时配送管理</label>
+                            <label class="layui-form-label clab" style="width:120px;">配送日期调整</label>
                             <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
                             <input id="Q1" value="Q1" type="checkbox" name="qx"/>
                             <label for="Q1" class="col-form-label clab">查看</label>
@@ -349,6 +338,45 @@
                             <label for="Q3" class="col-form-label clab">编辑</label>
                             <input id="Q4" value="Q4" type="checkbox" name="qx"/>
                             <label for="Q4" class="col-form-label clab">删除</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="O" value="O" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">采购单管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="O1" value="O1" type="checkbox" name="qx"/>
+                            <label for="O1" class="col-form-label clab">查看</label>
+                            <input id="O2" value="O2" type="checkbox" name="qx"/>
+                            <label for="O2" class="col-form-label clab">导出</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="N" value="N" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">配送单管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="N1" value="N1" type="checkbox" name="qx"/>
+                            <label for="N1" class="col-form-label clab">查看</label>
+                            <input id="N2" value="N2" type="checkbox" name="qx"/>
+                            <label for="N2" class="col-form-label clab">导出</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="L" value="L" type="checkbox" onclick="xz(this)"/>
+                            <label class="layui-form-label clab" style="width:120px;">订单管理</label>
+                            <span style="font-size:18px;line-height:100%;margin:0 10px;">|</span>
+                            <input id="L1" value="L1" type="checkbox" name="qx"/>
+                            <label for="L1" class="col-form-label clab">查看</label>
+                            <input id="L5" value="L5" type="checkbox" name="qx"/>
+                            <label for="L5" class="col-form-label clab">退货</label>
                         </div>
                     </div>
                 </div>

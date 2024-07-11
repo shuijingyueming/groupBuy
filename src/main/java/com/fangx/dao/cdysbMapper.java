@@ -30,4 +30,6 @@ public interface cdysbMapper {
     int updateByPrimaryKey(cdysb record);
 
     List<cdysb> selectByExampleAndPage(cdysbExample example, RowBounds rowBounds);
+
+    cdysb selectByPrimaryKey1(Integer id);
 }

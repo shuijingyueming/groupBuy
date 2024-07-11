@@ -11,6 +11,9 @@
   <resultMap id="BaseResultMap1" type="com.fangx.model.cdyhb"  extends="BaseResultMap">
         <association property="usb" column="YHB002" select="com.fangx.dao.cdusbMapper.selectByPrimaryKey"/>
   </resultMap>
+  <resultMap id="BaseResultMap2" type="com.fangx.model.cdyhb"  extends="BaseResultMap">
+    <association property="usd" column="YHB003" select="com.fangx.dao.cdusdMapper.selectByPrimaryKey"/>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -216,5 +219,11 @@
     <include refid="Base_Column_List" />
     from cdyhb
     where YHB003 = #{gsid,jdbcType=INTEGER} order by YHB002
+  </select>
+  <select id="selectByqsid" parameterType="java.lang.Integer" resultMap="BaseResultMap2">
+    select
+    <include refid="Base_Column_List" />
+    from cdyhb
+    where YHB002 = #{gsid,jdbcType=INTEGER} order by YHB002
   </select>
 </mapper>

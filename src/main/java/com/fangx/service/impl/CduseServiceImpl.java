@@ -91,6 +91,11 @@ public class CduseServiceImpl implements CduseService {
         return list.size() > 0 ? list.get(0) : null;
     }
 
+    @Override
+    public void delete(int id) {
+        useMapper.deleteByPrimaryKey(id);
+    }
+
     public PageBean queryByPage(PageBean pageBean, cduseExample example) {
         int page = (int) pageBean.getCurrentPage();
         int size = pageBean.getPageSize();

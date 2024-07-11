@@ -32,4 +32,8 @@ public interface CdyhaService extends IService<cdyha> {
     cdyha getByqscp(Integer qsid, Integer id);
 
     void deleteByqsid(Integer qsid);
+
+    void updatebyqsid(Integer uid, Integer id);
+
+    cdyha selectByqscp(Integer qsid, Integer cpid);
 }

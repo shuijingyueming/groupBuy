@@ -1,18 +1,12 @@
 package com.fangx.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.fangx.model.*;
-import com.fangx.pub.Datamsg;
-import com.fangx.until.EncrpytUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.TemplateEngine;
 
@@ -20,7 +14,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import java.util.*;
 
 @Controller
@@ -83,7 +76,7 @@ public class CompanyController extends BaseController {
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", usdService.selectPageBean(pb));
-            mav.addObject("usblist", usbService.serachAll());
+            mav.addObject("usblist", usbService.serachAll(null));
         }
         mav.setViewName("HTgs");
         return mav;
@@ -527,6 +520,142 @@ public class CompanyController extends BaseController {
         mav.addObject("date1", request.getParameter("date1"));
         mav.addObject("fhlx", request.getParameter("fhlx"));
         mav.setViewName("redirect:/toCo/topsls");
+        return mav;
+    }
+
+    /**
+     * 进入公司员工管理页面
+     * othersql:登录名  othersql1:机构
+     * @return 用户页面
+     */
+    @RequestMapping("/topsls1")
+    public ModelAndView tops1(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        int userid = 0;//后台登录用户ID
+        if(session.getAttribute("user")==null){
+            SystemTZYM(response,"登录失效");
+            return null;
+        }else{
+            userid = Decrypt(session.getAttribute("user").toString());
+            cduse user = useService.getByid(Decrypt(session.getAttribute("user").toString()));
+            mav.addObject("msg", request.getParameter("msg"));
+            if(request.getParameter("zt") != null && !request.getParameter("zt").isEmpty()){
+                if(request.getParameter("zt").equals("D")){
+                    addLog(getUse(request).getUse002(),"删除了配送日期为：【" + request.getParameter("uname") + "】的信息");
+                    ysbService.delete(Integer.valueOf(request.getParameter("id")));
+                    mav.addObject("msg","D");
+                }
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_MONTH, 9);
+            mav.addObject("time", calendar.getTime());
+            PageBean pb = new PageBean();
+            if (request.getParameter("fh") != null && !request.getParameter("fh").isEmpty()) {
+                if (request.getParameter("fh").indexOf("CP") >= 0) {
+                    PageBean pb1 = new PageBean();
+                    if (request.getParameter("pages") != null && !request.getParameter("pages").toString().isEmpty())
+                        pb1.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
+                    else
+                        pb1.setCurrentPage(1);
+                    if (request.getParameter("name") != null && !request.getParameter("name").toString().isEmpty()) {
+                        pb1.setOthersql(request.getParameter("name"));
+                    }
+                    if (request.getParameter("lx") != null && !request.getParameter("lx").isEmpty()) {
+                        pb1.setOthersql1(request.getParameter("lx"));
+                    }
+                    session.setAttribute("CPpb", pb1);
+                    pb.setCurrentPage(1);
+                    pb.setOthersql1(request.getParameter("cpid"));
+                }
+                mav.addObject("fhlx", request.getParameter("fh"));
+            } else {
+                if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
+                    pb.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
+                else
+                    pb.setCurrentPage(1);
+                if (request.getParameter("date") != null && !request.getParameter("date").isEmpty()) {
+                    pb.setOthersql1(request.getParameter("date"));
+                }
+                if (request.getParameter("date1") != null && !request.getParameter("date1").isEmpty()) {
+                    pb.setOthersql2(request.getParameter("date1"));
+                }
+                mav.addObject("fhlx", request.getParameter("fhlx"));
+            }
+            delsession(session,request.getParameter("fh"));
+            mav.addObject("pageobj", ysbService.selectPageBean(pb));
+            mav.addObject("usdlist", usdService.serachAll());
+        }
+        mav.setViewName("HTpsls1");
+        return mav;
+    }
+
+    /**
+     * 根据id获取菜品
+     * 王新苗
+     * @param request
+     * @param response
+     */
+    @ResponseBody
+    @RequestMapping(value = "/serachpsls1",produces= MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
+    public String serachpsls1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Integer id = Integer.valueOf(request.getParameter("id"));
+        HashMap result = new HashMap();
+        cdysb item=ysbService.getByid1(id);
+        result.put("item",item);
+        return JSON.toJSONString(result);
+    }
+
+    /**
+     * 修改菜品
+     * 王新苗
+     * @param request
+     * @param response
+     */
+    @ResponseBody
+    @RequestMapping(value = "/xgpsls1")
+    public ModelAndView xgpsls1(HttpServletRequest request,HttpServletResponse response) throws Exception {
+        ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            SystemTZYM(response, "登录失效");
+            return null;
+        }
+        cdysb item = new cdysb();
+        //修改
+        item.setYsb003(DATE.parse(request.getParameter("t3")));
+        if(!request.getParameter("t4").isEmpty())item.setYsb004(DATE.parse(request.getParameter("t4")));
+        item.setYsb006(request.getParameter("t6"));
+        item.setYsb007(request.getParameter("t7"));
+        if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
+            String log = "修改了临时配送日期为：【" + request.getParameter("t1") + "】的信息";
+            item.setYsb001(Integer.valueOf((request.getParameter("id"))));
+            addLog(getUse(request).getUse002(),log);
+            ysbService.update(item);
+            mav.addObject("msg", "U");
+        }else{
+            String log = "新增了临时配送日期为：【" + request.getParameter("t1")+ "】的信息";
+            addLog(getUse(request).getUse002(),log);
+            item.setYsb005("B");
+            item = ysbService.insert(item);
+            mav.addObject("msg", "I");
+        }
+        ysdService.deletebyid(item.getYsb001());
+        String[] ids=request.getParameter("t8").split("#");
+        cdysd ysd = new cdysd();
+        for(String id:ids) {
+            if (!id.isEmpty()) {
+                ysd.setYsd002(item.getYsb001());
+                ysd.setYsd003(Integer.valueOf(id));
+                ysdService.insert(ysd);
+            }
+        }
+        mav.addObject("pages", request.getParameter("pages"));
+        mav.addObject("date", request.getParameter("date"));
+        mav.addObject("date1", request.getParameter("date1"));
+        mav.addObject("fhlx", request.getParameter("fhlx"));
+        mav.setViewName("redirect:/toCo/topsls1");
         return mav;
     }
 

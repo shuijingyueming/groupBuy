@@ -4,6 +4,8 @@ var checked_item="";
 function tolskc(cpid){
     var params = [ ["cpid",cpid], ["fh","CP"],
         ["pages",$("#pages").val()],
+        ["yjid",$.trim($("#yjid").val())],
+        ["ejid",$.trim($("#ejid").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocpls","post",params,"_self");
 }
@@ -70,6 +72,15 @@ $(document).ready(function () {
             $('select[id=t12]').append("<option value=''>请选择</option>");
         }
     })
+
+    $('select[id=yjid]').change(function() {
+        if( $("#yjid").val()!=""){
+            tofl($("#yjid").val(),'ejid')
+        }else {
+            $('select[id=ejid]').empty();
+            $('select[id=ejid]').append("<option value=''>请选择</option>");
+        }
+    })
 });
 
 //翻页
@@ -85,12 +96,16 @@ function fanye(pageindex) {
 //翻页
 function usffanye(pageindex){
     var params = [["pages",pageindex],
+        ["yjid",$.trim($("#yjid").val())],
+        ["ejid",$.trim($("#ejid").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocp","post",params,"_self");
 }
 
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
+        ["yjid",$.trim($("#yjid").val())],
+        ["ejid",$.trim($("#ejid").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocp","post",params,"_self");
 }
@@ -101,6 +116,8 @@ function xgzt(id,uname,type){
         var params = [ ["id",id], ["zt","U"], ["uname",uname],["type",type],
             // ["TK","TK"],
             ["pages",$("#pages").val()],
+            ["yjid",$.trim($("#yjid").val())],
+            ["ejid",$.trim($("#ejid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     }
@@ -111,6 +128,8 @@ function xgztx(id,uname,type){
     if (r == true) {
         var params = [ ["id",id], ["zt","X"], ["uname",uname],["type",type],
             ["pages",$("#pages").val()],
+            ["yjid",$.trim($("#yjid").val())],
+            ["ejid",$.trim($("#ejid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     }
@@ -122,6 +141,8 @@ function del(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","D"], ["uname",uname],
             ["pages",$("#pages").val()],
+            ["yjid",$.trim($("#yjid").val())],
+            ["ejid",$.trim($("#ejid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     }
@@ -137,6 +158,8 @@ function delete_item(){
     if (r == true) {
         var params = [ ["id",checked_item], ["zt","AD"],
             ["pages",$("#pages").val()],
+            ["yjid",$.trim($("#yjid").val())],
+            ["ejid",$.trim($("#ejid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     } else {
@@ -439,6 +462,8 @@ function save(id){
             dataType:'json',
             success: function (res) {
                 var params = [["pages",$("#pages").val()],
+                    ["yjid",$.trim($("#yjid").val())],
+                    ["ejid",$.trim($("#ejid").val())],
                     ["name",$.trim($("#name").val())]];
                 form_submit("toDi/tocp","post",params,"_self");
             }
@@ -464,7 +489,6 @@ function tofl(id,name){
             for (var i = 0; i < list.length; i++) {
                 $("select[id="+name+"]").append("<option value='" + list[i].ysa001 + "'>" + list[i].ysa002 + "</option>");
             }
-            form.render();
         },
         errror: function () {
         }
@@ -483,12 +507,14 @@ function cancel_q(){
 }
 
 function xgtj(){
-    console.log($("input[name='t15']:checked").val())
+    // console.log($("input[name='t15']:checked").val())
     if($("input[name='t15']").val()=="A"||($("#t10").val()!=""&&parseInt($("#t10").val())>0)){
         var r = confirm("确定修改库存吗？");
         if (r == true) {
             var params = [ ["id",$("#cpid").val()],["lx",$("input[name='t15']:checked").val()],["num",$("#t10").val()], ["zt","K"],
                 ["pages",$("#pages").val()],
+                ["yjid",$.trim($("#yjid").val())],
+                ["ejid",$.trim($("#ejid").val())],
                 ["name",$.trim($("#name").val())]];
             form_submit("toDi/tocp","get",params,"_self");
         }

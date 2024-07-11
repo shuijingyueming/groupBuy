@@ -144,7 +144,7 @@ public class HTinfoController extends BaseController {
                 if(request.getParameter("zt").equals("D")){
                     addLog(getUse(request).getUse002(),"删除了账户名字为：【" + request.getParameter("uname") + "】的信息");
                     cduse use =useService.getByid(Integer.parseInt(request.getParameter("id")));
-                    useService.update(use);
+                    useService.delete(Integer.parseInt(request.getParameter("id")));
                     mav.addObject("msg","D");
                 }else if(request.getParameter("zt").equals("AD")){
                     addLog(getUse(request).getUse002(),"删除了账户信息");

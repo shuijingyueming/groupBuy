@@ -7,6 +7,7 @@ import com.fangx.model.PageBean;
 import com.fangx.model.cdusd;
 import com.fangx.model.cdusdExample;
 import com.fangx.model.cdusdExample.Criteria;
+import com.fangx.model.cdyhbExample;
 import com.fangx.service.CdusdService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,16 @@ public class CdusdServiceImpl implements CdusdService {
     @Override
     public List<cdusd> serachAll() {
         return usdMapper.selectByExample(null);
+    }
+
+    @Override
+    public List<cdusd> serachBytime(Integer weekDay) {
+        cdusdExample e1 = new cdusdExample();
+        Criteria c = e1.createCriteria();
+        cdyhbExample e2 = new cdyhbExample();
+        cdyhbExample.Criteria c1 = e2.createCriteria();
+        c1.andYhb002EqualTo(weekDay);
+        return usdMapper.selectByExample1(e1,e2);
     }
 
     public PageBean queryByPage(PageBean pageBean, cdusdExample example) {

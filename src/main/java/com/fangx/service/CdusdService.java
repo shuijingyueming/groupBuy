@@ -29,4 +29,6 @@ public interface CdusdService extends IService<cdusd> {
     cdusd selectByName(String name);
 
     List<cdusd> serachAll();
+
+    List<cdusd> serachBytime(Integer weekDay);
 }

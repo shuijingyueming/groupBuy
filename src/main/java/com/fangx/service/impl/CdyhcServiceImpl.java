@@ -52,6 +52,7 @@ public class CdyhcServiceImpl implements CdyhcService {
         if(pb.getOthersql3()!=null) c.andYhc006EqualTo(pb.getOthersql3());
         if(pb.getOthersql4()!=null) c.andYhc004GreaterThanOrEqualTo(sf.parse(pb.getOthersql4()+" 00:00:00"));
         if(pb.getOthersql5()!=null) c.andYhc004LessThanOrEqualTo(sf.parse(pb.getOthersql5()+" 23:59:59"));
+        if(pb.getOthersql7()!=null)c.andSql("(DATE_FORMAT(yhc008,'%Y-%m-%d')='"+pb.getOthersql7()+"')");
         e1.setOrderByClause("yhc004 desc");
         return queryByPage(pb, e1);
     }

@@ -25,11 +25,25 @@ public interface CdusbService extends IService<cdusb> {
 
     cdusb selectByName(String name);
 
-    List<cdusb> serachAll();
+    List<cdusb> serachAll(Integer gsid);
 
     cdusb selectByweek(Integer gsid, Integer d);
     cdusb selectByweek1(Integer gsid, Integer d);
     cdusb selectByweek2(Integer d);
 
+    cdusb selectByweek3(Integer gsid, Integer d, Integer id);
+    cdusb selectByweek4(Integer gsid, Integer d, Integer id);
+
+    cdusb selectByweek5(Integer gsid, Integer d, Integer id);
+    cdusb selectByweek6(Integer gsid, Integer d, Integer id);
+
     cdusb selectByzq(Integer i);
+
+    List<Integer> serachAllweek(Integer gsid);
+
+    cdusb getBytime(String time);
+
+    void delete(Integer id);
+
+    List<cdusb> serachBygs();
 }

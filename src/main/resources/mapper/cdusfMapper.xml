@@ -371,9 +371,7 @@
       <if test="usf009 != null">
         USF009 = #{usf009,jdbcType=REAL},
       </if>
-      <if test="usf010 != null">
         USF010 = #{usf010,jdbcType=INTEGER},
-      </if>
       <if test="usf011 != null">
         USF011 = #{usf011,jdbcType=INTEGER},
       </if>

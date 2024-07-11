@@ -15,7 +15,7 @@ public class cdyha {
 
     private Float yha007;
 
-    private String yha008;
+    private Integer yha008;
 
     public Integer getYha001() {
         return yha001;
@@ -73,12 +73,12 @@ public class cdyha {
         this.yha007 = yha007;
     }
 
-    public String getYha008() {
+    public Integer getYha008() {
         return yha008;
     }
 
-    public void setYha008(String yha008) {
-        this.yha008 = yha008 == null ? null : yha008.trim();
+    public void setYha008(Integer yha008) {
+        this.yha008 = yha008;
     }
 
     @Override

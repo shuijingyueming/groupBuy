@@ -5,8 +5,8 @@ function reback(){
     form_submit("toCo/togs","post",params,"_self");
 }
 
-function toczjl(id){
-    var params = [ ["id",id], ["fh",$("#fhlx").val()+"DZ"],
+function toddjl(id){
+    var params = [ ["date",id], ["fh",$("#fhlx").val()+"DZ"],
         ["pages",$("#pages").val()],
         ["gsid",$("#gsid").val()],
         ["name",$.trim($("#name").val())],

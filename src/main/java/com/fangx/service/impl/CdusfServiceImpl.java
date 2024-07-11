@@ -48,6 +48,8 @@ public class CdusfServiceImpl implements CdusfService {
         Criteria c = e1.createCriteria();
         if(pb.getOthersql()!=null) c.andUsf002Like("%"+pb.getOthersql()+"%");
         if(pb.getOthersql1()!=null) c.andUsf013EqualTo(pb.getOthersql1());
+        if(pb.getOthersql2()!=null) c.andUsf011EqualTo(Integer.valueOf(pb.getOthersql2()));
+        if(pb.getOthersql3()!=null) c.andUsf012EqualTo(Integer.valueOf(pb.getOthersql3()));
         e1.setOrderByClause("usf001 desc");
         return queryByPage(pb, e1);
     }

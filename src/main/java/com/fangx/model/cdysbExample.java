@@ -425,56 +425,135 @@ public class cdysbExample {
             return (Criteria) this;
         }
 
-        public Criteria andYsb006EqualTo(Integer value) {
+        public Criteria andYsb006EqualTo(String value) {
             addCriterion("YSB006 =", value, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006NotEqualTo(Integer value) {
+        public Criteria andYsb006NotEqualTo(String value) {
             addCriterion("YSB006 <>", value, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006GreaterThan(Integer value) {
+        public Criteria andYsb006GreaterThan(String value) {
             addCriterion("YSB006 >", value, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006GreaterThanOrEqualTo(Integer value) {
+        public Criteria andYsb006GreaterThanOrEqualTo(String value) {
             addCriterion("YSB006 >=", value, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006LessThan(Integer value) {
+        public Criteria andYsb006LessThan(String value) {
             addCriterion("YSB006 <", value, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006LessThanOrEqualTo(Integer value) {
+        public Criteria andYsb006LessThanOrEqualTo(String value) {
             addCriterion("YSB006 <=", value, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006In(List<Integer> values) {
+        public Criteria andYsb006Like(String value) {
+            addCriterion("YSB006 like", value, "ysb006");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb006NotLike(String value) {
+            addCriterion("YSB006 not like", value, "ysb006");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb006In(List<String> values) {
             addCriterion("YSB006 in", values, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006NotIn(List<Integer> values) {
+        public Criteria andYsb006NotIn(List<String> values) {
             addCriterion("YSB006 not in", values, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006Between(Integer value1, Integer value2) {
+        public Criteria andYsb006Between(String value1, String value2) {
             addCriterion("YSB006 between", value1, value2, "ysb006");
             return (Criteria) this;
         }
 
-        public Criteria andYsb006NotBetween(Integer value1, Integer value2) {
+        public Criteria andYsb006NotBetween(String value1, String value2) {
             addCriterion("YSB006 not between", value1, value2, "ysb006");
             return (Criteria) this;
         }
 
+        public Criteria andYsb007IsNull() {
+            addCriterion("YSB007 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007IsNotNull() {
+            addCriterion("YSB007 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007EqualTo(String value) {
+            addCriterion("YSB007 =", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007NotEqualTo(String value) {
+            addCriterion("YSB007 <>", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007GreaterThan(String value) {
+            addCriterion("YSB007 >", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007GreaterThanOrEqualTo(String value) {
+            addCriterion("YSB007 >=", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007LessThan(String value) {
+            addCriterion("YSB007 <", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007LessThanOrEqualTo(String value) {
+            addCriterion("YSB007 <=", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007Like(String value) {
+            addCriterion("YSB007 like", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007NotLike(String value) {
+            addCriterion("YSB007 not like", value, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007In(List<String> values) {
+            addCriterion("YSB007 in", values, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007NotIn(List<String> values) {
+            addCriterion("YSB007 not in", values, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007Between(String value1, String value2) {
+            addCriterion("YSB007 between", value1, value2, "ysb007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsb007NotBetween(String value1, String value2) {
+            addCriterion("YSB007 not between", value1, value2, "ysb007");
+            return (Criteria) this;
+        }
         public Criteria andSql(String value) {
             addCriterion(value);
             return (Criteria) this;

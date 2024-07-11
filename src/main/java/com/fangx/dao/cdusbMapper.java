@@ -34,4 +34,8 @@ public interface cdusbMapper {
     List<cdusb> selectByExampleAndPage(cdusbExample example, RowBounds rowBounds);
 
     List<cdusb> selectByExamplegs(@Param("cdusbExample")cdusbExample e1, @Param("cdyhbExample")cdyhbExample e2);
+
+    List<Integer> selectByExampleweekgs(@Param("cdusbExample")cdusbExample e1, @Param("cdyhbExample")cdyhbExample e2);
+
+    List<cdusb> selectByExample1(cdusbExample e1);
 }
