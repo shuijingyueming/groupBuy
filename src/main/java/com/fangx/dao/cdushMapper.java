@@ -30,9 +30,9 @@ public interface cdushMapper {
 
     cdush selectByddid(String ush001);
 
-    Integer selectByyhdd(@Param("yhid")Integer yhid, @Param("qsid")String qsid);
+    Integer selectByyhdd(@Param("yhid")Integer yhid, @Param("qsid")String qsid, @Param("cpid")Integer cpid);
 
     List<cdush> selectByExample1(cdushExample e1);
 
-    Integer selectBycg(String qsid);
+    Integer selectBycg(@Param("qsid")String qsid, @Param("cpid")Integer cpid);
 }

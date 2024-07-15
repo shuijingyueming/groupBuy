@@ -277,24 +277,59 @@ public class DishesController extends BaseController {
                         item.setUsf010(null);
                     }
                     usfService.update(item);
+//                    if(item.getUsf013().equals("C")){
+                        List<cdusb> list=usbService.serachAll(null);
+                        for(cdusb usb:list){
+                            cdyha yha=yhaService.getByqscp(usb.getUsb001(),item.getUsf001());
+                            if(yha==null){
+                                yha=new cdyha();
+                                yha.setYha002(item.getUsf001());
+                                yha.setYha003(usb.getUsb001());
+                                yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
+                                yha.setYha005(item.getUsf010()==null?"P":"C");
+                                yha.setYha006(0);
+                                yha.setYha009(item.getUsf013().equals("C")?"B":"A");
+                                yhaService.insert(yha);
+                            }else{
+                                if(yha.getYha009()==null||yha.getYha009().equals("B")){
+                                    yha.setYha002(item.getUsf001());
+                                    yha.setYha003(usb.getUsb001());
+                                    yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
+                                    yha.setYha005(item.getUsf010()==null?"P":"C");
+                                    yha.setYha006(0);
+                                    yha.setYha008(0);
+                                    yhaService.update(yha);
+                                }
+                            }
+                        }
+//                    }
                     mav.addObject("msg","C");
                 }else if(request.getParameter("zt").equals("U")){
                     addLog(getUse(request).getUse002(),"修改了菜品名字为：【" + request.getParameter("uname") + "】的状态");
                     cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("id")));
                     item.setUsf013(request.getParameter("type"));
                     usfService.update(item);
-                    if(request.getParameter("TK") != null &&request.getParameter("TK").equals("TK")&&!item.getUsf013().equals("C")){
+                    if(!item.getUsf013().equals("B")&&request.getParameter("TK") != null &&request.getParameter("TK").equals("TK")){
                         List<cdusb> list=usbService.serachAll(null);
                         for(cdusb usb:list){
                             cdyha yha=yhaService.getByqscp(usb.getUsb001(),item.getUsf001());
                             if(yha==null){
-                                cdysc ysc=yscService.selectBycpid(item.getUsf001(),DATE.format(usb.getUsb008()));
+                                yha=new cdyha();
                                 yha.setYha002(item.getUsf001());
                                 yha.setYha003(usb.getUsb001());
-                                yha.setYha004(ysc!=null?ysc.getYsc006():item.getUsf010());
-                                yha.setYha005(item.getUsf010()==0&ysc==null?"P":"C");
+                                yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
+                                yha.setYha005(item.getUsf010()==null?"P":"C");
                                 yha.setYha006(0);
+                                yha.setYha009(item.getUsf013().equals("C")?"B":"A");
                                 yhaService.insert(yha);
+                            }else{
+                                yha.setYha002(item.getUsf001());
+                                yha.setYha003(usb.getUsb001());
+                                yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
+                                yha.setYha005(item.getUsf010()==null?"P":"C");
+                                yha.setYha006(0);
+                                yha.setYha009(item.getUsf013().equals("C")?"B":"A");
+                                yhaService.update(yha);
                             }
                         }
                     }
@@ -389,8 +424,8 @@ public class DishesController extends BaseController {
         if(!request.getParameter("t6").isEmpty())item.setUsf006(Float.valueOf(request.getParameter("t6")));
         item.setUsf007(request.getParameter("t7"));
         if(!request.getParameter("t10").isEmpty())item.setUsf010(Integer.valueOf(request.getParameter("t10")));
-        item.setUsf011(Integer.valueOf(request.getParameter("t11")));
-        item.setUsf012(Integer.valueOf(request.getParameter("t12")));
+        if(!request.getParameter("t11").isEmpty())item.setUsf011(Integer.valueOf(request.getParameter("t11")));
+        if(!request.getParameter("t12").isEmpty())item.setUsf012(Integer.valueOf(request.getParameter("t12")));
         if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
             String log = "修改了名字为：【" + request.getParameter("t1") + "】的菜品信息";
             item.setUsf001(Integer.valueOf((request.getParameter("id"))));
@@ -405,6 +440,17 @@ public class DishesController extends BaseController {
             item.setUsf013("C");
             item.setUsf016("A");
             item = usfService.insert(item);
+            cdyha yha=new cdyha();
+            yha.setYha002(item.getUsf001());
+            yha.setYha004(0);
+            yha.setYha006(0);
+            yha.setYha008(0);
+            yha.setYha005("A");
+            yha.setYha009("B");
+            for(int i=1;i<8;i++){
+                yha.setYha003(i);
+                yhaService.insert(yha);
+            }
 //            mav.addObject("msg", "I");
         }
         String path = request.getSession().getServletContext().getRealPath("/");
@@ -785,9 +831,25 @@ public class DishesController extends BaseController {
             userid = Decrypt(session.getAttribute("user").toString());
             cduse user = useService.getByid(Decrypt(session.getAttribute("user").toString()));
             mav.addObject("msg", request.getParameter("msg"));
-            Date d=new Date();
-            if (request.getParameter("date") != null && !request.getParameter("date").isEmpty()) {
-                d=DATE.parse(request.getParameter("date"));
+            if (request.getParameter("t") != null && !request.getParameter("t").isEmpty()) {
+                mav.addObject("t", request.getParameter("t"));
+            }else{
+                mav.addObject("t", 0);
+            }
+            if (request.getParameter("l") != null && !request.getParameter("l").isEmpty()) {
+                mav.addObject("l", request.getParameter("l"));
+            }else{
+                mav.addObject("l", 0);
+            }
+            if (request.getParameter("t1") != null && !request.getParameter("t1").isEmpty()) {
+                mav.addObject("t1", request.getParameter("t1"));
+            }else{
+                mav.addObject("t1", 0);
+            }
+            if (request.getParameter("m1") != null && !request.getParameter("m1").isEmpty()) {
+                mav.addObject("m1", request.getParameter("m1"));
+            }else{
+                mav.addObject("m1", 0);
             }
            /* Integer ts=new Date(Integer.valueOf(sdf2.format(d)),d.getMonth()+1,0).getDate();
             List<time> list=new ArrayList<>();
@@ -839,6 +901,7 @@ public class DishesController extends BaseController {
                         if(ysb1==null)list.add(usd);
                     }
                 }
+                t.setTz(yscService.selectBytime(DATE.format(t.getD())));
                 t.setUsdlist(list);
             }else{
                 Calendar calendar = Calendar.getInstance();
@@ -898,7 +961,7 @@ public class DishesController extends BaseController {
                     addLog(getUse(request).getUse002(),"修改了菜品名字为：【" + request.getParameter("uname") + "】的团购类型");
                     if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
                         cdysc ysc =yscService.getByid(Integer.parseInt(request.getParameter("id")));
-                        ysc.setYsc005(request.getParameter("type"));
+                        ysc.setYsc007(request.getParameter("type"));
                         yscService.update(ysc);
                     }else{
                         cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("cpid")));
@@ -906,9 +969,26 @@ public class DishesController extends BaseController {
                         ysc.setYsc002(item.getUsf001());
                         ysc.setYsc003(DATE.parse(pb.getOthersql5()));
 //                        ysc.setYsc004(item.getUsf010());
-                        ysc.setYsc005(request.getParameter("type"));
                         ysc.setYsc006(0);
+                        ysc.setYsc007(request.getParameter("type"));
                         yscService.insert(ysc);
+                    }
+                    mav.addObject("msg","C");
+                }else if(request.getParameter("zt").equals("U1")){
+                    addLog(getUse(request).getUse002(),"修改了菜品名字为：【" + request.getParameter("uname") + "】的团购类型");
+                    if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
+                        cdyha yha =yhaService.getByid(Integer.parseInt(request.getParameter("id")));
+                        yha.setYha009(request.getParameter("type"));
+                        yhaService.update(yha);
+                    }else{
+                        cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("cpid")));
+                        cdyha yha=new cdyha();
+                        yha.setYha002(item.getUsf001());
+                        yha.setYha003(Integer.valueOf(pb.getOthersql1()));
+                        yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
+                        yha.setYha006(0);
+                        yha.setYha009(request.getParameter("type"));
+                        yhaService.insert(yha);
                     }
                     mav.addObject("msg","C");
                 }else if(request.getParameter("zt").equals("A")){
@@ -924,6 +1004,7 @@ public class DishesController extends BaseController {
                         ysc.setYsc003(DATE.parse(pb.getOthersql5()));
                         ysc.setYsc005("B");
                         ysc.setYsc006(Integer.valueOf(request.getParameter("num")));
+                        ysc.setYsc007(item.getUsf013().equals("C")?"B":"A");
                         yscService.insert(ysc);
                     }
                     mav.addObject("msg","C");
@@ -932,6 +1013,7 @@ public class DishesController extends BaseController {
                     if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
                         cdyha yha =yhaService.getByid(Integer.parseInt(request.getParameter("id")));
                         yha.setYha004(Integer.valueOf(request.getParameter("num")));
+                        yha.setYha005("C");
                         yhaService.update(yha);
                     }else{
                         cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("cpid")));
@@ -940,6 +1022,7 @@ public class DishesController extends BaseController {
                         yha.setYha003(Integer.valueOf(pb.getOthersql1()));
                         yha.setYha004(Integer.valueOf(request.getParameter("num")));
                         yha.setYha005("C");
+                        yha.setYha009(item.getUsf013().equals("C")?"B":"A");
                         yhaService.insert(yha);
                     }
                     mav.addObject("msg","C");
@@ -952,10 +1035,11 @@ public class DishesController extends BaseController {
             if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
                 pb.setOthersql(request.getParameter("name"));
             }
-            if (request.getParameter("type") != null && !request.getParameter("type").isEmpty()) {
-                pb.setOthersql4(request.getParameter("type"));
+            if (request.getParameter("lx") != null && !request.getParameter("lx").isEmpty()) {
+                pb.setOthersql4(request.getParameter("lx"));
             }
             delsession(session,request.getParameter("fh"));
+            pb.setOthersql10("C");
             pb=usfService.selectPageBean(pb);
             List<cdusf> list = pb.getResultList();
             if(pb.getOthersql4().equals("A")){

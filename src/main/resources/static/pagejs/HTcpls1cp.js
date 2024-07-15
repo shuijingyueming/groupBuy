@@ -1,7 +1,9 @@
 var checked_item="";
 function reback(){
-    var params = [];
-    form_submit("toDi/tocpls1","post",params,"_self");
+    // var params = [];
+    // form_submit("toDi/tocpls1","post",params,"_self");
+    // sessionStorage.setItem('isTrue',true);
+    history.back()
 }
 $(document).ready(function () {
     //菜单样式
@@ -74,7 +76,7 @@ function fanye(pageindex) {
 //翻页
 function usffanye(pageindex){
     var params = [["pages",pageindex],
-        ["type",$.trim($("#type").val())],
+        ["lx",$.trim($("#lx").val())],
         ["date",$.trim($("#date").val())],
         ["qsid",$.trim($("#qsid").val())],
         ["name",$.trim($("#name").val())]];
@@ -83,7 +85,7 @@ function usffanye(pageindex){
 
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
-        ["type",$.trim($("#type").val())],
+        ["lx",$.trim($("#lx").val())],
         ["date",$.trim($("#date").val())],
         ["qsid",$.trim($("#qsid").val())],
         ["name",$.trim($("#name").val())]];
@@ -95,7 +97,20 @@ function xgzt(id,cpid,uname,type){
     if (r == true) {
         var params = [ ["id",id],["cpid",cpid], ["zt","U"], ["uname",uname],["type",type],
             ["pages",$("#pages").val()],
-            ["type",$.trim($("#type").val())],
+            ["lx",$.trim($("#lx").val())],
+            ["date",$.trim($("#date").val())],
+            ["qsid",$.trim($("#qsid").val())],
+            ["name",$.trim($("#name").val())]];
+        form_submit("toDi/tocpls1cp","get",params,"_self");
+    }
+}
+
+function xgzt1(id,cpid,uname,type){
+    var r = confirm("确定修改此期数菜品的状态吗？");
+    if (r == true) {
+        var params = [ ["id",id],["cpid",cpid], ["zt","U1"], ["uname",uname],["type",type],
+            ["pages",$("#pages").val()],
+            ["lx",$.trim($("#lx").val())],
             ["date",$.trim($("#date").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
@@ -108,7 +123,7 @@ function todc(){
     if (r == true) {
         var params = [ ["type","E"],
             ["pages",$("#pages").val()],
-            ["type",$.trim($("#type").val())],
+            ["lx",$.trim($("#lx").val())],
             ["date",$.trim($("#date").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
@@ -121,7 +136,7 @@ function add1(id,cpid,uname){
     if (num != null) {
         var params = [ ["num",num],["id",id],["cpid",cpid], ["zt","A1"], ["uname",uname],
             ["pages",$("#pages").val()],
-            ["type",$.trim($("#type").val())],
+            ["lx",$.trim($("#lx").val())],
             ["date",$.trim($("#date").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
@@ -134,7 +149,7 @@ function add(id,cpid,uname){
     if (num != null) {
         var params = [ ["num",num],["id",id],["cpid",cpid], ["zt","A"], ["uname",uname],
             ["pages",$("#pages").val()],
-            ["type",$.trim($("#type").val())],
+            ["lx",$.trim($("#lx").val())],
             ["date",$.trim($("#date").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
@@ -147,7 +162,7 @@ function xgztx(id,uname,type){
     if (r == true) {
         var params = [ ["id",id], ["zt","X"], ["uname",uname],["type",type],
             ["pages",$("#pages").val()],
-            ["type",$.trim($("#type").val())],
+            ["lx",$.trim($("#lx").val())],
             ["date",$.trim($("#date").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
@@ -161,7 +176,7 @@ function del(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","D"], ["uname",uname],
             ["pages",$("#pages").val()],
-            ["type",$.trim($("#type").val())],
+            ["lx",$.trim($("#lx").val())],
             ["date",$.trim($("#date").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
@@ -179,7 +194,7 @@ function delete_item(){
     if (r == true) {
         var params = [ ["id",checked_item], ["zt","AD"],
             ["pages",$("#pages").val()],
-            ["type",$.trim($("#type").val())],
+            ["lx",$.trim($("#lx").val())],
             ["date",$.trim($("#date").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
@@ -311,7 +326,7 @@ function daoruwj1() {
             // console.log(data)
             if (data == 'A') {
                 var params = [  ["pages",$("#pages").val()],
-                    ["type",$.trim($("#type").val())],
+                    ["lx",$.trim($("#lx").val())],
                     ["date",$.trim($("#date").val())],
                     ["qsid",$.trim($("#qsid").val())],
                     ["name",$.trim($("#name").val())]];
@@ -323,7 +338,7 @@ function daoruwj1() {
             } else {
                 var r = confirm(data);
                 var params = [  ["pages",$("#pages").val()],
-                    ["type",$.trim($("#type").val())],
+                    ["lx",$.trim($("#lx").val())],
                     ["date",$.trim($("#date").val())],
                     ["qsid",$.trim($("#qsid").val())],
                     ["name",$.trim($("#name").val())]];
@@ -334,7 +349,7 @@ function daoruwj1() {
                         layer.msg(data);
                         setTimeout(function (){
                             var params = [  ["pages",$("#pages").val()],
-                                ["type",$.trim($("#type").val())],
+                                ["lx",$.trim($("#lx").val())],
                                 ["date",$.trim($("#date").val())],
                                 ["qsid",$.trim($("#qsid").val())],
                                 ["name",$.trim($("#name").val())]];

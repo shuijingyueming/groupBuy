@@ -8,6 +8,7 @@
     <result column="YSC004" jdbcType="TIMESTAMP" property="ysc004" />
     <result column="YSC005" jdbcType="CHAR" property="ysc005" />
     <result column="YSC006" jdbcType="INTEGER" property="ysc006" />
+    <result column="YSC007" jdbcType="CHAR" property="ysc007" />
   </resultMap>
   <resultMap id="BaseResultMap1" type="com.fangx.model.cdysc"  extends="BaseResultMap">
     <association property="usf" column="YSC002" select="com.fangx.dao.cdusfMapper.selectByPrimaryKey"/>
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    YSC001, YSC002, YSC003, YSC004, YSC005, YSC006
+    YSC001, YSC002, YSC003, YSC004, YSC005, YSC006, YSC007
   </sql>
   <select id="selectByExample" parameterType="com.fangx.model.cdyscExample" resultMap="BaseResultMap">
     select
@@ -105,10 +106,10 @@
   </delete>
   <insert id="insert" parameterType="com.fangx.model.cdysc">
     insert into cdysc (YSC001, YSC002, YSC003, 
-      YSC004, YSC005, YSC006
+      YSC004, YSC005, YSC006, YSC007
       )
     values (#{ysc001,jdbcType=INTEGER}, #{ysc002,jdbcType=INTEGER}, #{ysc003,jdbcType=TIMESTAMP}, 
-      #{ysc004,jdbcType=TIMESTAMP}, #{ysc005,jdbcType=CHAR}, #{ysc006,jdbcType=INTEGER}
+      #{ysc004,jdbcType=TIMESTAMP}, #{ysc005,jdbcType=CHAR}, #{ysc006,jdbcType=INTEGER}, #{ysc007,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fangx.model.cdysc">
@@ -132,6 +133,9 @@
       <if test="ysc006 != null">
         YSC006,
       </if>
+      <if test="ysc007 != null">
+        YSC007,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="ysc001 != null">
@@ -151,6 +155,9 @@
       </if>
       <if test="ysc006 != null">
         #{ysc006,jdbcType=INTEGER},
+      </if>
+      <if test="ysc007 != null">
+        #{ysc007,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -181,6 +188,9 @@
       <if test="record.ysc006 != null">
         YSC006 = #{record.ysc006,jdbcType=INTEGER},
       </if>
+      <if test="record.ysc007 != null">
+        YSC007 = #{record.ysc007,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -193,7 +203,8 @@
       YSC003 = #{record.ysc003,jdbcType=TIMESTAMP},
       YSC004 = #{record.ysc004,jdbcType=TIMESTAMP},
       YSC005 = #{record.ysc005,jdbcType=CHAR},
-      YSC006 = #{record.ysc006,jdbcType=INTEGER}
+      YSC006 = #{record.ysc006,jdbcType=INTEGER},
+      YSC007 = #{record.ysc007,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -216,6 +227,9 @@
       <if test="ysc006 != null">
         YSC006 = #{ysc006,jdbcType=INTEGER},
       </if>
+      <if test="ysc007 != null">
+        YSC007 = #{ysc007,jdbcType=CHAR},
+      </if>
     </set>
     where YSC001 = #{ysc001,jdbcType=INTEGER}
   </update>
@@ -225,7 +239,8 @@
       YSC003 = #{ysc003,jdbcType=TIMESTAMP},
       YSC004 = #{ysc004,jdbcType=TIMESTAMP},
       YSC005 = #{ysc005,jdbcType=CHAR},
-      YSC006 = #{ysc006,jdbcType=INTEGER}
+      YSC006 = #{ysc006,jdbcType=INTEGER},
+        YSC007 = #{ysc007,jdbcType=CHAR}
     where YSC001 = #{ysc001,jdbcType=INTEGER}
   </update>
   <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdyscExample" flushCache="true" useCache="false">

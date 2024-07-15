@@ -155,10 +155,13 @@
                                  <li id="menu_c1"><a _href="toDi/toqs">配送单管理</a></li>
                              </th:block>-->
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'O1#')>=0}">
-                                <li id="menu_e3"><a _href="toOr/tocg">采购单管理</a></li>
+                                <li id="menu_e3"><a _href="toOr/tocg">采购计划单管理</a></li>
                             </th:block>
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'N1#')>=0}">
+                           <!-- <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'N1#')>=0}">
                                 <li id="menu_e4"><a _href="toOr/tops">配送单管理</a></li>
+                            </th:block>-->
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'N1#')>=0}">
+                                <li id="menu_e5"><a _href="toOr/tops1">配送单管理</a></li>
                             </th:block>
                         </ul>
                     </li>

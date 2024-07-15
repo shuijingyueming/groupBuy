@@ -25,6 +25,8 @@ public class cdysc {
 
     private Integer ysc006;
 
+    private String ysc007;
+
     public Integer getYsc001() {
         return ysc001;
     }
@@ -73,6 +75,14 @@ public class cdysc {
         this.ysc006 = ysc006;
     }
 
+    public String getYsc007() {
+        return ysc007;
+    }
+
+    public void setYsc007(String ysc007) {
+        this.ysc007 = ysc007;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -85,6 +95,7 @@ public class cdysc {
         sb.append(", ysc004=").append(ysc004);
         sb.append(", ysc005=").append(ysc005);
         sb.append(", ysc006=").append(ysc006);
+        sb.append(", ysc007=").append(ysc007);
         sb.append("]");
         return sb.toString();
     }

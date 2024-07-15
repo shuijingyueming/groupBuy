@@ -78,6 +78,9 @@ public class BaseController {
     @Autowired
     protected CdysdService ysdService;
 
+    @Autowired
+    protected CdyseService yseService;
+
     //静态公共时间格式对象     调用BaseController.DATE
     protected final static SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
     protected final static SimpleDateFormat DATE1 = new SimpleDateFormat("yyyyMM");

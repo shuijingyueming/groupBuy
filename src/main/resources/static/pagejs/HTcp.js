@@ -114,7 +114,7 @@ function xgzt(id,uname,type){
     var r = confirm("确定修改此菜品的状态吗？");
     if (r == true) {
         var params = [ ["id",id], ["zt","U"], ["uname",uname],["type",type],
-            // ["TK","TK"],
+            ["TK","TK"],
             ["pages",$("#pages").val()],
             ["yjid",$.trim($("#yjid").val())],
             ["ejid",$.trim($("#ejid").val())],
@@ -187,22 +187,22 @@ function toxq(id){
                 html+= '<span class="jspan">'+item.usf002+'</span></div></div>';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">单位：</label>';
-                html+= '<span class="jspan">'+(item.usm!=null?item.usm002:'')+'</span></div></div>';
+                html+= '<span class="jspan">'+(item.usm!=null?item.usm.usm002:'')+'</span></div></div>';
                 html+= '</div>';
                 html+= '';
                 html+= '<div class="row">';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">一级分类：</label>';
-                html+= '<span class="jspan">'+(item.yhe!=null?item.yhe002:'')+'</span></div></div>';
+                html+= '<span class="jspan">'+(item.yhe!=null?item.yhe.yhe002:'')+'</span></div></div>';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">二级分类：</label>';
-                html+= '<span class="jspan">'+(item.ysa!=null?item.ysa002:'')+'</span></div></div>';
+                html+= '<span class="jspan">'+(item.ysa!=null?item.ysa.ysa002:'')+'</span></div></div>';
                 html+= '</div>';
                 html+= '';
                 html+= '<div class="row">';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">库存数：</label>';
-                html+= '<span class="jspan">'+(item.usf001!=null?item.usf010:'')+'</span></div></div>';
+                html+= '<span class="jspan">'+(item.usf010==null?'无限':item.usf010)+'</span></div></div>';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">原始价格：</label>';
                 html+= '<span class="jspan">'+(item.usf005!=null?item.usf005:'')+'</span></div></div>';
@@ -258,58 +258,6 @@ function gb(){
     $("#detail").hide();
 }
 
-//添加编辑
-function edit(id){
-    if(id!=null&&id!=''){
-        $.ajax({
-            url:'toDi/serachcp?id='+id,
-            type:'post',
-            async: false,
-            cache: false,
-            processData: false,
-            contentType: false,
-            dataType:'json',
-            success:function(data) {
-                var item = eval(data.item);
-                $("#t1").val(item.usf002);
-                $("#t8").val(item.usf003);
-                $("#t4").val(item.usf004);
-                $("#t5").val(item.usf005);
-                $("#t6").val(item.usf006);
-                // $("#t7").val(item.usf007);
-                KE.html(item.usf007);
-                // $("#t10").val(item.usf010);
-                console.log(item.usf011)
-                tofl(item.usf011,"t12")
-                $("#t11").val(item.usf011);
-                $("#t12").val(item.usf012);
-                var list=item.usnlist;
-                var html="";
-                var data="";
-                $("#p4").empty();
-                // console.log(item)
-                for(var i=0;i<list.length;i++){
-                    // data="upload/shopimg/"+list[i].usn003;
-                    data="https://fxtgoss.oss-cn-hangzhou.aliyuncs.com/shopimg/"+list[i].usn003;
-                    imglist.push(data);
-                    html="<div class='item'>";
-                    html+="<img src='"+data+"' style='width:150px;'/>";
-                    html+="<div class='closep' id=\'P"+i+"\' name=\'"+data+"\' onclick='imgRemove(this)'>X</div>";
-                    html+="</div>";
-                    $("#p4").append(html);
-                }
-            },
-            error:function(){}
-        });
-        $("#id").val(id);
-        $("#mtitle").html("修改菜品信息");
-    }else{
-        $("#mtitle").html("添加菜品信息");
-    }
-    $("#active").show();
-    $("#adiv").addClass("an");
-    //$('#active').css("height",$('#bash', parent.document).css("height"));
-}
 
 function clean(){
     $("#t1").val("");
@@ -367,8 +315,8 @@ function insertImg(img){
     for(var i=0;i<imglist.length;i++){
         html="";
         var data = imglist[i];
-        var data1 ="";
         if(typeof(imglist[i])=="object"){
+            let data1 ="";
             t4.push(imglist[i])
             var reader = new FileReader();
             reader.readAsDataURL(imglist[i]);
@@ -378,9 +326,9 @@ function insertImg(img){
                 image.src = e.target.result
                 return new Promise((resolve) => {
                     image.onload = () => {
-                        const width = image.width
-                        const height = image.height
-                        // console.log(width+"---"+height)
+                        // const width = image.width
+                        // const height = image.height
+
                         // if(width==414&&height==280){
                             html="<div class='item'>";
                             html+="<img src='"+data1+"' style='width:150px;' />";
@@ -430,10 +378,10 @@ function save(id){
         $("#t7").after('<label id="t3-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t7">不能为空</label>');
         falg=false;
     }
-    if(imglist.length==0){
-        $("#t2").after('<label id="t4-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t2">请添加图片</label>');
-        falg=false;
-    }
+    // if(imglist.length==0){
+    //     $("#t2").after('<label id="t4-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t2">请添加图片</label>');
+    //     falg=false;
+    // }
     if(falg){
         formData.delete("t2");
         for(var i=0;i<t4.length;i++){
@@ -483,7 +431,7 @@ function tofl(id,name){
         dataType: 'json',
         success: function (data) {
             var list = eval(data.list);
-            console.log(list)
+            // console.log(list)
             $("select[id="+name+"]").empty();
             $("select[id="+name+"]").append("<option value=''>请选择</option>");
             for (var i = 0; i < list.length; i++) {

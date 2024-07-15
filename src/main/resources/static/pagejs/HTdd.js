@@ -156,7 +156,7 @@ function toxq(id){
                 html+= '<span class="jspan">'+(item.yhc004!=null?getTime(item.yhc004):'')+'</span></div></div>';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">送货日期：</label>';
-                html+= '<span class="jspan">'+(item.yhc008!=null?getTime(item.yhc008):'')+'</span></div></div>';
+                html+= '<span class="jspan">'+(item.yhc008!=null?getTime(item.yhc008,'YY-MM-DD'):'')+'</span></div></div>';
                 html+= '</div>';
 
                 var list=item.ushlist;

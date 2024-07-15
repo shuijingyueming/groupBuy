@@ -50,6 +50,7 @@ public class CdusfServiceImpl implements CdusfService {
         if(pb.getOthersql1()!=null) c.andUsf013EqualTo(pb.getOthersql1());
         if(pb.getOthersql2()!=null) c.andUsf011EqualTo(Integer.valueOf(pb.getOthersql2()));
         if(pb.getOthersql3()!=null) c.andUsf012EqualTo(Integer.valueOf(pb.getOthersql3()));
+        if(pb.getOthersql10()!=null)c.andUsf013NotEqualTo(pb.getOthersql10());
         e1.setOrderByClause("usf001 desc");
         return queryByPage(pb, e1);
     }
@@ -132,18 +133,21 @@ public class CdusfServiceImpl implements CdusfService {
         List<cdusf> list1 = usfMapper.selectByExample(null);
         List<cdusf> list =new ArrayList<>();
         for(cdusf usf:list1){
-            usf.setSl(ushMapper.selectByyhdd(yhid,qsid));
+            usf.setSl(ushMapper.selectByyhdd(yhid,qsid,usf.getUsf001()));
             if(usf.getSl()!=null&&usf.getSl()>0)list.add(usf);
         }
         return list;
     }
 
     @Override
-    public List<cdusf> selectByCG(String qsid) {
-        List<cdusf> list1 = usfMapper.selectByExample(null);
+    public List<cdusf> selectByCG(String qsid, Integer flid) {
+        cdusfExample e1 = new cdusfExample();
+        Criteria c = e1.createCriteria();
+        if(flid!=null)c.andUsf011EqualTo(flid);
+        List<cdusf> list1 = usfMapper.selectByExample1(e1);
         List<cdusf> list =new ArrayList<>();
         for(cdusf usf:list1){
-            usf.setSl(ushMapper.selectBycg(qsid));
+            usf.setSl(ushMapper.selectBycg(qsid,usf.getUsf001()));
             if(usf.getSl()!=null&&usf.getSl()>0)list.add(usf);
         }
         return list;
@@ -183,6 +187,13 @@ public class CdusfServiceImpl implements CdusfService {
         if(pb.getOthersql1()!=null) c.andUsf011EqualTo(Integer.valueOf(pb.getOthersql1()));
         if(pb.getOthersql2()!=null) c.andUsf012EqualTo(Integer.valueOf(pb.getOthersql2()));
         c.andUsf013NotEqualTo("C");
+        cdyhaExample e2 = new cdyhaExample();
+        cdyhaExample.Criteria c1 = e2.createCriteria();
+        System.out.println("-------"+pb.getOthersql8()+"-----");
+        if(pb.getOthersql8()!=null){
+            c1.andYha003EqualTo(Integer.valueOf(pb.getOthersql8()));
+            if(pb.getOthersql9()!=null)c1.andYha009EqualTo(pb.getOthersql9());
+        }
         if(pb.getOthersql7()!=null){
             if(pb.getOthersql7().equals("A")){
                 e1.setOrderByClause("usf013 desc,usf001 desc");
@@ -192,22 +203,40 @@ public class CdusfServiceImpl implements CdusfService {
         }else{
             e1.setOrderByClause("usf001 desc");
         }
-        return queryByPage2(pb, e1);
+        return  pb.getOthersql8()!=null?queryByPage2(pb, e1,e2):queryByPage3(pb, e1);
     }
-
-    public PageBean queryByPage2(PageBean pageBean, cdusfExample e1) {
+    public PageBean queryByPage3(PageBean pageBean, cdusfExample example) {
         int page = (int) pageBean.getCurrentPage();
         int size = pageBean.getPageSize();
         //record sum
-//        int sum = (int) usfMapper.countByExampleqs(e1,e2);.
-        int sum = (int) usfMapper.countByExample(e1);
+        int sum = (int) usfMapper.countByExample(example);
         //page count
         int count = sum % size == 0 ? sum / size : sum / size + 1;
         //check page
         page = page < 1 ? 1 : ((page > count) ? count : page);
         //query
-//        List<cdusf> list = usfMapper.selectByExampleAndPageqs(e1,e2, new RowBounds((page - 1) * size, size));
-        List<cdusf> list = usfMapper.selectByExampleAndPage2(e1, new RowBounds((page - 1) * size, size));
+        List<cdusf> list = usfMapper.selectByExampleAndPage2(example, new RowBounds((page - 1) * size, size));
+        //save to PageBean
+        pageBean.setCurrentPage(page);
+        pageBean.setPageCount(count);
+        pageBean.setRecordCount(sum);
+        pageBean.setResultList(list);
+        pageBean.setPageSize(size);
+        return pageBean;
+    }
+    public PageBean queryByPage2(PageBean pageBean, cdusfExample e1, cdyhaExample e2) {
+        int page = (int) pageBean.getCurrentPage();
+        int size = pageBean.getPageSize();
+        //record sum
+        int sum = (int) usfMapper.countByExampleqs(e1,e2);
+//        int sum = (int) usfMapper.countByExample(e1);
+        //page count
+        int count = sum % size == 0 ? sum / size : sum / size + 1;
+        //check page
+        page = page < 1 ? 1 : ((page > count) ? count : page);
+        //query
+        List<cdusf> list = usfMapper.selectByExampleAndPageqs1(e1,e2, new RowBounds((page - 1) * size, size));
+//        List<cdusf> list = usfMapper.selectByExampleAndPage2(e1, new RowBounds((page - 1) * size, size));
         //save to PageBean
         pageBean.setCurrentPage(page);
         pageBean.setPageCount(count);

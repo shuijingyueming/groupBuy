@@ -30,4 +30,6 @@ public interface CdyscService extends IService<cdysc> {
     cdysc selectBycpid(Integer cpid, String time);
 
     void delete(Integer id);
+
+    boolean selectBytime(String time);
 }

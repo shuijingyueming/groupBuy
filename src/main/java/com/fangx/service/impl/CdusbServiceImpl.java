@@ -77,6 +77,15 @@ public class CdusbServiceImpl implements CdusbService {
     }
 
     @Override
+    public List<cdusb> serachAll1() {
+        cdusbExample e1 = new cdusbExample();
+        Criteria c = e1.createCriteria();
+        c.andUsb003IsNotNull();
+        e1.setOrderByClause("usb003");
+        return usbMapper.selectByExample(e1);
+    }
+
+    @Override
     public cdusb selectByweek(Integer gsid, Integer d) {
         cdusbExample e1 = new cdusbExample();
         Criteria c = e1.createCriteria();

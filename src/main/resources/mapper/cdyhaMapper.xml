@@ -10,6 +10,7 @@
     <result column="YHA006" jdbcType="INTEGER" property="yha006" />
     <result column="YHA007" jdbcType="REAL" property="yha007" />
     <result column="YHA008" jdbcType="INTEGER" property="yha008" />
+    <result column="YHA009" jdbcType="CHAR" property="yha009" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    YHA001, YHA002, YHA003, YHA004, YHA005, YHA006, YHA007, YHA008
+    YHA001, YHA002, YHA003, YHA004, YHA005, YHA006, YHA007, YHA008, YHA009
   </sql>
   <select id="selectByExample" parameterType="com.fangx.model.cdyhaExample" resultMap="BaseResultMap">
     select
@@ -105,10 +106,10 @@
   <insert id="insert" parameterType="com.fangx.model.cdyha">
     insert into cdyha (YHA001, YHA002, YHA003, 
       YHA004, YHA005, YHA006, 
-      YHA007, YHA008)
+      YHA007, YHA008, YHA009)
     values (#{yha001,jdbcType=INTEGER}, #{yha002,jdbcType=INTEGER}, #{yha003,jdbcType=INTEGER}, 
       #{yha004,jdbcType=INTEGER}, #{yha005,jdbcType=CHAR}, #{yha006,jdbcType=INTEGER}, 
-      #{yha007,jdbcType=REAL}, #{yha008,jdbcType=INTEGER})
+      #{yha007,jdbcType=REAL}, #{yha008,jdbcType=INTEGER}), #{yha009,jdbcType=CHAR}
   </insert>
   <insert id="insertSelective" parameterType="com.fangx.model.cdyha">
     insert into cdyha
@@ -137,6 +138,9 @@
       <if test="yha008 != null">
         YHA008,
       </if>
+      <if test="yha009 != null">
+        YHA009,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="yha001 != null">
@@ -162,6 +166,9 @@
       </if>
       <if test="yha008 != null">
         #{yha008,jdbcType=INTEGER},
+      </if>
+      <if test="yha009 != null">
+        #{yha009,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -198,6 +205,9 @@
       <if test="record.yha008 != null">
         YHA008 = #{record.yha008,jdbcType=INTEGER},
       </if>
+      <if test="record.yha009 != null">
+        YHA009 = #{record.yha009,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -212,7 +222,8 @@
       YHA005 = #{record.yha005,jdbcType=CHAR},
       YHA006 = #{record.yha006,jdbcType=INTEGER},
       YHA007 = #{record.yha007,jdbcType=REAL},
-      YHA008 = #{record.yha008,jdbcType=INTEGER}
+      YHA008 = #{record.yha008,jdbcType=INTEGER},
+      YHA009 = #{record.yha009,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -241,6 +252,9 @@
       <if test="yha008 != null">
         YHA008 = #{yha008,jdbcType=INTEGER},
       </if>
+      <if test="yha009 != null">
+        YHA009 = #{yha009,jdbcType=CHAR},
+      </if>
     </set>
     where YHA001 = #{yha001,jdbcType=INTEGER}
   </update>
@@ -252,7 +266,8 @@
       YHA005 = #{yha005,jdbcType=CHAR},
       YHA006 = #{yha006,jdbcType=INTEGER},
       YHA007 = #{yha007,jdbcType=REAL},
-      YHA008 = #{yha008,jdbcType=INTEGER}
+      YHA008 = #{yha008,jdbcType=INTEGER},
+      YHA009 = #{yha009,jdbcType=CHAR}
     where YHA001 = #{yha001,jdbcType=INTEGER}
   </update>
   <select id="selectByqscp" parameterType="java.lang.Integer" resultMap="BaseResultMap">

@@ -282,12 +282,12 @@
 
   <select id="selectByyhdd" parameterType="com.fangx.model.cdushExample" resultType="java.lang.Integer">
     select sum(ush004) from cdush left join cdyhc on cdush.ush002=cdyhc.yhc001
-    where YHC002 = #{yhid,jdbcType=INTEGER} and  DATE_FORMAT(yhc008,'%Y-%m-%d')= #{qsid,jdbcType=VARCHAR}
+    where YHC002 = #{yhid,jdbcType=INTEGER} and  ush003 = #{cpid,jdbcType=INTEGER} and DATE_FORMAT(yhc008,'%Y-%m-%d')= #{qsid,jdbcType=VARCHAR}
   </select>
 
   <select id="selectBycg" parameterType="com.fangx.model.cdushExample" resultType="java.lang.Integer">
     select sum(ush004) from cdush left join cdyhc on cdush.ush002=cdyhc.yhc001
-    where DATE_FORMAT(yhc008,'%Y-%m-%d')= #{qsid,jdbcType=VARCHAR}
+    where DATE_FORMAT(yhc008,'%Y-%m-%d')= #{qsid,jdbcType=VARCHAR} and  ush003 = #{cpid,jdbcType=INTEGER}
   </select>
 
   <select id="selectByExample1" parameterType="com.fangx.model.cdushExample" resultMap="BaseResultMap1">

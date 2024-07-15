@@ -98,10 +98,11 @@ public class CduscServiceImpl implements CduscService {
     }
 
     @Override
-    public cdusc selectByPhone(String phone) {
+    public cdusc selectByPhone(String phone, String gsid) {
         cduscExample e1 = new cduscExample();
         Criteria c = e1.createCriteria();
         c.andUsc015EqualTo(phone);
+        if(gsid!=null)c.andUsc005EqualTo(Integer.valueOf(gsid));
         List<cdusc> list = uscMapper.selectByExample(e1);
         return list.size() > 0 ? list.get(0) : null;
     }

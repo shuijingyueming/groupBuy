@@ -30,14 +30,11 @@
     <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
     <script type="text/javascript" src="static/js/pubjs.js"></script>
 </head>
-<input type="hidden" id="pages" name="pages" th:value="${pages}"/>
-<input type="hidden" id="name" name="name" th:value="${name}"/>
-<input type="hidden" id="phone" name="name" th:value="${phone}"/>
-<input type="hidden" id="ptime" name="ptime" th:value="${ptime}"/>
+<input type="hidden" id="pages" name="pages" th:value="${pageobj.currentPage}"/>
+<input type="hidden" id="counts" name="counts" th:value="${pageobj.pageCount}"/>
 <input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
 <input type="hidden" th:value="${msg}" id="msg">
 <input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
-<input type="hidden" id="gsid" name="gsid" th:value="${gsid}" />
 <body class="sidebar-mini fixed skin-blue">
 <div class="content-wrapper">
     <section class="content-header">
@@ -52,14 +49,20 @@
     </section>
     <!-- Serach Starts-->
     <section class="content" id="wrhead">
-        <div class="cardbg" style="padding:1rem;display: none">
+        <div class="cardbg" style="padding:1rem;">
             <form>
                 <div class="form-row">
-                    <div style="max-width: 78px;margin-top: 15px;" class="col-xl-2 col-lg-3">
-                        配送日期:
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="ptime" th:value="${pageobj.othersql2}" type="date" class="form-control"
+                               placeholder="请输入配送日期">
                     </div>
                     <div class="col-xl-2 col-lg-3 col-12">
-                        <input id="date" th:value="${date}" type="date" class="form-control" placeholder="请输入配送时间">
+                        <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control"
+                               placeholder="请输入企业名称">
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <input id="phone" th:value="${pageobj.othersql1}" type="text" class="form-control"
+                               placeholder="请输入企业电话">
                     </div>
                     <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
                 </div>
@@ -70,36 +73,72 @@
     <!-- DataTable With Button Example Section Starts -->
     <div class="card panel panel-default" id="wrapp">
         <div class="jsgrid collapse show p-4" data-parent="#accordion">
-            <table id="gspsygexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+            <table id="gspsexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                 <tr>
                     <th style="max-width:40px;">序号</th>
-                    <th>姓名</th>
-                    <th>电话</th>
-                    <th>内容</th>
-                    <th>备注</th>
+                    <th>配送日期</th>
+                    <th>企业名称</th>
+                    <th>企业地址</th>
+                    <th>企业电话</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
-                <tbody th:switch="${ yglist.size() gt 0 }">
+                <tbody th:switch="${ pageobj.recordCount gt 0 }">
                 <th:block th:case="true">
-                    <tr th:each="item,stat:${yglist}" style="border-bottom:1px solid #dee2e6;">
-                        <td th:text="${stat.index+1}"></td>
-                        <td th:text="${item.usc002}"></td>
-                        <td th:text="${item.usc015}"></td>
-                        <td th:text="${item.nr}"></td>
-                        <td th:text="${item.bz}"></td>
+                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
+                        <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
+                        <td th:text="${#dates.format(item.yse003,'yyyy-MM-dd')}"></td>
+                        <td th:text="${item.usd.usd002}"></td>
+                        <td th:text="${item.usd.usd003}"></td>
+                        <td th:text="${item.usd.usd004}"></td>
+                        <td>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
+                                <button th:onclick="tops([[${item.yse002}]],[[${#dates.format(item.yse003,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'I3#')>=0}">
+                                <button th:onclick="todc([[${item.yse002}]],[[${#dates.format(item.yse003,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">导出配送单</button>
+                            </th:block>
+                        </td>
                     </th:block>
                 </th:block>
                 <tr th:case="false">
                     <td></td><td></td>
                     <td></td><td></td>
-                    <td></td>
+                    <td></td><td></td>
                 </tr>
                 </tbody>
             </table>
+            <div class="page jsgrid-pager-container" style="display: block;">
+            </div>
         </div>
     </div>
     <!-- DataTable With Scroll Example Section Starts -->
+</div>
+<!-- 小红花滑动页 -->
+<div class="modal"id="modal-2">
+    <div class="modal-dialog"  style="left:-25%">
+        <div class="modal-content" style="border:1px solid #999;width:400px;height:260px;" >
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="font-size:15px;">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>配送日期</label>
+                        <div class="form-group">
+                            <input class="form-control" type="date" id="date" name="date" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="">
+                    <input type="hidden" id="gsid" name="gsid"/>
+                    <button type="button" class="effect-btn btn btn-info mt-2 mr-2 sm-btn" onclick="todc()">导出</button>
+                    <button type="button" id="pass1" class="effect-btn btn btn-info mt-2 mr-2 sm-btn" data-dismiss="modal" aria-hidden="true" onclick="cancel_q()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="assets/js/jquery/slim.min.js"></script>
 <script src="assets/js/jquery/popper.min.js"></script>
@@ -120,6 +159,6 @@
 <script type="text/javascript" src="assets/jquery-validate/localization/messages_zh.js"></script>
 <script src="pagejs/htfy.js"></script>
 <script src="pagejs/HTsel.js"></script>
-<script src="pagejs/HTgspsyg.js"></script>
+<script src="pagejs/HTgsps1.js"></script>
 </body>
 </html>

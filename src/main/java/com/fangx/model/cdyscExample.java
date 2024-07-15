@@ -475,6 +475,76 @@ public class cdyscExample {
             return (Criteria) this;
         }
 
+        public Criteria andYsc007IsNull() {
+            addCriterion("YSC007 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007IsNotNull() {
+            addCriterion("YSC007 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007EqualTo(String value) {
+            addCriterion("YSC007 =", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007NotEqualTo(String value) {
+            addCriterion("YSC007 <>", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007GreaterThan(String value) {
+            addCriterion("YSC007 >", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007GreaterThanOrEqualTo(String value) {
+            addCriterion("YSC007 >=", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007LessThan(String value) {
+            addCriterion("YSC007 <", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007LessThanOrEqualTo(String value) {
+            addCriterion("YSC007 <=", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007Like(String value) {
+            addCriterion("YSC007 like", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007NotLike(String value) {
+            addCriterion("YSC007 not like", value, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007In(List<String> values) {
+            addCriterion("YSC007 in", values, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007NotIn(List<String> values) {
+            addCriterion("YSC007 not in", values, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007Between(String value1, String value2) {
+            addCriterion("YSC007 between", value1, value2, "ysc007");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc007NotBetween(String value1, String value2) {
+            addCriterion("YSC007 not between", value1, value2, "ysc007");
+            return (Criteria) this;
+        }
+
         public Criteria andSql(String value) {
             addCriterion(value);
             return (Criteria) this;

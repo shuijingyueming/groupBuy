@@ -60,6 +60,15 @@
                             </th:block>
                         </select>
                     </div>
+                    <div class="col-xl-2 col-md-3 col-lg-4">
+                        <input class="form-control" type="month" id="name" name="name" th:value="${pageobj.othersql}">
+                    </div>
+                    <div class="col-xl-2 col-md-3 col-lg-4">
+                        <input class="form-control" type="date" id="start" name="start" th:value="${pageobj.othersql5}" />
+                    </div>
+                    <div class="col-xl-2 col-md-3 col-lg-4">
+                        <input class="form-control" type="date" id="end" name="end" th:value="${pageobj.othersql6}" />
+                    </div>
                     <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
                 </div>
             </form>

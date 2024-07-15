@@ -101,6 +101,11 @@ $(function () {
         return this.optional(element) || /^[\u0391-\uFFE5]+$/.test(value);
     }, "只能包含中文字符。");
 
+
+    jQuery.validator.addMethod("isNotChinese", function (value, element) {
+        return this.optional(element) || !(/^[\u0391-\uFFE5]+$/.test(value));
+    }, "不能包含中文字符。");
+
     // 判断英文字符 
     jQuery.validator.addMethod("isEnglish", function (value, element) {
         return this.optional(element) || /^[A-Za-z]+$/.test(value);

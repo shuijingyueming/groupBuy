@@ -36,5 +36,5 @@ public interface CdusfService extends IService<cdusf> {
 
     PageBean selectPageBean2(PageBean pb);
 
-    List<cdusf> selectByCG(String date);
+    List<cdusf> selectByCG(String date, Integer flid);
 }

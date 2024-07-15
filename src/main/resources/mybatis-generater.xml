@@ -69,5 +69,6 @@
 <!--        <table tableName="cdysb" domainObjectName="cdysb"></table>-->
 <!--        <table tableName="cdysc" domainObjectName="cdysc"></table>-->
 <!--        <table tableName="cdysd" domainObjectName="cdysd"></table>-->
+<!--        <table tableName="cdyse" domainObjectName="cdyse"></table>-->
     </context>
 </generatorConfiguration>

@@ -604,6 +604,75 @@ public class cdyhaExample {
             return (Criteria) this;
         }
 
+        public Criteria andYha009IsNull() {
+            addCriterion("YHA009 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009IsNotNull() {
+            addCriterion("YHA009 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009EqualTo(String value) {
+            addCriterion("YHA009 =", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009NotEqualTo(String value) {
+            addCriterion("YHA009 <>", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009GreaterThan(String value) {
+            addCriterion("YHA009 >", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009GreaterThanOrEqualTo(String value) {
+            addCriterion("YHA009 >=", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009LessThan(String value) {
+            addCriterion("YHA009 <", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009LessThanOrEqualTo(String value) {
+            addCriterion("YHA009 <=", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009Like(String value) {
+            addCriterion("YHA009 like", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009NotLike(String value) {
+            addCriterion("YHA009 not like", value, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009In(List<String> values) {
+            addCriterion("YHA009 in", values, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009NotIn(List<String> values) {
+            addCriterion("YHA009 not in", values, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009Between(String value1, String value2) {
+            addCriterion("YHA009 between", value1, value2, "yha009");
+            return (Criteria) this;
+        }
+
+        public Criteria andYha009NotBetween(String value1, String value2) {
+            addCriterion("YHA009 not between", value1, value2, "yha009");
+            return (Criteria) this;
+        }
         public Criteria andSql(String value) {
             addCriterion(value);
             return (Criteria) this;

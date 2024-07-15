@@ -32,10 +32,24 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="assets/css/calendar/fullcalendar.min.css">
     <link rel="stylesheet" href="assets/css/calendar/fullcalendar.print.min.css" media="print">
+
+    <style>
+        .fc-state-default{
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            text-shadow: 0 1px 1px rgba(255,255,255,.75);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(0,0,0,.05)
+        }
+    </style>
 </head>
 <input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
 <input type="hidden" th:value="${msg}" id="msg">
 <input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<input type="hidden" id="t" name="t" th:value="${t}" />
+<input type="hidden" id="l" name="l" th:value="${l}" />
+<input type="hidden" id="t1" name="t1" th:value="${t1}" />
+<input type="hidden" id="m1" name="m1" th:value="${m1}" />
 <body class="sidebar-mini fixed skin-blue">
 <div class="content-wrapper">
     <section class="content-header">

@@ -17,6 +17,8 @@ public class cdyha {
 
     private Integer yha008;
 
+    private String yha009;
+
     public Integer getYha001() {
         return yha001;
     }
@@ -81,6 +83,14 @@ public class cdyha {
         this.yha008 = yha008;
     }
 
+    public String getYha009() {
+        return yha009;
+    }
+
+    public void setYha009(String yha009) {
+        this.yha009 = yha009;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -95,6 +105,7 @@ public class cdyha {
         sb.append(", yha006=").append(yha006);
         sb.append(", yha007=").append(yha007);
         sb.append(", yha008=").append(yha008);
+        sb.append(", yha009=").append(yha009);
         sb.append("]");
         return sb.toString();
     }

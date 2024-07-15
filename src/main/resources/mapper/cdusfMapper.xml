@@ -141,7 +141,7 @@
       #{usf014,jdbcType=INTEGER}, #{usf015,jdbcType=REAL}, #{usf016,jdbcType=VARCHAR}, 
       #{usf017,jdbcType=VARCHAR}, #{usf018,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fangx.model.cdusf">
+  <insert id="insertSelective" parameterType="com.fangx.model.cdusf" useGeneratedKeys="true" keyProperty="usf001">
     insert into cdusf
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="usf001 != null">
@@ -171,9 +171,7 @@
       <if test="usf009 != null">
         USF009,
       </if>
-      <if test="usf010 != null">
         USF010,
-      </if>
       <if test="usf011 != null">
         USF011,
       </if>
@@ -420,7 +418,7 @@
       USF018 = #{usf018,jdbcType=VARCHAR}
     where USF001 = #{usf001,jdbcType=INTEGER}
   </update>
-  <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap2" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
     select
     <if test="distinct" >
       distinct
@@ -501,6 +499,29 @@
     </if>
   </select>
 
+  <select id="selectByExampleAndPageqs1" resultMap="BaseResultMap2" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdusf left join cdyha on cdusf.usf001=cdyha.yha002
+    <where>
+      <if test="cdusfExample != null">
+        <foreach collection="cdusfExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdyhaExample != null">
+        <foreach collection="cdyhaExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdusfExample != null">
+      <if test="cdusfExample.orderByClause != null">
+        order by ${cdusfExample.orderByClause}
+      </if>
+    </if>
+  </select>
+
   <select id="selectByExampleAndPage2" resultMap="BaseResultMap2" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
     select
     <if test="distinct" >
@@ -512,6 +533,20 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample1" parameterType="com.fangx.model.cdusfExample" resultMap="BaseResultMap1">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>

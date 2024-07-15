@@ -126,7 +126,7 @@
       #{usd007,jdbcType=REAL}, #{usd008,jdbcType=INTEGER}, #{usd009,jdbcType=REAL}, #{usd010,jdbcType=TIMESTAMP}, 
       #{usd011,jdbcType=VARCHAR}, #{usd012,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fangx.model.cdusd">
+  <insert id="insertSelective" parameterType="com.fangx.model.cdusd" useGeneratedKeys="true" keyProperty="usd001">
     insert into cdusd
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="usd001 != null">

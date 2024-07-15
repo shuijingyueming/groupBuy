@@ -29,6 +29,23 @@
 
     <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
     <script type="text/javascript" src="static/js/pubjs.js"></script>
+	<script type="text/javascript" src="js/print2.js"></script>
+	<style>
+	table{
+	   border-collapse: collapse;
+	}
+	  table.table-bordered.dataTable thead td, table.table-bordered.dataTable tbody td{
+	     border: 1px solid #999;
+		 font-weight:100;
+		 font-size:12px;
+	   }
+	   
+	</style>
+	<script type="text/javascript">
+     function toPrint() {
+       Print('#gscgexm',{});
+     }
+    </script>
 </head>
 <input type="hidden" id="pages" name="pages" th:value="${pages}"/>
 <input type="hidden" id="name" name="name" th:value="${name}"/>
@@ -61,6 +78,7 @@
                         <input id="date" th:value="${date}" type="date" class="form-control" placeholder="请输入配送时间">
                     </div>
                     <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
+					<button onclick="toPrint()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary" style="margin-left:10px;">打印</button>
                 </div>
             </form>
         </div>
@@ -69,25 +87,34 @@
     <!-- DataTable With Button Example Section Starts -->
     <div class="card panel panel-default" id="wrapp">
         <div class="jsgrid collapse show p-4" data-parent="#accordion">
-            <table id="gscgexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+            <table id="gscgexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
                 <thead>
                 <tr>
-                    <th style="max-width:40px;">序号</th>
-                    <th>产品名称</th>
-                    <th>总订购量</th>
+                    <td>序号</td>
+                    <td>分类</td>
+                    <td>产品名称</td>
+                    <td>单位</td>
+                    <td>订购量</td>
+                   <!-- <td>备注</td>-->
                 </tr>
                 </thead>
-                <tbody th:switch="${ cplist.size() gt 0 }">
+                <tbody th:switch="${ list.size() gt 0 }">
                 <th:block th:case="true">
-                    <tr th:each="item,stat:${cplist}" style="border-bottom:1px solid #dee2e6;">
-                        <td th:text="${stat.index+1}"></td>
-                        <td th:text="${item.usf002}"></td>
-                        <td th:text="${item.sl}"></td>
+                    <th:block th:each="item1,stat1:${list}">
+                        <tr th:each="item,stat:${item1.usflist}" style="border-bottom:1px solid #dee2e6;">
+                            <td th:text="${(stat1.index>0?list[stat1.index-1].index:0)+stat.index+1}"></td>
+                            <td th:text="${stat.index==0?item1.yhe002:''}"></td>
+                            <td th:text="${item.usf002}"></td>
+                            <td th:text="${item.usm!=null?item.usm.usm002:''}"></td>
+                            <td th:text="${item.sl}"></td>
+                            <!--<td></td>-->
                     </th:block>
                 </th:block>
+                </th:block>
                 <tr th:case="false">
-                    <td></td><td></td>
-                    <td></td>
+                    <td></td> <td></td>
+                    <td></td> <td></td>
+                    <td></td> 
                 </tr>
                 </tbody>
             </table>

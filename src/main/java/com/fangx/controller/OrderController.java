@@ -44,16 +44,24 @@ public class OrderController extends BaseController {
             cduse user = useService.getByid(Decrypt(session.getAttribute("user").toString()));
             mav.addObject("msg", request.getParameter("msg"));
             if(request.getParameter("zt")!=null && request.getParameter("zt").equals("DC")){
-                new ExcelExport().Excelexportyhcg(request, response,usfService,request.getParameter("date"));
+                new ExcelExport().Excelexportyhcg(request, response,yheService,usfService,request.getParameter("date"));
                 return null;
             }
             String date=DATE.format(new Date());
             if (request.getParameter("date") != null && !request.getParameter("date").isEmpty()) {
                 date=request.getParameter("date");
             }
-            List<cdusf> cplist=usfService.selectByCG(date);
+            List<cdyhe> list=yheService.serachAll(null);
+            int index=0;
+            for(cdyhe yhe:list){
+                yhe.setUsflist(usfService.selectByCG(date,yhe.getYhe001()));
+                index+=yhe.getUsflist().size();
+                System.out.println("*****"+index);
+                yhe.setIndex(index);
+            }
+//            List<cdusf> cplist=usfService.selectByCG(date);
             delsession(session,request.getParameter("fh"));
-            mav.addObject("cplist", cplist);
+            mav.addObject("list", list);
             mav.addObject("date", date);
         }
         mav.setViewName("HTgscg");
@@ -103,6 +111,50 @@ public class OrderController extends BaseController {
             mav.addObject("pageobj", usdService.selectPageBean(pb));
         }
         mav.setViewName("HTgsps");
+        return mav;
+    }
+
+    @RequestMapping("/tops1")
+    public ModelAndView tops1(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        int userid = 0;//后台登录用户ID
+        if(session.getAttribute("user")==null){
+            SystemTZYM(response,"登录失效");
+            return null;
+        }else{
+            userid = Decrypt(session.getAttribute("user").toString());
+            cduse user = useService.getByid(Decrypt(session.getAttribute("user").toString()));
+            mav.addObject("msg", request.getParameter("msg"));
+            if(request.getParameter("zt")!=null && request.getParameter("zt").equals("DC")){
+                new ExcelExport().Excelexportyhdd(request, response,usbService,usfService,usdService,uscService,yhcService,ushService,Integer.valueOf(request.getParameter("id")),request.getParameter("date"));
+                return null;
+            }
+            PageBean pb = new PageBean();
+            if(request.getParameter("fh")!=null && !request.getParameter("fh").isEmpty()){
+                if(request.getParameter("fh").indexOf("GS")>=0){
+                    pb=(PageBean)session.getAttribute("GSpb");
+                    session.removeAttribute("GSpb");
+                }
+            }else{
+                if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
+                    pb.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
+                else
+                    pb.setCurrentPage(1);
+                if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
+                    pb.setOthersql(request.getParameter("name"));
+                }
+                if (request.getParameter("phone") != null && !request.getParameter("phone").isEmpty()) {
+                    pb.setOthersql1(request.getParameter("phone"));
+                }
+                if (request.getParameter("ptime") != null && !request.getParameter("ptime").isEmpty()) {
+                    pb.setOthersql2(request.getParameter("ptime"));
+                }
+            }
+            delsession(session,request.getParameter("fh"));
+            mav.addObject("pageobj", yseService.selectPageBean(pb));
+        }
+        mav.setViewName("HTgsps1");
         return mav;
     }
 
@@ -162,6 +214,7 @@ public class OrderController extends BaseController {
             mav.addObject("pages", request.getParameter("pages"));
             mav.addObject("name", request.getParameter("name"));
             mav.addObject("phone", request.getParameter("phone"));
+            mav.addObject("ptime", request.getParameter("ptime"));
 
         }
         mav.setViewName("HTgspsyg");
@@ -418,6 +471,12 @@ public class OrderController extends BaseController {
                 }
                 if (request.getParameter("gsid") != null && !request.getParameter("gsid").isEmpty()) {
                     pb.setOthersql2(request.getParameter("gsid"));
+                }
+                if (request.getParameter("start") != null && !request.getParameter("start").isEmpty()) {
+                    pb.setOthersql5(request.getParameter("start"));
+                }
+                if (request.getParameter("end") != null && !request.getParameter("end").isEmpty()) {
+                    pb.setOthersql6(request.getParameter("end"));
                 }
                 mav.addObject("fhlx", request.getParameter("fhlx"));
             }

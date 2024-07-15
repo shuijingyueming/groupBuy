@@ -32,7 +32,7 @@ public interface CduscService extends IService<cdusc> {
 
     cdusc selectByOpenid(String openid);
 
-    cdusc selectByPhone(String phone);
+    cdusc selectByPhone(String phone, String gsid);
 
     cdusc selectBygsid(String name, String phone, Integer gsid);
 }

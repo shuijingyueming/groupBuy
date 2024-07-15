@@ -29,6 +29,7 @@ $(document).ready(function () {
         rules : {
             t1: {
                 required : true,
+                isNotChinese: true,
                 remote:{
                     url: "zhname", //后台处理程序
                     type: "post",  //数据发送方式

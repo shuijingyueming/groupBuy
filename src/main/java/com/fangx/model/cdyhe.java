@@ -3,6 +3,25 @@ package com.fangx.model;
 import java.util.List;
 
 public class cdyhe {
+    private Integer index=0;
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    private List<cdusf>usflist;
+
+    public List<cdusf> getUsflist() {
+        return usflist;
+    }
+
+    public void setUsflist(List<cdusf> usflist) {
+        this.usflist = usflist;
+    }
 
     private List<cdysa> ysalist;
 

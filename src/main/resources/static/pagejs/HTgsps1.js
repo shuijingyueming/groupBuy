@@ -1,7 +1,8 @@
 var checked_item="";
 
-function tops(gsid){
-    var params = [ ["gsid",gsid],
+function tops(gsid,date){
+    var params = [ ["gsid",gsid],["date",date],
+        ["ptime",$("#ptime").val()],
         ["pages",$("#pages").val()],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
@@ -35,57 +36,27 @@ function fanye(pageindex) {
 //翻页
 function usdfanye(pageindex){
     var params = [["pages",pageindex],
+        ["ptime",$("#ptime").val()],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
-    form_submit("toOr/tops","post",params,"_self");
+    form_submit("toOr/tops1","post",params,"_self");
 }
 
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
+        ["ptime",$("#ptime").val()],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
-    form_submit("toOr/tops","post",params,"_self");
+    form_submit("toOr/tops1","post",params,"_self");
 }
 
-function todc(){
+function todc(id,date){
     var r = confirm("确定导出配送单吗？");
     if (r == true) {
-        var params = [ ["type","E"],
-            ["pages",$("#pages").val()],
+        var params = [ ["id",id], ["date",date], ["zt","DC"],
+            ["ptime",$("#ptime").val()],
             ["name",$.trim($("#name").val())],
             ["phone",$.trim($("#phone").val())]];
-        form_submit("toOr/tops","get",params,"_self");
+        form_submit("toOr/tops1","get",params,"_self");
     }
-}
-
-function topsd(id){
-    $("#gsid").val(id);
-    $("#modal-2").show();
-}
-
-function cancel_q(){
-    $("#date").val("");
-    $("#gsid").val("");
-    $("#modal-2").hide();
-}
-
-
-function todc(){
-    if($("#date").val()!=""){
-        var r = confirm("确定导出配送单吗？");
-        if (r == true) {
-            var params = [ ["id",$("#gsid").val()], ["date",$("#date").val()], ["zt","DC"],
-                ["name",$.trim($("#name").val())],
-                ["phone",$.trim($("#phone").val())]];
-            form_submit("toDi/toqs","get",params,"_self");
-        }
-    }else{
-        layui.use('layer', function(){
-            var layer = layui.layer;
-            layer.ready(function(){
-                layer.msg("请选择配送日期");
-            });
-        });
-    }
-
 }

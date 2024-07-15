@@ -403,7 +403,7 @@ public class ExcelExport {
 		return fh.isEmpty()?"A":fh;
 	}
 
-	public void Excelexportyhcg(HttpServletRequest request, HttpServletResponse response, CdusfService usfService, String date) throws Exception {
+	public void Excelexportyhcg(HttpServletRequest request, HttpServletResponse response, CdyheService yheService, CdusfService usfService, String date) throws Exception {
 		// web浏览通过MIME类型判断文件是excel类型
 		response.setContentType("application/vnd.ms-excel;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
@@ -450,7 +450,7 @@ public class ExcelExport {
 		cellStyle4.setFont(fontStyle4);
 		cellStyle4.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平居中
 		cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
-		CellRangeAddress sv1 = new CellRangeAddress((short) 0, (short) 0,(short) 0, (short) 2);
+		CellRangeAddress sv1 = new CellRangeAddress((short) 0, (short) 0,(short) 0, (short) 4);
 		sheet.addMergedRegion(sv1);
 		HSSFCell cells = row.createCell((short) 0);// 合并单元格示例
 		cells.setCellValue(file);
@@ -460,6 +460,7 @@ public class ExcelExport {
 		HSSFFont fontStyle = wb.createFont();
 		fontStyle.setFontHeightInPoints((short) 11);
 		HSSFCellStyle cellStyle = wb.createCellStyle();
+//		cellStyle.setLocked(true);
 		// 这里仅设置了底边边框，左边框、右边框和顶边框同理可设
 		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -475,26 +476,49 @@ public class ExcelExport {
 		row = sheet.createRow(2);
 		// 创建HSSFCell对象
 		HSSFCell cell = row.createCell(0);
-		String[] s={"序号","产品名称","总订购量"};
-		for(int j=0;j<=2;j++){
+		String[] s={"序号","分类","产品名称","产品单位","总订购量"};
+		for(int j=0;j<=4;j++){
 			cell = row.createCell(j);
 			cell.setCellValue(s[j]);
 			cell.setCellStyle(cellStyle);
 		}
 
 		int rowNum=3;
-
-		List<cdusf> list=usfService.selectByCG(date);
+		List<cdyhe> list=yheService.serachAll(null);
+		for(cdyhe yhe:list){
+			yhe.setUsflist(usfService.selectByCG(date,yhe.getYhe001()));
+		}
+		int o=0;
 		for (int j = 0; j<list.size(); j++) {
-			row = sheet.createRow(rowNum);
-			String[] s1={String.valueOf((j + 1)),list.get(j).getUsf002(), String.valueOf(list.get(j).getSl())};
-			for(int a=0;a<=2;a++){
+			for (int k = 0; k<list.get(j).getUsflist().size(); k++) {
+				row = sheet.createRow(rowNum);
+				o++;
+			String[] s1={String.valueOf(o),
+					k==0?list.get(j).getYhe002():"",
+					list.get(j).getUsflist().get(k).getUsf002(),
+					list.get(j).getUsflist().get(k).getUsm().getUsm002(),
+					String.valueOf(list.get(j).getUsflist().get(k).getSl())};
+			for(int a=0;a<=4;a++){
 				cell = row.createCell(a);
 				cell.setCellValue(s1[a]);
 				cell.setCellStyle(cellStyle);
 			}
 			rowNum ++;
+			}
 		}
+
+//		List<cdusf> list=usfService.selectByCG(date, null);
+//		for (int j = 0; j<list.size(); j++) {
+//			row = sheet.createRow(rowNum);
+//			String[] s1={String.valueOf((j + 1)),list.get(j).getUsf002(), String.valueOf(list.get(j).getSl())};
+//			for(int a=0;a<=2;a++){
+//				cell = row.createCell(a);
+//				cell.setCellValue(s1[a]);
+//				cell.setCellStyle(cellStyle);
+//			}
+//			rowNum ++;
+//		}
+//		sheet.protectSheet("123456");
 		try {
 			wb.write(outt);
 			outt.close();
@@ -509,7 +533,7 @@ public class ExcelExport {
 		response.setContentType("application/vnd.ms-excel;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		String fileName =usd.getUsd002()+"配送单.xls";// 下载的时候的文件名
-		String file=usd.getUsd002()+"配送单";
+		String file="宁波方兴菜篮子配送单";
 
 		final String userAgent = request.getHeader("USER-AGENT");
 		String finalFileName = null;
@@ -561,6 +585,7 @@ public class ExcelExport {
 		HSSFFont fontStyle = wb.createFont();
 		fontStyle.setFontHeightInPoints((short) 11);
 		HSSFCellStyle cellStyle = wb.createCellStyle();
+//		cellStyle.setLocked(true);
 		// 这里仅设置了底边边框，左边框、右边框和顶边框同理可设
 		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -572,8 +597,9 @@ public class ExcelExport {
 		row=sheet.createRow(1);
 //		row.createCell(0).setCellValue("统计条件："+file);
 		row.createCell(0).setCellValue("配送时间："+date);
-		row.createCell(1).setCellValue("企业地址："+usd.getUsd003());
-		row.createCell(2).setCellValue("企业电话："+usd.getUsd004());
+		row.createCell(1).setCellValue("企业名称："+usd.getUsd002());
+		row.createCell(2).setCellValue("企业地址："+usd.getUsd003());
+		row.createCell(3).setCellValue("企业电话："+usd.getUsd004());
 
 		row = sheet.createRow(2);
 		// 创建HSSFCell对象
@@ -602,7 +628,8 @@ public class ExcelExport {
 				for (int k = 0; k<ddlist.size(); k++) {
 					if(ddlist.get(k).getYhc009()!=null&&!ddlist.get(k).getYhc009().isEmpty())bz+=ddlist.get(k).getYhc009()+"#";
 				}
-				String[] s1={String.valueOf((j + 1)),yglist.get(j).getUsc002(),yglist.get(j).getUsc015(),nr,bz};
+				String[] s1={String.valueOf((j + 1)),yglist.get(j).getUsc002(),yglist.get(j).getUsc015().substring(0,1)+"*"+yglist.get(j).getUsc015().substring(yglist.get(j).getUsc015().length()-4),nr,bz};
+//				String[] s1={String.valueOf((j + 1)),yglist.get(j).getUsc002(),yglist.get(j).getUsc015(),nr,bz};
 				for(int a=0;a<=4;a++){
 					cell = row.createCell(a);
 					cell.setCellValue(s1[a]);
@@ -611,6 +638,7 @@ public class ExcelExport {
 				rowNum ++;
 			}
 		}
+//		sheet.protectSheet("123456");
 		try {
 			wb.write(outt);
 			outt.close();

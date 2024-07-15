@@ -2,11 +2,10 @@ package com.fangx.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fangx.model.PageBean;
-import com.fangx.model.cdyhk;
+import com.fangx.model.cdyse;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>
@@ -16,19 +15,21 @@ import java.util.List;
  * @author dps
  * @since 2023-03-15
  */
-public interface CdyhkService extends IService<cdyhk> {
-    cdyhk getByid(String id);
+public interface CdyseService extends IService<cdyse> {
+    cdyse getByid(String id);
 
     PageBean selectPageBean(PageBean pb) throws ParseException;
 
-    boolean update(cdyhk yhk);
+    boolean update(cdyse yse);
 
-    cdyhk insert(cdyhk yhk);
+    cdyse insert(cdyse yse);
 
     void deleteById(String id, PageBean pb);
 
 
-    cdyhk selectByName(Integer name);
+    cdyse selectByName(Integer name);
 
-    cdyhk selectBycurentday(Date time, Integer gsid) throws ParseException;
+    cdyse selectBycurentday(Date time, Integer gsid) throws ParseException;
+
+    cdyse selectByDS(String date, Integer gsid);
 }

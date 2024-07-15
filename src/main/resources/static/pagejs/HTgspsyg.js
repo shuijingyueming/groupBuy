@@ -2,9 +2,10 @@ var checked_item="";
 
 function reback(){
     var params = [ ["pages",$("#pages").val()],
+        ["ptime",$("#ptime").val()],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
-    form_submit("toOr/tops","post",params,"_self");
+    form_submit("toOr/tops1","post",params,"_self");
 }
 
 

@@ -25,17 +25,9 @@
     <link rel="stylesheet" href="static/css/pubcss.css">
     <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/jsgrid.css">
     <link rel="stylesheet" type="text/css" href="assets/css/tables/jsgrid/theme.css">
-    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
-
-    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
-    <script type="text/javascript" src="static/js/pubjs.js"></script>
-
-    <!-- 富文本编辑器 -->
-    <link href="kindeditor/themes/default/default.css" rel="stylesheet" />
-    <script src="kindeditor/kindeditor-all-min.js"></script>
-    <script src="kindeditor/lang/zh_CN.js"></script>
-
-    <style>
+	   <link href="kindeditor/themes/default/default.css" rel="stylesheet" />
+	
+	  <style>
         .item{
             clear:both;
             position: relative;
@@ -57,6 +49,13 @@
 		  height:15px;
 		}
     </style>
+    <script src="assets/lib/layui/layui.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="static/js/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="static/js/pubjs.js"></script>
+
+   
+  
 </head>
 <input type="hidden" id="pages" name="pages" th:value="${pageobj.currentPage}"/>
 <input type="hidden" id="counts" name="counts" th:value="${pageobj.pageCount}"/>
@@ -171,10 +170,10 @@
                                     <button th:onclick="xgztx([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">显示</button>
                                 </th:block>
                             </th:block>
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0}">
+                           <!-- <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0}">
                                 <button th:onclick="tolskc([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz"> 临时库存管理
                                 </button>
-                            </th:block>
+                            </th:block>-->
                         </td>
                     </tr>
                 </th:block>
@@ -311,7 +310,6 @@
                 </div>
                 <div class="row" style="margin-top:2px;">
                     <div class="form-group">
-                        <div class="btcor">*</div>
                         <label class="col-form-label" style="margin-left:10px;">图片<span style="margin-left:15px;"><font color="#ec8e26"><!--分辨率:414*280--></font></span>
                             <button type="button" class="effect-btn btn btn-light" style="margin-left:30px;width:80px;" onclick="$('#t2').click();">选择文件</button>
                         </label>
@@ -385,12 +383,18 @@
 <script src="pagejs/htfy.js"></script>
 <script src="pagejs/HTsel.js"></script>
 <script src="pagejs/HTcp.js"></script>
+ <!-- 富文本编辑器 -->
+ 
+    <script src="kindeditor/kindeditor-all-min.js"></script>
+    <script src="kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript">
     var imglist=[];
     var t4=[];
     var formData = new FormData();
+	
     //富文本编辑器
-    $(function() {
+
+	   var KE;
         KindEditor.ready(function (K) {
             KE = K.create('#t7', {
                 allowFileManager: true, //浏览图片空间
@@ -420,7 +424,61 @@
                 }
             });
         });
-    });
+		
+		//添加编辑
+function edit(id){
+    if(id!=null&&id!=''){
+        $.ajax({
+            url:'toDi/serachcp?id='+id,
+            type:'post',
+            async: false,
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType:'json',
+            success:function(data) {
+                var item = eval(data.item);
+                $("#t1").val(item.usf002);
+                $("#t8").val(item.usf003);
+                $("#t4").val(item.usf004);
+                $("#t5").val(item.usf005);
+                $("#t6").val(item.usf006);
+                // $("#t7").val(item.usf007);
+                KE.html(item.usf007);
+                // $("#t10").val(item.usf010);
+                // console.log(item.usf011)
+                tofl(item.usf011,"t12")
+                $("#t11").val(item.usf011);
+                $("#t12").val(item.usf012);
+                var list=item.usnlist;
+                var html="";
+                var data="";
+                $("#p4").empty();
+                // console.log(item)
+                for(var i=0;i<list.length;i++){
+                    // data="upload/shopimg/"+list[i].usn003;
+                    data="https://fxtgoss.oss-cn-hangzhou.aliyuncs.com/shopimg/"+list[i].usn003;
+                    imglist.push(data);
+                    html="<div class='item'>";
+                    html+="<img src='"+data+"' style='width:150px;'/>";
+                    html+="<div class='closep' id=\'P"+i+"\' name=\'"+data+"\' onclick='imgRemove(this)'>X</div>";
+                    html+="</div>";
+                    $("#p4").append(html);
+                }
+            },
+            error:function(){}
+        });
+        $("#id").val(id);
+        $("#mtitle").html("修改菜品信息");
+    }else{
+        $("#mtitle").html("添加菜品信息");
+    }
+    $("#active").show();
+    $("#adiv").addClass("an");
+    //$('#active').css("height",$('#bash', parent.document).css("height"));
+}
+
+
 </script>
 </body>
 </html>

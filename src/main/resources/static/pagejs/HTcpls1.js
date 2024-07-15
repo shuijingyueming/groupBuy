@@ -56,12 +56,12 @@ function getEvents(y, m,d, s,t) {
                             )
                             list.push(
                                 {
-                                    title: '菜品管理',
+                                    title: (item.tz?'(有调整)':'')+'菜品管理',
                                     start: da,
                                     allDay: true,
-                                    url: 'toDi/tocpls1cp?date='+getTime(da,'YY-MM-DD')+"&type="+(i+1>d+7?'B':'A'),
-                                    backgroundColor: '#7fb5f1', //red
-                                    borderColor: '#7fb5f1' //red
+                                    url: 'toDi/tocpls1cp?date='+getTime(da,'YY-MM-DD')+"&lx="+(i+1>d+7?'B':'A'),
+                                    backgroundColor:(item.tz?'#f56954': '#00c0ef'), //red
+                                    borderColor: (item.tz?'#f56954': '#00c0ef') //red
                                 }
 
                             )
@@ -113,11 +113,11 @@ $(function () {
         m = date.getMonth(),
         y = date.getFullYear()
     var t=getMonthDay(y, m);
-    var list=getEvents(y, m,d,0,t);
-    var l=0;
+    var list=[];
+    var l=$('#l').val();
     var t1=0;
     var m1=0;
-
+    list=getEvents(y, m,d,0,t);
     $('#calendar').fullCalendar({
         editable: true,
         eventLimit: true,
@@ -159,14 +159,6 @@ $(function () {
             // week: 'week',
             // day: 'day'
         },
-        // next:function (){
-        //     // console.log(l)
-        //     t1=t+getMonthDay(y, m+l);
-        //     list=list.concat(getEvents(y, m+l,d,t,t1));
-        //     l++;
-        //     console.log(list)
-        //     $('#calendar').fullCalendar('events', list)
-        // },
         //Random default events
         events: list,
         eventLimit: true,
@@ -199,6 +191,5 @@ $(function () {
 
         }
     });
-
 })
 

@@ -56,8 +56,8 @@ public class WXController extends BaseController {
         String openid = request.getParameter("openid");
         String gsid = request.getParameter("gsid");
 //        System.out.println(phone+"------phone2");
-        //按电话号码查找老师
-        cdusc usc=uscService.selectByPhone(phone);
+        //按电话号码查找
+        cdusc usc=uscService.selectByPhone(phone,gsid);
         if(usc!=null){
             if(usc.getUsc003().equals("B")){
                 addLog(getIpAdrress(request),"手机号："+phone+"，登录时账户已封号");
@@ -124,7 +124,7 @@ public class WXController extends BaseController {
 //        if(encryptedData!=null&&code!=null&&phone!=null) phone =  WeiCatJK.decrypt_new(encryptedData,code,iv);
 //        System.out.println(TIMEMIAO.format(new Date())+"phone----"+phone);
 //        if(phone!=null){
-        cdusc usc=uscService.selectByPhone(phone);
+        cdusc usc=uscService.selectByPhone(phone, gsid);
         if(usc.getUsc005()==Integer.valueOf(gsid)){
             usc.setUsc004(openid);
             usc.setUsc006(nickName);
@@ -132,9 +132,9 @@ public class WXController extends BaseController {
             uscService.update(usc);
             result.put("item", usc);
             result.put("msg", "1");
-        }else if(usc!=null){
+        }/*else if(usc!=null){
             result.put("msg", "2");
-        }else{
+        }*/else{
             result.put("msg", "0");
         }
         return JSON.toJSONString(result);
@@ -188,7 +188,9 @@ public class WXController extends BaseController {
 //            result.put("date", ca.getTime());
                 result.put("item", item);
             }
-
+            System.out.println("****");
+            List<cdusb> list1=usbService.serachAll(Integer.valueOf(gsid));
+            result.put("list", list1);
         }/*else{
             Date d=new Date();
             Calendar ca = Calendar.getInstance();
@@ -204,7 +206,7 @@ public class WXController extends BaseController {
 //            for(cdusb usb:list){
 //                usb.setUsb007(getWeek(usb.getUsb003()));
 //            }
-            result.put("list", list);
+
         }*/
         return JSON.toJSONString(result);
     }
@@ -295,9 +297,10 @@ public class WXController extends BaseController {
                         result.put("item", item);
                     }
                 }
+
             }
-
-
+            List<cdusb> list1=usbService.serachAll(Integer.valueOf(gsid));
+            result.put("list", list1);
         }
         return JSON.toJSONString(result);
     }
@@ -451,6 +454,14 @@ public class WXController extends BaseController {
         usc.setUsc011(usc.getUsc011()+yhc.getYhc007());
         yhcService.insert(yhc);
         uscService.update(usc);
+        cdyse yse=yseService.selectByDS(DATE.format(new Date(date)),yhc.getYhc003());
+        if(yse==null){
+            yse=new cdyse();
+            yse.setYse001(UUID.randomUUID().toString().replace("-",""));
+            yse.setYse002(yhc.getYhc003());
+            yse.setYse003(TIMEMIAO.parse(DATE.format(new Date(date))+" 00:00:00"));
+            yseService.insert(yse);
+        }
         List<cdush> list=ushService.selectByyhidjs(Integer.valueOf(yhid),id);
         for(cdush ush:list){
             ush.setUsh002(yhc.getYhc001());
@@ -646,6 +657,8 @@ public class WXController extends BaseController {
         if(request.getParameter("yjfl")!=null&&!request.getParameter("yjfl").isEmpty())pagebean.setOthersql1(request.getParameter("yjfl"));
         if(request.getParameter("ejfl")!=null&&!request.getParameter("ejfl").isEmpty()&&!request.getParameter("ejfl").equals("null"))pagebean.setOthersql2(request.getParameter("ejfl"));
         if(request.getParameter("name")!=null&&!request.getParameter("name").isEmpty())pagebean.setOthersql(request.getParameter("name"));
+        if(request.getParameter("qsid")!=null&&!request.getParameter("qsid").isEmpty())pagebean.setOthersql8(request.getParameter("qsid"));
+        pagebean.setOthersql9("A");
         PageBean pb=usfService.selectPageBean2(pagebean);
         List<cdusf> list=pb.getResultList();
         String yhid=request.getParameter("yhid");
@@ -654,7 +667,6 @@ public class WXController extends BaseController {
                 usf.setUsh(ushService.selectByyhcp(Integer.valueOf(yhid),usf.getUsf001()));
             }
         }
-
         result.put("pb", pb);
         return JSON.toJSONString(result);
     }
@@ -769,7 +781,20 @@ public class WXController extends BaseController {
         return JSON.toJSONString(result);
     }
 
-
+    /**
+     * 类型
+     * 王新苗
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/wxddxq", method = RequestMethod.POST)
+    public String wxddxq(HttpServletRequest request) throws Exception {
+        Map<String, Object> result = new HashMap<String, Object>();
+        cdyhc item =yhcService.getByid(request.getParameter("id"));
+        result.put("item", item);
+        return JSON.toJSONString(result);
+    }
 
 
 }

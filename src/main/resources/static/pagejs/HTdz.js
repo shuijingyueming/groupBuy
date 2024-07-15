@@ -69,6 +69,8 @@ function uscfanye(pageindex){
         ["fhlx",$("#fhlx").val()],
         ["gsid",$("#gsid").val()],
         ["pages",pageindex],
+        ["start",$.trim($("#start").val())],
+        ["end",$.trim($("#end").val())],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
     form_submit("toOr/todz","post",params,"_self");
@@ -79,6 +81,8 @@ function xxcx(){
         ["fhlx",$("#fhlx").val()],
         ["gsid",$("#gsid").val()],
         ["pages",$("#pages").val()],
+        ["start",$.trim($("#start").val())],
+        ["end",$.trim($("#end").val())],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
     form_submit("toOr/todz","post",params,"_self");
@@ -92,6 +96,8 @@ function tocz(id,uname){
             ["fhlx",$("#fhlx").val()],
             ["gsid",$("#gsid").val()],
             ["pages",$("#pages").val()],
+            ["start",$.trim($("#start").val())],
+            ["end",$.trim($("#end").val())],
             ["name",$.trim($("#name").val())],
             ["phone",$.trim($("#phone").val())]];
         form_submit("toOr/todz","get",params,"_self");
@@ -113,6 +119,8 @@ function xgzt(id,uname,type){
             ["fhlx",$("#fhlx").val()],
             ["gsid",$("#gsid").val()],
             ["pages",$("#pages").val()],
+            ["start",$.trim($("#start").val())],
+            ["end",$.trim($("#end").val())],
             ["name",$.trim($("#name").val())],
             ["phone",$.trim($("#phone").val())]];
         form_submit("toOr/todz","get",params,"_self");
@@ -126,6 +134,8 @@ function del(id,uname){
             ["fhlx",$("#fhlx").val()],
             ["gsid",$("#gsid").val()],
             ["pages",$("#pages").val()],
+            ["start",$.trim($("#start").val())],
+            ["end",$.trim($("#end").val())],
             ["name",$.trim($("#name").val())],
             ["phone",$.trim($("#phone").val())]];
         form_submit("toOr/todz","get",params,"_self");
@@ -144,6 +154,8 @@ function delete_item(){
             ["fhlx",$("#fhlx").val()],
             ["gsid",$("#gsid").val()],
             ["pages",$("#pages").val()],
+            ["start",$.trim($("#start").val())],
+            ["end",$.trim($("#end").val())],
             ["name",$.trim($("#name").val())],
             ["phone",$.trim($("#phone").val())]];
         form_submit("toOr/todz","get",params,"_self");

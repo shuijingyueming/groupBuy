@@ -91,6 +91,16 @@ public class CdyscServiceImpl implements CdyscService {
         yscMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public boolean selectBytime(String time) {
+        cdyscExample e1 = new cdyscExample();
+        Criteria c = e1.createCriteria();
+        c.andSql("(DATE_FORMAT(ysc003,'%Y-%m-%d')='"+time+"')");
+        e1.setOrderByClause("ysc003");
+        List<cdysc>  list= yscMapper.selectByExample(e1);
+        return list.size()>0;
+    }
+
     public PageBean queryByPage(PageBean pageBean, cdyscExample example) {
         int page = (int) pageBean.getCurrentPage();
         int size = pageBean.getPageSize();

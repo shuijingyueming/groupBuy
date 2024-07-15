@@ -38,6 +38,9 @@ public interface cdusfMapper {
     long countByExampleqs(@Param("cdusfExample")cdusfExample e1, @Param("cdyhaExample")cdyhaExample e2);
 
     List<cdusf> selectByExampleAndPageqs(@Param("cdusfExample")cdusfExample e1, @Param("cdyhaExample")cdyhaExample e2, RowBounds rowBounds);
+    List<cdusf> selectByExampleAndPageqs1(@Param("cdusfExample")cdusfExample e1, @Param("cdyhaExample")cdyhaExample e2, RowBounds rowBounds);
 
     List<cdusf> selectByExampleAndPage2(cdusfExample e1, RowBounds rowBounds);
+
+    List<cdusf> selectByExample1(cdusfExample e1);
 }

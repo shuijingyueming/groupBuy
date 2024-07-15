@@ -33,7 +33,6 @@ function tops(gsid){
 }
 
 $(document).ready(function () {
-
     $('select[id=t4]').change(function() {
         const text = $("#t4").find("option:selected").text();
         const id =$(this).val();

@@ -34,7 +34,12 @@
     <link href="kindeditor/themes/default/default.css" rel="stylesheet" />
     <script src="kindeditor/kindeditor-all-min.js"></script>
     <script src="kindeditor/lang/zh_CN.js"></script>
-
+  <style>
+    .bgcolor{
+	   color:#FF0000;
+	}
+  </style>
+  
 </head>
 <input type="hidden" id="pages" name="pages" th:value="${pageobj.currentPage}"/>
 <input type="hidden" id="counts" name="counts" th:value="${pageobj.pageCount}"/>
@@ -42,7 +47,7 @@
 <input type="hidden" th:value="${msg}" id="msg">
 <input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
 <input type="hidden" id="qsid" name="qsid" th:value="${pageobj.othersql1}"/>
-<input type="hidden" id="type" name="type" th:value="${pageobj.othersql4}"/>
+<input type="hidden" id="lx" name="lx" th:value="${pageobj.othersql4}"/>
 <input type="hidden" id="date" name="date" th:value="${pageobj.othersql5}"/>
 <body class="sidebar-mini fixed skin-blue">
 <div class="content-wrapper">
@@ -85,26 +90,41 @@
                     <th:block th:if="${pageobj.othersql4=='B'}">
                         <th>临时库存数</th>
                         <th>状态</th>
+                        <th>开团状态</th>
+                    </th:block>
+                    <th:block th:if="${pageobj.othersql4=='A'}">
+                        <th>开团状态</th>
                     </th:block>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody th:switch="${ pageobj.recordCount gt 0 }">
                 <th:block th:case="true">
-                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
+                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;" 
+					th:class="${item.ysc!=null&&item.ysc.ysc006>0?'bgcolor':''}">
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
                         <td th:text="${item.usf002}"></td>
                         <td th:text="${item.usf005}"></td>
                         <td th:text="${item.usf006}"></td>
-                        <td th:text="${item.yha!=null?item.yha.yha004+(item.yha.yha006!=null?item.yha.yha006:0):(item.usf010==null?'无限':item.usf010)}"></td>
+                        <td th:text="${item.yha!=null?(item.yha.yha005=='P'?'无限':(item.yha.yha004+(item.yha.yha006!=null?item.yha.yha006:0))):(item.usf010==null?'无限':item.usf010)}"></td>
                         <th:block th:if="${pageobj.othersql4=='B'}">
                             <td th:text="${item.ysc!=null?item.ysc.ysc006:''}"></td>
                             <td th:text="${item.ysc!=null?(item.ysc.ysc005=='A'?'已使用':(item.ysc.ysc005=='B'?'未使用':'')):''}"></td>
+                            <td th:text="${item.ysc!=null?(item.ysc.ysc007=='A'?'开团':(item.ysc.ysc007=='B'?'不开团':'')):''}"></td>
+                        </th:block>
+                        <th:block th:if="${pageobj.othersql4=='A'}">
+                            <td th:text="${item.yha!=null?(item.yha.yha009=='A'?'开团':(item.yha.yha009=='B'?'不开团':'')):''}"></td>
                         </th:block>
                         <td>
                             <th:block th:if="${pageobj.othersql4=='A'}">
                                 <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P3#')>=0}">
                                     <button th:onclick="add1([[${item.yha!=null?item.yha.yha001:''}]],[[${item.usf001}]],[[${item.usf002}]])" type="button" class="btn btn-primary btn-sm btxz">编辑库存数</button>
+                                    <th:block th:if="${item.yha!=null&&item.yha.yha009=='B'}">
+                                        <button th:onclick="xgzt1([[${item.yha.yha001}]],[[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">开团</button>
+                                    </th:block>
+                                    <th:block th:if="${item.yha!=null&&item.yha.yha009=='A'}">
+                                        <button th:onclick="xgzt1([[${item.yha.yha001}]],[[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">不开团</button>
+                                    </th:block>
                                 </th:block>
                             </th:block>
                             <th:block th:if="${pageobj.othersql4=='B'}">
@@ -112,6 +132,12 @@
                                 <!-- <button th:onclick="toxq([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>-->
                                 <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P3#')>=0}">
                                     <button th:onclick="add([[${item.ysc!=null?item.ysc.ysc001:''}]],[[${item.usf001}]],[[${item.usf002}]])" type="button" class="btn btn-primary btn-sm btxz">编辑库存数</button>
+                                    <th:block th:if="${item.ysc!=null&&item.ysc.ysc007=='B'}">
+                                        <button th:onclick="xgzt([[${item.ysc.ysc001}]],[[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">开团</button>
+                                    </th:block>
+                                    <th:block th:if="${item.ysc!=null&&item.ysc.ysc007=='A'}">
+                                        <button th:onclick="xgzt([[${item.ysc.ysc001}]],[[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">不开团</button>
+                                    </th:block>
                                 </th:block>
                                 <th:block th:if="${item.ysc!=null}">
                                     <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P4#')>=0}">

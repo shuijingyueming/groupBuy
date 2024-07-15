@@ -27,7 +27,6 @@ import java.util.function.Function;
  */
 @Service
 public class CdyhkServiceImpl implements CdyhkService {
-
     @Autowired
     private cdyhkMapper yhkMapper;
 
@@ -40,11 +39,14 @@ public class CdyhkServiceImpl implements CdyhkService {
     }
 
     @Override
-    public PageBean selectPageBean(PageBean pb) {
+    public PageBean selectPageBean(PageBean pb) throws ParseException {
         cdyhkExample e1 = new cdyhkExample();
         Criteria c = e1.createCriteria();
 //        if(pb.getOthersql()!=null) c.andYhk007Like("%"+pb.getOthersql()+"%");
+        if(pb.getOthersql()!=null)c.andSql("(DATE_FORMAT(yhk003,'%Y-%m')='"+pb.getOthersql()+"')");
         if(pb.getOthersql2()!=null) c.andYhk002EqualTo(Integer.valueOf(pb.getOthersql2()));
+        if(pb.getOthersql5()!=null) c.andYhk003GreaterThanOrEqualTo(sf.parse(pb.getOthersql5()+" 00:00:00"));
+        if(pb.getOthersql6()!=null) c.andYhk003LessThanOrEqualTo(sf.parse(pb.getOthersql6()+" 23:59:59"));
         e1.setOrderByClause("yhk003 desc");
         return queryByPage(pb, e1);
     }

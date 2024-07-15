@@ -27,6 +27,8 @@ public interface CdusbService extends IService<cdusb> {
 
     List<cdusb> serachAll(Integer gsid);
 
+    List<cdusb> serachAll1();
+
     cdusb selectByweek(Integer gsid, Integer d);
     cdusb selectByweek1(Integer gsid, Integer d);
     cdusb selectByweek2(Integer d);

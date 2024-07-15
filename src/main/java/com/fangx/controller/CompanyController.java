@@ -76,7 +76,7 @@ public class CompanyController extends BaseController {
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", usdService.selectPageBean(pb));
-            mav.addObject("usblist", usbService.serachAll(null));
+            mav.addObject("usblist", usbService.serachAll1());
         }
         mav.setViewName("HTgs");
         return mav;

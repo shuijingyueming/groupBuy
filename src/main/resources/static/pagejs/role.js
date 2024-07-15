@@ -208,7 +208,7 @@ function edit(id){
 
                 if(item.usa004.indexOf("K1#")>=0)$("#K").prop("checked",true);
 
-                if(item.usa004.indexOf("P1#P2#P3#P4#P5#")>=0)$("#P").prop("checked",true);
+                if(item.usa004.indexOf("P1#P3#P4#P5#")>=0)$("#P").prop("checked",true);
                 if(item.usa004.indexOf("Q1#Q2#Q3#Q4#")>=0)$("#Q").prop("checked",true);
                 if(item.usa004.indexOf("O1#O2#")>=0)$("#O").prop("checked",true);
                 if(item.usa004.indexOf("N1#N2#")>=0)$("#N").prop("checked",true);

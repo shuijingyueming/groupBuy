@@ -290,6 +290,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                                             yha.setYha004(ysc!=null?ysc.getYsc006():usf.getUsf010());
                                             yha.setYha005(usf.getUsf010()==0&ysc==null?"P":"C");
                                             yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
+                                            yha.setYha009(usf.getUsf013().equals("C")?"B":"A");
                                             yhaService.insert(yha);
                                             if(ysc!=null){
                                                 ysc.setYsc005("A");
@@ -458,7 +459,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
 
         //线程获取微信的token
-        new Thread(){
+    new Thread(){
             public void run(){
                 while (true){
                     try {
@@ -477,7 +478,6 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 }
             }
         }.start();
-
     }
 
     private Integer getWeekDay(Calendar c){

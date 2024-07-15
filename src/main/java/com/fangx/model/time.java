@@ -14,6 +14,8 @@ public class time implements Serializable {
 
     private boolean zt;
 
+    private boolean tz=false;
+
     private List<cdusd> usdlist;
 
     public Date getD() {
@@ -30,6 +32,14 @@ public class time implements Serializable {
 
     public void setZt(boolean zt) {
         this.zt = zt;
+    }
+
+    public boolean isTz() {
+        return tz;
+    }
+
+    public void setTz(boolean tz) {
+        this.tz = tz;
     }
 
     public List<cdusd> getUsdlist() {
