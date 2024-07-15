@@ -378,10 +378,10 @@ function save(id){
         $("#t7").after('<label id="t3-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t7">不能为空</label>');
         falg=false;
     }
-    // if(imglist.length==0){
-    //     $("#t2").after('<label id="t4-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t2">请添加图片</label>');
-    //     falg=false;
-    // }
+    if(imglist.length==0){
+        $("#t2").after('<label id="t4-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t2">请添加图片</label>');
+        falg=false;
+    }
     if(falg){
         formData.delete("t2");
         for(var i=0;i<t4.length;i++){

@@ -465,14 +465,18 @@ public class WXController extends BaseController {
         List<cdush> list=ushService.selectByyhidjs(Integer.valueOf(yhid),id);
         for(cdush ush:list){
             ush.setUsh002(yhc.getYhc001());
+            cdusf usf=usfService.getByid(ush.getUsh003());
             cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
             if(yha.getYha005().equals("C")){
 //                if(yha.getYha004()>ush.getUsh004()){
-                    yha.setYha004(yha.getYha004()-ush.getUsh004());
+                yha.setYha004(yha.getYha004()-ush.getUsh004());
+                usf.setUsf008(usf.getUsf008()+ush.getUsh004());
+                usf.setUsf009(usf.getUsf009()+ush.getUsh006());
 //                }else{
 //                    yha.setYha004(0);
 //                    yha.setYha006((yha.getYha006()+yha.getYha004())-ush.getUsh004());
 //                }
+                usfService.update(usf);
                 yhaService.update(yha);
             }
             ushService.update(ush);
@@ -518,6 +522,7 @@ public class WXController extends BaseController {
         for(cdush ush:list){
             ush.setUsh002(yhc.getYhc001());
             cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
+            cdusf usf=usfService.getByid(ush.getUsh003());
             if(yha.getYha005().equals("C")){
 //                if(yha.getYha004()>ush.getUsh004()){
                     yha.setYha004(yha.getYha004()-ush.getUsh004());
@@ -525,6 +530,9 @@ public class WXController extends BaseController {
 //                    yha.setYha004(0);
 //                    yha.setYha006((yha.getYha006()+yha.getYha004())-ush.getUsh004());
 //                }
+                usf.setUsf008(usf.getUsf008()+ush.getUsh004());
+                usf.setUsf009(usf.getUsf009()+ush.getUsh006());
+                usfService.update(usf);
                 yhaService.update(yha);
             }
             ushService.update(ush);
@@ -727,13 +735,18 @@ public class WXController extends BaseController {
             cdusc usc =uscService.getByid(item.getYhc002());
             usc.setUsc008(usc.getUsc008()+item.getYhc007());
             usc.setUsc011(usc.getUsc011()-item.getYhc007());
+
             uscService.update(usc);
             yhcService.update(item);
             List<cdush> list=ushService.selectByyhidtk(item.getYhc001());
             for(cdush ush:list){
+                cdusf usf=usfService.getByid(ush.getUsh003());
                 cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
                 if(yha.getYha005().equals("C")){
                     yha.setYha004(yha.getYha004()+ush.getUsh004());
+                    usf.setUsf008(usf.getUsf008()-ush.getUsh004());
+                    usf.setUsf009(usf.getUsf009()-ush.getUsh006());
+                    usfService.update(usf);
                     yhaService.update(yha);
                 }
             }
@@ -743,9 +756,13 @@ public class WXController extends BaseController {
                 item.setYhc005("N");
                 List<cdush> list=ushService.selectByyhidtk(item.getYhc001());
                 for(cdush ush:list){
+                    cdusf usf=usfService.getByid(ush.getUsh003());
                     cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
                     if(yha.getYha005().equals("C")){
                         yha.setYha004(yha.getYha004()+ush.getUsh004());
+                        usf.setUsf008(usf.getUsf008()-ush.getUsh004());
+                        usf.setUsf009(usf.getUsf009()-ush.getUsh006());
+                        usfService.update(usf);
                         yhaService.update(yha);
                     }
                 }
@@ -763,9 +780,13 @@ public class WXController extends BaseController {
                     uscService.update(usc);
                     List<cdush> list=ushService.selectByyhidtk(item.getYhc001());
                     for(cdush ush:list){
+                        cdusf usf=usfService.getByid(ush.getUsh003());
                         cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
                         if(yha.getYha005().equals("C")){
                             yha.setYha004(yha.getYha004()+ush.getUsh004());
+                            usf.setUsf008(usf.getUsf008()-ush.getUsh004());
+                            usf.setUsf009(usf.getUsf009()-ush.getUsh006());
+                            usfService.update(usf);
                             yhaService.update(yha);
                         }
                     }

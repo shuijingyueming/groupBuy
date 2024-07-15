@@ -85,6 +85,7 @@
                     <th>微信昵称</th>
                     <th>员工名称</th>
                     <th>企业名称</th>
+                    <th>部门</th>
                     <th>手机号</th>
                     <th>账户余额</th>
                     <th>累计公司充值金额</th>
@@ -102,6 +103,7 @@
                         <td th:text="${item.usc006}"></td>
                         <td th:text="${item.usc002}"></td>
                         <td th:text="${item.usd!=null?item.usd.usd002:''}"></td>
+                        <td th:text="${item.usc016}"></td>
                         <td th:text="${item.usc015}"></td>
                         <td th:text="${item.usc008}"></td>
                         <td th:text="${item.usc009}"></td>
@@ -200,6 +202,14 @@
                         <div class="form-group">
                             <label>手机号</label>
                             <input lay-verify="required" id="t3" name="t3" type="text" class="form-control input-1" placeholder="请填写手机号">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>部门</label>
+                            <input lay-verify="required" id="t6" name="t6" type="text" class="form-control input-1" placeholder="请填写部门">
                         </div>
                     </div>
                 </div>

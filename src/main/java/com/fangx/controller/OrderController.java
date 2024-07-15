@@ -254,9 +254,13 @@ public class OrderController extends BaseController {
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(yhc.getYhc008());
                             int i=getWeekDay(calendar);
+                            cdusf usf=usfService.getByid(ush.getUsh003());
                             cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i).getUsb001()),ush.getUsh003());
                             if(yha.getYha005().equals("C")){
                                 yha.setYha004(yha.getYha004()+ush.getUsh004());
+                                usf.setUsf008(usf.getUsf008()-ush.getUsh004());
+                                usf.setUsf009(usf.getUsf009()-ush.getUsh006());
+                                usfService.update(usf);
                                 yhaService.update(yha);
                             }
                             ushService.update(ush);
@@ -272,9 +276,13 @@ public class OrderController extends BaseController {
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.setTime(yhc.getYhc008());
                                 int i=getWeekDay(calendar);
+                                cdusf usf=usfService.getByid(ush.getUsh003());
                                 cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i).getUsb001()),ush.getUsh003());
                                 if(yha.getYha005().equals("C")){
                                     yha.setYha004(yha.getYha004()+ush.getUsh004());
+                                    usf.setUsf008(usf.getUsf008()-ush.getUsh004());
+                                    usf.setUsf009(usf.getUsf009()-ush.getUsh006());
+                                    usfService.update(usf);
                                     yhaService.update(yha);
                                 }
                                 ushService.update(ush);
@@ -295,9 +303,13 @@ public class OrderController extends BaseController {
                                     Calendar calendar = Calendar.getInstance();
                                     calendar.setTime(yhc.getYhc008());
                                     int i=getWeekDay(calendar);
+                                    cdusf usf=usfService.getByid(ush.getUsh003());
                                     cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i).getUsb001()),ush.getUsh003());
                                     if(yha.getYha005().equals("C")){
                                         yha.setYha004(yha.getYha004()+ush.getUsh004());
+                                        usf.setUsf008(usf.getUsf008()-ush.getUsh004());
+                                        usf.setUsf009(usf.getUsf009()-ush.getUsh006());
+                                        usfService.update(usf);
                                         yhaService.update(yha);
                                     }
                                     ushService.update(ush);

@@ -275,6 +275,7 @@ public class CompanyController extends BaseController {
         item.setUsc002(request.getParameter("t1"));
         item.setUsc005(Integer.valueOf(request.getParameter("t2")));
         item.setUsc015(request.getParameter("t3"));
+        item.setUsc016(request.getParameter("t6"));
         if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
             String log = "修改了名字为：【" + request.getParameter("t1") + "】的公司员工信息";
             item.setUsc001(Integer.valueOf((request.getParameter("id"))));

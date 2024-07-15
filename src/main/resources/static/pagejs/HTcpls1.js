@@ -13,6 +13,18 @@ function getMonthDay(year, month) {
     return days
 }
 
+
+function tocp(date,lx){
+    var params = [["lx",lx],
+        ["t",$.trim($("#t").val())],
+        ["l",$.trim($("#l").val())],
+        ["m1",$.trim($("#m1").val())],
+        ["date",$.trim($("#date").val())],
+        ["qsid",$.trim($("#qsid").val())],
+        ["name",$.trim($("#name").val())]];
+    form_submit("toDi/tocpls1cp","post",params,"_self");
+}
+
 function getEvents(y, m,d, s,t) {
     var list=[];
     let da=new Date();
@@ -59,7 +71,8 @@ function getEvents(y, m,d, s,t) {
                                     title: (item.tz?'(有调整)':'')+'菜品管理',
                                     start: da,
                                     allDay: true,
-                                    url: 'toDi/tocpls1cp?date='+getTime(da,'YY-MM-DD')+"&lx="+(i+1>d+7?'B':'A'),
+                                    hclick:'tocp("'+getTime(da,'YY-MM-DD')+'","'+"&lx="+(i+1>d+7?'B':'A')+'")',
+                                    // url: 'toDi/tocpls1cp?date='+getTime(da,'YY-MM-DD')+"&lx="+(i+1>d+7?'B':'A')+"&t="+$('#t').val()+"&l="+$('#l').val()+"&m1="+$('#m1').val(),
                                     backgroundColor:(item.tz?'#f56954': '#00c0ef'), //red
                                     borderColor: (item.tz?'#f56954': '#00c0ef') //red
                                 }
@@ -73,8 +86,8 @@ function getEvents(y, m,d, s,t) {
             });
         }
     }
+    // console.log(list)
     // layer.close(index)
-    // console.log(list);
     return list;
 }
 
@@ -112,11 +125,12 @@ $(function () {
     var d = date.getDate(),
         m = date.getMonth(),
         y = date.getFullYear()
-    var t=getMonthDay(y, m);
+    var t=$('#t').val()!=""?parseInt($('#t').val()):getMonthDay(y, m);
+    $('#t').val(t)
     var list=[];
-    var l=$('#l').val();
+    var l=$('#l').val()!=""?$('#l').val():0;
     var t1=0;
-    var m1=0;
+    var m1=$('#m1').val()!=""?$('#m1').val():0;
     list=getEvents(y, m,d,0,t);
     $('#calendar').fullCalendar({
         editable: true,
@@ -132,6 +146,7 @@ $(function () {
                 text: '上个月',
                 click: function() {
                     m1--;
+                    $('#m1').val(m1);
                     $('#calendar').fullCalendar('prev')
                 }
             },
@@ -139,12 +154,17 @@ $(function () {
                 text: '下个月',
                 click: function() {
                     m1++;
+                    $('#m1').val(m1);
                     // console.log(m1);
                     $('#calendar').fullCalendar('next')
                     if(m1>l){
                         t1=t+getMonthDay(y, m+l);
-                        list=list.concat(getEvents(y, m+l,d,t,t1));
                         l++;
+                        $('#l').val(l);
+                        $('#t').val(t1)
+                        let list1=getEvents(y, m,d,t,t1);
+                        t=t1;
+                        list=list.concat(list1);
                         // console.log(list);
                         $("#calendar").fullCalendar('removeEvents');
                         $('#calendar').fullCalendar("addEventSource",list);
@@ -187,9 +207,13 @@ $(function () {
                 // if so, remove the element from the "Draggable Events" list
                 $(this).remove()
             }
-
-
         }
     });
+    // console.log(m1);
+    if(m1>0){
+        for(let i=0;i<m1;i++) {
+            $('#calendar').fullCalendar('next')
+        }
+    }
 })
 

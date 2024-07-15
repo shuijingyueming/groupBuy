@@ -833,23 +833,12 @@ public class DishesController extends BaseController {
             mav.addObject("msg", request.getParameter("msg"));
             if (request.getParameter("t") != null && !request.getParameter("t").isEmpty()) {
                 mav.addObject("t", request.getParameter("t"));
-            }else{
-                mav.addObject("t", 0);
             }
             if (request.getParameter("l") != null && !request.getParameter("l").isEmpty()) {
                 mav.addObject("l", request.getParameter("l"));
-            }else{
-                mav.addObject("l", 0);
-            }
-            if (request.getParameter("t1") != null && !request.getParameter("t1").isEmpty()) {
-                mav.addObject("t1", request.getParameter("t1"));
-            }else{
-                mav.addObject("t1", 0);
             }
             if (request.getParameter("m1") != null && !request.getParameter("m1").isEmpty()) {
                 mav.addObject("m1", request.getParameter("m1"));
-            }else{
-                mav.addObject("m1", 0);
             }
            /* Integer ts=new Date(Integer.valueOf(sdf2.format(d)),d.getMonth()+1,0).getDate();
             List<time> list=new ArrayList<>();
@@ -1054,7 +1043,9 @@ public class DishesController extends BaseController {
                 }
             }
             mav.addObject("pageobj", pb);
-
+            mav.addObject("t", request.getParameter("t"));
+            mav.addObject("l", request.getParameter("l"));
+            mav.addObject("m1", request.getParameter("m1"));
         }
         mav.setViewName("HTcpls1cp");
         return mav;
