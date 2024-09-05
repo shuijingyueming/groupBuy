@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdyseMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdyse">
+    <id column="YSE001" jdbcType="VARCHAR" property="yse001" />
+    <result column="YSE002" jdbcType="INTEGER" property="yse002" />
+    <result column="YSE003" jdbcType="TIMESTAMP" property="yse003" />
+    <result column="YSE004" jdbcType="VARCHAR" property="yse004" />
+    <result column="YSE005" jdbcType="VARCHAR" property="yse005" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.fangx.model.cdyse"  extends="BaseResultMap">
+    <association property="usd" column="YSE002" select="com.fangx.dao.cdusdMapper.selectByPrimaryKey1"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    YSE001, YSE002, YSE003, YSE004, YSE005
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdyseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdyse
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdyse
+    where YSE001 = #{yse001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdyse
+    where YSE001 = #{yse001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdyseExample">
+    delete from cdyse
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdyse">
+    insert into cdyse (YSE001, YSE002, YSE003, 
+      YSE004, YSE005)
+    values (#{yse001,jdbcType=VARCHAR}, #{yse002,jdbcType=INTEGER}, #{yse003,jdbcType=TIMESTAMP}, 
+      #{yse004,jdbcType=VARCHAR}, #{yse005,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdyse">
+    insert into cdyse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="yse001 != null">
+        YSE001,
+      </if>
+      <if test="yse002 != null">
+        YSE002,
+      </if>
+      <if test="yse003 != null">
+        YSE003,
+      </if>
+      <if test="yse004 != null">
+        YSE004,
+      </if>
+      <if test="yse005 != null">
+        YSE005,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="yse001 != null">
+        #{yse001,jdbcType=VARCHAR},
+      </if>
+      <if test="yse002 != null">
+        #{yse002,jdbcType=INTEGER},
+      </if>
+      <if test="yse003 != null">
+        #{yse003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yse004 != null">
+        #{yse004,jdbcType=VARCHAR},
+      </if>
+      <if test="yse005 != null">
+        #{yse005,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdyseExample" resultType="java.lang.Long">
+    select count(*) from cdyse
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdyse
+    <set>
+      <if test="record.yse001 != null">
+        YSE001 = #{record.yse001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yse002 != null">
+        YSE002 = #{record.yse002,jdbcType=INTEGER},
+      </if>
+      <if test="record.yse003 != null">
+        YSE003 = #{record.yse003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.yse004 != null">
+        YSE004 = #{record.yse004,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yse005 != null">
+        YSE005 = #{record.yse005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdyse
+    set YSE001 = #{record.yse001,jdbcType=VARCHAR},
+      YSE002 = #{record.yse002,jdbcType=INTEGER},
+      YSE003 = #{record.yse003,jdbcType=TIMESTAMP},
+      YSE004 = #{record.yse004,jdbcType=VARCHAR},
+      YSE005 = #{record.yse005,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdyse">
+    update cdyse
+    <set>
+      <if test="yse002 != null">
+        YSE002 = #{yse002,jdbcType=INTEGER},
+      </if>
+      <if test="yse003 != null">
+        YSE003 = #{yse003,jdbcType=TIMESTAMP},
+      </if>
+      <if test="yse004 != null">
+        YSE004 = #{yse004,jdbcType=VARCHAR},
+      </if>
+      <if test="yse005 != null">
+        YSE005 = #{yse005,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where YSE001 = #{yse001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdyse">
+    update cdyse
+    set YSE002 = #{yse002,jdbcType=INTEGER},
+      YSE003 = #{yse003,jdbcType=TIMESTAMP},
+      YSE004 = #{yse004,jdbcType=VARCHAR},
+      YSE005 = #{yse005,jdbcType=VARCHAR}
+    where YSE001 = #{yse001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdyseExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdyse
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="countByExample1" parameterType="com.fangx.model.cdyseExample" resultType="java.lang.Long">
+    select count(*) from cdyse
+    left join cdusd on cdusd.usd001=cdyse.yse002
+    <where>
+      <if test="cdusdExample != null">
+        <foreach collection="cdusdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdyseExample != null">
+        <foreach collection="cdyseExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectByExampleAndPage1" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdyseExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdyse
+    left join cdusd on cdusd.usd001=cdyse.yse002
+    <where>
+      <if test="cdusdExample != null">
+        <foreach collection="cdusdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdyseExample != null">
+        <foreach collection="cdyseExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdyseExample != null">
+      <if test="cdyseExample.orderByClause != null">
+        order by ${cdyseExample.orderByClause}
+      </if>
+    </if>
+  </select>
+
+  <sql id="ECExample_Where_Clause">
+    <if test="criteria.valid">
+      <foreach collection="criteria.criteria" item="criterion">
+        <choose>
+          <when test="criterion.noValue">
+            and ${criterion.condition}
+          </when>
+          <when test="criterion.singleValue">
+            and ${criterion.condition}
+            #{criterion.value}
+          </when>
+          <when test="criterion.betweenValue">
+            and ${criterion.condition} #{criterion.value} and
+            #{criterion.secondValue}
+          </when>
+          <when test="criterion.listValue">
+            and ${criterion.condition}
+            <foreach collection="criterion.value" item="listItem"
+                     open="(" close=")" separator=",">
+              #{listItem}
+            </foreach>
+          </when>
+        </choose>
+      </foreach>
+    </if>
+  </sql>
+</mapper>
