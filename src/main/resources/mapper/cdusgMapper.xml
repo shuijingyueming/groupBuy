@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangx.dao.cdusgMapper">
+  <resultMap id="BaseResultMap" type="com.fangx.model.cdusg">
+    <id column="USG001" jdbcType="VARCHAR" property="usg001" />
+    <result column="USG002" jdbcType="INTEGER" property="usg002" />
+    <result column="USG003" jdbcType="INTEGER" property="usg003" />
+    <result column="USG004" jdbcType="INTEGER" property="usg004" />
+    <result column="USG005" jdbcType="REAL" property="usg005" />
+    <result column="USG006" jdbcType="REAL" property="usg006" />
+    <result column="USG007" jdbcType="TIMESTAMP" property="usg007" />
+    <result column="USG008" jdbcType="VARCHAR" property="usg008" />
+    <result column="USG009" jdbcType="VARCHAR" property="usg009" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USG001, USG002, USG003, USG004, USG005, USG006, USG007, USG008, USG009
+  </sql>
+  <select id="selectByExample" parameterType="com.fangx.model.cdusgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cdusg
+    where USG001 = #{usg001,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cdusg
+    where USG001 = #{usg001,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fangx.model.cdusgExample">
+    delete from cdusg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fangx.model.cdusg">
+    insert into cdusg (USG001, USG002, USG003, 
+      USG004, USG005, USG006, USG007, 
+      USG008, USG009)
+    values (#{usg001,jdbcType=VARCHAR}, #{usg002,jdbcType=INTEGER}, #{usg003,jdbcType=INTEGER}, 
+      #{usg004,jdbcType=INTEGER}, #{usg005,jdbcType=REAL}, #{usg006,jdbcType=REAL}, #{usg007,jdbcType=TIMESTAMP}, 
+      #{usg008,jdbcType=VARCHAR}, #{usg009,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangx.model.cdusg">
+    insert into cdusg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="usg001 != null">
+        USG001,
+      </if>
+      <if test="usg002 != null">
+        USG002,
+      </if>
+      <if test="usg003 != null">
+        USG003,
+      </if>
+      <if test="usg004 != null">
+        USG004,
+      </if>
+      <if test="usg005 != null">
+        USG005,
+      </if>
+      <if test="usg006 != null">
+        USG006,
+      </if>
+      <if test="usg007 != null">
+        USG007,
+      </if>
+      <if test="usg008 != null">
+        USG008,
+      </if>
+      <if test="usg009 != null">
+        USG009,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="usg001 != null">
+        #{usg001,jdbcType=VARCHAR},
+      </if>
+      <if test="usg002 != null">
+        #{usg002,jdbcType=INTEGER},
+      </if>
+      <if test="usg003 != null">
+        #{usg003,jdbcType=INTEGER},
+      </if>
+      <if test="usg004 != null">
+        #{usg004,jdbcType=INTEGER},
+      </if>
+      <if test="usg005 != null">
+        #{usg005,jdbcType=REAL},
+      </if>
+      <if test="usg006 != null">
+        #{usg006,jdbcType=REAL},
+      </if>
+      <if test="usg007 != null">
+        #{usg007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usg008 != null">
+        #{usg008,jdbcType=VARCHAR},
+      </if>
+      <if test="usg009 != null">
+        #{usg009,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fangx.model.cdusgExample" resultType="java.lang.Long">
+    select count(*) from cdusg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cdusg
+    <set>
+      <if test="record.usg001 != null">
+        USG001 = #{record.usg001,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usg002 != null">
+        USG002 = #{record.usg002,jdbcType=INTEGER},
+      </if>
+      <if test="record.usg003 != null">
+        USG003 = #{record.usg003,jdbcType=INTEGER},
+      </if>
+      <if test="record.usg004 != null">
+        USG004 = #{record.usg004,jdbcType=INTEGER},
+      </if>
+      <if test="record.usg005 != null">
+        USG005 = #{record.usg005,jdbcType=REAL},
+      </if>
+      <if test="record.usg006 != null">
+        USG006 = #{record.usg006,jdbcType=REAL},
+      </if>
+      <if test="record.usg007 != null">
+        USG007 = #{record.usg007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.usg008 != null">
+        USG008 = #{record.usg008,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usg009 != null">
+        USG009 = #{record.usg009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cdusg
+    set USG001 = #{record.usg001,jdbcType=VARCHAR},
+      USG002 = #{record.usg002,jdbcType=INTEGER},
+      USG003 = #{record.usg003,jdbcType=INTEGER},
+      USG004 = #{record.usg004,jdbcType=INTEGER},
+      USG005 = #{record.usg005,jdbcType=REAL},
+      USG006 = #{record.usg006,jdbcType=REAL},
+      USG007 = #{record.usg007,jdbcType=TIMESTAMP},
+      USG008 = #{record.usg008,jdbcType=VARCHAR},
+      USG009 = #{record.usg009,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangx.model.cdusg">
+    update cdusg
+    <set>
+      <if test="usg002 != null">
+        USG002 = #{usg002,jdbcType=INTEGER},
+      </if>
+      <if test="usg003 != null">
+        USG003 = #{usg003,jdbcType=INTEGER},
+      </if>
+      <if test="usg004 != null">
+        USG004 = #{usg004,jdbcType=INTEGER},
+      </if>
+      <if test="usg005 != null">
+        USG005 = #{usg005,jdbcType=REAL},
+      </if>
+      <if test="usg006 != null">
+        USG006 = #{usg006,jdbcType=REAL},
+      </if>
+      <if test="usg007 != null">
+        USG007 = #{usg007,jdbcType=TIMESTAMP},
+      </if>
+      <if test="usg008 != null">
+        USG008 = #{usg008,jdbcType=VARCHAR},
+      </if>
+      <if test="usg009 != null">
+        USG009 = #{usg009,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USG001 = #{usg001,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangx.model.cdusg">
+    update cdusg
+    set USG002 = #{usg002,jdbcType=INTEGER},
+      USG003 = #{usg003,jdbcType=INTEGER},
+      USG004 = #{usg004,jdbcType=INTEGER},
+      USG005 = #{usg005,jdbcType=REAL},
+      USG006 = #{usg006,jdbcType=REAL},
+      USG007 = #{usg007,jdbcType=TIMESTAMP},
+      USG008 = #{usg008,jdbcType=VARCHAR},
+      USG009 = #{usg009,jdbcType=VARCHAR}
+    where USG001 = #{usg001,jdbcType=VARCHAR}
+  </update>
+  <select id="selectBygsid" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cdusg
+    where USG002 = #{cpid,jdbcType=INTEGER} and USG003 = #{gsid,jdbcType=INTEGER}
+  </select>
+</mapper>

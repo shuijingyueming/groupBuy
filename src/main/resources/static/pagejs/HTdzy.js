@@ -6,7 +6,7 @@ function reback(){
 }
 
 function toddjl(id){
-    var params = [ ["date",id], ["fh",$("#fhlx").val()+"DZ"],
+    var params = [ ["date",id], ["fh",$("#fhlx").val()+"YDZ"],
         ["pages",$("#pages").val()],
         ["gsid",$("#gsid").val()],
         ["start",$("#start").val()],
@@ -23,8 +23,8 @@ $(document).ready(function () {
         $("#"+$("#menuName", parent.document).val(), parent.document).removeClass("active");
     }
 
-    $("#menuName", parent.document).val("menu_e2");
-    $("#menu_e2", parent.document).addClass("active");
+    $("#menuName", parent.document).val("menu_e4");
+    $("#menu_e4", parent.document).addClass("active");
 
     pdyes($("#pages").val(), $("#counts").val());
 
@@ -87,7 +87,7 @@ function uscfanye(pageindex){
         ["end",$.trim($("#end").val())],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
-    form_submit("toOr/todz","post",params,"_self");
+    form_submit("toOr/toydz","post",params,"_self");
 }
 
 function xxcx(){
@@ -99,9 +99,8 @@ function xxcx(){
         ["end",$.trim($("#end").val())],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
-    form_submit("toOr/todz","post",params,"_self");
+    form_submit("toOr/toydz","post",params,"_self");
 }
-
 
 function todcdz(id){
     var r = confirm("确定导出对账单吗？");
@@ -115,7 +114,7 @@ function todcdz(id){
             ["end", $.trim($("#end").val())],
             ["name", $.trim($("#name").val())],
             ["phone", $.trim($("#phone").val())]];
-        form_submit("toOr/todz", "post", params, "_self");
+        form_submit("toOr/toydz", "post", params, "_self");
     }
 }
 

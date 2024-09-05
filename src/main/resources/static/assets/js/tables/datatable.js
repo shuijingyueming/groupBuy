@@ -51,7 +51,8 @@ $(document).ready(function () {
         "paging": false,
         dom: 'Bfrtip',
         buttons: $("#jsqx").val()=="admin"||$("#fhlx").val()!=""?[/*'excel','print',*/
-            $("#fhlx").val()!=""?{text: '返回',action: function ( e, dt, node, config ) {reback();}}:undefined/*,
+            $("#fhlx").val().indexOf("YDZ")<0?{text: '返回',action: function ( e, dt, node, config ) {reback();}}:undefined,
+            $("#fhlx").val().indexOf("YDZ")>=0?{text: '返回',action: function ( e, dt, node, config ) {rebacky();}}:undefined/*,
             $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,*/
         ]:[],
         "columnDefs": [ {
@@ -81,7 +82,9 @@ $(document).ready(function () {
         "paging": false,
         dom: 'Bfrtip',
         buttons: $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("G2#")>=0?[/*'excel','print',*/
-            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("G2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined/*,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("G2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,
+            {text: '下载模板',action: function ( e, dt, node, config ) {todc();}},
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("G6#")>=0?{text: '导入',action: function ( e, dt, node, config ) {dryg();}}:undefined/*,
             $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A4#")>=0?{text: '批量删除',action: function ( e, dt, node, config ) {delete_item();}}:undefined*/
         ]:[],
         "columnDefs": [ {
@@ -145,6 +148,22 @@ $(document).ready(function () {
         buttons: $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("I2#")>=0?[/*'excel','print',*/
             $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("I2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,
             {text: '下载模板',action: function ( e, dt, node, config ) {todc();}}/*,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A4#")>=0?{text: '批量删除',action: function ( e, dt, node, config ) {delete_item();}}:undefined*/
+        ]:[],
+        "columnDefs": [ {
+            "orderable": false,
+            "targets": [0]
+        }]
+    });
+    $('#gscpexm').DataTable({
+        // "searching":false,
+        "info":false,
+        "paging": false,
+        dom: 'Bfrtip',
+        buttons: $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("G1#")>=0?[/*'excel','print',*/
+            {text: '返回',action: function ( e, dt, node, config ) {reback();}},
+            /*$("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("I2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,
+            {text: '下载模板',action: function ( e, dt, node, config ) {todc();}},
             $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A4#")>=0?{text: '批量删除',action: function ( e, dt, node, config ) {delete_item();}}:undefined*/
         ]:[],
         "columnDefs": [ {

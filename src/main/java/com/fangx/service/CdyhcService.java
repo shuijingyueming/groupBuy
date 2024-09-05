@@ -31,7 +31,9 @@ public interface CdyhcService extends IService<cdyhc> {
 
     Float selectBygsid(Date time, Integer gsid, String fkzt, String zt) throws ParseException;
 
-    List<cdyhc> selectByyhid(Integer yhid, String date) throws ParseException;
+    Float selectBygsidY(String start,Integer gsid, String fkzt, String zt) throws ParseException;
+
+    List<cdyhc> selectByyhid(Integer yhid, String date, String zt) throws ParseException;
 
     PageBean selectPageBean1(PageBean pagebean);
 
@@ -40,4 +42,7 @@ public interface CdyhcService extends IService<cdyhc> {
     cdyhc selectByStr(String nonce_str);
 
     List<cdyhc> selectByyhid1(Integer usc001, String date) throws ParseException;
+
+    List<cdyhc> selectBygsiddz(String time,Integer gsid);
+    List<cdyhc> selectBygsiddz1(String time,Integer gsid);
 }

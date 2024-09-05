@@ -42,5 +42,11 @@ public interface cdusfMapper {
 
     List<cdusf> selectByExampleAndPage2(cdusfExample e1, RowBounds rowBounds);
 
+    List<cdusf> selectByExampleAndPage3(cdusfExample example, RowBounds rowBounds);
+
     List<cdusf> selectByExample1(cdusfExample e1);
+
+    List<cdusf> selectByExample2(cdusfExample e1);
+
+    List<cdusf> selectByExampleAndPageqs2(@Param("cdusfExample")cdusfExample e1, @Param("cdyhaExample")cdyhaExample e2, RowBounds rowBounds);
 }

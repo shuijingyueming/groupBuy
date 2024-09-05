@@ -53,6 +53,7 @@ public class CdyhcServiceImpl implements CdyhcService {
         if(pb.getOthersql4()!=null) c.andYhc004GreaterThanOrEqualTo(sf.parse(pb.getOthersql4()+" 00:00:00"));
         if(pb.getOthersql5()!=null) c.andYhc004LessThanOrEqualTo(sf.parse(pb.getOthersql5()+" 23:59:59"));
         if(pb.getOthersql7()!=null)c.andSql("(DATE_FORMAT(yhc008,'%Y-%m-%d')='"+pb.getOthersql7()+"')");
+        if(pb.getOthersql8()!=null)c.andSql("(DATE_FORMAT(yhc008,'%Y-%m')='"+pb.getOthersql8()+"')");
         e1.setOrderByClause("yhc004 desc");
         return queryByPage(pb, e1);
     }
@@ -144,8 +145,8 @@ public class CdyhcServiceImpl implements CdyhcService {
     public Float selectBygsid(Date time, Integer gsid, String fkzt, String zt) throws ParseException {
         cdyhcExample e1 = new cdyhcExample();
         Criteria c = e1.createCriteria();
-        c.andYhc004GreaterThanOrEqualTo(sf.parse(sf1.format(time)+" 00:00:00"));
-        c.andYhc004LessThanOrEqualTo(sf.parse(sf1.format(time)+" 23:59:59"));
+        c.andYhc008GreaterThanOrEqualTo(sf.parse(sf1.format(time)+" 00:00:00"));
+        c.andYhc008LessThanOrEqualTo(sf.parse(sf1.format(time)+" 23:59:59"));
         c.andYhc003EqualTo(gsid);
         c.andYhc006EqualTo(fkzt);
         if(zt!=null){
@@ -157,7 +158,39 @@ public class CdyhcServiceImpl implements CdyhcService {
     }
 
     @Override
-    public List<cdyhc> selectByyhid(Integer yhid, String time) throws ParseException {
+    public Float selectBygsidY(String time, Integer gsid, String fkzt, String zt) throws ParseException {
+        cdyhcExample e1 = new cdyhcExample();
+        Criteria c = e1.createCriteria();
+        c.andSql("(DATE_FORMAT(yhc008,'%Y-%m')='"+time+"')");
+        c.andYhc003EqualTo(gsid);
+        c.andYhc006EqualTo(fkzt);
+        if(zt!=null){
+            c.andYhc005EqualTo(zt);
+        }else{
+            c.andSql("(yhc005='Y' or yhc005='M')");
+        }
+        return yhcMapper.countByExampleje(e1);
+    }
+
+    @Override
+    public   List<cdyhc> selectBygsiddz(String time,Integer gsid) {
+        cdyhcExample e1 = new cdyhcExample();
+        Criteria c = e1.createCriteria();
+        c.andSql("(DATE_FORMAT(yhc008,'%Y-%m')='"+time+"')");
+        c.andYhc003EqualTo(gsid);
+        return yhcMapper.selectByExample1(e1);
+    }
+    @Override
+    public   List<cdyhc> selectBygsiddz1(String time,Integer gsid) {
+        cdyhcExample e1 = new cdyhcExample();
+        Criteria c = e1.createCriteria();
+        c.andSql("(DATE_FORMAT(yhc008,'%Y-%m-%d')='"+time+"')");
+        c.andYhc003EqualTo(gsid);
+        return yhcMapper.selectByExample1(e1);
+    }
+
+    @Override
+    public List<cdyhc> selectByyhid(Integer yhid, String time, String zt) throws ParseException {
         cdyhcExample e1 = new cdyhcExample();
         Criteria c = e1.createCriteria();
         c.andYhc002EqualTo(yhid);
@@ -165,7 +198,7 @@ public class CdyhcServiceImpl implements CdyhcService {
             c.andYhc008GreaterThanOrEqualTo(sf.parse(time+" 00:00:00"));
             c.andYhc008LessThanOrEqualTo(sf.parse(time+" 23:59:59"));
         }
-        c.andYhc005EqualTo("Y");
+        c.andYhc005EqualTo(zt);
         return yhcMapper.selectByExample(e1);
     }
 

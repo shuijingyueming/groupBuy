@@ -343,6 +343,91 @@ public class ExcelExport {
 		return fh.isEmpty()?"A":fh;
     }
 
+
+	public static String getByExcelcp1(InputStream in, String fileName, CdyhaService yhaService,CdusfService usfService, CdyheService yheService, CdysaService ysaService, CdusmService usmService) throws Exception {
+		String fh="";
+		ExcelImport exc = new ExcelImport();
+		// 创建Excel工作薄
+		Workbook work = exc.getWorkbook(in, fileName);
+		if (null == work) {
+			throw new Exception("创建Excel工作薄为空！");
+		}
+		Sheet sheet = null; // 页数
+		Row row = null; // 行数
+		//Cell cell = null; // 列数
+		sheet = work.getSheetAt(0);
+		cdusf item=new cdusf();
+		String name="";
+		String ejfl="";
+		String yjfl="";
+		String dw="";
+		String gg="";
+		String yje="";
+		String xje="";
+		cdusm usm=new cdusm();
+		cdyhe yhe=new cdyhe();
+		cdysa ysa=new cdysa();
+		for (int row_num = 1; row_num < sheet.getPhysicalNumberOfRows(); row_num++) {
+			row = sheet.getRow(row_num);
+			if (row != null) {
+//				name = getValue(row.getCell(0)).replaceAll(" ", "");
+				name = getValue(row.getCell(0));
+				ejfl=getValue(row.getCell(1)).replaceAll(" ","");
+				yjfl=getValue(row.getCell(2)).replaceAll(" ","");
+				dw=getValue(row.getCell(3)).replaceAll(" ","");
+				gg=getValue(row.getCell(4)).replaceAll(" ","");
+				yje=getValue(row.getCell(5)).replaceAll(" ","");
+				xje=getValue(row.getCell(6)).replaceAll(" ","");
+				if (!name.isEmpty()) {
+					item=usfService.selectByName(name);
+					if(!yjfl.isEmpty())yhe=yheService.selectByName(yjfl);
+					if(!ejfl.isEmpty())ysa=ysaService.selectByName(ejfl);
+					if(!dw.isEmpty())usm=usmService.selectByName(dw);
+					if(item==null){
+						item=new cdusf();
+						item.setUsf002(name);
+						item.setUsf003(gg);
+						if(usm!=null)item.setUsf004(usm.getUsm001());
+						if(yhe!=null)item.setUsf011(yhe.getYhe001());
+						if(ysa!=null)item.setUsf012(ysa.getYsa001());
+						item.setUsf013("C");
+						item.setUsf016("A");
+						item.setUsf005(Float.valueOf(yje));
+						item.setUsf006(Float.valueOf(xje));
+						item.setUsf008(0);
+						item.setUsf009(0.0F);
+						item.setUsf013("C");
+						item.setUsf016("A");
+						item = usfService.insert(item);
+						cdyha yha=new cdyha();
+						yha.setYha002(item.getUsf001());
+						yha.setYha004(0);
+						yha.setYha006(0);
+						yha.setYha008(0);
+						yha.setYha005("A");
+						yha.setYha009("B");
+						for(int i=1;i<8;i++){
+							yha.setYha003(i);
+							yhaService.insert(yha);
+						}
+					}else{
+						item.setUsf003(gg);
+						if(usm!=null)item.setUsf004(usm.getUsm001());
+						if(yhe!=null)item.setUsf011(yhe.getYhe001());
+						if(ysa!=null)item.setUsf012(ysa.getYsa001());
+						item.setUsf005(Float.valueOf(yje));
+						item.setUsf006(Float.valueOf(xje));
+						usfService.update(item);
+					}
+				}else{
+					fh+="第"+(row_num+1)+"行导入不成功";
+					break;
+				}
+			}
+		}
+		return fh.isEmpty()?"A":fh;
+	}
+
 	public static boolean isNumeric(String str) {
 		return str.matches("-?\\d+(\\.\\d+)?");
 	}
@@ -693,5 +778,231 @@ public class ExcelExport {
 			value="Saturday";
 		}
 		return value;
+	}
+
+	public void Excelexportydz(HttpServletRequest request, HttpServletResponse response, CdyhcService yhcService,CdusdService usdService, Integer id, String date) throws Exception {
+		// web浏览通过MIME类型判断文件是excel类型
+		cdusd usd=usdService.getByid(id);
+		response.setContentType("application/vnd.ms-excel;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		String fileName =usd.getUsd002()+"对账单.xls";// 下载的时候的文件名
+		String file="宁波方兴菜篮子对账单";
+
+		final String userAgent = request.getHeader("USER-AGENT");
+		String finalFileName = null;
+		try {
+			outt = response.getOutputStream();
+			if (StringUtils.contains(userAgent, "MSIE")) {// IE浏览器
+				finalFileName = URLEncoder.encode(fileName, "UTF8");
+			} else if (StringUtils.contains(userAgent, "Mozilla")) {// google,火狐浏览器
+				finalFileName = new String(fileName.getBytes(), "ISO8859-1");
+			} else {
+				finalFileName = URLEncoder.encode(fileName, "UTF8");// 其他浏览器
+			}
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		// Content-disposition属性设置成以附件方式进行下载
+		response.setHeader("Content-disposition", "attachment;filename="
+				+ finalFileName);
+
+		try {
+			outt = response.getOutputStream();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		// 声明一个工作簿
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet sheet = wb.createSheet(file);
+		sheet.setDefaultColumnWidth(25);
+		sheet.setDefaultRowHeightInPoints(20);
+		HSSFRow row = sheet.createRow(0);
+		HSSFCellStyle cellStyle4 = wb.createCellStyle();
+		// 字体
+		HSSFFont fontStyle4 = wb.createFont();
+		fontStyle4.setFontName("宋体");
+		fontStyle4.setFontHeightInPoints((short) 26);
+		fontStyle4.setBold(true);//粗体显示
+		cellStyle4.setFont(fontStyle4);
+		cellStyle4.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平居中
+		cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+		CellRangeAddress sv1 = new CellRangeAddress((short) 0, (short) 0,(short) 0, (short) 6);
+		sheet.addMergedRegion(sv1);
+		HSSFCell cells = row.createCell((short) 0);// 合并单元格示例
+		cells.setCellValue(file);
+		cells.setCellStyle(cellStyle4);
+		row.setHeight((short) 800);
+		// 字体
+		HSSFFont fontStyle = wb.createFont();
+		fontStyle.setFontHeightInPoints((short) 11);
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+//		cellStyle.setLocked(true);
+		// 这里仅设置了底边边框，左边框、右边框和顶边框同理可设
+		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setFont(fontStyle);
+		cellStyle.setWrapText(true);// 自动换行
+
+		row=sheet.createRow(1);
+//		row.createCell(0).setCellValue("统计条件："+file);
+		usd.setYze(yhcService.selectBygsidY(date,usd.getUsd001(),"P",null));
+		usd.setWze(yhcService.selectBygsidY(date,usd.getUsd001(),"W",null));
+		row.createCell(0).setCellValue("对账时间："+date);
+		row.createCell(1).setCellValue("企业名称："+usd.getUsd002());
+		row.createCell(2).setCellValue("企业地址："+usd.getUsd003());
+		row.createCell(3).setCellValue("企业电话："+usd.getUsd004());
+		row.createCell(4).setCellValue("余额消费总金额："+(usd.getYze()!=null?usd.getYze():0)+"元");
+		row.createCell(5).setCellValue("支付消费总金额："+(usd.getWze()!=null?usd.getWze():0)+"元");
+
+		row = sheet.createRow(2);
+		// 创建HSSFCell对象
+		HSSFCell cell = row.createCell(0);
+		String[] s={"序号","人员名称","支付方式","总金额","下单日期","送货日期","状态"};
+		for(int j=0;j<=6;j++){
+			cell = row.createCell(j);
+			cell.setCellValue(s[j]);
+			cell.setCellStyle(cellStyle);
+		}
+
+		int rowNum=3;
+
+		List<cdyhc> list=yhcService.selectBygsiddz(date,usd.getUsd001());
+		for (int j = 0; j<list.size(); j++) {
+			row = sheet.createRow(rowNum);
+			cdyhc item=list.get(j);
+			String zf=(item.getYhc006().equals('W') ? "微信支付" : (item.getYhc006().equals('P') ? "账户余额" : ""));
+			String zt=item.getYhc005().equals('Y') ? "下单" : (item.getYhc005().equals('M') ? "送货结单" : (item.getYhc005().equals('N') ? "退单" : (item.getYhc005().equals('A') ? "待付款" : "")));
+			String[] s1 = {String.valueOf((j + 1)), item.getUsc().getUsc002(),zf, item.getYhc007().toString(), sdf.format(item.getYhc004()), sdf.format(item.getYhc008()), zt};
+			for(int a=0;a<=6;a++){
+				cell = row.createCell(a);
+				cell.setCellValue(s1[a]);
+				cell.setCellStyle(cellStyle);
+			}
+			rowNum ++;
+		}
+//		sheet.protectSheet("123456");
+		try {
+			wb.write(outt);
+			outt.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void Excelexportdz(HttpServletRequest request, HttpServletResponse response, CdyhcService yhcService,CdusdService usdService, Integer id, String date) throws Exception {
+		// web浏览通过MIME类型判断文件是excel类型
+		cdusd usd=usdService.getByid(id);
+		response.setContentType("application/vnd.ms-excel;charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		String fileName =usd.getUsd002()+"对账单.xls";// 下载的时候的文件名
+		String file="宁波方兴菜篮子对账单";
+
+		final String userAgent = request.getHeader("USER-AGENT");
+		String finalFileName = null;
+		try {
+			outt = response.getOutputStream();
+			if (StringUtils.contains(userAgent, "MSIE")) {// IE浏览器
+				finalFileName = URLEncoder.encode(fileName, "UTF8");
+			} else if (StringUtils.contains(userAgent, "Mozilla")) {// google,火狐浏览器
+				finalFileName = new String(fileName.getBytes(), "ISO8859-1");
+			} else {
+				finalFileName = URLEncoder.encode(fileName, "UTF8");// 其他浏览器
+			}
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		// Content-disposition属性设置成以附件方式进行下载
+		response.setHeader("Content-disposition", "attachment;filename="
+				+ finalFileName);
+
+		try {
+			outt = response.getOutputStream();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+		// 声明一个工作簿
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet sheet = wb.createSheet(file);
+		sheet.setDefaultColumnWidth(25);
+		sheet.setDefaultRowHeightInPoints(20);
+		HSSFRow row = sheet.createRow(0);
+		HSSFCellStyle cellStyle4 = wb.createCellStyle();
+		// 字体
+		HSSFFont fontStyle4 = wb.createFont();
+		fontStyle4.setFontName("宋体");
+		fontStyle4.setFontHeightInPoints((short) 26);
+		fontStyle4.setBold(true);//粗体显示
+		cellStyle4.setFont(fontStyle4);
+		cellStyle4.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平居中
+		cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+		CellRangeAddress sv1 = new CellRangeAddress((short) 0, (short) 0,(short) 0, (short) 6);
+		sheet.addMergedRegion(sv1);
+		HSSFCell cells = row.createCell((short) 0);// 合并单元格示例
+		cells.setCellValue(file);
+		cells.setCellStyle(cellStyle4);
+		row.setHeight((short) 800);
+		// 字体
+		HSSFFont fontStyle = wb.createFont();
+		fontStyle.setFontHeightInPoints((short) 11);
+		HSSFCellStyle cellStyle = wb.createCellStyle();
+//		cellStyle.setLocked(true);
+		// 这里仅设置了底边边框，左边框、右边框和顶边框同理可设
+		cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		cellStyle.setFont(fontStyle);
+		cellStyle.setWrapText(true);// 自动换行
+
+		row=sheet.createRow(1);
+//		row.createCell(0).setCellValue("统计条件："+file);
+		usd.setYze(yhcService.selectBygsid(sdf2.parse(date),usd.getUsd001(),"P",null));
+		usd.setWze(yhcService.selectBygsid(sdf2.parse(date),usd.getUsd001(),"W",null));
+		row.createCell(0).setCellValue("对账时间："+date);
+		row.createCell(1).setCellValue("企业名称："+usd.getUsd002());
+		row.createCell(2).setCellValue("企业地址："+usd.getUsd003());
+		row.createCell(3).setCellValue("企业电话："+usd.getUsd004());
+		row.createCell(4).setCellValue("余额消费总金额："+(usd.getYze()!=null?usd.getYze():0)+"元");
+		row.createCell(5).setCellValue("支付消费总金额："+(usd.getWze()!=null?usd.getWze():0)+"元");
+
+		row = sheet.createRow(2);
+		// 创建HSSFCell对象
+		HSSFCell cell = row.createCell(0);
+		String[] s={"序号","人员名称","支付方式","总金额","下单日期","送货日期","状态"};
+		for(int j=0;j<=6;j++){
+			cell = row.createCell(j);
+			cell.setCellValue(s[j]);
+			cell.setCellStyle(cellStyle);
+		}
+
+		int rowNum=3;
+
+		List<cdyhc> list=yhcService.selectBygsiddz1(date,usd.getUsd001());
+		for (int j = 0; j<list.size(); j++) {
+			row = sheet.createRow(rowNum);
+			cdyhc item = list.get(j);
+			String zf=(item.getYhc006().equals("W") ? "微信支付" : (item.getYhc006().equals("P") ? "账户余额" : ""));
+			String zt=item.getYhc005().equals("Y") ? "下单" : (item.getYhc005().equals("M") ? "送货结单" : (item.getYhc005().equals("N") ? "退单" : (item.getYhc005().equals('A') ? "待付款" : "")));
+			String[] s1 = {String.valueOf((j + 1)), item.getUsc().getUsc002(),zf, item.getYhc007().toString(), sdf.format(item.getYhc004()), sdf.format(item.getYhc008()), zt};
+			for (int a = 0; a <= 6; a++) {
+				cell = row.createCell(a);
+				cell.setCellValue(s1[a]);
+				cell.setCellStyle(cellStyle);
+			}
+			rowNum++;
+		}
+//		sheet.protectSheet("123456");
+		try {
+			wb.write(outt);
+			outt.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

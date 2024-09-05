@@ -6,6 +6,8 @@ import java.util.List;
 public class cdusfExample {
     protected String orderByClause;
 
+    protected Integer gsid;
+
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
@@ -20,6 +22,14 @@ public class cdusfExample {
 
     public String getOrderByClause() {
         return orderByClause;
+    }
+
+    public Integer getGsid() {
+        return gsid;
+    }
+
+    public void setGsid(Integer gsid) {
+        this.gsid = gsid;
     }
 
     public void setDistinct(boolean distinct) {

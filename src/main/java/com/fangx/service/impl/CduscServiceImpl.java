@@ -93,6 +93,7 @@ public class CduscServiceImpl implements CduscService {
         cduscExample e1 = new cduscExample();
         Criteria c = e1.createCriteria();
         c.andUsc004EqualTo(openid);
+        c.andUsc003EqualTo("A");
         List<cdusc> list = uscMapper.selectByExample(e1);
         return list.size() > 0 ? list.get(0) : null;
     }

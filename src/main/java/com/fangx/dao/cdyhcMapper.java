@@ -35,4 +35,6 @@ public interface cdyhcMapper {
     Float countByExampleje(cdyhcExample e1);
 
     List<cdyhc> selectByExampleAndPage1(cdyhcExample example, RowBounds rowBounds);
+
+    List<cdyhc> selectByExample1(cdyhcExample e1);
 }

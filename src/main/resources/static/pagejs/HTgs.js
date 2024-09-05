@@ -24,6 +24,14 @@ function todz(gsid){
     form_submit("toOr/todz","post",params,"_self");
 }
 
+function tocp(gsid){
+    var params = [ ["id",gsid],
+        ["pages",$("#pages").val()],
+        ["name",$.trim($("#name").val())],
+        ["phone",$.trim($("#phone").val())]];
+    form_submit("toCo/togscp","post",params,"_self");
+}
+
 function tops(gsid){
     var params = [ ["id",gsid],
         , ["pages",$("#pages").val()],
@@ -92,7 +100,19 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(form) {
-            var index = window.parent.tis("保存中");
+             layui.use('layer', function(){
+                var layer = layui.layer;
+                var index = layer.load(1, {
+                    content: "保存中",
+                    shade: [0.1, 'black'], //0.1透明度的白色背景
+                    success: function (layero) {
+                        layero.find('.layui-layer-content').css({
+                            'padding-top': '39px',
+                            'width': '60px'
+                        });
+                    }
+                });
+            });
             form.submit();
         }
     });

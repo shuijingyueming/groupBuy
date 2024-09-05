@@ -130,7 +130,7 @@ public class CdusbServiceImpl implements CdusbService {
     public cdusb selectByweek4(Integer gsid, Integer d, Integer id) {
         cdusbExample e1 = new cdusbExample();
         Criteria c = e1.createCriteria();
-        c.andUsb003LessThan(d);
+        c.andUsb003LessThanOrEqualTo(d);
         c.andUsb003IsNotNull();
         if(id!=null)c.andUsb001NotEqualTo(id);
         cdyhbExample e2 = new cdyhbExample();
@@ -159,7 +159,7 @@ public class CdusbServiceImpl implements CdusbService {
     public cdusb selectByweek6(Integer gsid, Integer d, Integer id) {
         cdusbExample e1 = new cdusbExample();
         Criteria c = e1.createCriteria();
-        c.andUsb003LessThan(d+1);
+        c.andUsb003LessThanOrEqualTo(d+1);
         c.andUsb003IsNotNull();
         if(id!=null)c.andUsb001NotEqualTo(id);
         cdyhbExample e2 = new cdyhbExample();

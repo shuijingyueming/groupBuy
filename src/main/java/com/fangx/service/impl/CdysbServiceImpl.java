@@ -207,10 +207,10 @@ public class CdysbServiceImpl implements CdysbService {
     public cdysb selectBygs3(String time, Integer gsid) throws ParseException {
         cdysbExample e1 = new cdysbExample();
         Criteria c = e1.createCriteria();
-        c.andYsb003LessThanOrEqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb003EqualTo(TIMEMIAO.parse(time+" 00:00:00"));
         c.andYsb004IsNull();
-        c.andYsb007EqualTo("B");
-        c.andSql("((select count(*) from cdysd where ysd002=ysb001 and ysd003='"+gsid+"')>0)");
+//        c.andYsb007EqualTo("B");
+        c.andSql("(Ysb007='A'  OR (Ysb007='B' and (select count(*) from cdysd where ysd002=ysb001 and ysd003='"+gsid+"')>0))");
         e1.setOrderByClause("ysb003");
         List<cdysb> list = ysbMapper.selectByExample(e1);
         return list!=null&&list.size()>0?list.get(0):null;
@@ -240,6 +240,29 @@ public class CdysbServiceImpl implements CdysbService {
         e1.setOrderByClause("ysb003");
         List<cdysb> list = ysbMapper.selectByExample(e1);
         return list!=null&&list.size()>0?list.get(0):null;
+    }
+
+    @Override
+    public cdysb selectBygs6(String time, List<Integer> list1) throws ParseException {
+        cdysbExample e1 = new cdysbExample();
+        Criteria c = e1.createCriteria();
+        c.andYsb003LessThanOrEqualTo(TIMEMIAO.parse(time+" 00:00:00"));
+        c.andYsb004IsNull();
+        if(list1.size()>0){
+            String sql="";
+            sql+=" (";
+            for(Integer i:list1){
+                sql+=" DayOfWeek(ysb003) = "+i+" ";
+                sql+="or";
+            }
+            sql=sql.substring(0,sql.length()-2);
+            sql+=" )";
+            c.andSql(sql);
+            e1.setOrderByClause("ysb003");
+            List<cdysb> list = ysbMapper.selectByExample(e1);
+            return list!=null&&list.size()>0?list.get(0):null;
+        }
+        return null;
     }
 
     public PageBean queryByPage(PageBean pageBean, cdysbExample example) {

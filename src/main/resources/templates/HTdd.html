@@ -35,6 +35,7 @@
 <input type="hidden" th:value="${msg}" id="msg">
 <input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
 
+<input type="hidden" id="mo" name="mo" th:value="${pageobj.othersql8}" />
 <input type="hidden" id="date" name="date" th:value="${pageobj.othersql7}" />
 <body class="sidebar-mini fixed skin-blue">
 <div class="content-wrapper">
@@ -126,9 +127,9 @@
                     </tr>
                 </th:block>
                 <tr th:case="false">
-                    <td></td> <td></td><td></td>
                     <td></td> <td></td> <td></td>
-                    <td></td> <td></td><td></td>
+                    <td></td> <td></td> <td></td>
+                    <td></td> <td></td> <td></td>
                 </tr>
                 </tbody>
             </table>

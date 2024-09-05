@@ -39,12 +39,12 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            对账管理<small></small>
+            日对账管理<small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
             <li>订单管理</li>
-            <li class="active">对账管理</li>
+            <li class="active">日对账管理</li>
         </ol>
     </section>
     <!-- Serach Starts-->
@@ -60,13 +60,13 @@
                             </th:block>
                         </select>
                     </div>
-                    <div class="col-xl-2 col-md-3 col-lg-4">
+                    <div class="col-xl-2 col-md-3 col-lg-4" style="display: none">
                         <input class="form-control" type="month" id="name" name="name" th:value="${pageobj.othersql}">
                     </div>
                     <div class="col-xl-2 col-md-3 col-lg-4">
                         <input class="form-control" type="date" id="start" name="start" th:value="${pageobj.othersql5}" />
                     </div>
-                    <div class="col-xl-2 col-md-3 col-lg-4">
+                    <div class="col-xl-2 col-md-3 col-lg-4" style="display: none">
                         <input class="form-control" type="date" id="end" name="end" th:value="${pageobj.othersql6}" />
                     </div>
                     <button onclick="xxcx()" type="button" class="col-xl-1 col-lg-1 col-12 btn btn-primary">查询</button>
@@ -83,26 +83,25 @@
                 <tr>
                     <th style="max-width:40px;">序号</th>
                     <th>企业名称</th>
-                    <th>生成日期</th>
                     <th>余额消费总金额</th>
                     <th>支付消费总金额</th>
 <!--                    <th>期数</th>-->
                     <th>操作</th>
                 </tr>
                 </thead>
-                <tbody th:switch="${ pageobj.recordCount gt 0 }">
+                <tbody th:switch="${ usdlist.size() gt 0 }">
                 <th:block th:case="true">
-                    <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
+                    <tr th:each="item,stat:${usdlist}" style="border-bottom:1px solid #dee2e6;">
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
-                        <td th:text="${item.usd!=null?item.usd.usd002:''}"></td>
-                        <td th:text="${#dates.format(item.yhk003,'yyyy-MM-dd')}"></td>
-                        <td th:text="${item.yhk005!=null?item.yhk005:0}"></td>
-                        <td th:text="${item.yhk006!=null?item.yhk006:0}"></td>
+                        <td th:text="${item.usd002}"></td>
+                        <td th:text="${item.yze!=null?item.yze:0}"></td>
+                        <td th:text="${item.wze!=null?item.wze:0}"></td>
 <!--                        <td th:text="${item.usb!=null?item.usb.usb002:''}"></td>-->
                         <td>
-                           <!-- <button th:onclick="toxq([[${item.yhk001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>-->
+                           <!-- <button th:onclick="toxq([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>-->
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'L3#')>=0}">
-                                <button th:onclick="toddjl([[${#dates.format(item.yhk003,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">订单管理</button>
+                                <button th:onclick="toddjl([[${pageobj.othersql5}]])" type="button" class="btn btn-primary btn-sm btxz">订单管理</button>
+                                <button th:onclick="todcdz([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">导出</button>
                             </th:block>
                         </td>
                     </tr>
@@ -110,13 +109,13 @@
                 <tr th:case="false">
                     <td></td><td></td>
                     <td></td><td></td>
-                    <td></td><td></td>
+                    <td></td>
 <!--                    <td></td>-->
                 </tr>
                 </tbody>
             </table>
-            <div class="page jsgrid-pager-container" style="display: block;">
-            </div>
+<!--            <div class="page jsgrid-pager-container" style="display: block;">-->
+<!--            </div>-->
         </div>
     </div>
     <!-- DataTable With Scroll Example Section Starts -->

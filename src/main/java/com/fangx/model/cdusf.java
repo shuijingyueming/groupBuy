@@ -4,6 +4,26 @@ import java.util.List;
 
 public class cdusf {
 
+    private Integer gsid;
+
+    public Integer getGsid() {
+        return gsid;
+    }
+
+    public void setGsid(Integer gsid) {
+        this.gsid = gsid;
+    }
+
+    private cdusg usg;
+
+    public cdusg getUsg() {
+        return usg;
+    }
+
+    public void setUsg(cdusg usg) {
+        this.usg = usg;
+    }
+
     private cdysc ysc;
 
     public cdysc getYsc() {

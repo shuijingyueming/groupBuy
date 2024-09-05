@@ -108,6 +108,7 @@
     <div class="card panel panel-default" id="wrapp">
         <div class="jsgrid collapse show p-4" data-parent="#accordion">
             <table id="cpexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                <input type="file" id="file1" name="file1" style="display: none" onchange="daoruwj1(this)"/>
                 <thead>
                 <tr>
                     <th style="max-width:40px;">序号</th>
@@ -139,7 +140,7 @@
                         <!--                        <td th:text="${item.usf009}"></td>-->
                         <td th:text="${item.usf010==null?'无限':item.usf010}"></td>
                         <td th:text="${item.usf013=='A'?'上架':(item.usf013=='B'?'推荐':(item.usf013=='C'?'下架':''))}"></td>
-                        <td th:text="${item.usf016=='A'?'不显示':(item.usf016=='B'?'显示':'')}"></td>
+                        <td th:text="${item.usf016=='A'?'不推荐':(item.usf016=='B'?'推荐':'')}"></td>
                         <td>
                             <button th:onclick="toxq([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
@@ -156,7 +157,7 @@
                                     <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">不推荐</button>
                                 </th:block>
                                 <th:block th:if="${item.usf013!='B'}">
-                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">推荐</button>
+                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">促销推荐</button>
                                 </th:block>
                                 <th:block th:if="${item.usf013!='C'}">
                                     <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['C']])" type="button" class="btn btn-primary btn-sm btxz">下架</button>
@@ -164,10 +165,10 @@
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G8#')>=0}">
                                 <th:block th:if="${item.usf016=='B'}">
-                                    <button th:onclick="xgztx([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">不显示</button>
+                                    <button th:onclick="xgztx([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">销量不推荐</button>
                                 </th:block>
                                 <th:block th:if="${item.usf016=='A'}">
-                                    <button th:onclick="xgztx([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">显示</button>
+                                    <button th:onclick="xgztx([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">销量推荐</button>
                                 </th:block>
                             </th:block>
                            <!-- <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'P1#')>=0}">

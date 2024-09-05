@@ -4,6 +4,26 @@ import java.util.Date;
 import java.util.List;
 
 public class cdusd {
+
+    private Float yze;
+    private Float wze;
+
+    public Float getYze() {
+        return yze;
+    }
+
+    public void setYze(Float yze) {
+        this.yze = yze;
+    }
+
+    public Float getWze() {
+        return wze;
+    }
+
+    public void setWze(Float wze) {
+        this.wze = wze;
+    }
+
     private List<cdyhb> yhblist;
 
     public List<cdyhb> getYhblist() {

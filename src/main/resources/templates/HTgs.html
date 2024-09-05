@@ -111,6 +111,9 @@
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
                                 <button th:onclick="todz([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">对账管理</button>
                             </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G1##')>=0}">
+                                <button th:onclick="tocp([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">菜品管理</button>
+                            </th:block>
 <!--                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">-->
 <!--                                <button th:onclick="tops([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz"> 临时配送管理-->
 <!--                                </button>-->

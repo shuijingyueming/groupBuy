@@ -561,6 +561,32 @@ public class LoginController extends BaseController {
      *  2023/04/26
      */
     @ResponseBody
+    @RequestMapping(value = "/drcp1")
+    public String drcp1(HttpServletRequest request, HttpServletResponse response)throws Exception {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            SystemTZYM(response, "登录失效");
+            return null;
+        }
+        try {
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            MultipartFile file = multipartRequest.getFile("file1");
+            InputStream in = file.getInputStream();
+            String data=ExcelExport.getByExcelcp1(in, file.getOriginalFilename(),yhaService,usfService,yheService,ysaService,usmService);
+            addLog(getUse(request).getUse002(),"导入了菜品信息");
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "B";
+        }
+    }
+
+    /**
+     * 导入excel
+     * 王新苗
+     *  2023/04/26
+     */
+    @ResponseBody
     @RequestMapping(value = "/drcp")
     public String drcp(HttpServletRequest request, HttpServletResponse response)throws Exception {
         HttpSession session = request.getSession();

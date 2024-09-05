@@ -267,6 +267,12 @@ public class DishesController extends BaseController {
             userid = Decrypt(session.getAttribute("user").toString());
             cduse user = useService.getByid(Decrypt(session.getAttribute("user").toString()));
             mav.addObject("msg", request.getParameter("msg"));
+            //导出模板
+            if (request.getParameter("type") != null && request.getParameter("type").equals("E")) {
+                String fpath = LoginController.class.getClass().getResource("/").getPath();
+                downloadLocal(fpath.substring(1,fpath.length())+"static/upload/cp.xls", "菜品导入模板.xls",response, request);
+                return null;
+            }
             if(request.getParameter("zt") != null && !request.getParameter("zt").isEmpty()){
                 if(request.getParameter("zt").equals("K")){
                     cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("id")));
@@ -891,20 +897,37 @@ public class DishesController extends BaseController {
                     }
                 }
                 t.setTz(yscService.selectBytime(DATE.format(t.getD())));
-                t.setUsdlist(list);
+                List<cdusd> list1=new ArrayList<>();
+                list.stream().forEach(p -> {if (!list1.contains(p)) {list1.add(p);}}
+                );
+                t.setUsdlist(list1);
+                t.setUsdlist(list1);
             }else{
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(ysb.getYsb003());
                 List<cdusd> usdlist=usdService.serachBytime(getWeekDay1(calendar));
                 List<cdusd> list=new ArrayList<>();
                 for(cdusd usd:usdlist){
+                    list.add(usd);
+//                    cdysb ysb1=ysbService.selectBygs4(DATE.format(t.getD()),usd.getUsd001());;
+//                    if(ysb1==null){
+//                        ysb1=ysbService.selectBygs5(DATE.format(t.getD()),"A",usd.getUsd001());;
+//                        if(ysb1==null)list.add(usd);
+//                    }
+                }
+                calendar.setTime(t.getD());
+                List<cdusd> usdlist1=usdService.serachBytime(getWeekDay1(calendar));
+                for(cdusd usd:usdlist1){
                     cdysb ysb1=ysbService.selectBygs4(DATE.format(t.getD()),usd.getUsd001());;
                     if(ysb1==null){
                         ysb1=ysbService.selectBygs5(DATE.format(t.getD()),"A",usd.getUsd001());;
                         if(ysb1==null)list.add(usd);
                     }
                 }
-                t.setUsdlist(list);
+                List<cdusd> list1=new ArrayList<>();
+                list.stream().forEach(p -> {if (!list1.contains(p)) {list1.add(p);}}
+                );
+                t.setUsdlist(list1);
             }
 
         }

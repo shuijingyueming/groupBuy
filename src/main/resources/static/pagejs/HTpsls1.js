@@ -94,7 +94,19 @@ $(document).ready(function () {
                 $("#t4").after('<label id="t1-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t4">配送日期要大于原配送日期</label>');
                 return;
             }
-            var index = window.parent.tis("保存中");
+             layui.use('layer', function(){
+                var layer = layui.layer;
+                var index = layer.load(1, {
+                    content: "保存中",
+                    shade: [0.1, 'black'], //0.1透明度的白色背景
+                    success: function (layero) {
+                        layero.find('.layui-layer-content').css({
+                            'padding-top': '39px',
+                            'width': '60px'
+                        });
+                    }
+                });
+            });
             form.submit();
         }
     });

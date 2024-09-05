@@ -19,7 +19,7 @@ function tocp(date,lx){
         ["t",$.trim($("#t").val())],
         ["l",$.trim($("#l").val())],
         ["m1",$.trim($("#m1").val())],
-        ["date",$.trim($("#date").val())],
+        ["date",date],
         ["qsid",$.trim($("#qsid").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocpls1cp","post",params,"_self");
@@ -71,7 +71,7 @@ function getEvents(y, m,d, s,t) {
                                     title: (item.tz?'(有调整)':'')+'菜品管理',
                                     start: da,
                                     allDay: true,
-                                    hclick:'tocp("'+getTime(da,'YY-MM-DD')+'","'+"&lx="+(i+1>d+7?'B':'A')+'")',
+                                    hclick:'tocp("'+getTime(da,'YY-MM-DD')+'","'+(i+1>d+7?'B':'A')+'")',
                                     // url: 'toDi/tocpls1cp?date='+getTime(da,'YY-MM-DD')+"&lx="+(i+1>d+7?'B':'A')+"&t="+$('#t').val()+"&l="+$('#l').val()+"&m1="+$('#m1').val(),
                                     backgroundColor:(item.tz?'#f56954': '#00c0ef'), //red
                                     borderColor: (item.tz?'#f56954': '#00c0ef') //red

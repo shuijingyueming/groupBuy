@@ -4,6 +4,11 @@ function reback(){
     form_submit("toOr/todz","post",params,"_self");
 }
 
+function rebacky(){
+    var params = [["fh",$("#fhlx").val()]];
+    form_submit("toOr/toydz","post",params,"_self");
+}
+
 $(document).ready(function () {
     //菜单样式
     if($("#menuName", parent.document).val()!=""){
@@ -28,7 +33,7 @@ function fanye(pageindex) {
 //翻页
 function usefanye(pageindex){
     var params = [["pages",pageindex],
-        ["date",$.trim($("#date").val())],
+         ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
         ["start",$.trim($("#start").val())],
         ["end",$.trim($("#end").val())],
         ["zffs",$.trim($("#zffs").val())],
@@ -43,7 +48,7 @@ function usefanye(pageindex){
 
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
-        ["date",$.trim($("#date").val())],
+         ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
         ["start",$.trim($("#start").val())],
         ["end",$.trim($("#end").val())],
         ["zffs",$.trim($("#zffs").val())],
@@ -60,7 +65,7 @@ function totk(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","T"], ["uname",uname],
             ["pages",$("#pages").val()],
-            ["date",$.trim($("#date").val())],
+             ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
@@ -79,7 +84,7 @@ function del(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","D"], ["uname",uname],
             ["pages",$("#pages").val()],
-            ["date",$.trim($("#date").val())],
+             ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
@@ -102,7 +107,7 @@ function delete_item(){
     if (r == true) {
         var params = [ ["id",checked_item], ["zt","AD"],
             ["pages",$("#pages").val()],
-            ["date",$.trim($("#date").val())],
+             ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],

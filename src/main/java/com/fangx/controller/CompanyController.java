@@ -83,6 +83,95 @@ public class CompanyController extends BaseController {
     }
 
     /**
+     * 进入公司管理页面
+     * othersql:登录名  othersql1:机构
+     * @return 用户页面
+     */
+    @RequestMapping("/togscp")
+    public ModelAndView togscp(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
+        int userid = 0;//后台登录用户ID
+        if(session.getAttribute("user")==null){
+            SystemTZYM(response,"登录失效");
+            return null;
+        }else{
+            userid = Decrypt(session.getAttribute("user").toString());
+            cduse user = useService.getByid(Decrypt(session.getAttribute("user").toString()));
+            mav.addObject("msg", request.getParameter("msg"));
+            //导出模板
+            if (request.getParameter("type") != null && request.getParameter("type").equals("E")) {
+                String fpath = LoginController.class.getClass().getResource("/").getPath();
+                downloadLocal(fpath.substring(1,fpath.length())+"static/upload/staff.xls", "员工导入模板.xls",response, request);
+                return null;
+            }
+            PageBean pb = new PageBean();
+            if(request.getParameter("fh")!=null && !request.getParameter("fh").isEmpty()){
+                if(request.getParameter("fh").indexOf("GS")>=0){
+                    pb=(PageBean)session.getAttribute("GSpb");
+                    session.removeAttribute("GSpb");
+                }
+            }else{
+                if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty()){
+                    pb.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
+                }
+                if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
+                    pb.setOthersql(request.getParameter("name"));
+                }
+                if (request.getParameter("phone") != null && !request.getParameter("phone").isEmpty()) {
+                    pb.setOthersql1(request.getParameter("phone"));
+                }
+                if (request.getParameter("id") != null && !request.getParameter("id").isEmpty()) {
+                    pb.setOthersql2(request.getParameter("id"));
+                }
+                if (request.getParameter("cpname") != null && !request.getParameter("cpname").isEmpty()) {
+                    pb.setOthersql3(request.getParameter("cpname"));
+                }
+            }
+            delsession(session,request.getParameter("fh"));
+            List<cdusf> list=usfService.serachAllgs(pb.getOthersql2(),pb.getOthersql3());
+            mav.addObject("pageobj", pb);
+            mav.addObject("list", list);
+        }
+        mav.setViewName("HTgscp");
+        return mav;
+    }
+
+    /**
+     * 根据id获取公司
+     * 王新苗
+     * @param request
+     * @param response
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addgscp",produces= MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
+    public String addgscp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String jg = request.getParameter("jg");
+        String jgid = request.getParameter("jgid");
+        HashMap result = new HashMap();
+        if(!jg.isEmpty()){
+            Integer cpid = Integer.valueOf(request.getParameter("cpid"));
+            Integer gsid = Integer.valueOf(request.getParameter("gsid"));
+            cdusg item=new cdusg();
+            item.setUsg002(cpid);
+            item.setUsg003(gsid);
+            item.setUsg005(Float.valueOf(jg));
+            item.setUsg007(new Date());
+            if(!jgid.isEmpty()){
+                item.setUsg001(jgid);
+                usgService.update(item);
+            }else{
+                item.setUsg001(UUID.randomUUID().toString().replace("-",""));
+                usgService.insert(item);
+            }
+            result.put("item",item);
+        }else if(!jgid.isEmpty()){
+            usgService.delete(jgid);
+        }
+        return JSON.toJSONString(result);
+    }
+
+    /**
      * 根据id获取公司
      * 王新苗
      * @param request
@@ -234,7 +323,7 @@ public class CompanyController extends BaseController {
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", uscService.selectPageBean(pb));
-            mav.addObject("usdlist", usdService.serachAll());
+            mav.addObject("usdlist", usdService.serachAll(null));
         }
         mav.setViewName("HTgsyg");
         return mav;
@@ -388,7 +477,7 @@ public class CompanyController extends BaseController {
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", yhdService.selectPageBean(pb));
-            mav.addObject("usdlist", usdService.serachAll());
+            mav.addObject("usdlist", usdService.serachAll(null));
             mav.addObject("usclist", uscService.serachAll(null));
         }
         mav.setViewName("HTgscz");
@@ -586,7 +675,7 @@ public class CompanyController extends BaseController {
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", ysbService.selectPageBean(pb));
-            mav.addObject("usdlist", usdService.serachAll());
+            mav.addObject("usdlist", usdService.serachAll(null));
         }
         mav.setViewName("HTpsls1");
         return mav;

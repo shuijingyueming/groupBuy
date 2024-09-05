@@ -116,7 +116,7 @@
                                 </th:block>
                                 <th:block th:if="${(list==null||list.size() == 0)&&(listA==null)}">
                                     <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'E2#')>=0}">
-                                    <span th:onclick="edit('','','A')">+</span>&nbsp;&nbsp;添加一级分类
+                                    <span th:onclick="edit('','','A')"><i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp;&nbsp;添加一级分类</span>
                                     </th:block>
                                 </th:block>
                             </div>

@@ -29,6 +29,14 @@
   <resultMap id="BaseResultMap2" type="com.fangx.model.cdusf"  extends="BaseResultMap1">
     <collection  property="usnlist"  column="USF001"  select="com.fangx.dao.cdusnMapper.selectBycpid"/>
   </resultMap>
+  <resultMap id="BaseResultMap3" type="com.fangx.model.cdusf"  extends="BaseResultMap">
+    <result column="gsid" jdbcType="INTEGER" property="gsid" />
+    <collection  property="usg"  column="{cpid=USF001,gsid=gsid}"  select="com.fangx.dao.cdusgMapper.selectBygsid"/>
+  </resultMap>
+  <resultMap id="BaseResultMap4" type="com.fangx.model.cdusf"  extends="BaseResultMap2">
+    <result column="gsid" jdbcType="INTEGER" property="gsid" />
+    <collection  property="usg"  column="{cpid=USF001,gsid=gsid}"  select="com.fangx.dao.cdusgMapper.selectBygsid"/>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -522,7 +530,7 @@
     </if>
   </select>
 
-  <select id="selectByExampleAndPage2" resultMap="BaseResultMap2" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
+  <select id="selectByExampleAndPage3" resultMap="BaseResultMap2" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
     select
     <if test="distinct" >
       distinct
@@ -536,7 +544,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample1" parameterType="com.fangx.model.cdusfExample" resultMap="BaseResultMap1">
+  <select id="selectByExample1" parameterType="com.fangx.model.cdusfExample" resultMap="BaseResultMap1" flushCache="true" useCache="false">
     select
     <if test="distinct">
       distinct
@@ -550,4 +558,57 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="selectByExample2" parameterType="com.fangx.model.cdusfExample" resultMap="BaseResultMap3" flushCache="true" useCache="false">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" /> <if test="gsid != null">,${gsid} as gsid</if>
+    from cdusf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPage2" resultMap="BaseResultMap4" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" /> <if test="gsid != null">,${gsid} as gsid</if>
+    from cdusf
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleAndPageqs2" resultMap="BaseResultMap4" parameterType="com.fangx.model.cdusfExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    <if test="cdusfExample != null"><if test="cdusfExample.gsid != null">,${cdusfExample.gsid} as gsid</if></if>
+    from cdusf left join cdyha on cdusf.usf001=cdyha.yha002
+    <where>
+      <if test="cdusfExample != null">
+        <foreach collection="cdusfExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdyhaExample != null">
+        <foreach collection="cdyhaExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdusfExample != null">
+      <if test="cdusfExample.orderByClause != null">
+        order by ${cdusfExample.orderByClause}
+      </if>
+    </if>
+  </select>
+
 </mapper>

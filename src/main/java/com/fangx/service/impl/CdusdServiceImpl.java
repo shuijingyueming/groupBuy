@@ -81,8 +81,11 @@ public class CdusdServiceImpl implements CdusdService {
     }
 
     @Override
-    public List<cdusd> serachAll() {
-        return usdMapper.selectByExample(null);
+    public List<cdusd> serachAll(String gsid) {
+        cdusdExample e1 = new cdusdExample();
+        Criteria c = e1.createCriteria();
+        if(gsid!=null&&!gsid.isEmpty())c.andUsd001EqualTo(Integer.valueOf(gsid));
+        return usdMapper.selectByExample(e1);
     }
 
     @Override

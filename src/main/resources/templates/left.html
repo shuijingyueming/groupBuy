@@ -179,7 +179,10 @@
                                 <li id="menu_e1"><a _href="toOr/todd">订单管理</a></li>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
-                                <li id="menu_e2"><a _href="toOr/todz">对账管理</a></li>
+                                <li id="menu_e2"><a _href="toOr/todz">日对账管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
+                                <li id="menu_e4"><a _href="toOr/toydz">月对账管理</a></li>
                             </th:block>
                         </ul>
                     </li>

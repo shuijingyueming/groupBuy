@@ -257,6 +257,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                                         yha.setYha004(ysc!=null?ysc.getYsc006():(usf.getUsf010()!=null?usf.getUsf010():0));
                                         yha.setYha005(usf.getUsf010()==null&ysc==null?"P":"C");
                                         yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
+                                        yha.setYha009(ysc!=null?ysc.getYsc007():(usf.getUsf013().equals("C")?"B":"A"));
                                         yhaService.insert(yha);
                                         if(ysc!=null){
                                             ysc.setYsc005("A");
@@ -290,7 +291,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                                             yha.setYha004(ysc!=null?ysc.getYsc006():usf.getUsf010());
                                             yha.setYha005(usf.getUsf010()==0&ysc==null?"P":"C");
                                             yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
-                                            yha.setYha009(usf.getUsf013().equals("C")?"B":"A");
+                                            yha.setYha009(ysc!=null?ysc.getYsc007():(usf.getUsf013().equals("C")?"B":"A"));
                                             yhaService.insert(yha);
                                             if(ysc!=null){
                                                 ysc.setYsc005("A");
@@ -412,50 +413,50 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
         }.start();
 
         //每天 00:00:10做日对账,主要对账前一天数据
-        new Thread(){
-            public void run(){
-                this.setName("daydj");
-                while (true) {
-                    try {
-                        Thread.sleep(3000);
-                        long current = System.currentTimeMillis();// 当前时间毫秒数
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(new Date());
-                        calendar.add(Calendar.DAY_OF_MONTH, 1);
-                        calendar.set(Calendar.HOUR_OF_DAY, 0);
-                        calendar.set(Calendar.MINUTE, 0);
-                        calendar.set(Calendar.SECOND, 10);
-                        calendar.set(Calendar.MILLISECOND, 0);
-                        //日对账表
-                        Calendar ca = Calendar.getInstance();//得到一个Calendar的实例
-                        ca.setTime(new Date()); //设置时间为当前时间
-                        ca.add(Calendar.DATE, -1);//前一天
-                        cdyhk yhk=yhkService.selectBycurentday(ca.getTime(),null);
-                        //电站日对账
-                        List<cdusd> usdlist=usdService.serachAll();
-                        for(cdusd usd:usdlist){
-                            yhk=yhkService.selectBycurentday(ca.getTime(),usd.getUsd001());
-                            if(yhk==null){
-                                yhk=new cdyhk();
-                                yhk.setYhk001(UUID.randomUUID().toString().replaceAll("-", ""));
-                                yhk.setYhk002(usd.getUsd001());
-                                yhk.setYhk003(sf.parse(sf1.format(ca.getTime())+" 00:00:00"));
-                                yhk.setYhk005(yhcService.selectBygsid(ca.getTime(),usd.getUsd001(),"P",null));
-                                yhk.setYhk006(yhcService.selectBygsid(ca.getTime(),usd.getUsd001(),"W",null));
-                                yhk.setYhk008(getWeekDay(ca));
-                                yhkService.insert(yhk);
-                            }else{
-                                System.out.println(usd.getUsd002()+"日对账");
-                            }
-                        }
-                        long tomorrowzero = calendar.getTimeInMillis();
-                        long tomorrowzeroSeconds = (tomorrowzero- current);
-                        System.out.println("离日对账时间："+tomorrowzeroSeconds+"秒");
-                        Thread.sleep(tomorrowzeroSeconds);
-                    } catch (Exception e) { }
-                }
-            }
-        }.start();
+//        new Thread(){
+//            public void run(){
+//                this.setName("daydj");
+//                while (true) {
+//                    try {
+//                        Thread.sleep(3000);
+//                        long current = System.currentTimeMillis();// 当前时间毫秒数
+//                        Calendar calendar = Calendar.getInstance();
+//                        calendar.setTime(new Date());
+//                        calendar.add(Calendar.DAY_OF_MONTH, 1);
+//                        calendar.set(Calendar.HOUR_OF_DAY, 0);
+//                        calendar.set(Calendar.MINUTE, 0);
+//                        calendar.set(Calendar.SECOND, 10);
+//                        calendar.set(Calendar.MILLISECOND, 0);
+//                        //日对账表
+//                        Calendar ca = Calendar.getInstance();//得到一个Calendar的实例
+//                        ca.setTime(new Date()); //设置时间为当前时间
+//                        ca.add(Calendar.DATE, -1);//前一天
+//                        cdyhk yhk=yhkService.selectBycurentday(ca.getTime(),null);
+//                        //电站日对账
+//                        List<cdusd> usdlist=usdService.serachAll(null);
+//                        for(cdusd usd:usdlist){
+//                            yhk=yhkService.selectBycurentday(ca.getTime(),usd.getUsd001());
+//                            if(yhk==null){
+//                                yhk=new cdyhk();
+//                                yhk.setYhk001(UUID.randomUUID().toString().replaceAll("-", ""));
+//                                yhk.setYhk002(usd.getUsd001());
+//                                yhk.setYhk003(sf.parse(sf1.format(ca.getTime())+" 00:00:00"));
+//                                yhk.setYhk005(yhcService.selectBygsid(ca.getTime(),usd.getUsd001(),"P",null));
+//                                yhk.setYhk006(yhcService.selectBygsid(ca.getTime(),usd.getUsd001(),"W",null));
+//                                yhk.setYhk008(getWeekDay(ca));
+//                                yhkService.insert(yhk);
+//                            }else{
+//                                System.out.println(usd.getUsd002()+"日对账");
+//                            }
+//                        }
+//                        long tomorrowzero = calendar.getTimeInMillis();
+//                        long tomorrowzeroSeconds = (tomorrowzero- current);
+//                        System.out.println("离日对账时间："+tomorrowzeroSeconds+"秒");
+//                        Thread.sleep(tomorrowzeroSeconds);
+//                    } catch (Exception e) { }
+//                }
+//            }
+//        }.start();
 
 
         //线程获取微信的token

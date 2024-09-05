@@ -49,4 +49,6 @@ public interface CdysbService extends IService<cdysb> {
     cdysb selectBygs5(String time,String zt, Integer gsid)throws ParseException;
 
     List<cdysb> selectBycpid2(String time);
+
+    cdysb selectBygs6(String time, List<Integer> list) throws ParseException;
 }

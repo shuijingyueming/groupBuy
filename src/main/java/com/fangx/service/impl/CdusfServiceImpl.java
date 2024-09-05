@@ -153,6 +153,16 @@ public class CdusfServiceImpl implements CdusfService {
         return list;
     }
 
+    @Override
+    public List<cdusf> serachAllgs(String gsid, String cpname) {
+        cdusfExample e1 = new cdusfExample();
+        Criteria c = e1.createCriteria();
+        if(gsid!=null)e1.setGsid(Integer.valueOf(gsid));
+        if(cpname!=null) c.andUsf002Like("%"+cpname+"%");
+        List<cdusf> list = usfMapper.selectByExample2(e1);
+        return list;
+    }
+
 
     public PageBean queryByPage1(PageBean pageBean, cdusfExample e1, cdyhaExample e2) {
         int page = (int) pageBean.getCurrentPage();
@@ -196,13 +206,16 @@ public class CdusfServiceImpl implements CdusfService {
         }
         if(pb.getOthersql7()!=null){
             if(pb.getOthersql7().equals("A")){
+                c.andUsf013EqualTo("B");
                 e1.setOrderByClause("usf013 desc,usf001 desc");
             }else{
-                e1.setOrderByClause("usf008 desc,usf001 desc");
+                c.andUsf016EqualTo("B");
+                e1.setOrderByClause("usf016 desc,usf008 desc,usf001 desc");
             }
         }else{
             e1.setOrderByClause("usf001 desc");
         }
+        if(pb.getOthersql10()!=null)e1.setGsid(Integer.valueOf(pb.getOthersql10()));
         return  pb.getOthersql8()!=null?queryByPage2(pb, e1,e2):queryByPage3(pb, e1);
     }
     public PageBean queryByPage3(PageBean pageBean, cdusfExample example) {
@@ -215,7 +228,7 @@ public class CdusfServiceImpl implements CdusfService {
         //check page
         page = page < 1 ? 1 : ((page > count) ? count : page);
         //query
-        List<cdusf> list = usfMapper.selectByExampleAndPage2(example, new RowBounds((page - 1) * size, size));
+        List<cdusf> list = pageBean.getOthersql10()!=null?usfMapper.selectByExampleAndPage2(example, new RowBounds((page - 1) * size, size)):usfMapper.selectByExampleAndPage3(example, new RowBounds((page - 1) * size, size));
         //save to PageBean
         pageBean.setCurrentPage(page);
         pageBean.setPageCount(count);
@@ -235,7 +248,7 @@ public class CdusfServiceImpl implements CdusfService {
         //check page
         page = page < 1 ? 1 : ((page > count) ? count : page);
         //query
-        List<cdusf> list = usfMapper.selectByExampleAndPageqs1(e1,e2, new RowBounds((page - 1) * size, size));
+        List<cdusf> list =  pageBean.getOthersql10()!=null?usfMapper.selectByExampleAndPageqs2(e1,e2, new RowBounds((page - 1) * size, size)):usfMapper.selectByExampleAndPageqs1(e1,e2, new RowBounds((page - 1) * size, size));
 //        List<cdusf> list = usfMapper.selectByExampleAndPage2(e1, new RowBounds((page - 1) * size, size));
         //save to PageBean
         pageBean.setCurrentPage(page);

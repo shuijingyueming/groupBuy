@@ -59,7 +59,19 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(form) {
-            var index = window.parent.tis("保存中");
+             layui.use('layer', function(){
+                var layer = layui.layer;
+                var index = layer.load(1, {
+                    content: "保存中",
+                    shade: [0.1, 'black'], //0.1透明度的白色背景
+                    success: function (layero) {
+                        layero.find('.layui-layer-content').css({
+                            'padding-top': '39px',
+                            'width': '60px'
+                        });
+                    }
+                });
+            });
             form.submit();
         }
     });
@@ -470,4 +482,72 @@ function xgtj(){
         $("#sdid").val("");
         $("#modal-2").hide();
     }
+}
+
+function todc(){
+    var r = confirm("确定导出模板吗？");
+    if (r == true) {
+        var params = [ ["type","E"],
+            ["yjid",$.trim($("#yjid").val())],
+            ["ejid",$.trim($("#ejid").val())],
+            ["name",$.trim($("#name").val())]];
+        form_submit("toDi/tocp","get",params,"_self");
+    }
+}
+
+
+function dryg(){
+    $('#file1').click();
+}
+
+function daoruwj1() {
+    var formData = new FormData();
+    formData.append("file1", document.getElementById("file1").files[0]);
+    // var index = layer.load(1, {
+    //     content: "导入中",
+    //     shade: [0.1, 'black'], //0.1透明度的白色背景
+    //     success: function (layero) {
+    //         layero.find('.layui-layer-content').css({
+    //             'padding-top': '39px',
+    //             'width': '60px'
+    //         });
+    //     }
+    // });
+    $.ajax({
+        url: 'drcp1',
+        type: 'POST',
+        data: formData,
+        //async: false,                      //async 设置为 false，则所有的请求均为同步请求，在没有返回值之前，同步请求将锁住浏览器
+        cache: false,                      // 不缓存
+        processData: false,                // jQuery不要去处理发送的数据
+        contentType: false,                // jQuery不要去设置Content-Type请求头
+        dataType: 'text',
+        success: function (data) {
+            // layer.close(index)
+            if (data == 'A') {
+                var params = [["pages",$("#pages").val()],
+                    ["yjid",$.trim($("#yjid").val())],
+                    ["ejid",$.trim($("#ejid").val())],
+                    ["name",$.trim($("#name").val())]];
+                form_submit("toDi/tocp","get",params,"_self");
+                // });
+            } else if (data == 'B') {
+                // layer.msg("导入失败");
+                $("#file1").val("");
+            } else {
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.ready(function(){
+                        layer.msg(data);
+                    });
+                });
+                $("#file1").val("");
+                // deleteCookie('tab_list');
+                // deleteCookie('left_menu_father');
+                // deleteCookie('left_menu_son');
+                // var error = "登录失效";
+                // window.parent.location = 'login?error=' + error;
+            }
+        }
+    });
 }
