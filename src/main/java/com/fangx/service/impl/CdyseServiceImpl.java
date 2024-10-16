@@ -8,6 +8,7 @@ import com.fangx.model.cdusdExample;
 import com.fangx.model.cdyse;
 import com.fangx.model.cdyseExample;
 import com.fangx.model.cdyseExample.Criteria;
+import com.fangx.service.CdyhcService;
 import com.fangx.service.CdyseService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ import java.util.function.Function;
 public class CdyseServiceImpl implements CdyseService {
     @Autowired
     private cdyseMapper yseMapper;
+    @Autowired
+    private CdyhcService yhcService;
 
     protected final static SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     protected final static SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -44,7 +47,9 @@ public class CdyseServiceImpl implements CdyseService {
         cdyseExample e1 = new cdyseExample();
         Criteria c = e1.createCriteria();
 //        if(pb.getOthersql()!=null) c.andyse007Like("%"+pb.getOthersql()+"%");
+        if(pb.getOthersql3()!=null) c.andYse002EqualTo(Integer.valueOf(pb.getOthersql3()));
         if(pb.getOthersql2()!=null)c.andSql("(DATE_FORMAT(yse003,'%Y-%m-%d')='"+pb.getOthersql2()+"')");
+        if(pb.getOthersql4()!=null)c.andSql("(DATE_FORMAT(yse003,'%Y-%m')='"+pb.getOthersql4()+"')");
         cdusdExample e2 = new cdusdExample();
         cdusdExample.Criteria c1 = e2.createCriteria();
         if(pb.getOthersql()!=null) c1.andUsd002Like("%"+pb.getOthersql()+"%");
@@ -100,16 +105,41 @@ public class CdyseServiceImpl implements CdyseService {
     }
 
     @Override
-    public cdyse selectByDS(String date, Integer gsid) {
+    public cdyse selectByDS(String date, String date1, Integer gsid) {
         cdyseExample e1 = new cdyseExample();
         Criteria c = e1.createCriteria();
         c.andYse002EqualTo(gsid);
         c.andSql("(DATE_FORMAT(yse003,'%Y-%m-%d')='"+date+"')");
+        c.andSql("(DATE_FORMAT(yse004,'%Y-%m-%d')='"+date1+"')");
         List<cdyse> list = yseMapper.selectByExample(e1);
         return list.size() > 0 ? list.get(0) : null;
     }
 
-    public PageBean queryByPage(PageBean pageBean, cdyseExample e1, cdusdExample e2) {
+    @Override
+    public void updateBycurentday(Date time, Date time1, Integer gsid) throws ParseException {
+        cdyse yse=new cdyse();
+        yse.setYse003(time1);
+        cdyseExample e1 = new cdyseExample();
+        Criteria c = e1.createCriteria();
+        if(gsid!=null) c.andYse002EqualTo(gsid);
+        c.andYse004GreaterThanOrEqualTo(sf.parse(sf1.format(time)+" 00:00:00"));
+        c.andYse004LessThanOrEqualTo(sf.parse(sf1.format(time)+" 23:59:59"));
+        yseMapper.updateByExampleSelective(yse,e1);
+    }
+
+    @Override
+    public void updateBycurentday1(Date time, Date time1, Integer gsid) throws ParseException {
+        cdyse yse=new cdyse();
+        yse.setYse003(time1);
+        yse.setYse004(time1);
+        cdyseExample e1 = new cdyseExample();
+        Criteria c = e1.createCriteria();
+        if(gsid!=null) c.andYse002EqualTo(gsid);
+        c.andSql("(DATE_FORMAT(yse004,'%Y-%m-%d')='"+sf1.format(time)+"')");
+        yseMapper.updateByExampleSelective(yse,e1);
+    }
+
+    public PageBean queryByPage(PageBean pageBean, cdyseExample e1, cdusdExample e2) throws ParseException {
         int page = (int) pageBean.getCurrentPage();
         int size = pageBean.getPageSize();
         //record sum
@@ -120,6 +150,12 @@ public class CdyseServiceImpl implements CdyseService {
         page = page < 1 ? 1 : ((page > count) ? count : page);
         //query
         List<cdyse> list = yseMapper.selectByExampleAndPage1(e1,e2, new RowBounds((page - 1) * size, size));
+        for(cdyse yse:list){
+            yse.setRs(yhcService.selectBygsidRS(yse.getYse003(),yse.getYse002(),"P",null));
+            yse.setZze(yhcService.selectBygsid(yse.getYse003(),yse.getYse002(),"P",null));
+            yse.setYze(yhcService.selectBygsid(yse.getYse003(),yse.getYse002(),"P",null));
+            yse.setWze(yhcService.selectBygsid(yse.getYse003(),yse.getYse002(),"W",null));
+        }
         //save to PageBean
         pageBean.setCurrentPage(page);
         pageBean.setPageCount(count);

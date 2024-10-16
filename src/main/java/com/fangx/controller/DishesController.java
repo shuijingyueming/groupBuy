@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.fangx.model.*;
 import com.fangx.until.ExcelExport;
 import com.fangx.until.OSSUtil;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -284,7 +283,7 @@ public class DishesController extends BaseController {
                     }
                     usfService.update(item);
 //                    if(item.getUsf013().equals("C")){
-                        List<cdusb> list=usbService.serachAll(null);
+                        List<cdusb> list=usbService.serachAll(null, null);
                         for(cdusb usb:list){
                             cdyha yha=yhaService.getByqscp(usb.getUsb001(),item.getUsf001());
                             if(yha==null){
@@ -310,13 +309,14 @@ public class DishesController extends BaseController {
                         }
 //                    }
                     mav.addObject("msg","C");
-                }else if(request.getParameter("zt").equals("U")){
+                }
+                else if(request.getParameter("zt").equals("U")){
                     addLog(getUse(request).getUse002(),"修改了菜品名字为：【" + request.getParameter("uname") + "】的状态");
                     cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("id")));
                     item.setUsf013(request.getParameter("type"));
                     usfService.update(item);
                     if(!item.getUsf013().equals("B")&&request.getParameter("TK") != null &&request.getParameter("TK").equals("TK")){
-                        List<cdusb> list=usbService.serachAll(null);
+                        List<cdusb> list=usbService.serachAll(null, null);
                         for(cdusb usb:list){
                             cdyha yha=yhaService.getByqscp(usb.getUsb001(),item.getUsf001());
                             if(yha==null){
@@ -340,16 +340,23 @@ public class DishesController extends BaseController {
                         }
                     }
                     mav.addObject("msg","C");
-                }else if(request.getParameter("zt").equals("X")){
+                }
+                else if(request.getParameter("zt").equals("X")){
                     addLog(getUse(request).getUse002(),"修改了菜品名字为：【" + request.getParameter("uname") + "】的销量状态");
                     cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("id")));
                     item.setUsf016(request.getParameter("type"));
                     usfService.update(item);
                     mav.addObject("msg","C");
-                }else if(request.getParameter("zt").equals("D")){
+                }
+                else if(request.getParameter("zt").equals("D")){
                     addLog(getUse(request).getUse002(),"删除了菜品名字为：【" + request.getParameter("uname") + "】的信息");
-                    cduse item =useService.getByid(Integer.parseInt(request.getParameter("id")));
-                    useService.update(item);
+                    cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("id")));
+                    usfService.delete(item.getUsf001());
+                    for(cdusn usn:item.getUsnlist()){
+                        OSSUtil.deleteFile(usn.getUsn003(),"A");
+                        usnService.delete(usn.getUsn001());
+                    }
+                    yhaService.deletebyid(item.getUsf001());
                     mav.addObject("msg","D");
                 }
             }
@@ -522,7 +529,7 @@ public class DishesController extends BaseController {
                 new ExcelExport().Excelexportyhdd(request, response,usbService,usfService,usdService,uscService,yhcService,ushService,Integer.valueOf(request.getParameter("id")), request.getParameter("date"));
                 return null;
             }
-            mav.addObject("list",usbService.serachAll(null));
+            mav.addObject("list",usbService.serachAll(null, null));
         }
         mav.setViewName("HTqs");
         return mav;
@@ -574,15 +581,7 @@ public class DishesController extends BaseController {
             item = usbService.insert(item);
             mav.addObject("msg", "I");
             List<cdusf> list=usfService.serachAll();
-            cdyha yha=new cdyha();
-            for(cdusf usf:list){
-                yha.setYha002(usf.getUsf001());
-                yha.setYha003(item.getUsb001());
-                yha.setYha004(usf.getUsf010());
-                yha.setYha005(usf.getUsf010()==0?"P":"C");
-                yha.setYha006(0);
-                yhaService.insert(yha);
-            }
+            setList(item,null,list);
         }
 //        mav.addObject("name", request.getParameter("name"));
         mav.setViewName("redirect:/toDi/toqs");
@@ -880,58 +879,49 @@ public class DishesController extends BaseController {
         HashMap result = new HashMap();
         time t=new time();
         t.setD(d);
-        cdysb ysb=ysbService.selectBycpid1(DATE.format(t.getD()),null);
-        t.setZt(ysb==null);
+        int s=ysbService.countBygstime(null,null,DATE.format(d),"A","A");
+        t.setZt(s>0);
         if(t.isZt()){
-            ysb=ysbService.selectBycpid1(null,DATE.format(t.getD()));
-            if(ysb==null){
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(t.getD());
-                List<cdusd> usdlist=usdService.serachBytime(getWeekDay1(calendar));
-                List<cdusd> list=new ArrayList<>();
-                for(cdusd usd:usdlist){
-                    cdysb ysb1=ysbService.selectBygs4(DATE.format(t.getD()),usd.getUsd001());;
-                    if(ysb1==null){
-                        ysb1=ysbService.selectBygs5(DATE.format(t.getD()),"A",usd.getUsd001());;
-                        if(ysb1==null)list.add(usd);
-                    }
-                }
-                t.setTz(yscService.selectBytime(DATE.format(t.getD())));
-                List<cdusd> list1=new ArrayList<>();
-                list.stream().forEach(p -> {if (!list1.contains(p)) {list1.add(p);}}
-                );
-                t.setUsdlist(list1);
-                t.setUsdlist(list1);
-            }else{
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(ysb.getYsb003());
-                List<cdusd> usdlist=usdService.serachBytime(getWeekDay1(calendar));
-                List<cdusd> list=new ArrayList<>();
-                for(cdusd usd:usdlist){
-                    list.add(usd);
-//                    cdysb ysb1=ysbService.selectBygs4(DATE.format(t.getD()),usd.getUsd001());;
-//                    if(ysb1==null){
-//                        ysb1=ysbService.selectBygs5(DATE.format(t.getD()),"A",usd.getUsd001());;
-//                        if(ysb1==null)list.add(usd);
-//                    }
-                }
-                calendar.setTime(t.getD());
-                List<cdusd> usdlist1=usdService.serachBytime(getWeekDay1(calendar));
-                for(cdusd usd:usdlist1){
-                    cdysb ysb1=ysbService.selectBygs4(DATE.format(t.getD()),usd.getUsd001());;
-                    if(ysb1==null){
-                        ysb1=ysbService.selectBygs5(DATE.format(t.getD()),"A",usd.getUsd001());;
-                        if(ysb1==null)list.add(usd);
-                    }
-                }
-                List<cdusd> list1=new ArrayList<>();
-                list.stream().forEach(p -> {if (!list1.contains(p)) {list1.add(p);}}
-                );
-                t.setUsdlist(list1);
+            List<cdysb> list=ysbService.selectBygstime1(null,null,DATE.format(d),"A","A");
+            List<cdusd> list1=new ArrayList<>();
+            for(cdysb ysb:list){
+                list1.add(ysb.getUsd());
             }
-
+            t.setTz(yscService.selectBytime(DATE.format(t.getD()),"A"));
+            t.setUsdlist(list1);
+        }else{
+            List<Integer> list=ysbService.selectBygstime3(DATE.format(d),DATE.format(d),"A",null);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(t.getD());
+                List<cdusd> list1=usdService.serachBytime(getWeekDay1(calendar),"A",list);
+                t.setTz(yscService.selectBytime(DATE.format(t.getD()),"A"));
+                t.setUsdlist(list1);
+                t.setZt(t.getUsdlist().size()>0);
         }
         result.put("item",t);
+
+        time t1=new time();
+        t1.setD(d);
+        s=ysbService.countBygstime(null,null,DATE.format(d),"B",null);
+        t1.setZt(s>0);
+        if(t1.isZt()){
+            List<cdysb> list=ysbService.selectBygstime1(null,null,DATE.format(d),"B","A");
+            List<cdusd> list1=new ArrayList<>();
+            for(cdysb ysb:list){
+                list1.add(ysb.getUsd());
+            }
+            t1.setTz(yscService.selectBytime(DATE.format(t1.getD()),"B"));
+            t1.setUsdlist(list1);
+        }else{
+            List<Integer> list=ysbService.selectBygstime3(DATE.format(d),DATE.format(d),"B",null);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(t.getD());
+            List<cdusd> list1=usdService.serachBytime1(Integer.valueOf(sdf5.format(calendar.getTime())),"B",list);
+            t1.setTz(yscService.selectBytime(DATE.format(t.getD()),"B"));
+            t1.setUsdlist(list1);
+            t1.setZt(t1.getUsdlist().size()>0);
+        }
+        result.put("item1",t1);
         return JSON.toJSONString(result);
     }
 
@@ -968,6 +958,9 @@ public class DishesController extends BaseController {
             if (request.getParameter("date") != null && !request.getParameter("date").isEmpty()) {
                 pb.setOthersql5(request.getParameter("date"));
             }
+            if (request.getParameter("fpfs") != null && !request.getParameter("fpfs").isEmpty()) {
+                pb.setOthersql6(request.getParameter("fpfs"));
+            }
             if(request.getParameter("zt") != null && !request.getParameter("zt").isEmpty()){
                 if(request.getParameter("zt").equals("U")){
                     addLog(getUse(request).getUse002(),"修改了菜品名字为：【" + request.getParameter("uname") + "】的团购类型");
@@ -980,7 +973,8 @@ public class DishesController extends BaseController {
                         cdysc ysc=new cdysc();
                         ysc.setYsc002(item.getUsf001());
                         ysc.setYsc003(DATE.parse(pb.getOthersql5()));
-//                        ysc.setYsc004(item.getUsf010());
+                        ysc.setYsc004(request.getParameter("fpfs"));
+                        ysc.setYsc005("B");
                         ysc.setYsc006(0);
                         ysc.setYsc007(request.getParameter("type"));
                         yscService.insert(ysc);
@@ -1014,8 +1008,10 @@ public class DishesController extends BaseController {
                         cdysc ysc=new cdysc();
                         ysc.setYsc002(item.getUsf001());
                         ysc.setYsc003(DATE.parse(pb.getOthersql5()));
+                        ysc.setYsc004(request.getParameter("fpfs"));
                         ysc.setYsc005("B");
                         ysc.setYsc006(Integer.valueOf(request.getParameter("num")));
+                        ysc.setYsc005(request.getParameter("fpfs"));
                         ysc.setYsc007(item.getUsf013().equals("C")?"B":"A");
                         yscService.insert(ysc);
                     }
@@ -1057,12 +1053,19 @@ public class DishesController extends BaseController {
             if(pb.getOthersql4().equals("A")){
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(DATE.parse(pb.getOthersql5()));
-                for(cdusf usf:list){
-                    usf.setYha(yhaService.selectByqscp(getWeekDay1(calendar),usf.getUsf001()));
+                if(pb.getOthersql6().equals("A")){
+                    for(cdusf usf:list){
+                        usf.setYha(yhaService.selectByqscp(getWeekDay1(calendar),usf.getUsf001()));
+                    }
+                }else{
+                    cdusb usb=usbService.getByname(calendar.get(Calendar.DAY_OF_MONTH)+"号");
+                    for(cdusf usf:list){
+                        usf.setYha(yhaService.selectByqscp(usb.getUsb001(),usf.getUsf001()));
+                    }
                 }
             }else{
                 for(cdusf usf:list){
-                    usf.setYsc(yscService.selectBycpid(usf.getUsf001(),pb.getOthersql5()));
+                    usf.setYsc(yscService.selectBycpid(usf.getUsf001(),pb.getOthersql5(),pb.getOthersql6()));
                 }
             }
             mav.addObject("pageobj", pb);

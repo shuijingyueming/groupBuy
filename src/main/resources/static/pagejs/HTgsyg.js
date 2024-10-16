@@ -5,8 +5,8 @@ function reback(){
     form_submit("toCo/togs","post",params,"_self");
 }
 
-function toczjl(id){
-    var params = [ ["id",id], ["fh",$("#fhlx").val()+"YG"]
+function toczjl(id,lx){
+    var params = [ ["id",id],["lx",lx], ["fh",$("#fhlx").val()+"YG"]
         , ["pages",$("#pages").val()],
         ["gsid",$("#gsid").val()],
         ["name",$.trim($("#name").val())],
@@ -96,9 +96,45 @@ function xxcx(){
     form_submit("toCo/togsyg","post",params,"_self");
 }
 
+function toqlgs(){
+    // console.log(num)
+    if($("#gsid").val()!=""){
+        var r = confirm("确定清零此公司的员工吗？");
+        if (r == true) {
+            var params = [ ["id",$("#gsid").val()], ["zt","GQ"], ["uname",$("#gsid option:selected").html()],
+                ["fhlx",$("#fhlx").val()],
+                ["gsid",$("#gsid").val()],
+                ["pages",$("#pages").val()],
+                ["name",$.trim($("#name").val())],
+                ["phone",$.trim($("#phone").val())]];
+            form_submit("toCo/togsyg","get",params,"_self");
+        }
+    }else{
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.ready(function(){
+                layer.msg("请选择公司");
+            });
+        });
+    }
+}
+
+function toql(id,uname){
+    var r = confirm("确定清零员工吗？");
+    // console.log(num)
+    if (r == true) {
+        var params = [ ["id",id], ["zt","Q"], ["uname",uname],
+            ["fhlx",$("#fhlx").val()],
+            ["gsid",$("#gsid").val()],
+            ["pages",$("#pages").val()],
+            ["name",$.trim($("#name").val())],
+            ["phone",$.trim($("#phone").val())]];
+        form_submit("toCo/togsyg","get",params,"_self");
+    }
+}
+
 function tocz(id,uname){
     var num = prompt("请输入充值金额","");
-    // console.log(num)
     if (num>0) {
         var params = [["num",num], ["id",id], ["zt","CZ"], ["uname",uname],
             ["fhlx",$("#fhlx").val()],

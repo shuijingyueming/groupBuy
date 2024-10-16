@@ -226,26 +226,53 @@ function showpdtpgs(){
         var filejw = filename.substring(filename.lastIndexOf("."));
         var pd = false;
         for(var i=0;i<filePath.length;i++){
-            // var imagSize =file.size;
-            // if(imagSize <= 1024 * 300){
             if(filejw==filePath[i]){
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function(e) {
-                    var data = e.target.result;
-                    $("#shtp").attr("src",data);
-                };
+                var imagSize =file.size;
+                if(imagSize <= 1024 * 50){
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function(e) {
+                        var  data = e.target.result;
+                        const image = new Image()
+                        image.src = e.target.result
+                        return new Promise((resolve) => {
+                            image.onload = () => {
+                                const width = image.width
+                                const height = image.height
+                                if (width <= 200 && height <= 200) {
+                                    $("#shtp").attr("src", data);
+                                } else {
+                                    layui.use('layer', function(){
+                                        var layer = layui.layer;
+                                        layer.ready(function(){
+                                            layer.msg("分辨率不能超过200px");
+                                        });
+                                    });
+                                }
+                            }
+                        })
+                    };
+                }else{
+                    layui.use('layer', function(){
+                        var layer = layui.layer;
+                        layer.ready(function(){
+                            layer.msg("图片大小在50K以内");
+                        });
+                    });
+                }
                 pd =  true;
                 return;
             }
-            // }else{
-            //     layer.msg("图片大小在300K以内");
-            // }
         }
         if(!pd){
             file.value="";
             $("#file").val("");
-            layer.msg("只能上传以.jpg、.png结尾的图片");
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.ready(function(){
+                    layer.msg("只能上传以.jpg、.png结尾的图片");
+                });
+            });
             return;
         }
     }else{

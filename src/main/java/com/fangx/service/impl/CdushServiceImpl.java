@@ -125,6 +125,15 @@ public class CdushServiceImpl implements CdushService {
         return ushMapper.selectByExample1(e1);
     }
 
+    @Override
+    public boolean countByddid(String ddid) {
+        cdushExample e1 = new cdushExample();
+        Criteria c = e1.createCriteria();
+        c.andUsh002EqualTo(ddid);
+        c.andSql("(ush009 is null or ush009='Y')");
+        return ushMapper.countByExample(e1)==0;
+    }
+
 
     @Override
     public boolean saveBatch(Collection<cdush> entityList, int batchSize) {

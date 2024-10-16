@@ -113,6 +113,7 @@
                 <tr>
                     <th style="max-width:40px;">序号</th>
                     <th>菜品名称</th>
+                    <th>规格</th>
                     <th>单位名称</th>
                     <th>一级分类</th>
                     <th>二级分类</th>
@@ -131,6 +132,7 @@
                     <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
                         <td th:text="${item.usf002}"></td>
+                        <td th:text="${item.usf003}"></td>
                         <td th:text="${item.usm!=null?item.usm.usm002:''}"></td>
                         <td th:text="${item.yhe!=null?item.yhe.yhe002:''}"></td>
                         <td th:text="${item.ysa!=null?item.ysa.ysa002:''}"></td>
@@ -145,6 +147,9 @@
                             <button th:onclick="toxq([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
                                 <button th:onclick="edit([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
+                            </th:block>
+                            <th:block th:if="${item.sl==0&&(session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G4#')>=0)}">
+                                <button th:onclick="del([[${item.usf001}]],[[${item.usf002}]])" type="button" class="btn btn-primary btn-sm btxz">删除</button>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
                                 <button th:onclick="tokc([[${item.usf001}]])" type="button" class="btn btn-primary btn-sm btxz">库存设置</button>
@@ -296,7 +301,7 @@
                 <div class="row">
                     <div class="col-md-6 col-xl-4">
                         <div class="form-group">
-                            <label>规格简介</label>
+                            <label>规格</label>
                             <textarea id="t8" name="t8" lay-verify="required" style="width:500px;height:75px;"></textarea>
                         </div>
                     </div>
@@ -311,9 +316,11 @@
                 </div>
                 <div class="row" style="margin-top:2px;">
                     <div class="form-group">
-                        <label class="col-form-label" style="margin-left:10px;">图片<span style="margin-left:15px;"><font color="#ec8e26"><!--分辨率:414*280--></font></span>
+                        <label class="col-form-label" style="margin-left:10px;">图片</label>
                             <button type="button" class="effect-btn btn btn-light" style="margin-left:30px;width:80px;" onclick="$('#t2').click();">选择文件</button>
-                        </label>
+                            <span style="margin-left:15px;"> <font color="#ec8e26">png/jpg格式 分辨率不能超过800px 图片大小在2M以内</font></span>
+                            <br/><br/>
+
                         <input type="hidden" id="delimg" name="delimg"/>
                         <input type="file" id="t2" name="t2" style="display: none;" accept="image/x-png,image/jpg,image/jpeg" onchange="showpdtpgs('t2','#p4')" multiple/>
                     </div>

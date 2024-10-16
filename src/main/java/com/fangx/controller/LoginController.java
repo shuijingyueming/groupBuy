@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.fangx.model.*;
 import com.fangx.until.EncrpytUtil;
 import com.fangx.until.ExcelExport;
-import com.fangx.until.OSSUtil;
 import com.fangx.until.RSACoder;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -198,7 +196,7 @@ public class LoginController extends BaseController {
         if (isok) {
             if (PubMessage.dlmap.get(name + "bcode") == null) {
                 mav.setViewName("HTlogin");
-            }/*else if (!ycode.toUpperCase().equals(PubMessage.dlmap.get(name + "bcode").toString())) { //todo
+            }else if (!ycode.toUpperCase().equals(PubMessage.dlmap.get(name + "bcode").toString())) { //todo
                 if (PubMessage.dlmap.get(name + "dnumn") == null) PubMessage.dlmap.put(name + "dnumn", 1);
                 else
                     PubMessage.dlmap.put(name + "dnumn", Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) + 1);
@@ -211,7 +209,7 @@ public class LoginController extends BaseController {
                 session.setAttribute("dnumn", PubMessage.dlmap.get(name + "dnumn").toString());
                 mav.setViewName("HTlogin");
                 isok = false;
-            }else*/ if (null != name && !name.trim().isEmpty() && null != pwd && !pwd.trim().isEmpty()) {
+            }else if (null != name && !name.trim().isEmpty() && null != pwd && !pwd.trim().isEmpty()) {
                 cduse use = useService.getLogin(name, EncrpytUtil.getSHA256(pwd));
                 //System.out.println(EncrpytUtil.getSHA256(pwd)+"-----");
                 if (null != use) {
@@ -444,7 +442,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/cplsname",produces= MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
     public boolean cplsname(HttpServletRequest request,HttpServletResponse response){
         Integer id=request.getParameter("id").isEmpty()?0:Integer.valueOf(request.getParameter("id"));
-        cdysc item=yscService.selectBycpid(Integer.valueOf(request.getParameter("cpid")),request.getParameter("name"));
+        cdysc item=yscService.selectBycpid(Integer.valueOf(request.getParameter("cpid")),request.getParameter("name"), null);
         if((id==0 && item!=null)||(id!=0 && item!=null && id!=item.getYsc001())){
             return false;
         }else{
@@ -457,14 +455,14 @@ public class LoginController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/pslsname",produces= MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
-    public boolean pslsname(HttpServletRequest request,HttpServletResponse response){
+    public boolean pslsname(HttpServletRequest request,HttpServletResponse response) throws ParseException {
         Integer id=request.getParameter("id").isEmpty()?0:Integer.valueOf(request.getParameter("id"));
         String zt=request.getParameter("zt");
-
+        String zt1=request.getParameter("zt1");
         if(request.getParameter("name1")!=null&&request.getParameter("name1").isEmpty()){
             return false;
         }else{
-            cdysb item=ysbService.selectBycpid(request.getParameter("name"),request.getParameter("name1"),zt);
+            cdysb item=ysbService.selectBycpid(request.getParameter("name"),request.getParameter("name1"),zt,zt1);
             if(item!=null&&(id==0||(id!=0 && id!=item.getYsb001()))){
                 return false;
             }else{
@@ -527,6 +525,53 @@ public class LoginController extends BaseController {
         return JSON.toJSONString(result);
     }
 
+    /**
+     *
+     */
+    @ResponseBody
+    @RequestMapping(value = "/togslist",produces= MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
+    public String togslist(HttpServletRequest request,HttpServletResponse response) throws ParseException {
+        Map<String, Object> result = new HashMap<String, Object>();
+//        String lx=request.getParameter("lx");
+        String date=request.getParameter("date");
+        if(date.isEmpty()){
+            List<cdusd> list=usdService.selectBylx(null);
+            result.put("list", list);
+        }else{
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(DATE.parse(date));
+            List<cdysb> list1=ysbService.selectBygstime1(null,date,null,null,null);
+            List<cdysb> list2=ysbService.selectBygstime1(null,null,date,null,null);
+            if(list1.size()==0&&list2.size()==0){
+                List<Integer> ids=ysbService.selectBygstime3(date,date,null,null);
+                List<cdusd> list=usdService.serachBytime(getWeekDay1(calendar),"A",ids);
+                List<cdusd> list3=usdService.serachBytime1(Integer.valueOf(sdf5.format(calendar.getTime())),"B",ids);
+                list.addAll(list3);
+                result.put("list", list);
+            }else{
+                List<cdusd> list3=new ArrayList<>();
+                List<Integer> ids=new ArrayList<>();
+                for(cdysb ysb:list1){
+                    if(ysb.getYsb005().equals("A")&&ysb.getYsb004()==ysb.getYsb003()){
+                        list3.add(ysb.getUsd());
+                        ids.add(ysb.getUsd().getUsd001());
+                    }
+                }
+                for(cdysb ysb:list2){
+                    list3.add(ysb.getUsd());
+                    ids.add(ysb.getUsd().getUsd001());
+                }
+                List<cdusd> list5=usdService.serachBytime(getWeekDay1(calendar),"A",ids);
+                List<cdusd> list4=usdService.serachBytime1(Integer.valueOf(sdf5.format(calendar.getTime())),"B",ids);
+                List<cdusd> list=new ArrayList<>();
+                list3.stream().forEach(p -> {if (!list.contains(p)) {list.add(p);}});
+                list4.addAll(list5);
+                list.addAll(list4);
+                result.put("list", list);
+            }
+        }
+        return JSON.toJSONString(result);
+    }
 
     /**
      * 导入excel

@@ -56,7 +56,7 @@ public class OrderController extends BaseController {
             for(cdyhe yhe:list){
                 yhe.setUsflist(usfService.selectByCG(date,yhe.getYhe001()));
                 index+=yhe.getUsflist().size();
-                System.out.println("*****"+index);
+//                System.out.println("*****"+index);
                 yhe.setIndex(index);
             }
 //            List<cdusf> cplist=usfService.selectByCG(date);
@@ -132,10 +132,33 @@ public class OrderController extends BaseController {
             }
             PageBean pb = new PageBean();
             if(request.getParameter("fh")!=null && !request.getParameter("fh").isEmpty()){
-                if(request.getParameter("fh").indexOf("GS")>=0){
-                    pb=(PageBean)session.getAttribute("GSpb");
-                    session.removeAttribute("GSpb");
+                    if (request.getParameter("fh").indexOf("YDZ") >= 0) {
+                        PageBean pb1 = new PageBean();
+                        if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
+                            pb1.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
+                        else
+                            pb1.setCurrentPage(1);
+                        if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
+                            pb1.setOthersql(request.getParameter("name"));
+                        }
+                        if (request.getParameter("phone") != null && !request.getParameter("phone").isEmpty()) {
+                            pb1.setOthersql1(request.getParameter("phone"));
+                        }
+                        if (request.getParameter("gsid") != null && !request.getParameter("gsid").isEmpty()) {
+                            pb1.setOthersql2(request.getParameter("gsid"));
+                        }
+                /*if (request.getParameter("start") != null && !request.getParameter("start").isEmpty()) {
+                    pb1.setOthersql5(request.getParameter("start"));
                 }
+                    if (request.getParameter("end") != null && !request.getParameter("end").isEmpty()) {
+                        pb1.setOthersql6(request.getParameter("end"));
+                    }*/
+                        session.setAttribute("YDZpb", pb1);
+                        pb.setCurrentPage(1);
+                        pb.setOthersql4(request.getParameter("date"));
+                        pb.setOthersql(request.getParameter("gsname"));
+                    }
+                    mav.addObject("fhlx", request.getParameter("fh"));
             }else{
                 if (request.getParameter("pages") != null && !request.getParameter("pages").isEmpty())
                     pb.setCurrentPage(Integer.valueOf(request.getParameter("pages")));
@@ -150,6 +173,13 @@ public class OrderController extends BaseController {
                 if (request.getParameter("ptime") != null && !request.getParameter("ptime").isEmpty()) {
                     pb.setOthersql2(request.getParameter("ptime"));
                 }
+                if (request.getParameter("gsid1") != null && !request.getParameter("gsid1").isEmpty()) {
+                    pb.setOthersql3(request.getParameter("gsid1"));
+                }
+                if (request.getParameter("mo") != null && !request.getParameter("mo").isEmpty()) {
+                    pb.setOthersql4(request.getParameter("mo"));
+                }
+                mav.addObject("fhlx", request.getParameter("fhlx"));
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", yseService.selectPageBean(pb));
@@ -186,30 +216,39 @@ public class OrderController extends BaseController {
             }
             List<cdusc> yglist1=uscService.serachAll(Integer.valueOf(request.getParameter("gsid")));
             List<cdusc> yglist=new ArrayList<>();
+            Float zje=0.0F;
             for (cdusc usc:yglist1) {
                 List<cdyhc> ddlist=yhcService.selectByyhid1(usc.getUsc001(),date);
                 if (ddlist.size()>0){
                     List<cdusf> cplist=usfService.selectByDD(usc.getUsc001(),date);
                     String nr="";
                     String bz="";
+                    Float je=0.0f;
                     for (int k = 0; k<cplist.size(); k++) {
-                        nr+=cplist.get(k).getUsf002()+"("+cplist.get(k).getSl().toString()+")";
+                        nr+=cplist.get(k).getUsf002()+"("+cplist.get(k).getSl().toString()+cplist.get(k).getUsm().getUsm002()+"["+cplist.get(k).getUsf003()+"]"+")";
                         if(k<cplist.size()-1)nr+="+";
                     }
                     for (int k = 0; k<ddlist.size(); k++) {
+                        je+=ddlist.get(k).getYhc007()-ddlist.get(k).getYhc013();
                         if(ddlist.get(k).getYhc009()!=null&&!ddlist.get(k).getYhc009().isEmpty())bz+=ddlist.get(k).getYhc009()+"#";
                     }
                     usc.setDdlist(ddlist);
                     usc.setCplist(cplist);
                     usc.setNr(nr);
                     usc.setBz(bz);
+                    usc.setJe(je);
                     yglist.add(usc);
+                    zje=zje+je;
                 }
 
             }
             delsession(session,request.getParameter("fh"));
             mav.addObject("yglist", yglist);
             mav.addObject("date", date);
+            mav.addObject("zje", zje);
+            mav.addObject("mo", request.getParameter("mo"));
+            mav.addObject("gsid1", request.getParameter("gsid1"));
+            mav.addObject("fhlx", request.getParameter("fhlx"));
             mav.addObject("gsid", request.getParameter("gsid"));
             mav.addObject("pages", request.getParameter("pages"));
             mav.addObject("name", request.getParameter("name"));
@@ -245,17 +284,19 @@ public class OrderController extends BaseController {
                     if(yhc.getYhc006().equals("P")){
                         yhc.setYhc005("N");
                         cdusc usc =uscService.getByid(yhc.getYhc002());
-                        usc.setUsc008(usc.getUsc008()+yhc.getYhc007());
-                        usc.setUsc011(usc.getUsc011()-yhc.getYhc007());
+                        usc.setUsc008(usc.getUsc008()+yhc.getYhc007()-yhc.getYhc013());
+                        usc.setUsc011(usc.getUsc011()-yhc.getYhc007()+yhc.getYhc013());
+                        yhc.setYhc013(yhc.getYhc007());
                         uscService.update(usc);
                         List<cdush> list=ushService.selectByyhidtk(yhc.getYhc001());
                         for(cdush ush:list){
                             ush.setUsh002(yhc.getYhc001());
+                            ush.setUsh009("N");
                             Calendar calendar = Calendar.getInstance();
                             calendar.setTime(yhc.getYhc008());
                             int i=getWeekDay(calendar);
                             cdusf usf=usfService.getByid(ush.getUsh003());
-                            cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i).getUsb001()),ush.getUsh003());
+                            cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i, null).getUsb001()),ush.getUsh003());
                             if(yha.getYha005().equals("C")){
                                 yha.setYha004(yha.getYha004()+ush.getUsh004());
                                 usf.setUsf008(usf.getUsf008()-ush.getUsh004());
@@ -273,11 +314,12 @@ public class OrderController extends BaseController {
                             List<cdush> list=ushService.selectByyhidtk(yhc.getYhc001());
                             for(cdush ush:list){
                                 ush.setUsh002(yhc.getYhc001());
+                                ush.setUsh009("N");
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.setTime(yhc.getYhc008());
                                 int i=getWeekDay(calendar);
                                 cdusf usf=usfService.getByid(ush.getUsh003());
-                                cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i).getUsb001()),ush.getUsh003());
+                                cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i, null).getUsb001()),ush.getUsh003());
                                 if(yha.getYha005().equals("C")){
                                     yha.setYha004(yha.getYha004()+ush.getUsh004());
                                     usf.setUsf008(usf.getUsf008()-ush.getUsh004());
@@ -289,22 +331,24 @@ public class OrderController extends BaseController {
                             }
                         }else{
                             Map<String,Object> result = new HashMap<String, Object>();
-                            result=gettk(yhc.getYhc010(),yhc.getYhc007());
+                            result=gettk(yhc.getYhc010(),yhc.getYhc007()-yhc.getYhc013());
 //                            System.out.println("---***--"+result);
                             if(result.get("return_code").equals("SUCCESS")){
                                 yhc.setYhc005("N");
                                 cdusc usc =uscService.getByid(yhc.getYhc002());
-                                usc.setUsc010(usc.getUsc010()-yhc.getYhc007());
-                                usc.setUsc011(usc.getUsc011()-yhc.getYhc007());
+                                usc.setUsc008(usc.getUsc008()+yhc.getYhc007()-yhc.getYhc013());
+                                usc.setUsc011(usc.getUsc011()-yhc.getYhc007()+yhc.getYhc013());
+                                yhc.setYhc013(yhc.getYhc007());
                                 uscService.update(usc);
                                 List<cdush> list=ushService.selectByyhidtk(yhc.getYhc001());
                                 for(cdush ush:list){
                                     ush.setUsh002(yhc.getYhc001());
+                                    ush.setUsh009("N");
                                     Calendar calendar = Calendar.getInstance();
                                     calendar.setTime(yhc.getYhc008());
                                     int i=getWeekDay(calendar);
                                     cdusf usf=usfService.getByid(ush.getUsh003());
-                                    cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i).getUsb001()),ush.getUsh003());
+                                    cdyha yha=yhaService.getByqscp(Integer.valueOf(usbService.selectByzq(i, null).getUsb001()),ush.getUsh003());
                                     if(yha.getYha005().equals("C")){
                                         yha.setYha004(yha.getYha004()+ush.getUsh004());
                                         usf.setUsf008(usf.getUsf008()-ush.getUsh004());
@@ -390,6 +434,12 @@ public class OrderController extends BaseController {
                 if (request.getParameter("name") != null && !request.getParameter("name").isEmpty()) {
                     pb.setOthersql(request.getParameter("name"));
                 }
+                if (request.getParameter("ygname") != null && !request.getParameter("ygname").isEmpty()) {
+                    pb.setOthersql9(request.getParameter("ygname"));
+                }
+                if (request.getParameter("phone") != null && !request.getParameter("phone").isEmpty()) {
+                    pb.setOthersql10(request.getParameter("phone"));
+                }
                 if (request.getParameter("ygid") != null && !request.getParameter("ygid").isEmpty()) {
                     pb.setOthersql6(request.getParameter("ygid"));
                 }
@@ -418,7 +468,7 @@ public class OrderController extends BaseController {
             delsession(session,request.getParameter("fh"));
             mav.addObject("pageobj", yhcService.selectPageBean(pb));
             mav.addObject("usdlist", usdService.serachAll(null));
-            mav.addObject("usclist", uscService.serachAll(null));
+//            mav.addObject("usclist", uscService.serachAll(null));
         }
         mav.setViewName("HTdd");
         return mav;
@@ -437,6 +487,103 @@ public class OrderController extends BaseController {
         HashMap result = new HashMap();
         cdyhc item=yhcService.getByid(id);
         result.put("item",item);
+        return JSON.toJSONString(result);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/serachtkdd",produces= MediaType.APPLICATION_JSON_VALUE+";charset=utf-8")
+    public String serachtkdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String id = request.getParameter("id");
+        HashMap result = new HashMap();
+        cdush item1 =ushService.getByid(id);
+        cdyhc item =yhcService.getByid(item1.getUsh002());
+        if(item1.getUsh009()==null||item1.getUsh009().equals("Y")){
+            if(item.getYhc006().equals("P")){
+                item1.setUsh009("N");
+                cdusc usc =uscService.getByid(item.getYhc002());
+                usc.setUsc008(usc.getUsc008()+item1.getUsh005());
+                usc.setUsc011(usc.getUsc011()-item1.getUsh005());
+
+                cdyhk yhk=yhkService.getByid(item1.getUsh008());
+                if(item.getYhc006().equals("P")){
+                    yhk.setYhk005(yhk.getYhk005()-item1.getUsh005());
+                }else{
+                    yhk.setYhk006(yhk.getYhk006()-item1.getUsh005());
+                }
+                cdusf usf=usfService.getByid(item1.getUsh003());
+                cdyha yha=yhaService.getByqscp(yhk.getYhk008(),item1.getUsh003());
+                if(yha.getYha005().equals("C")){
+                    yha.setYha004(yha.getYha004()+item1.getUsh004());
+                    usf.setUsf008(usf.getUsf008()-item1.getUsh004());
+                    usf.setUsf009(usf.getUsf009()-item1.getUsh006());
+                    usfService.update(usf);
+                    yhaService.update(yha);
+                }
+                yhkService.update(yhk);
+                ushService.update(item1);
+                uscService.update(usc);
+                if(ushService.countByddid(item.getYhc001()))item.setYhc005("N");
+                item.setYhc013(item.getYhc013()!=null?item.getYhc013()+item1.getUsh005():item1.getUsh005());
+                yhcService.update(item);
+                result.put("msg","1");
+            }
+            else{
+                if(item.getYhc005().equals("A")){
+                    item1.setUsh009("N");
+                    Calendar ca = Calendar.getInstance();//得到一个Calendar的实例
+                    ca.setTime(item.getYhc008());
+                    cdusf usf=usfService.getByid(item1.getUsh003());
+                    cdyha yha=yhaService.getByqscp(getWeekDay(ca),item1.getUsh003());
+                    if(yha.getYha005().equals("C")){
+                        yha.setYha004(yha.getYha004()+item1.getUsh004());
+                        usf.setUsf008(usf.getUsf008()-item1.getUsh004());
+                        usf.setUsf009(usf.getUsf009()-item1.getUsh006());
+                        usfService.update(usf);
+                        yhaService.update(yha);
+                    }
+                    ushService.update(item1);
+                    if(ushService.countByddid(item.getYhc001()))item.setYhc005("N");
+                    yhcService.update(item);
+                    result.put("msg","1");
+                }else{
+                    Map<String,Object> result1 = new HashMap<String, Object>();
+                    result1=gettk(item.getYhc010(),item1.getUsh005());
+//                System.out.println("---***--"+result1);
+                    if(result1.get("return_code").equals("SUCCESS")){
+                        item.setYhc005("N");
+                        cdusc usc =uscService.getByid(item.getYhc002());
+                        usc.setUsc008(usc.getUsc008()+item1.getUsh005());
+                        usc.setUsc011(usc.getUsc011()-item1.getUsh005());
+                        cdyhk yhk=yhkService.getByid(item1.getUsh008());
+                        if(item.getYhc006().equals("P")){
+                            yhk.setYhk005(yhk.getYhk005()-item1.getUsh005());
+                        }else{
+                            yhk.setYhk006(yhk.getYhk006()-item1.getUsh005());
+                        }
+                        item1.setUsh009("N");
+                        cdusf usf=usfService.getByid(item1.getUsh003());
+                        cdyha yha=yhaService.getByqscp(yhk.getYhk008(),item1.getUsh003());
+                        if(yha.getYha005().equals("C")){
+                            yha.setYha004(yha.getYha004()+item1.getUsh004());
+                            usf.setUsf008(usf.getUsf008()-item1.getUsh004());
+                            usf.setUsf009(usf.getUsf009()-item1.getUsh006());
+                            usfService.update(usf);
+                            yhaService.update(yha);
+                        }
+                        yhkService.update(yhk);
+                        ushService.update(item1);
+                        item.setYhc013(item.getYhc013()!=null?item.getYhc013()+item1.getUsh005():item1.getUsh005());
+                        uscService.update(usc);
+                        if(ushService.countByddid(item.getYhc001()))item.setYhc005("N");
+                        yhcService.update(item);
+                        result.put("msg","1");
+                    }else{
+                        result.put("msg","0");
+                    }
+                }
+            }
+            result.put("item",item);
+        }
         return JSON.toJSONString(result);
     }
 
@@ -598,8 +745,8 @@ public class OrderController extends BaseController {
             delsession(session,request.getParameter("fh"));
             List<cdusd> list=usdService.serachAll(pb.getOthersql2());
             for(cdusd usd:list){
-                usd.setYze(yhcService.selectBygsidY(pb.getOthersql(),usd.getUsd001(),"P",null));
-                usd.setWze(yhcService.selectBygsidY(pb.getOthersql(),usd.getUsd001(),"W",null));
+                usd.setYze(yhcService.selectBygsidY(pb.getOthersql(),usd.getUsd001(),"P","M"));
+                usd.setWze(yhcService.selectBygsidY(pb.getOthersql(),usd.getUsd001(),"W","M"));
             }
             mav.addObject("pageobj", pb);
             mav.addObject("usdlist", list);

@@ -37,6 +37,9 @@
     <result column="gsid" jdbcType="INTEGER" property="gsid" />
     <collection  property="usg"  column="{cpid=USF001,gsid=gsid}"  select="com.fangx.dao.cdusgMapper.selectBygsid"/>
   </resultMap>
+  <resultMap id="BaseResultMap5" type="com.fangx.model.cdusf"  extends="BaseResultMap">
+    <collection  property="usm"  column="USF004"  select="com.fangx.dao.cdusmMapper.selectByPrimaryKey"/>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -610,5 +613,18 @@
       </if>
     </if>
   </select>
-
+  <select id="selectByExample3" parameterType="com.fangx.model.cdusfExample" resultMap="BaseResultMap5">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdusf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
 </mapper>

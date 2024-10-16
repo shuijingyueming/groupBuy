@@ -51,7 +51,7 @@ $(document).ready(function () {
         "paging": false,
         dom: 'Bfrtip',
         buttons: $("#jsqx").val()=="admin"||$("#fhlx").val()!=""?[/*'excel','print',*/
-            $("#fhlx").val().indexOf("YDZ")<0?{text: '返回',action: function ( e, dt, node, config ) {reback();}}:undefined,
+            $("#fhlx").val().indexOf("DZ")>=0&&$("#fhlx").val().indexOf("YDZ")<0?{text: '返回',action: function ( e, dt, node, config ) {reback();}}:undefined,
             $("#fhlx").val().indexOf("YDZ")>=0?{text: '返回',action: function ( e, dt, node, config ) {rebacky();}}:undefined/*,
             $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,*/
         ]:[],
@@ -117,7 +117,7 @@ $(document).ready(function () {
         "paging": false,
         dom: 'Bfrtip',
         buttons: [
-            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("Q2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("Q2#")>=0?{text: '新增调整',action: function ( e, dt, node, config ) {edit();}}:undefined,
         ],
         "columnDefs": [ {
             "orderable": false,
@@ -178,7 +178,8 @@ $(document).ready(function () {
         dom: 'Bfrtip',
         buttons: $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J2#")>=0||$("#fhlx").val()!=""?[/*'excel','print',*/
             $("#fhlx").val()!=""?{text: '返回',action: function ( e, dt, node, config ) {reback();}}:undefined,
-            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined/*,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J6#")>=0?{text: '公司清零',action: function ( e, dt, node, config ) {toqlgs();}}:undefined/*,
             $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A4#")>=0?{text: '批量删除',action: function ( e, dt, node, config ) {delete_item();}}:undefined*/
         ]:[],
         "columnDefs": [ {
@@ -208,7 +209,10 @@ $(document).ready(function () {
         "info":false,
         "paging": false,
         dom: 'Bfrtip',
-        buttons: [],
+        buttons: $("#jsqx").val()=="admin"||$("#fhlx").val()!=""?[/*'excel','print',*/
+            $("#fhlx").val().indexOf("YDZ")>=0?{text: '返回',action: function ( e, dt, node, config ) {rebacky();}}:undefined/*,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,*/
+        ]:[],
         "columnDefs": [ {
             "orderable": false,
             "targets": [0]

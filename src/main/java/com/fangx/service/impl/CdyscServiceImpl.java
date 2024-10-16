@@ -76,11 +76,12 @@ public class CdyscServiceImpl implements CdyscService {
     }
 
     @Override
-    public cdysc selectBycpid(Integer cpid, String time) {
+    public cdysc selectBycpid(Integer cpid, String time, String lx) {
         cdyscExample e1 = new cdyscExample();
         Criteria c = e1.createCriteria();
         c.andYsc002EqualTo(cpid);
         c.andSql("(DATE_FORMAT(ysc003,'%Y-%m-%d')='"+time+"')");
+        if(lx!=null)c.andYsc004EqualTo(lx);
         e1.setOrderByClause("ysc003");
         List<cdysc> list = yscMapper.selectByExample(e1);
         return list.size()>0?list.get(0):null;
@@ -92,10 +93,11 @@ public class CdyscServiceImpl implements CdyscService {
     }
 
     @Override
-    public boolean selectBytime(String time) {
+    public boolean selectBytime(String time, String lx) {
         cdyscExample e1 = new cdyscExample();
         Criteria c = e1.createCriteria();
         c.andSql("(DATE_FORMAT(ysc003,'%Y-%m-%d')='"+time+"')");
+        if(lx!=null)c.andYsc004EqualTo(lx);
         e1.setOrderByClause("ysc003");
         List<cdysc>  list= yscMapper.selectByExample(e1);
         return list.size()>0;

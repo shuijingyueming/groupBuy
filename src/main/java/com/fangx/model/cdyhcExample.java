@@ -896,6 +896,67 @@ public class cdyhcExample {
             return (Criteria) this;
         }
 
+
+        public Criteria andYhc014IsNull() {
+            addCriterion("YHC014 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014IsNotNull() {
+            addCriterion("YHC014 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014EqualTo(Date value) {
+            addCriterion("YHC014 =", value, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014NotEqualTo(Date value) {
+            addCriterion("YHC014 <>", value, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014GreaterThan(Date value) {
+            addCriterion("YHC014 >", value, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014GreaterThanOrEqualTo(Date value) {
+            addCriterion("YHC014 >=", value, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014LessThan(Date value) {
+            addCriterion("YHC014 <", value, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014LessThanOrEqualTo(Date value) {
+            addCriterion("YHC014 <=", value, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014In(List<Date> values) {
+            addCriterion("YHC014 in", values, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014NotIn(List<Date> values) {
+            addCriterion("YHC014 not in", values, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014Between(Date value1, Date value2) {
+            addCriterion("YHC014 between", value1, value2, "yhc014");
+            return (Criteria) this;
+        }
+
+        public Criteria andYhc014NotBetween(Date value1, Date value2) {
+            addCriterion("YHC014 not between", value1, value2, "yhc014");
+            return (Criteria) this;
+        }
+
         public Criteria andSql(String value) {
             addCriterion(value);
             return (Criteria) this;

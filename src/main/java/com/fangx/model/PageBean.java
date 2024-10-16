@@ -3,6 +3,16 @@ package com.fangx.model;
 import java.util.List;
 
 public class PageBean {
+    private float zje;
+
+    public float getZje() {
+        return zje;
+    }
+
+    public void setZje(float zje) {
+        this.zje = zje;
+    }
+
     private List<Integer> isn;
 
     public List<Integer> getIsn() {

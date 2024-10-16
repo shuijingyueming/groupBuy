@@ -28,4 +28,6 @@ public interface CdyhbService extends IService<cdyhb> {
 
     void deletebyid(Integer cpid);
     void delete(String id);
+
+    List<Integer> seletebyid(Integer cpid);
 }

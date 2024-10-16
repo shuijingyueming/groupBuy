@@ -120,19 +120,19 @@
                 // if(username!=""&&userpwd!=""&&isyz){
                 //if(userpwd!=""&&!regex.test(userpwd)){
                 //	layer.msg("密码中必须包含字母、数字、特殊字符,至少8个字符，最多20个字符");
-                //}else if(ycode.length<4){
-                /*if (ycode.length < 4) { //todo
+                //}else
+                if (ycode.length < 4) { //todo
                     layer.msg("验证码位数不足");
-                } else*/ if (username != "" && userpwd != "" && ycode != "") {
+                } else if (username != "" && userpwd != "" && ycode != "") {
                     // isyz = false;
                     var params = [
                         ["username", encrypt.encrypt(username)], ["userpwd", encrypt.encrypt(userpwd)], ["ycode", ycode]
                     ];
                     form_submit("checkLogin", "post", params, "_self");
                 } else {
-                    /*if (ycode == "") {
+                    if (ycode == "") {
                         layer.msg("请输入验证码");
-                    } else*/ if (username == "") {
+                    } else if (username == "") {
                         layer.msg("用户名不能为空");
                     } else if (userpwd == "") {
                         layer.msg("密码不能为空");

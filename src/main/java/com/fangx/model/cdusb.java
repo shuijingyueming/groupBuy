@@ -26,7 +26,7 @@ public class cdusb {
 
     private Integer usb006;
 
-    private String usb007;
+    private Date usb007;
 
     private Date usb008;
 
@@ -78,12 +78,12 @@ public class cdusb {
         this.usb006 = usb006;
     }
 
-    public String getUsb007() {
+    public Date getUsb007() {
         return usb007;
     }
 
-    public void setUsb007(String usb007) {
-        this.usb007 = usb007 == null ? null : usb007.trim();
+    public void setUsb007(Date usb007) {
+        this.usb007 = usb007;
     }
 
     public Date getUsb008() {

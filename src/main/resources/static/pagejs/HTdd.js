@@ -14,8 +14,8 @@ $(document).ready(function () {
     if($("#menuName", parent.document).val()!=""){
         $("#"+$("#menuName", parent.document).val(), parent.document).removeClass("active");
     }
-        $("#menuName", parent.document).val("menu_e1");
-        $("#menu_e1", parent.document).addClass("active");
+    $("#menuName", parent.document).val("menu_e1");
+    $("#menu_e1", parent.document).addClass("active");
 
     pdyes($("#pages").val(), $("#counts").val());
 });
@@ -33,29 +33,29 @@ function fanye(pageindex) {
 //翻页
 function usefanye(pageindex){
     var params = [["pages",pageindex],
-         ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
+        ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
         ["start",$.trim($("#start").val())],
         ["end",$.trim($("#end").val())],
         ["zffs",$.trim($("#zffs").val())],
         ["type",$.trim($("#type").val())],
         ["gsid",$.trim($("#gsid").val())],
         ["ygid",$.trim($("#ygid").val())],
-        ["name",$.trim($("#name").val())],
+        ["name",$.trim($("#name").val())],["ygname",$.trim($("#ygname").val())],
         ["phone",$.trim($("#phone").val())]
-        ];
+    ];
     form_submit("toOr/todd","post",params,"_self");
 }
 
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
-         ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
+        ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
         ["start",$.trim($("#start").val())],
         ["end",$.trim($("#end").val())],
         ["zffs",$.trim($("#zffs").val())],
         ["type",$.trim($("#type").val())],
         ["gsid",$.trim($("#gsid").val())],
         ["ygid",$.trim($("#ygid").val())],
-        ["name",$.trim($("#name").val())],
+        ["name",$.trim($("#name").val())],["ygname",$.trim($("#ygname").val())],
         ["phone",$.trim($("#phone").val())]];
     form_submit("toOr/todd","post",params,"_self");
 }
@@ -65,14 +65,14 @@ function totk(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","T"], ["uname",uname],
             ["pages",$("#pages").val()],
-             ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
+            ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
             ["type",$.trim($("#type").val())],
             ["gsid",$.trim($("#gsid").val())],
             ["ygid",$.trim($("#ygid").val())],
-            ["name",$.trim($("#name").val())],
+            ["name",$.trim($("#name").val())],["ygname",$.trim($("#ygname").val())],
             ["phone",$.trim($("#phone").val())]];
         form_submit("toOr/todd","get",params,"_self");
     }
@@ -84,14 +84,14 @@ function del(id,uname){
     if (r == true) {
         var params = [ ["id",id], ["zt","D"], ["uname",uname],
             ["pages",$("#pages").val()],
-             ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
+            ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
             ["type",$.trim($("#type").val())],
             ["gsid",$.trim($("#gsid").val())],
             ["ygid",$.trim($("#ygid").val())],
-            ["name",$.trim($("#name").val())],
+            ["name",$.trim($("#name").val())],["ygname",$.trim($("#ygname").val())],
             ["phone",$.trim($("#phone").val())]];
         form_submit("toOr/todd","get",params,"_self");
     }
@@ -107,14 +107,14 @@ function delete_item(){
     if (r == true) {
         var params = [ ["id",checked_item], ["zt","AD"],
             ["pages",$("#pages").val()],
-             ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
+            ["date",$.trim($("#date").val())],["mo",$.trim($("mo").val())],
             ["start",$.trim($("#start").val())],
             ["end",$.trim($("#end").val())],
             ["zffs",$.trim($("#zffs").val())],
             ["type",$.trim($("#type").val())],
             ["gsid",$.trim($("#gsid").val())],
             ["ygid",$.trim($("#ygid").val())],
-            ["name",$.trim($("#name").val())],
+            ["name",$.trim($("#name").val())],["ygname",$.trim($("#ygname").val())],
             ["phone",$.trim($("#phone").val())]];
         form_submit("toOr/todd","get",params,"_self");
     } else {
@@ -123,7 +123,7 @@ function delete_item(){
 
 
 //详情
-function toxq(id){
+function toxq(id,index){
     if(id!=null&&id!=''){
         $.ajax({
             url:'toOr/serachdd?id='+id,
@@ -168,9 +168,15 @@ function toxq(id){
                 html+= "<div class='row'><div class='col-md-11'>";
                 html+= "<div class='form-group'><label class='layui-form-label'></label>";
                 html+= "<div id='p4' style='display: flex;justify-content: start;align-items: center;flex-flow: row wrap;'>";
-                html+='<table style=\'width: 1000px;\'><thead><tr><th>菜品</th><th>数量</th><th>价格</th><th>金额</th></tr></thead> <tbody>';
+                html+='<table class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;font-size:13px;"><thead><tr><th>菜品</th><th>数量</th><th>价格</th><th>金额</th><th>操作</th></tr></thead> <tbody>';
                 for(var i=0;i<list.length;i++){
-                    html+="<tr><th>"+list[i].usf.usf002+"</th><th>"+list[i].ush004+"</th><th>"+list[i].ush005+"</th><th>"+list[i].ush006+"</th></tr>";
+                    html+="<tr><td>"+list[i].usf.usf002+"</td><td>"+list[i].ush004+"</td><td>"+list[i].ush005+"</td><td>"+list[i].ush006+"</td>";
+                    // if(item.yhc005!="M"&&(list[i].ush009==null||list[i].ush009=="Y")){
+                    if(list[i].ush009==null||list[i].ush009=="Y"){
+                        html+="<td><button class='btn btn-primary btn-sm btxz' onclick=tocptk(this,'"+index+"','"+list[i].ush001+"')>退款</button></td></tr>";
+                    }else{
+                        html+="<td>(已退款)</td></tr>";
+                    }
                 }
                 html+= '</tbody></table></div></div></div>';
                 $("#xq").append(html);
@@ -187,4 +193,30 @@ function toxq(id){
 function gb(){
     $("#ddiv").removeClass("an");
     $("#detail").hide();
+}
+
+function tocptk(o,index,cpddid){
+    var r = confirm("确定退款这样菜品吗？");
+    if (r == true) {
+        $.ajax({
+            url: 'toOr/serachtkdd?id=' + cpddid,
+            type: 'post',
+            async: false,
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function (data) {
+                if(data.msg=="1"){
+                    o.remove();
+                    if(data.item.yhc005="N") {
+                        let name = "td[name='zt" + index + "']";
+                        $(name).html("退单");
+                        name = "button[name='tk" + index + "']";
+                        $(name).remove();
+                    }
+                }
+            }
+        })
+    }
 }

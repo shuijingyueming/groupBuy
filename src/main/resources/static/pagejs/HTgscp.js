@@ -167,8 +167,9 @@ function bcjg(obj,cpid,jgid){
             dataType:'json',
             success:function(data) {
                 var item = eval(data.item);
-                $(obj).parent().prev().html(html);
-                html = '<button onclick="xgjg(this,&quot;'+cpid+'&quot;,&quot;'+(html==""?"":jgid!=""?jgid:(item!=null?item.usg001:''))+'&quot;,&quot;'+(html==""?"":(item!=null?item.usg005:''))+'&quot;)" type="button" class="btn btn-primary btn-sm btxz">编辑</button>';
+                console.log(item)
+                $(obj).parent().prev().html(html==""?"":parseFloat(html).toFixed(2));
+                html = '<button onclick="xgjg(this,&quot;'+cpid+'&quot;,&quot;'+(html==""?"":jgid!=""?jgid:(item!=null?item.usg001:''))+'&quot;,&quot;'+(html==""?"":parseFloat(html).toFixed(2))+'&quot;)" type="button" class="btn btn-primary btn-sm btxz">编辑</button>';
                 $(obj).parent().html(html);
             }
         });

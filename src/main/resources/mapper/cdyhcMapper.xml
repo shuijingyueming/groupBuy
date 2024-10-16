@@ -14,6 +14,8 @@
     <result column="YHC010" jdbcType="VARCHAR" property="yhc010" />
     <result column="YHC011" jdbcType="VARCHAR" property="yhc011" />
     <result column="YHC012" jdbcType="VARCHAR" property="yhc012" />
+    <result column="YHC013" jdbcType="REAL" property="yhc013" />
+    <result column="YHC014" jdbcType="TIMESTAMP" property="yhc014" />
   </resultMap>
   <resultMap id="BaseResultMap1" type="com.fangx.model.cdyhc"  extends="BaseResultMap">
     <association property="usc" column="YHC002" select="com.fangx.dao.cduscMapper.selectByPrimaryKey"/>
@@ -82,7 +84,7 @@
   </sql>
   <sql id="Base_Column_List">
     YHC001, YHC002, YHC003, YHC004, YHC005, YHC006, YHC007, YHC008, YHC009, YHC010, YHC011, 
-    YHC012
+    YHC012, YHC013, YHC014
   </sql>
   <select id="selectByExample" parameterType="com.fangx.model.cdyhcExample" resultMap="BaseResultMap">
     select
@@ -124,12 +126,13 @@
     insert into cdyhc (YHC001, YHC002, YHC003, 
       YHC004, YHC005, YHC006, 
       YHC007, YHC008, YHC009, 
-      YHC010, YHC011, YHC012
+      YHC010, YHC011, YHC012, YHC013, YHC014
       )
     values (#{yhc001,jdbcType=VARCHAR}, #{yhc002,jdbcType=INTEGER}, #{yhc003,jdbcType=INTEGER}, 
       #{yhc004,jdbcType=TIMESTAMP}, #{yhc005,jdbcType=CHAR}, #{yhc006,jdbcType=CHAR}, 
       #{yhc007,jdbcType=REAL}, #{yhc008,jdbcType=TIMESTAMP}, #{yhc009,jdbcType=VARCHAR}, 
-      #{yhc010,jdbcType=VARCHAR}, #{yhc011,jdbcType=VARCHAR}, #{yhc012,jdbcType=VARCHAR}
+      #{yhc010,jdbcType=VARCHAR}, #{yhc011,jdbcType=VARCHAR}, #{yhc012,jdbcType=VARCHAR},
+      #{yhc013,jdbcType=REAL}, #{yhc014,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fangx.model.cdyhc">
@@ -171,6 +174,12 @@
       <if test="yhc012 != null">
         YHC012,
       </if>
+      <if test="yhc013 != null">
+        YHC013,
+      </if>
+      <if test="yhc014 != null">
+        YHC014,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="yhc001 != null">
@@ -208,6 +217,12 @@
       </if>
       <if test="yhc012 != null">
         #{yhc012,jdbcType=VARCHAR},
+      </if>
+      <if test="yhc013 != null">
+        #{yhc013,jdbcType=REAL},
+      </if>
+      <if test="yhc014 != null">
+        #{yhc014,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -256,6 +271,12 @@
       <if test="record.yhc012 != null">
         YHC012 = #{record.yhc012,jdbcType=VARCHAR},
       </if>
+      <if test="record.yhc013 != null">
+        YHC013 = #{record.yhc013,jdbcType=REAL},
+      </if>
+      <if test="record.yhc014 != null">
+        YHC014 = #{record.yhc014,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -274,7 +295,9 @@
       YHC009 = #{record.yhc009,jdbcType=VARCHAR},
       YHC010 = #{record.yhc010,jdbcType=VARCHAR},
       YHC011 = #{record.yhc011,jdbcType=VARCHAR},
-      YHC012 = #{record.yhc012,jdbcType=VARCHAR}
+      YHC012 = #{record.yhc012,jdbcType=VARCHAR},
+      YHC013 = #{record.yhc013,jdbcType=REAL},
+    YHC014 = #{record.yhc014,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -315,6 +338,12 @@
       <if test="yhc012 != null">
         YHC012 = #{yhc012,jdbcType=VARCHAR},
       </if>
+      <if test="yhc013 != null">
+        YHC013 = #{yhc013,jdbcType=REAL},
+      </if>
+      <if test="yhc014 != null">
+        YHC014 = #{yhc014,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where YHC001 = #{yhc001,jdbcType=VARCHAR}
   </update>
@@ -330,7 +359,9 @@
       YHC009 = #{yhc009,jdbcType=VARCHAR},
       YHC010 = #{yhc010,jdbcType=VARCHAR},
       YHC011 = #{yhc011,jdbcType=VARCHAR},
-      YHC012 = #{yhc012,jdbcType=VARCHAR}
+      YHC012 = #{yhc012,jdbcType=VARCHAR},
+      YHC013 = #{yhc013,jdbcType=REAL},
+        YHC014 = #{yhc014,jdbcType=TIMESTAMP}
     where YHC001 = #{yhc001,jdbcType=VARCHAR}
   </update>
   <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdyhcExample" flushCache="true" useCache="false">
@@ -347,12 +378,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="countByExampleje" parameterType="com.fangx.model.cdyhcExample" resultType="java.lang.Float">
-    select SUM(YHC007) from cdyhc
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
+
   <select id="selectByExampleAndPage1" resultMap="BaseResultMap2" parameterType="com.fangx.model.cdyhcExample" flushCache="true" useCache="false">
     select
     <if test="distinct" >
@@ -380,5 +406,97 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+  </select>
+
+  <select id="countByExampleyh" parameterType="com.fangx.model.cdyhcExample" resultType="java.lang.Long">
+    select count(*) from cdyhc left join  cdusc on  cdyhc.yhc002=cdusc.usc001
+    <where>
+      <if test="cdyhcExample != null">
+        <foreach collection="cdyhcExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectByExampleAndPageyh" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdyhcExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdyhc left join  cdusc on  cdyhc.yhc002=cdusc.usc001
+    <where>
+      <if test="cdyhcExample != null">
+        <foreach collection="cdyhcExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdyhcExample != null">
+      <if test="cdyhcExample.orderByClause != null">
+        order by ${cdyhcExample.orderByClause}
+      </if>
+    </if>
+  </select>
+  <sql id="ECExample_Where_Clause">
+    <if test="criteria.valid">
+      <foreach collection="criteria.criteria" item="criterion">
+        <choose>
+          <when test="criterion.noValue">
+            and ${criterion.condition}
+          </when>
+          <when test="criterion.singleValue">
+            and ${criterion.condition}
+            #{criterion.value}
+          </when>
+          <when test="criterion.betweenValue">
+            and ${criterion.condition} #{criterion.value} and
+            #{criterion.secondValue}
+          </when>
+          <when test="criterion.listValue">
+            and ${criterion.condition}
+            <foreach collection="criterion.value" item="listItem"
+                     open="(" close=")" separator=",">
+              #{listItem}
+            </foreach>
+          </when>
+        </choose>
+      </foreach>
+    </if>
+  </sql>
+  <select id="countByExampleje" parameterType="com.fangx.model.cdyhcExample" resultType="java.lang.Float">
+    select SUM(YHC007-YHC013) from cdyhc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="countByExamplers" parameterType="com.fangx.model.cdyhcExample" resultType="java.lang.Integer">
+    select count(distinct YHC002) from cdyhc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <select id="countByExampleje1" parameterType="com.fangx.model.cdyhcExample" resultType="java.lang.Float">
+    select SUM(YHC007-YHC013) from cdyhc left join  cdusc on  cdyhc.yhc002=cdusc.usc001
+    <where>
+      <if test="cdyhcExample != null">
+        <foreach collection="cdyhcExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
   </select>
 </mapper>

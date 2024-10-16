@@ -3,11 +3,8 @@ package com.fangx.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fangx.dao.cdusdMapper;
-import com.fangx.model.PageBean;
-import com.fangx.model.cdusd;
-import com.fangx.model.cdusdExample;
+import com.fangx.model.*;
 import com.fangx.model.cdusdExample.Criteria;
-import com.fangx.model.cdyhbExample;
 import com.fangx.service.CdusdService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,13 +86,36 @@ public class CdusdServiceImpl implements CdusdService {
     }
 
     @Override
-    public List<cdusd> serachBytime(Integer weekDay) {
+    public List<cdusd> serachBytime(Integer weekDay, String lx, List<Integer> ids) {
         cdusdExample e1 = new cdusdExample();
         Criteria c = e1.createCriteria();
+        if(lx!=null)c.andUsd011EqualTo(lx);
         cdyhbExample e2 = new cdyhbExample();
         cdyhbExample.Criteria c1 = e2.createCriteria();
         c1.andYhb002EqualTo(weekDay);
+        if(ids!=null&&ids.size()>0)c.andUsd001NotIn(ids);
         return usdMapper.selectByExample1(e1,e2);
+    }
+
+
+    @Override
+    public List<cdusd> serachBytime1(Integer weekDay, String lx, List<Integer> ids) {
+        cdusdExample e1 = new cdusdExample();
+        Criteria c = e1.createCriteria();
+        if(lx!=null)c.andUsd011EqualTo(lx);
+        cdusbExample e2 = new cdusbExample();
+        cdusbExample.Criteria c1 = e2.createCriteria();
+        c1.andUsb002EqualTo(weekDay+"号");
+        if(lx!=null)c1.andUsb005EqualTo(lx);
+        if(ids!=null&&ids.size()>0)c.andUsd001NotIn(ids);
+        return usdMapper.selectByExample2(e1,e2);
+    }
+    @Override
+    public List<cdusd> selectBylx(String lx) {
+        cdusdExample e1 = new cdusdExample();
+        Criteria c = e1.createCriteria();
+        if(lx!=null)c.andUsd011EqualTo(lx);
+        return usdMapper.selectByExample(e1);
     }
 
     public PageBean queryByPage(PageBean pageBean, cdusdExample example) {

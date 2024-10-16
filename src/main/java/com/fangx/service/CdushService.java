@@ -35,4 +35,6 @@ public interface CdushService extends IService<cdush> {
     cdush selectByyhcp(Integer yhid, Integer cpid);
 
     List<cdush> selectByyhidtk(String ddid);
+
+    boolean countByddid(String ddid);
 }

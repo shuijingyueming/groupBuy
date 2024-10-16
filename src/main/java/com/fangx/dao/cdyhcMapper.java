@@ -1,5 +1,6 @@
 package com.fangx.dao;
 
+import com.fangx.model.cduscExample;
 import com.fangx.model.cdyhc;
 import com.fangx.model.cdyhcExample;
 import java.util.List;
@@ -37,4 +38,12 @@ public interface cdyhcMapper {
     List<cdyhc> selectByExampleAndPage1(cdyhcExample example, RowBounds rowBounds);
 
     List<cdyhc> selectByExample1(cdyhcExample e1);
+
+    long countByExampleyh(@Param("cdyhcExample")cdyhcExample e1, @Param("cduscExample")cduscExample e2);
+
+    List<cdyhc> selectByExampleAndPageyh(@Param("cdyhcExample")cdyhcExample e1, @Param("cduscExample")cduscExample e2, RowBounds rowBounds);
+
+    Integer countByExamplers(cdyhcExample e1);
+
+    float countByExampleje1(@Param("cdyhcExample")cdyhcExample e1, @Param("cduscExample")cduscExample e2);
 }

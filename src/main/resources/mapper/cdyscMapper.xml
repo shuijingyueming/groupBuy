@@ -5,7 +5,7 @@
     <id column="YSC001" jdbcType="INTEGER" property="ysc001" />
     <result column="YSC002" jdbcType="INTEGER" property="ysc002" />
     <result column="YSC003" jdbcType="TIMESTAMP" property="ysc003" />
-    <result column="YSC004" jdbcType="TIMESTAMP" property="ysc004" />
+    <result column="YSC004" jdbcType="CHAR" property="ysc004" />
     <result column="YSC005" jdbcType="CHAR" property="ysc005" />
     <result column="YSC006" jdbcType="INTEGER" property="ysc006" />
     <result column="YSC007" jdbcType="CHAR" property="ysc007" />
@@ -109,7 +109,7 @@
       YSC004, YSC005, YSC006, YSC007
       )
     values (#{ysc001,jdbcType=INTEGER}, #{ysc002,jdbcType=INTEGER}, #{ysc003,jdbcType=TIMESTAMP}, 
-      #{ysc004,jdbcType=TIMESTAMP}, #{ysc005,jdbcType=CHAR}, #{ysc006,jdbcType=INTEGER}, #{ysc007,jdbcType=CHAR}
+      #{ysc004,jdbcType=CHAR}, #{ysc005,jdbcType=CHAR}, #{ysc006,jdbcType=INTEGER}, #{ysc007,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fangx.model.cdysc">
@@ -148,7 +148,7 @@
         #{ysc003,jdbcType=TIMESTAMP},
       </if>
       <if test="ysc004 != null">
-        #{ysc004,jdbcType=TIMESTAMP},
+        #{ysc004,jdbcType=CHAR},
       </if>
       <if test="ysc005 != null">
         #{ysc005,jdbcType=CHAR},
@@ -180,7 +180,7 @@
         YSC003 = #{record.ysc003,jdbcType=TIMESTAMP},
       </if>
       <if test="record.ysc004 != null">
-        YSC004 = #{record.ysc004,jdbcType=TIMESTAMP},
+        YSC004 = #{record.ysc004,jdbcType=CHAR},
       </if>
       <if test="record.ysc005 != null">
         YSC005 = #{record.ysc005,jdbcType=CHAR},
@@ -201,7 +201,7 @@
     set YSC001 = #{record.ysc001,jdbcType=INTEGER},
       YSC002 = #{record.ysc002,jdbcType=INTEGER},
       YSC003 = #{record.ysc003,jdbcType=TIMESTAMP},
-      YSC004 = #{record.ysc004,jdbcType=TIMESTAMP},
+      YSC004 = #{record.ysc004,jdbcType=CHAR},
       YSC005 = #{record.ysc005,jdbcType=CHAR},
       YSC006 = #{record.ysc006,jdbcType=INTEGER},
       YSC007 = #{record.ysc007,jdbcType=CHAR}
@@ -219,7 +219,7 @@
         YSC003 = #{ysc003,jdbcType=TIMESTAMP},
       </if>
       <if test="ysc004 != null">
-        YSC004 = #{ysc004,jdbcType=TIMESTAMP},
+        YSC004 = #{ysc004,jdbcType=CHAR},
       </if>
       <if test="ysc005 != null">
         YSC005 = #{ysc005,jdbcType=CHAR},
@@ -237,7 +237,7 @@
     update cdysc
     set YSC002 = #{ysc002,jdbcType=INTEGER},
       YSC003 = #{ysc003,jdbcType=TIMESTAMP},
-      YSC004 = #{ysc004,jdbcType=TIMESTAMP},
+      YSC004 = #{ysc004,jdbcType=CHAR},
       YSC005 = #{ysc005,jdbcType=CHAR},
       YSC006 = #{ysc006,jdbcType=INTEGER},
         YSC007 = #{ysc007,jdbcType=CHAR}

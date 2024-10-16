@@ -5,14 +5,14 @@ import java.util.List;
 
 public class cdysb {
 
-    private List<cdysd> ysdlist;
+    private cdusd usd;
 
-    public List<cdysd> getYsdlist() {
-        return ysdlist;
+    public cdusd getUsd() {
+        return usd;
     }
 
-    public void setYsdlist(List<cdysd> ysdlist) {
-        this.ysdlist = ysdlist;
+    public void setUsd(cdusd usd) {
+        this.usd = usd;
     }
 
     private Integer ysb001;
@@ -25,9 +25,10 @@ public class cdysb {
 
     private String ysb005;
 
-    private String ysb006;
+    private Integer ysb006;
 
     private String ysb007;
+    private String ysb008;
 
     public Integer getYsb001() {
         return ysb001;
@@ -69,11 +70,11 @@ public class cdysb {
         this.ysb005 = ysb005 == null ? null : ysb005.trim();
     }
 
-    public String getYsb006() {
+    public Integer getYsb006() {
         return ysb006;
     }
 
-    public void setYsb006(String ysb006) {
+    public void setYsb006(Integer ysb006) {
         this.ysb006 = ysb006;
     }
 
@@ -83,6 +84,14 @@ public class cdysb {
 
     public void setYsb007(String ysb007) {
         this.ysb007 = ysb007;
+    }
+
+    public String getYsb008() {
+        return ysb008;
+    }
+
+    public void setYsb008(String ysb008) {
+        this.ysb008 = ysb008;
     }
 
     @Override
@@ -98,6 +107,7 @@ public class cdysb {
         sb.append(", ysb005=").append(ysb005);
         sb.append(", ysb006=").append(ysb006);
         sb.append(", ysb007=").append(ysb007);
+        sb.append(", ysb008=").append(ysb008);
         sb.append("]");
         return sb.toString();
     }

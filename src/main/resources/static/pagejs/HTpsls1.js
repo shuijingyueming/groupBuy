@@ -52,6 +52,9 @@ $(document).ready(function () {
                         "zt":function(){
                             return $("input[name='t7']:checked").val()
                         },
+                        "zt1":function(){
+                            return $("input[name='t10']:checked").val()
+                        },
                         "id":function(){
                             return $("#id").val().trim();
                         }//要传递的数据
@@ -72,6 +75,9 @@ $(document).ready(function () {
                         "zt":function(){
                             return $("input[name='t7']:checked").val()
                         },
+                        "zt1":function(){
+                            return $("input[name='t10']:checked").val()
+                        },
                         "id":function(){
                             return $("#id").val().trim();
                         }//要传递的数据
@@ -90,8 +96,12 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(form) {
-            if($("#t4").val()!=''&&$("#t3").val()>=$("#t4").val()) {
-                $("#t4").after('<label id="t1-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t4">配送日期要大于原配送日期</label>');
+            // if($("#t4").val()!=''&&$("#t3").val()>=$("#t4").val()) {
+            //     $("#t4").after('<label id="t1-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t4">配送日期要大于原配送日期</label>');
+            //     return;
+            // }
+            if($('input[name=t7]:checked').val()=='B'&&$("#alllzbzlx").find(".dpcs").length==0) {
+                $("#t9").after('<label id="t1-error" class="error" style="margin-left:5px;margin-top:6px;color: red;" for="t4">请选择公司</label>');
                 return;
             }
              layui.use('layer', function(){
@@ -112,16 +122,28 @@ $(document).ready(function () {
     });
 
     $('input[name=t6]').change(function() {
-        console.log($("input[name='t6']:checked").val())
+        // console.log($("input[name='t6']:checked").val())
         if( $("input[name='t6']:checked").val()=="A"){
             $(".ps").show();
+            $("#t4").val("");
         }else {
             $(".ps").hide();
-            $("#t4").val("");
+            $("#t4").val($("#t3").val());
         }
     })
+
+    $('input[name=tt6]').change(function() {
+        // console.log($("input[name='t6']:checked").val())
+        if( $("input[name='tt6']:checked").val()=="A"){
+            $(".ps1").show();
+            $("#tt4").val("");
+        }else {
+            $(".ps1").hide();
+            $("#tt4").val($("#tt3").val());
+        }
+    })
+
     $('input[name=t7]').change(function() {
-        console.log($("input[name='t7']:checked").val())
         if( $("input[name='t7']:checked").val()=="A"){
             $(".fw").hide();
             $("#alllzbzlx").empty();
@@ -129,11 +151,56 @@ $(document).ready(function () {
             $("#t8").val("");
             listBz = [];
             listBzSet = new Set(listBz);
+            $("select[id='t9'] option").each(function() {
+                $("#t8").val($("#t8").val()+this.value+"#");
+            })
         }else {
+            $("#t8").val("");
             $(".fw").show();
         }
     })
+    $('input[name=t10]').change(function() {
+    //     if( $("input[name='t10']:checked").val()=="A"){
+    //         $("#t3").attr("min",$("#ztime").val());
+    //         $("#t4").attr("min",$("#ztime").val());
+    //     }else {
+    //         $("#t3").attr("min",$("#ytime").val());
+    //         $("#t4").attr("min",$("#ytime").val());
+    //     }
+        togs($("input[name='t10']:checked").val(),$("#t3").val());
+    })
+    $('#t3').change(function() {
+        togs($("input[name='t10']:checked").val(),$("#t3").val());
+    })
 });
+function togs(lx,date) {
+    $.ajax({
+        url: 'togslist?lx=' + lx+'&date='+date,
+        type: 'post',
+        async: false,
+        cache: false,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function (data) {
+            var list = eval(data.list);
+            // console.log(list)
+            $("#alllzbzlx").empty();
+            $("#t9").val("");
+            $("#t8").val("");
+            listBz = [];
+            listBzSet = new Set(listBz);
+            $("select[id='t9']").empty();
+            $("select[id='t9']").append("<option value=''>请选择</option>");
+            for (var i = 0; i < list.length; i++) {
+                if($("input[name='t7']:checked").val()=="A"){$("#t8").val($("#t8").val()+list[i].usd001+"#");}
+                $("select[id='t9']").append("<option value='" + list[i].usd001 + "'>" + list[i].usd002 + "</option>");
+            }
+        },
+        errror: function () {
+        }
+    })
+}
 
 //翻页
 function fanye(pageindex) {
@@ -174,6 +241,18 @@ function todc(){
     }
 }
 
+function xgzt(id,uname,type){
+    var r = confirm("确定修改此临时配送日期吗？");
+    if (r == true) {
+        var params = [ ["id",id], ["zt","U"], ["type",type],
+            ["pages",$("#pages").val()],
+            ["fhlx",$.trim($("#fhlx").val())],
+            ["date1",$.trim($("#date1").val())],
+            ["date",$.trim($("#date").val())]];
+        form_submit("toCo/topsls1","post",params,"_self");
+    }
+}
+
 function del(id,uname){
     var r = confirm("确定删除此临时配送日期吗？");
     if (r == true) {
@@ -206,56 +285,11 @@ function delete_item(){
 
 //添加编辑
 function edit(id){
-    if(id!=null&&id!=''){
-        $.ajax({
-            url:'toCo/serachpsls1?id='+id,
-            type:'post',
-            async: false,
-            cache: false,
-            processData: false,
-            contentType: false,
-            dataType:'json',
-            success:function(data) {
-                var item = eval(data.item);
-                $("#t3").val(getTime(item.ysb003,'YY-MM-DD'));
-                $("input[name='t6']").each(function(){
-                    if($(this).val()==item.ysb006){
-                        $(this).prop("checked",true);
-                    }else{
-                        $(this).prop("checked",false);
-                    }
-                });
-                if(item.ysb006=='B')$(".ps").hide();
-                if(item.ysb004!=null) $("#t4").val(getTime(item.ysb004,'YY-MM-DD'));
-                $("input[name='t7']").each(function(){
-                    if($(this).val()==item.ysb007){
-                        $(this).prop("checked",true);
-                    }else{
-                        $(this).prop("checked",false);
-                    }
-                });
-                if(item.ysb007=='B')$(".fw").show();
-                var list =item.ysdlist;
-                $("#alllzbzlx").empty();
-                var html=``;
-                if(list!=null&&list.length>0){
-                    for(var i=0;i<list.length;i++){
-                        html +=  "<div class=dpcs><image src='./static/images/delicon.png' class='bz' name='bz' id='"+list[i].usd.usd001+"' value='"+list[i].usd.usd002+"'></image>"+list[i].usd.usd002+"</div>";
-                    }
-                }
-                $("#alllzbzlx").append(html);
-                $("img[class='bz']").each(function(){
-                    listBz.push($(this).attr('id')+"#"+$(this).parent().text());
-                    listBzSet.add($(this).attr('id')+"#"+$(this).parent().text());
-                });
-            },
-            error:function(){}
-        });
-        $("#id").val(id);
-        $("#mtitle").html("修改临时配送日期信息");
-    }else{
-        $("#mtitle").html("添加临时配送日期信息");
-    }
+    $("#t8").val("");
+    $("select[id='t9']").each(function() {
+        $("#t8").val($("#t8").val()+this.value+"#");
+    })
+    $("#mtitle").html("添加临时配送日期信息");
     $("#active").show();
     $("#adiv").addClass("an");
     //$('#active').css("height",$('#bash', parent.document).css("height"));
@@ -264,6 +298,8 @@ function edit(id){
 function clean(){
     $("#t3").val("");
     $("#t4").val("");
+    // $("#t3").attr("min",$("#ztime").val());
+    // $("#t4").attr("min",$("#ztime").val());
     $("input[name='t6']").each(function(){
         if($(this).val()=='A'){
             $(this).prop("checked",true);
@@ -279,6 +315,14 @@ function clean(){
             $(this).prop("checked",false);
         }
     });
+    $("input[name='t10']").each(function(){
+        if($(this).val()=='A'){
+            $(this).prop("checked",true);
+        }else{
+            $(this).prop("checked",false);
+        }
+    });
+    togs("A",null);
     $(".fw").hide();
     $("#t9").val("");
     $("#alllzbzlx").empty();
@@ -304,7 +348,7 @@ function cancel_q(){
 
 
 function drkc(){
-    if($("#time").val()!=""){
+    if(getTime($("#time").val(),'YY-MM-DD')!=""){
         $('#file1').click();
     }else {
         layui.use('layer', function () {
@@ -319,7 +363,7 @@ function daoruwj1() {
     $("#pass1").attr("onclick","xxcx()");
     var formData = new FormData();
     formData.append("file1", document.getElementById("file1").files[0]);
-    formData.append("time", $("#time").val());
+    formData.append("time", getTime($("#time").val(),'YY-MM-DD'));
     // var index = layer.load(1, {
     //     content: "导入中",
     //     shade: [0.1, 'black'], //0.1透明度的白色背景
@@ -367,4 +411,62 @@ function daoruwj1() {
             }
         }
     });
+}
+
+
+//添加编辑
+function edit1(id){
+    if(id!=null&&id!=''){
+        $.ajax({
+            url:'toCo/serachpsls1?id='+id,
+            type:'post',
+            async: false,
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType:'json',
+            success:function(data) {
+                var item = eval(data.item);
+                $("#tt3").val(getTime(item.ysb003,'YY-MM-DD'));
+                $("input[name='tt6']").each(function(){
+                    if($(this).val()==item.ysb005){
+                        $(this).prop("checked",true);
+                    }else{
+                        $(this).prop("checked",false);
+                    }
+                });
+                if(item.ysb004!=null) $("#tt4").val(getTime(item.ysb004,'YY-MM-DD'));
+                if(item.ysb005=="A") {
+                    $(".ps1").show();
+                }else{
+                    $(".ps1").hide();
+                }
+                $("#tt8").val(item.ysb002);
+            },
+            error:function(){}
+        });
+        $("#id1").val(id);
+        $("#mtitle1").html("修改临时配送日期信息");
+    }
+    $("#active1").show();
+    $("#adiv1").addClass("an");
+    //$('#active').css("height",$('#bash', parent.document).css("height"));
+}
+
+function clean1(){
+    $("#tt3").val("");
+    $("#tt4").val("");
+    $("input[name='tt6']").each(function(){
+        if($(this).val()=='A'){
+            $(this).prop("checked",true);
+        }else{
+            $(this).prop("checked",false);
+        }
+    });
+    $("#tt8").val("");
+    $("#id1").val("");
+    $("#adiv1").removeClass("an");
+    $("#active1").hide();
+    $(".form-control").removeClass("error");
+    $(".error").remove();
 }

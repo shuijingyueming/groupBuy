@@ -45,4 +45,10 @@ public interface CdyhcService extends IService<cdyhc> {
 
     List<cdyhc> selectBygsiddz(String time,Integer gsid);
     List<cdyhc> selectBygsiddz1(String time,Integer gsid);
+
+    Integer selectBygsidRS(Date time, Integer gsid, String fkzt, String zt) throws ParseException;
+
+    void updateBycurentday(Date time, Date time1, Integer gsid) throws ParseException;
+
+    void updateBycurentday1(Date ysb003, Date time, Integer usd001) throws ParseException;
 }

@@ -58,6 +58,10 @@ public class cdyhc {
 
     private String yhc012;
 
+    private Float yhc013;
+
+    private Date yhc014;
+
     public String getYhc001() {
         return yhc001;
     }
@@ -154,6 +158,22 @@ public class cdyhc {
         this.yhc012 = yhc012 == null ? null : yhc012.trim();
     }
 
+    public Float getYhc013() {
+        return yhc013;
+    }
+
+    public void setYhc013(Float yhc013) {
+        this.yhc013 = yhc013;
+    }
+
+    public Date getYhc014() {
+        return yhc014;
+    }
+
+    public void setYhc014(Date yhc014) {
+        this.yhc014 = yhc014;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -172,6 +192,8 @@ public class cdyhc {
         sb.append(", yhc010=").append(yhc010);
         sb.append(", yhc011=").append(yhc011);
         sb.append(", yhc012=").append(yhc012);
+        sb.append(", yhc013=").append(yhc013);
+        sb.append(", yhc014=").append(yhc014);
         sb.append("]");
         return sb.toString();
     }

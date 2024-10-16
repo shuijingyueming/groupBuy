@@ -106,6 +106,9 @@ public class CdusfServiceImpl implements CdusfService {
         page = page < 1 ? 1 : ((page > count) ? count : page);
         //query
         List<cdusf> list = usfMapper.selectByExampleAndPage(example, new RowBounds((page - 1) * size, size));
+        for(cdusf usf:list){
+            usf.setSl(ushMapper.countBycpid(usf.getUsf001()));
+        }
         //save to PageBean
         pageBean.setCurrentPage(page);
         pageBean.setPageCount(count);
@@ -130,7 +133,7 @@ public class CdusfServiceImpl implements CdusfService {
 
     @Override
     public List<cdusf> selectByDD(Integer yhid, String qsid) {
-        List<cdusf> list1 = usfMapper.selectByExample(null);
+        List<cdusf> list1 = usfMapper.selectByExample3(null);
         List<cdusf> list =new ArrayList<>();
         for(cdusf usf:list1){
             usf.setSl(ushMapper.selectByyhdd(yhid,qsid,usf.getUsf001()));
@@ -161,6 +164,11 @@ public class CdusfServiceImpl implements CdusfService {
         if(cpname!=null) c.andUsf002Like("%"+cpname+"%");
         List<cdusf> list = usfMapper.selectByExample2(e1);
         return list;
+    }
+
+    @Override
+    public void delete(Integer id) {
+        usfMapper.deleteByPrimaryKey(id);
     }
 
 

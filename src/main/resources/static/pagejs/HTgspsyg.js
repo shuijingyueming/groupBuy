@@ -2,6 +2,9 @@ var checked_item="";
 
 function reback(){
     var params = [ ["pages",$("#pages").val()],
+        ["mo",$("#mo").val()],
+        ["gsid1",$("#gsid1").val()],
+        ["fhlx",$("#fhlx").val()],
         ["ptime",$("#ptime").val()],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
@@ -24,6 +27,8 @@ $(document).ready(function () {
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
         ["date",$("#date").val()],
+        ["mo",$("#mo").val()],
+        ["gsid1",$("#gsid1").val()],
         ["gsid",$.trim($("#gsid").val())],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
@@ -48,6 +53,8 @@ function todc(){
         if (r == true) {
             var params = [["pages",$("#pages").val()],
                 ["date",$("#date").val()], ["zt","DC"],
+                ["mo",$("#mo").val()],
+                ["gsid1",$("#gsid1").val()],
                 ["gsid",$.trim($("#gsid").val())],
                 ["name",$.trim($("#name").val())],
                 ["phone",$.trim($("#phone").val())]];

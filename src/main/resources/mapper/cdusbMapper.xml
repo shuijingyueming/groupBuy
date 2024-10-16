@@ -8,7 +8,7 @@
     <result column="USB004" jdbcType="INTEGER" property="usb004" />
     <result column="USB005" jdbcType="CHAR" property="usb005" />
     <result column="USB006" jdbcType="INTEGER" property="usb006" />
-    <result column="USB007" jdbcType="VARCHAR" property="usb007" />
+    <result column="USB007" jdbcType="TIMESTAMP" property="usb007" />
     <result column="USB008" jdbcType="TIMESTAMP" property="usb008" />
   </resultMap>
   <resultMap id="BaseResultMap1" type="com.fangx.model.cdusb"  extends="BaseResultMap">
@@ -111,7 +111,7 @@
       USB007, USB008)
     values (#{usb001,jdbcType=INTEGER}, #{usb002,jdbcType=VARCHAR}, #{usb003,jdbcType=INTEGER}, 
       #{usb004,jdbcType=INTEGER}, #{usb005,jdbcType=CHAR}, #{usb006,jdbcType=INTEGER}, 
-      #{usb007,jdbcType=VARCHAR}, #{usb008,jdbcType=TIMESTAMP})
+      #{usb007,jdbcType=TIMESTAMP}, #{usb008,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.fangx.model.cdusb" useGeneratedKeys="true" keyProperty="usb001">
     insert into cdusb
@@ -161,7 +161,7 @@
         #{usb006,jdbcType=INTEGER},
       </if>
       <if test="usb007 != null">
-        #{usb007,jdbcType=VARCHAR},
+        #{usb007,jdbcType=TIMESTAMP},
       </if>
       <if test="usb008 != null">
         #{usb008,jdbcType=TIMESTAMP},
@@ -196,7 +196,7 @@
         USB006 = #{record.usb006,jdbcType=INTEGER},
       </if>
       <if test="record.usb007 != null">
-        USB007 = #{record.usb007,jdbcType=VARCHAR},
+        USB007 = #{record.usb007,jdbcType=TIMESTAMP},
       </if>
       <if test="record.usb008 != null">
         USB008 = #{record.usb008,jdbcType=TIMESTAMP},
@@ -214,7 +214,7 @@
       USB004 = #{record.usb004,jdbcType=INTEGER},
       USB005 = #{record.usb005,jdbcType=CHAR},
       USB006 = #{record.usb006,jdbcType=INTEGER},
-      USB007 = #{record.usb007,jdbcType=VARCHAR},
+      USB007 = #{record.usb007,jdbcType=TIMESTAMP},
       USB008 = #{record.usb008,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -239,7 +239,7 @@
         USB006 = #{usb006,jdbcType=INTEGER},
       </if>
       <if test="usb007 != null">
-        USB007 = #{usb007,jdbcType=VARCHAR},
+        USB007 = #{usb007,jdbcType=TIMESTAMP},
       </if>
         USB008 = #{usb008,jdbcType=TIMESTAMP},
     </set>
@@ -252,7 +252,7 @@
       USB004 = #{usb004,jdbcType=INTEGER},
       USB005 = #{usb005,jdbcType=CHAR},
       USB006 = #{usb006,jdbcType=INTEGER},
-      USB007 = #{usb007,jdbcType=VARCHAR},
+      USB007 = #{usb007,jdbcType=TIMESTAMP},
       USB008 = #{usb008,jdbcType=TIMESTAMP}
     where USB001 = #{usb001,jdbcType=INTEGER}
   </update>

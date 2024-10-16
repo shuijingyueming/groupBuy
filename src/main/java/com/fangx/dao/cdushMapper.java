@@ -35,4 +35,6 @@ public interface cdushMapper {
     List<cdush> selectByExample1(cdushExample e1);
 
     Integer selectBycg(@Param("qsid")String qsid, @Param("cpid")Integer cpid);
+
+    Integer countBycpid(Integer cpid);
 }

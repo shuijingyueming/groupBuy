@@ -31,4 +31,6 @@ public interface cdyhbMapper {
     cdyhb selectBygsid(Integer gsid);
 
     cdyhb selectByqsid(Integer gsid);
+
+    List<Integer> selectByExampleid(cdyhbExample e1);
 }

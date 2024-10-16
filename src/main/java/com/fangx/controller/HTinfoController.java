@@ -152,7 +152,7 @@ public class HTinfoController extends BaseController {
                     mav.addObject("msg","D");
                 }else if(request.getParameter("zt").equals("R")){
                     cduse use = useService.getByid(Integer.valueOf(request.getParameter("id")));
-                    use.setUse003(EncrpytUtil.getSHA256("123456"));
+                    use.setUse003(EncrpytUtil.getSHA256("Q!w2e3r4"));
                     useService.update(use);
                     addLog(getUse(request).getUse002(),"重置了名字为：【" + use.getUse002()+ "】的密码");
                     mav.addObject("msg","M");
@@ -264,7 +264,7 @@ public class HTinfoController extends BaseController {
             mav.addObject("msg", "U");
         }else{
             String log = "新增了名字为：【" + request.getParameter("t1")+ "】的用户信息";
-            use.setUse003(EncrpytUtil.getSHA256("123456"));
+            use.setUse003(EncrpytUtil.getSHA256("Q!w2e3r4"));
             addLog(getUse(request).getUse002(),log);
             use = useService.insert(use);
             mav.addObject("msg", "I");

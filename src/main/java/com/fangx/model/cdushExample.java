@@ -683,6 +683,11 @@ public class cdushExample {
             addCriterion("USH009 not between", value1, value2, "ush009");
             return (Criteria) this;
         }
+
+        public Criteria andSql(String value) {
+            addCriterion(value);
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -31,5 +31,9 @@ public interface CdyseService extends IService<cdyse> {
 
     cdyse selectBycurentday(Date time, Integer gsid) throws ParseException;
 
-    cdyse selectByDS(String date, Integer gsid);
+    cdyse selectByDS(String date, String date1, Integer gsid);
+
+    void updateBycurentday(Date ysb003, Date ysb004, Integer gsid) throws ParseException;
+
+    void updateBycurentday1(Date ysb003, Date time, Integer usd001) throws ParseException;
 }

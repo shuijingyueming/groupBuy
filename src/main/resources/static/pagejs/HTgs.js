@@ -9,8 +9,8 @@ function toyg(gsid){
         ["phone",$.trim($("#phone").val())]];
     form_submit("toCo/togsyg","post",params,"_self");
 }
-function toczjl(gsid){
-    var params = [ ["id",gsid], ["fh","GS"]
+function toczjl(gsid,lx){
+    var params = [ ["id",gsid],["lx",lx], ["fh","GS"]
         , ["pages",$("#pages").val()],
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
@@ -114,6 +114,22 @@ $(document).ready(function () {
                 });
             });
             form.submit();
+        }
+    });
+    $('input[name=t11]').click(function() {
+        if(this.value=="A"){
+            $(".week").show();
+            $(".mouth").hide();
+            $("input[name='t9']").each(function(){
+                $(this).prop("checked",false);
+            });
+        }else{
+            $(".week").hide();
+            $(".mouth").show();
+            $("#alllzbzlx").empty();
+            $("#t8").val("");
+            listBz = [];
+            listBzSet = new Set(listBz);
         }
     });
 });
@@ -258,19 +274,45 @@ function edit(id){
                 $("#t3").val(item.usd004);
                 $("#t4").val(item.usd008);
                 $("#t5").val(getTime(item.usd010,'YY-MM-DD'));
-                var list =item.yhblist;
-                $("#alllzbzlx").empty();
-                var html=``;
-                if(list!=null&&list.length>0){
-                    for(var i=0;i<list.length;i++){
-                        html +=  "<div class=dpcs><image src='./static/images/delicon.png' class='bz' name='bz' id='"+list[i].usb.usb001+"' value='"+list[i].usb.usb002+"'></image>"+list[i].usb.usb002+"</div>";
+                $("input[name='t11']").each(function(){
+                    if(item.usd011==$(this).val()){
+                        $(this).prop("checked",true);
+                    }else{
+                        $(this).prop("checked",false);
                     }
-                }
-                $("#alllzbzlx").append(html);
-                $("img[class='bz']").each(function(){
-                    listBz.push($(this).attr('id')+"#"+$(this).parent().text());
-                    listBzSet.add($(this).attr('id')+"#"+$(this).parent().text());
                 });
+                var list =item.yhblist;
+                console.log(list)
+                if(item.usd011=="B"){
+                    $(".mouth").show();
+                    $(".week").hide();
+                    for(var i=0;i<list.length;i++){
+                        $("input[name='t9']").each(function(){
+                            if(list[i].usb.usb002==$(this).val()+"号"){
+                                $(this).prop("checked",true);
+                            }
+                        });
+                    }
+
+                }else{
+                    $("#alllzbzlx").empty();
+                    $(".week").show();
+                    $(".mouth").hide();
+                    var html=``;
+                    if(list!=null&&list.length>0){
+                        for(var i=0;i<list.length;i++){
+                            html +=  "<div class=dpcs><image src='./static/images/delicon.png' class='bz' name='bz' id='"+list[i].usb.usb001+"' value='"+list[i].usb.usb002+"'></image>"+list[i].usb.usb002+"</div>";
+                            $("#t8").val($("#t8").val()+list[i].usb.usb001+"#");
+                        }
+                    }
+                    $("#alllzbzlx").append(html);
+                    $("img[class='bz']").each(function(){
+                        listBz.push($(this).attr('id')+"#"+$(this).parent().text());
+                        listBzSet.add($(this).attr('id')+"#"+$(this).parent().text());
+                    });
+
+                }
+
             },
             error:function(){}
         });
@@ -299,6 +341,18 @@ function clean(){
     $("#t8").val("");
     listBz = [];
     listBzSet = new Set(listBz);
+    $("input[name='t11']").each(function(){
+        if("A"==$(this).val()){
+            $(this).prop("checked",true);
+        }else{
+            $(this).prop("checked",false);
+        }
+    });
+    $(".week").show();
+    $(".mouth").hide();
+    $("input[name='t9']").each(function(){
+            $(this).prop("checked",false);
+    });
 }
 
 function dryg(id){

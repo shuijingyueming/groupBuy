@@ -458,7 +458,7 @@ public class ExcelExport {
 					if(usf!=null){
 						if(!kcsl.isEmpty()){
 							if(isNumeric(kcsl)&&Integer.valueOf(kcsl)>=0){
-								item=yscService.selectBycpid(usf.getUsf001(),time);
+								item=yscService.selectBycpid(usf.getUsf001(),time, null);
 								if(item!=null){
 									item.setYsc006(Integer.valueOf(kcsl));
 									yscService.update(item);
@@ -660,7 +660,7 @@ public class ExcelExport {
 		cellStyle4.setFont(fontStyle4);
 		cellStyle4.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平居中
 		cellStyle4.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
-		CellRangeAddress sv1 = new CellRangeAddress((short) 0, (short) 0,(short) 0, (short) 4);
+		CellRangeAddress sv1 = new CellRangeAddress((short) 0, (short) 0,(short) 0, (short) 5);
 		sheet.addMergedRegion(sv1);
 		HSSFCell cells = row.createCell((short) 0);// 合并单元格示例
 		cells.setCellValue(file);
@@ -679,18 +679,18 @@ public class ExcelExport {
 		cellStyle.setFont(fontStyle);
 		cellStyle.setWrapText(true);// 自动换行
 
-		row=sheet.createRow(1);
-//		row.createCell(0).setCellValue("统计条件："+file);
-		row.createCell(0).setCellValue("配送时间："+date);
-		row.createCell(1).setCellValue("企业名称："+usd.getUsd002());
-		row.createCell(2).setCellValue("企业地址："+usd.getUsd003());
-		row.createCell(3).setCellValue("企业电话："+usd.getUsd004());
+//		row=sheet.createRow(1);
+////		row.createCell(0).setCellValue("统计条件："+file);
+//		row.createCell(0).setCellValue("配送时间："+date);
+//		row.createCell(1).setCellValue("企业名称："+usd.getUsd002());
+//		row.createCell(2).setCellValue("企业地址："+usd.getUsd003());
+//		row.createCell(3).setCellValue("企业电话："+usd.getUsd004());
 
 		row = sheet.createRow(2);
 		// 创建HSSFCell对象
 		HSSFCell cell = row.createCell(0);
-		String[] s={"序号","姓名","电话","内容","备注"};
-		for(int j=0;j<=4;j++){
+		String[] s={"序号","姓名","电话","内容","金额","备注"};
+		for(int j=0;j<=5;j++){
 			cell = row.createCell(j);
 			cell.setCellValue(s[j]);
 			cell.setCellStyle(cellStyle);
@@ -699,6 +699,8 @@ public class ExcelExport {
 		int rowNum=3;
 
 		List<cdusc> yglist=uscService.serachAll(usd.getUsd001());
+		int index=0;
+		Float zje=0.0f;
 		for (int j = 0; j<yglist.size(); j++) {
 			List<cdyhc> ddlist=yhcService.selectByyhid1(yglist.get(j).getUsc001(),date);
 			List<cdusf> list=usfService.selectByDD(yglist.get(j).getUsc001(),date);
@@ -706,23 +708,35 @@ public class ExcelExport {
 				row = sheet.createRow(rowNum);
 				String nr="";
 				String bz="";
+				Float je=0.0f;
 				for (int k = 0; k<list.size(); k++) {
-					nr+=list.get(k).getUsf002()+"("+list.get(k).getSl().toString()+")";
+
+					nr+=list.get(k).getUsf002()+"("+list.get(k).getSl().toString()+list.get(k).getUsm().getUsm002()+"["+list.get(k).getUsf003()+"]"+")";
 					if(k<list.size()-1)nr+="+";
 				}
 				for (int k = 0; k<ddlist.size(); k++) {
+					je+=ddlist.get(k).getYhc007()-ddlist.get(k).getYhc013();
 					if(ddlist.get(k).getYhc009()!=null&&!ddlist.get(k).getYhc009().isEmpty())bz+=ddlist.get(k).getYhc009()+"#";
 				}
-				String[] s1={String.valueOf((j + 1)),yglist.get(j).getUsc002(),yglist.get(j).getUsc015().substring(0,1)+"*"+yglist.get(j).getUsc015().substring(yglist.get(j).getUsc015().length()-4),nr,bz};
+				index++;
+				String[] s1={String.valueOf(index),yglist.get(j).getUsc002(),yglist.get(j).getUsc015().substring(0,1)+"*"+yglist.get(j).getUsc015().substring(yglist.get(j).getUsc015().length()-4),nr, String.valueOf(je),bz};
 //				String[] s1={String.valueOf((j + 1)),yglist.get(j).getUsc002(),yglist.get(j).getUsc015(),nr,bz};
-				for(int a=0;a<=4;a++){
+				for(int a=0;a<=5;a++){
 					cell = row.createCell(a);
 					cell.setCellValue(s1[a]);
 					cell.setCellStyle(cellStyle);
 				}
+				zje=zje+je;
 				rowNum ++;
 			}
 		}
+		row=sheet.createRow(1);
+//		row.createCell(0).setCellValue("统计条件："+file);
+		row.createCell(0).setCellValue("配送时间："+date);
+		row.createCell(1).setCellValue("企业名称："+usd.getUsd002());
+		row.createCell(2).setCellValue("企业地址："+usd.getUsd003());
+		row.createCell(3).setCellValue("企业电话："+usd.getUsd004());
+		row.createCell(4).setCellValue("总金额："+zje);
 //		sheet.protectSheet("123456");
 		try {
 			wb.write(outt);

@@ -40,7 +40,7 @@ $(document).ready(function () {
             layui.use('layer', function(){
                 var layer = layui.layer;
                 layer.ready(function(){
-                    layer.msg("重置密码成功,重置密码为123456");
+                    layer.msg("重置密码成功,重置密码为Q!w2e3r4");
                 });
             });
         }else if(msg=='DR'){

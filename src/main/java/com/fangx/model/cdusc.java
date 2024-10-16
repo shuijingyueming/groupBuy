@@ -7,6 +7,7 @@ public class cdusc {
 
     private String nr;
     private String bz;
+    private Float je;
 
     public String getNr() {
         return nr;
@@ -22,6 +23,14 @@ public class cdusc {
 
     public void setBz(String bz) {
         this.bz = bz;
+    }
+
+    public Float getJe() {
+        return je;
+    }
+
+    public void setJe(Float je) {
+        this.je = je;
     }
 
     private List<cdyhc> ddlist;

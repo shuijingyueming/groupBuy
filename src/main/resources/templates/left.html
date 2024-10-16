@@ -112,7 +112,10 @@
                                 <li id="menu_d2"><a _href="toCo/togsyg">员工管理</a></li>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
-                                <li id="menu_d3"><a _href="toCo/tocz">充值记录管理</a></li>
+                                <li id="menu_d3"><a _href="toCo/tocz?lx=A">充值记录管理</a></li>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
+                                <li id="menu_d4"><a _href="toCo/tocz?lx=B">清零记录管理</a></li>
                             </th:block>
                         </ul>
                     </li>
@@ -178,9 +181,9 @@
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'L1#')>=0}">
                                 <li id="menu_e1"><a _href="toOr/todd">订单管理</a></li>
                             </th:block>
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
-                                <li id="menu_e2"><a _href="toOr/todz">日对账管理</a></li>
-                            </th:block>
+<!--                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">-->
+<!--                                <li id="menu_e2"><a _href="toOr/todz">日对账管理</a></li>-->
+<!--                            </th:block>-->
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
                                 <li id="menu_e4"><a _href="toOr/toydz">月对账管理</a></li>
                             </th:block>

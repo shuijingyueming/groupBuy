@@ -92,7 +92,7 @@ function usffanye(pageindex){
         ["l",$.trim($("#l").val())],
         ["m1",$.trim($("#m1").val())],
         ["lx",$.trim($("#lx").val())],
-        ["date",$.trim($("#date").val())],
+        ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
         ["qsid",$.trim($("#qsid").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocpls1cp","post",params,"_self");
@@ -104,7 +104,7 @@ function xxcx(){
         ["l",$.trim($("#l").val())],
         ["m1",$.trim($("#m1").val())],
         ["lx",$.trim($("#lx").val())],
-        ["date",$.trim($("#date").val())],
+        ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
         ["qsid",$.trim($("#qsid").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocpls1cp","post",params,"_self");
@@ -119,7 +119,7 @@ function xgzt(id,cpid,uname,type){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -135,7 +135,7 @@ function xgzt1(id,cpid,uname,type){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -151,7 +151,7 @@ function todc(){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -167,7 +167,7 @@ function add1(id,cpid,uname){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -183,7 +183,7 @@ function add(id,cpid,uname){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -199,7 +199,7 @@ function xgztx(id,uname,type){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -216,7 +216,7 @@ function del(id,uname){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -237,7 +237,7 @@ function delete_item(){
             ["l",$.trim($("#l").val())],
             ["m1",$.trim($("#m1").val())],
             ["lx",$.trim($("#lx").val())],
-            ["date",$.trim($("#date").val())],
+            ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
             ["qsid",$.trim($("#qsid").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocpls1cp","get",params,"_self");
@@ -372,7 +372,7 @@ function daoruwj1() {
                     ["t",$.trim($("#t").val())],
                     ["l",$.trim($("#l").val())],
                     ["m1",$.trim($("#m1").val())],
-                    ["date",$.trim($("#date").val())],
+                    ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
                     ["qsid",$.trim($("#qsid").val())],
                     ["name",$.trim($("#name").val())]];
                 form_submit("toDi/tocpls1cp","post",params,"_self");
@@ -387,7 +387,7 @@ function daoruwj1() {
                     ["t",$.trim($("#t").val())],
                     ["l",$.trim($("#l").val())],
                     ["m1",$.trim($("#m1").val())],
-                    ["date",$.trim($("#date").val())],
+                    ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
                     ["qsid",$.trim($("#qsid").val())],
                     ["name",$.trim($("#name").val())]];
                 form_submit("toDi/tocpls1cp","post",params,"_self");
@@ -398,7 +398,7 @@ function daoruwj1() {
                         setTimeout(function (){
                             var params = [  ["pages",$("#pages").val()],
                                 ["lx",$.trim($("#lx").val())],
-                                ["date",$.trim($("#date").val())],
+                                ["date",$.trim($("#date").val())],["fpfs",$.trim($("#fpfs").val())],
                                 ["qsid",$.trim($("#qsid").val())],
                                 ["name",$.trim($("#name").val())]];
                             form_submit("toDi/tocpls1cp","post",params,"_self");

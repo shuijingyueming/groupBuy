@@ -1,5 +1,6 @@
 package com.fangx.dao;
 
+import com.fangx.model.cdusbExample;
 import com.fangx.model.cdusd;
 import com.fangx.model.cdusdExample;
 import java.util.List;
@@ -36,4 +37,6 @@ public interface cdusdMapper {
     List<cdusd> selectByExampleAndPage(cdusdExample example, RowBounds rowBounds);
 
     List<cdusd> selectByExample1(@Param("cdusdExample")cdusdExample e1, @Param("cdyhbExample")cdyhbExample e2);
+
+    List<cdusd> selectByExample2(@Param("cdusdExample")cdusdExample e1, @Param("cdusbExample")cdusbExample e2);
 }

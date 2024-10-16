@@ -226,4 +226,14 @@
     from cdyhb
     where YHB002 = #{gsid,jdbcType=INTEGER} order by YHB002
   </select>
+
+  <select id="selectByExampleid" parameterType="com.fangx.model.cdyhbExample" resultType="java.lang.Integer">
+    select yhb003 from cdyhb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
 </mapper>

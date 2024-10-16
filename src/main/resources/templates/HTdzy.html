@@ -94,13 +94,14 @@
                     <tr th:each="item,stat:${usdlist}" style="border-bottom:1px solid #dee2e6;">
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
                         <td th:text="${item.usd002}"></td>
-                        <td th:text="${item.yze!=null?item.yze:0}"></td>
-                        <td th:text="${item.wze!=null?item.wze:0}"></td>
+                        <td th:text="${item.yze!=null?#numbers.formatDecimal(item.yze,1,'COMMA',2,'POINT'):0}"></td>
+                        <td th:text="${item.wze!=null?#numbers.formatDecimal(item.wze,1,'COMMA',2,'POINT'):0}"></td>
 <!--                        <td th:text="${item.usb!=null?item.usb.usb002:''}"></td>-->
                         <td>
                            <!-- <button th:onclick="toxq([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>-->
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'L3#')>=0}">
-                                <button th:onclick="toddjl([[${pageobj.othersql5}]])" type="button" class="btn btn-primary btn-sm btxz">订单管理</button>
+                                <button th:onclick="topsjl([[${pageobj.othersql}]],[[${item.usd002}]])" type="button" class="btn btn-primary btn-sm btxz">配送单管理</button>
+                                <button th:onclick="toddjl([[${pageobj.othersql}]])" type="button" class="btn btn-primary btn-sm btxz">订单管理</button>
                                 <button th:onclick="todcdz([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">导出</button>
                             </th:block>
                         </td>

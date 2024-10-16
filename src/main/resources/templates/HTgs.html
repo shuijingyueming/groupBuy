@@ -106,7 +106,8 @@
                                 <button th:onclick="toyg([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">员工管理</button>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
-                                <button th:onclick="toczjl([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">充值管理</button>
+                                <button th:onclick="toczjl([[${item.usd001}]],'A')" type="button" class="btn btn-primary btn-sm btxz">充值管理</button>
+                                <button th:onclick="toczjl([[${item.usd001}]],'B')" type="button" class="btn btn-primary btn-sm btxz">清零管理</button>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
                                 <button th:onclick="todz([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">对账管理</button>
@@ -182,7 +183,6 @@
                 </div>
                 </div>
                 <div class="row">
-
                     <div class="col-md-6 col-xl-4">
                         <div class="form-group">
                             <label>企业电话</label>
@@ -191,7 +191,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>类型</label>
+                        <div class="form-group" style="display:flex:justify-content:center:align-items:center;">
+                            <input class="inpchk" id="r111" name="t11" value="A" type="radio" checked />
+                            <label for="r111" class="form-check-label">按周</label>
+                            <input class="inpchk" style="margin-left:20px;" id="r112" name="t11" value="B" type="radio" />
+                            <label for="r112" class="form-check-label">按月</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row week" style="">
                     <div class="col-md-6 col-xl-4">
                         <input type="hidden" id="t8" name="t8" lay-verify="t8" value="">
                         <label>配送周期</label>
@@ -205,9 +216,78 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row week">
                     <div class="col-md-12 col-xl-12">
                         <div class="form-group bqdiv" id="alllzbzlx"></div>
+                    </div>
+                </div>
+                <div class="row mouth" style="display: none">
+                    <label>配送日期</label>
+                    <div class="col-md-10 col-xl-10">
+                        <div class="form-group">
+                            <input id="A1" value="1" type="checkbox" name="t9"/>
+                            <label for="A1" class="col-form-label clab">1号</label>
+                            <input id="A2" value="2" type="checkbox" name="t9"/>
+                            <label for="A2" class="col-form-label clab">2号</label>
+                            <input id="A3" value="3" type="checkbox" name="t9"/>
+                            <label for="A3" class="col-form-label clab">3号</label>
+                            <input id="A4" value="4" type="checkbox" name="t9"/>
+                            <label for="A4" class="col-form-label clab">4号</label>
+                            <input id="A5" value="5" type="checkbox" name="t9"/>
+                            <label for="A5" class="col-form-label clab">5号</label>
+                            <input id="A6" value="6" type="checkbox" name="t9"/>
+                            <label for="A6" class="col-form-label clab">6号</label>
+                            <input id="A7" value="7" type="checkbox" name="t9"/>
+                            <label for="A7" class="col-form-label clab">7号</label>
+                            <input id="A8" value="8" type="checkbox" name="t9"/>
+                            <label for="A8" class="col-form-label clab">8号</label>
+                            <input id="A9" value="9" type="checkbox" name="t9"/>
+                            <label for="A9" class="col-form-label clab">9号</label>
+                            <input id="A10" value="10" type="checkbox" name="t9"/>
+                            <label for="A10" class="col-form-label clab">10号</label>
+                            <input id="A11" value="11" type="checkbox" name="t9"/>
+                            <label for="A11" class="col-form-label clab">11号</label>
+                            <input id="A12" value="12" type="checkbox" name="t9"/>
+                            <label for="A12" class="col-form-label clab">12号</label>
+                            <input id="A13" value="13" type="checkbox" name="t9"/>
+                            <label for="A13" class="col-form-label clab">13号</label>
+                            <input id="A14" value="14" type="checkbox" name="t9"/>
+                            <label for="A14" class="col-form-label clab">14号</label>
+                            <input id="A15" value="15" type="checkbox" name="t9"/>
+                            <label for="A15" class="col-form-label clab">15号</label>
+                            <input id="A16" value="16" type="checkbox" name="t9"/>
+                            <label for="A16" class="col-form-label clab">16号</label>
+                            <input id="A17" value="17" type="checkbox" name="t9"/>
+                            <label for="A17" class="col-form-label clab">17号</label>
+                            <input id="A18" value="18" type="checkbox" name="t9"/>
+                            <label for="A18" class="col-form-label clab">18号</label>
+                            <input id="A19" value="19" type="checkbox" name="t9"/>
+                            <label for="A19" class="col-form-label clab">19号</label>
+                            <input id="A20" value="20" type="checkbox" name="t9"/>
+                            <label for="A20" class="col-form-label clab">20号</label>
+                            <input id="A21" value="21" type="checkbox" name="t9"/>
+                            <label for="A21" class="col-form-label clab">21号</label>
+                            <input id="A22" value="22" type="checkbox" name="t9"/>
+                            <label for="A22" class="col-form-label clab">22号</label>
+                            <input id="A23" value="23" type="checkbox" name="t9"/>
+                            <label for="A23" class="col-form-label clab">23号</label>
+                            <input id="A24" value="24" type="checkbox" name="t9"/>
+                            <label for="A24" class="col-form-label clab">24号</label>
+                            <input id="A25" value="25" type="checkbox" name="t9"/>
+                            <label for="A25" class="col-form-label clab">25号</label>
+                            <input id="A26" value="26" type="checkbox" name="t9"/>
+                            <label for="A26" class="col-form-label clab">26号</label>
+                            <input id="A27" value="27" type="checkbox" name="t9"/>
+                            <label for="A27" class="col-form-label clab">27号</label>
+                            <input id="A28" value="28" type="checkbox" name="t9"/>
+                            <label for="A28" class="col-form-label clab">28号</label>
+                            <input id="A29" value="29" type="checkbox" name="t9"/>
+                            <label for="A29" class="col-form-label clab">29号</label>
+                            <input id="A30" value="30" type="checkbox" name="t9"/>
+                            <label for="A30" class="col-form-label clab">30号</label>
+                            <input id="A31" value="31" type="checkbox" name="t9"/>
+                            <label for="A31" class="col-form-label clab">31号</label>
+                        </div>
                     </div>
                 </div>
                     <div class="row">
@@ -216,6 +296,7 @@
                             <button type="submit" lay-submit="" class="btn btn-success">提交</button>
                         </div>
                     </div>
+
             </form>
         </div>
         <!-- Form Formatter Section Ends -->

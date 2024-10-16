@@ -5,7 +5,7 @@
     <id column="YSE001" jdbcType="VARCHAR" property="yse001" />
     <result column="YSE002" jdbcType="INTEGER" property="yse002" />
     <result column="YSE003" jdbcType="TIMESTAMP" property="yse003" />
-    <result column="YSE004" jdbcType="VARCHAR" property="yse004" />
+    <result column="YSE004" jdbcType="TIMESTAMP" property="yse004" />
     <result column="YSE005" jdbcType="VARCHAR" property="yse005" />
   </resultMap>
   <resultMap id="BaseResultMap1" type="com.fangx.model.cdyse"  extends="BaseResultMap">
@@ -106,7 +106,7 @@
     insert into cdyse (YSE001, YSE002, YSE003, 
       YSE004, YSE005)
     values (#{yse001,jdbcType=VARCHAR}, #{yse002,jdbcType=INTEGER}, #{yse003,jdbcType=TIMESTAMP}, 
-      #{yse004,jdbcType=VARCHAR}, #{yse005,jdbcType=VARCHAR})
+       #{yse004,jdbcType=TIMESTAMP}, #{yse005,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fangx.model.cdyse">
     insert into cdyse
@@ -138,7 +138,7 @@
         #{yse003,jdbcType=TIMESTAMP},
       </if>
       <if test="yse004 != null">
-        #{yse004,jdbcType=VARCHAR},
+         #{yse004,jdbcType=TIMESTAMP},
       </if>
       <if test="yse005 != null">
         #{yse005,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
         YSE003 = #{yse003,jdbcType=TIMESTAMP},
       </if>
       <if test="yse004 != null">
-        YSE004 = #{yse004,jdbcType=VARCHAR},
+        YSE004 =  #{yse004,jdbcType=TIMESTAMP},
       </if>
       <if test="yse005 != null">
         YSE005 = #{yse005,jdbcType=VARCHAR},
@@ -207,7 +207,7 @@
     update cdyse
     set YSE002 = #{yse002,jdbcType=INTEGER},
       YSE003 = #{yse003,jdbcType=TIMESTAMP},
-      YSE004 = #{yse004,jdbcType=VARCHAR},
+      YSE004 =  #{yse004,jdbcType=TIMESTAMP},
       YSE005 = #{yse005,jdbcType=VARCHAR}
     where YSE001 = #{yse001,jdbcType=VARCHAR}
   </update>

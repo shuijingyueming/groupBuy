@@ -19,7 +19,7 @@ public class cdysc {
 
     private Date ysc003;
 
-    private Date ysc004;
+    private String ysc004;
 
     private String ysc005;
 
@@ -51,11 +51,11 @@ public class cdysc {
         this.ysc003 = ysc003;
     }
 
-    public Date getYsc004() {
+    public String getYsc004() {
         return ysc004;
     }
 
-    public void setYsc004(Date ysc004) {
+    public void setYsc004(String ysc004) {
         this.ysc004 = ysc004;
     }
 

@@ -101,6 +101,11 @@ function getTime(timestamp, option){
 	//获取 秒
 	if (option == 'ss') return [second].map(formatNumber).toString()
 
+
+	if (option == 'd') {
+		return month
+	}
+
 	//获取 年月日
 
 	//默认 时分秒 年月日

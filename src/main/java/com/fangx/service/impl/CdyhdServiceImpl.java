@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fangx.dao.cdyhdMapper;
 import com.fangx.model.PageBean;
+import com.fangx.model.cduscExample;
 import com.fangx.model.cdyhd;
 import com.fangx.model.cdyhdExample;
 import com.fangx.model.cdyhdExample.Criteria;
@@ -40,8 +41,13 @@ public class CdyhdServiceImpl implements CdyhdService {
         Criteria c = e1.createCriteria();
         if(pb.getOthersql1()!=null) c.andYhd002EqualTo(Integer.valueOf(pb.getOthersql1()));
         if(pb.getOthersql2()!=null) c.andYhd003EqualTo(Integer.valueOf(pb.getOthersql2()));
+        if(pb.getOthersql5()!=null) c.andYhd006EqualTo(pb.getOthersql5());
+        cduscExample e2 = new cduscExample();
+        cduscExample.Criteria c1 = e2.createCriteria();
+        if(pb.getOthersql()!=null) c1.andUsc002Like("%"+pb.getOthersql()+"%");
+        if(pb.getOthersql3()!=null) c1.andUsc015Like("%"+pb.getOthersql3()+"%");
         e1.setOrderByClause("yhd005 desc");
-        return queryByPage(pb, e1);
+        return queryByPage(pb, e1,e2);
     }
 
     @Override
@@ -79,17 +85,17 @@ public class CdyhdServiceImpl implements CdyhdService {
         return list;
     }
 
-    public PageBean queryByPage(PageBean pageBean, cdyhdExample example) {
+    public PageBean queryByPage(PageBean pageBean, cdyhdExample e1, cduscExample e2) {
         int page = (int) pageBean.getCurrentPage();
         int size = pageBean.getPageSize();
         //record sum
-        int sum = (int) yhdMapper.countByExample(example);
+        int sum = (int) yhdMapper.countByExampleyh(e1,e2);
         //page count
         int count = sum % size == 0 ? sum / size : sum / size + 1;
         //check page
         page = page < 1 ? 1 : ((page > count) ? count : page);
         //query
-        List<cdyhd> list = yhdMapper.selectByExampleAndPage(example, new RowBounds((page - 1) * size, size));
+        List<cdyhd> list = yhdMapper.selectByExampleAndPageyh(e1,e2, new RowBounds((page - 1) * size, size));
         //save to PageBean
         pageBean.setCurrentPage(page);
         pageBean.setPageCount(count);

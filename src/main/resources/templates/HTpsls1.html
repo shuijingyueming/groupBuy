@@ -77,10 +77,11 @@
                 <thead>
                 <tr>
                     <th style="max-width:40px;">序号</th>
+                    <th>公司</th>
                     <th>原配送日期</th>
                     <th>配送日期</th>
-                    <th>公司</th>
                     <th>状态</th>
+                    <th>配送类型</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -88,23 +89,26 @@
                 <th:block th:case="true">
                     <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
+                        <td th:text="${item.usd.usd002}"></td>
                         <td th:text="${#dates.format(item.ysb003,'yyyy-MM-dd')}"></td>
                         <td th:text="${item.ysb004!=null?#dates.format(item.ysb004,'yyyy-MM-dd'):''}"></td>
+                        <td th:text="${item.ysb005=='A'?'配送':(item.ysb005=='B'?'不配送':'')}"></td>
+                        <td th:text="${item.ysb008=='A'?'按周':(item.ysb008=='B'?'按月':'')}"></td>
                         <td>
-                            <th:block th:each="item1,stat1:${item.ysdlist}">
-                                [[${item1.usd.usd002}]]
-                            </th:block>
-                        </td>
-                        <td th:text="${item.ysb005=='A'?'已使用':(item.ysb005=='B'?'未使用':'')}"></td>
-                        <td>
-                            <th:block th:if="${item.ysb005=='B'}">
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
-                                <button th:onclick="edit([[${item.ysb001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
+                                <button th:onclick="edit1([[${item.ysb001}]])" type="button" class="btn btn-primary btn-sm btxz">编辑</button>
                             </th:block>
-                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G4#')>=0}">
-                                <button th:onclick="del([[${item.ysb001}]],[[${#dates.format(item.ysb004,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">删除</button>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G3#')>=0}">
+                                <th:block th:if="${item.ysb005=='B'}">
+                                    <button th:onclick="xgzt([[${item.ysb001}]],[[${#dates.format(item.ysb003,'yyyy-MM-dd')}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">配送</button>
+                                </th:block>
+                                <th:block th:if="${item.ysb005=='A'}">
+                                    <button th:onclick="xgzt([[${item.ysb001}]],[[${#dates.format(item.ysb003,'yyyy-MM-dd')}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">不配送</button>
+                                </th:block>
                             </th:block>
-                        </th:block>
+                            <!--                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G4#')>=0}">-->
+                            <!--                                <button th:onclick="del([[${item.ysb001}]],[[${#dates.format(item.ysb004,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">删除</button>-->
+<!--                            </th:block>-->
                         </td>
                     </th:block>
                 </th:block>
@@ -112,6 +116,7 @@
                     <td></td><td></td>
                     <td></td><td></td>
                     <td></td> <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>
@@ -132,23 +137,36 @@
                 <input type="hidden" name="date" th:value="${pageobj.othersql1}" />
                 <input type="hidden" name="date1" th:value="${pageobj.othersql2}" />
                 <input type="hidden" name="fhlx" th:value="${fhlx}" />
+                <input type="hidden" id="ztime" th:value="${time}" />
+<!--                <input type="hidden" id="ytime" th:value="${ytime}" />-->
+               <!-- <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>类型</label>
+                        <div class="form-group" style="display:flex:justify-content:center:align-items:center;">
+                            <input class="inpchk" id="r111" name="t10" value="A" type="radio" checked />
+                            <label for="r111" class="form-check-label">按周</label>
+                            <input class="inpchk" style="margin-left:20px;" id="r112" name="t10" value="B" type="radio" />
+                            <label for="r112" class="form-check-label">按月</label>
+                        </div>
+                    </div>
+                </div>-->
                 <div class="row">
                     <div class="col-md-6 col-xl-4">
                         <div class="form-group">
                             <label>原配送日期</label>
-                            <input lay-verify="required|name" th:min="${#dates.format(time,'yyyy-MM-dd')}" id="t3" name="t3" type="date" class="form-control input-0"
+                            <input lay-verify="required|name" th:min="${time}" id="t3" name="t3" type="date" class="form-control input-0"
                                    placeholder="请填写原配送日期">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-8 col-sm-8">
-                        <label>配送日期</label>
+                        <label>配送调整设置</label>
                         <div class="form-group" style="display:flex:justify-content:center:align-items:center;">
                             <input class="inpchk" id="r61" name="t6" value="A" type="radio" checked />
-                            <label for="r61" class="form-check-label">有</label>
+                            <label for="r61" class="form-check-label">更换配送日期</label>
                             <input class="inpchk" style="margin-left:20px;" id="r62" name="t6" value="B" type="radio" />
-                            <label for="r62" class="form-check-label">无</label>
+                            <label for="r62" class="form-check-label">取消配送</label>
                         </div>
                     </div>
                 </div>
@@ -156,7 +174,7 @@
                     <div class="col-md-6 col-xl-4">
                         <div class="form-group">
                             <label>配送日期</label>
-                            <input lay-verify="required|name" th:min="${#dates.format(time,'yyyy-MM-dd')}" id="t4" name="t4" type="date" class="form-control input-0"
+                            <input lay-verify="required|name" th:min="${time}" id="t4" name="t4" type="date" class="form-control input-0"
                                    placeholder="请填写配送日期">
                         </div>
                     </div>
@@ -202,6 +220,62 @@
         <!-- Form Formatter Section Ends -->
     </div>
 </div>
+
+<!-- 编辑滑动页 -->
+<div id="active1" class="model">
+    <div id="adiv1" class="am">
+        <!-- Form Formatter Section Starts -->
+        <div class="cardbg">
+            <h6 id="mtitle1" class="title-inner text-uppercase" style="padding-top:10px;">账户名称</h6>
+            <form method="post" id="submitForm1" action="toCo/xgpsls2" enctype="multipart/form-data">
+                <input type="hidden" id="id1" name="id"/>
+                <input type="hidden" name="date" th:value="${pageobj.othersql1}" />
+                <input type="hidden" name="date1" th:value="${pageobj.othersql2}" />
+                <input type="hidden" name="fhlx" th:value="${fhlx}" />
+                <div class="row">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>原配送日期</label>
+                            <input lay-verify="required|name" id="tt3" name="t3" type="date" class="form-control input-0"
+                                   placeholder="请填写原配送日期" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-8">
+                        <label>配送调整设置</label>
+                        <div class="form-group" style="display:flex:justify-content:center:align-items:center;">
+                            <input class="inpchk" id="rt61" name="tt6" value="A" type="radio" checked />
+                            <label for="r61" class="form-check-label">配送</label>
+                            <input class="inpchk" style="margin-left:20px;" id="rt62" name="tt6" value="B" type="radio" />
+                            <label for="r62" class="form-check-label">取消配送</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ps1">
+                    <div class="col-md-6 col-xl-4">
+                        <div class="form-group">
+                            <label>配送日期</label>
+                            <input lay-verify="required|name" th:min="${time}" id="tt4" name="t4" type="date" class="form-control input-0"
+                                   placeholder="请填写配送日期">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                        <input type="hidden" id="tt8" name="t8" lay-verify="t8" value="">
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xl-12" style="padding-top: 20px;">
+                        <button type="button" class="btn btn-outline-secondary" onclick="clean1()">取消</button>
+                        <button type="submit" lay-submit="" class="btn btn-success">提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Form Formatter Section Ends -->
+    </div>
+</div>
 <!-- 小红花滑动页 -->
 <div class="modal"id="modal-2">
     <div class="modal-dialog"  style="left:-25%">
@@ -214,7 +288,7 @@
                     <div class="col-md-8 col-sm-8">
                         <label>配送日期</label>
                         <div class="form-group">
-                            <input lay-verify="required|name" th:min="${#dates.format(time,'yyyy-MM-dd')}" id="time" name="time" type="date" class="form-control input-0"
+                            <input lay-verify="required|name" th:min="${time}" id="time" name="time" type="date" class="form-control input-0"
                                    placeholder="请填写配送日期">
                         </div>
                     </div>

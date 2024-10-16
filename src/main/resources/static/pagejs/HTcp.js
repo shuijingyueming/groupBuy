@@ -204,6 +204,12 @@ function toxq(id){
                 html+= '';
                 html+= '<div class="row">';
                 html+= '<div class="col-md-5">';
+                html+= '<div class="form-group"><label class="layui-form-label">规格：</label>';
+                html+= '<span class="jspan">'+(item.usf003!=null?item.usf003:'')+'</span></div></div>';
+                html+= '</div>';
+                html+= '';
+                html+= '<div class="row">';
+                html+= '<div class="col-md-5">'; 
                 html+= '<div class="form-group"><label class="layui-form-label">一级分类：</label>';
                 html+= '<span class="jspan">'+(item.yhe!=null?item.yhe.yhe002:'')+'</span></div></div>';
                 html+= '<div class="col-md-5">';
@@ -232,12 +238,7 @@ function toxq(id){
                 html+= '<span class="jspan">'+(item.usf009!=null?item.usf009:'')+'</span></div></div>';
                 html+= '</div>';
                 html+= '';
-                html+= '<div class="row">';
-                html+= '<div class="col-md-5">';
-                html+= '<div class="form-group"><label class="layui-form-label">规格简介：</label>';
-                html+= '<span class="jspan">'+(item.usf003!=null?item.usf003:'')+'</span></div></div>';
-                html+= '</div>';
-                html+= '';
+
                 html+= '<div class="row">';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">详情描述：</label>';
@@ -312,11 +313,51 @@ function imgRemove(obj){
 //判断图片
 function showpdtpgs(id,img){
     var file = document.getElementById(id).files;
+    let pd =true;
     if(file){
         for(var i=0;i<file.length;i++){
-            imglist.push(file[i]);
+            var imagSize =file[i].size;
+            let index=i;
+            if(imagSize <= 1024 * 1024 * 2){
+                var reader = new FileReader();
+                reader.readAsDataURL(file[i]);
+                reader.onload = (function(i,e) {
+                    const image = new Image()
+                    image.src = e.target.result
+                    return new Promise((resolve) => {
+                        image.onload = () => {
+                            const width = image.width
+                            const height = image.height
+                            if(width>=800||height>=800){
+                                pd =false;
+                                layui.use('layer', function(){
+                                    var layer = layui.layer;
+                                    layer.ready(function(){
+                                     layer.msg('分辨率不超过800px');
+                                    });
+                                });
+                            }
+                            if(index==(file.length-1)){
+                                if(pd){
+                                    for(var j=0;j<file.length;j++){
+                                        imglist.push(file[j]);
+                                    }
+                                    insertImg(img);
+                                }
+                            }
+                        }
+                    })
+                }).bind(reader, i);
+            }else{
+                pd =false;
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.ready(function(){
+                        layer.msg("图片大小在2M以内");
+                    });
+                });
+            }
         }
-        insertImg(img);
     }
 }
 
@@ -340,7 +381,6 @@ function insertImg(img){
                     image.onload = () => {
                         // const width = image.width
                         // const height = image.height
-
                         // if(width==414&&height==280){
                             html="<div class='item'>";
                             html+="<img src='"+data1+"' style='width:150px;' />";

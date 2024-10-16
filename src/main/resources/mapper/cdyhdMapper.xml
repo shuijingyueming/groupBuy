@@ -243,4 +243,68 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="countByExampleyh" parameterType="com.fangx.model.cdyhdExample" resultType="java.lang.Long">
+    select count(*) from cdyhd left join  cdusc on  cdyhd.yhd002=cdusc.usc001
+    <where>
+      <if test="cdyhdExample != null">
+        <foreach collection="cdyhdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+  </select>
+  <select id="selectByExampleAndPageyh" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdyhdExample" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdyhd left join cdusc on  cdyhd.yhd002=cdusc.usc001
+    <where>
+      <if test="cdyhdExample != null">
+        <foreach collection="cdyhdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cduscExample != null">
+        <foreach collection="cduscExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdyhdExample != null">
+      <if test="cdyhdExample.orderByClause != null">
+        order by ${cdyhdExample.orderByClause}
+      </if>
+    </if>
+  </select>
+
+  <sql id="ECExample_Where_Clause">
+    <if test="criteria.valid">
+      <foreach collection="criteria.criteria" item="criterion">
+        <choose>
+          <when test="criterion.noValue">
+            and ${criterion.condition}
+          </when>
+          <when test="criterion.singleValue">
+            and ${criterion.condition}
+            #{criterion.value}
+          </when>
+          <when test="criterion.betweenValue">
+            and ${criterion.condition} #{criterion.value} and
+            #{criterion.secondValue}
+          </when>
+          <when test="criterion.listValue">
+            and ${criterion.condition}
+            <foreach collection="criterion.value" item="listItem"
+                     open="(" close=")" separator=",">
+              #{listItem}
+            </foreach>
+          </when>
+        </choose>
+      </foreach>
+    </if>
+  </sql>
 </mapper>

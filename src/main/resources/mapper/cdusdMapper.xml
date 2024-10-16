@@ -387,4 +387,25 @@
       order by ${cdusdExample}
     </if>
   </select>
+
+  <select id="selectByExample2" parameterType="com.fangx.model.cdusdExample" resultMap="BaseResultMap" flushCache="true" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from cdusd left join cdyhb on cdusd.usd001=cdyhb.yhb003 left join cdusb on cdusb.usb001=cdyhb.yhb002
+    <where>
+      <if test="cdusdExample != null">
+        <foreach collection="cdusdExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+      <if test="cdusbExample != null">
+        <foreach collection="cdusbExample.oredCriteria" item="criteria" separator="or">
+          <include refid="ECExample_Where_Clause" />
+        </foreach>
+      </if>
+    </where>
+    <if test="cdusdExample.orderByClause != null" >
+      order by ${cdusdExample}
+    </if>
+  </select>
 </mapper>

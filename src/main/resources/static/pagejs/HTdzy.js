@@ -5,6 +5,17 @@ function reback(){
     form_submit("toCo/togs","post",params,"_self");
 }
 
+function topsjl(id,gsname){
+    var params = [ ["date",id], ["gsname",gsname],["fh",$("#fhlx").val()+"YDZ"],
+        ["pages",$("#pages").val()],
+        ["gsid",$("#gsid").val()],
+        ["start",$("#start").val()],
+        ["end",$("#end").val()],
+        ["name",$.trim($("#name").val())],
+        ["phone",$.trim($("#phone").val())]];
+    form_submit("toOr/tops1","post",params,"_self");
+}
+
 function toddjl(id){
     var params = [ ["date",id], ["fh",$("#fhlx").val()+"YDZ"],
         ["pages",$("#pages").val()],

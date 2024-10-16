@@ -27,9 +27,9 @@ public interface CdyscService extends IService<cdysc> {
 
     List<cdysc> selectBycp(Integer cpid, String date);
 
-    cdysc selectBycpid(Integer cpid, String time);
+    cdysc selectBycpid(Integer cpid, String time, String lx);
 
     void delete(Integer id);
 
-    boolean selectBytime(String time);
+    boolean selectBytime(String time, String lx);
 }

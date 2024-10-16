@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fangx.dao.cdyhcMapper;
 import com.fangx.model.PageBean;
+import com.fangx.model.cduscExample;
 import com.fangx.model.cdyhc;
 import com.fangx.model.cdyhcExample;
 import com.fangx.model.cdyhcExample.Criteria;
@@ -50,12 +51,16 @@ public class CdyhcServiceImpl implements CdyhcService {
         if(pb.getOthersql1()!=null) c.andYhc003EqualTo(Integer.valueOf(pb.getOthersql1()));
         if(pb.getOthersql2()!=null) c.andYhc005EqualTo(pb.getOthersql2());
         if(pb.getOthersql3()!=null) c.andYhc006EqualTo(pb.getOthersql3());
-        if(pb.getOthersql4()!=null) c.andYhc004GreaterThanOrEqualTo(sf.parse(pb.getOthersql4()+" 00:00:00"));
-        if(pb.getOthersql5()!=null) c.andYhc004LessThanOrEqualTo(sf.parse(pb.getOthersql5()+" 23:59:59"));
+        if(pb.getOthersql4()!=null) c.andYhc008GreaterThanOrEqualTo(sf.parse(pb.getOthersql4()+" 00:00:00"));
+        if(pb.getOthersql5()!=null) c.andYhc008LessThanOrEqualTo(sf.parse(pb.getOthersql5()+" 23:59:59"));
         if(pb.getOthersql7()!=null)c.andSql("(DATE_FORMAT(yhc008,'%Y-%m-%d')='"+pb.getOthersql7()+"')");
         if(pb.getOthersql8()!=null)c.andSql("(DATE_FORMAT(yhc008,'%Y-%m')='"+pb.getOthersql8()+"')");
+        cduscExample e2 = new cduscExample();
+        cduscExample.Criteria c1 = e2.createCriteria();
+        if(pb.getOthersql9()!=null) c1.andUsc002Like("%"+pb.getOthersql9()+"%");
+        if(pb.getOthersql10()!=null) c1.andUsc015Like("%"+pb.getOthersql10()+"%");
         e1.setOrderByClause("yhc004 desc");
-        return queryByPage(pb, e1);
+        return queryByPage(pb, e1,e2);
     }
 
     @Override
@@ -158,6 +163,43 @@ public class CdyhcServiceImpl implements CdyhcService {
     }
 
     @Override
+    public Integer selectBygsidRS(Date time, Integer gsid, String fkzt, String zt) throws ParseException {
+        cdyhcExample e1 = new cdyhcExample();
+        Criteria c = e1.createCriteria();
+        c.andYhc008GreaterThanOrEqualTo(sf.parse(sf1.format(time)+" 00:00:00"));
+        c.andYhc008LessThanOrEqualTo(sf.parse(sf1.format(time)+" 23:59:59"));
+        c.andYhc003EqualTo(gsid);
+        c.andYhc006EqualTo(fkzt);
+        if(zt!=null){
+            c.andYhc005EqualTo(zt);
+        }else{
+            c.andSql("(yhc005='Y' or yhc005='M')");
+        }
+        return yhcMapper.countByExamplers(e1);
+    }
+
+    @Override
+    public void updateBycurentday(Date time, Date time1, Integer gsid) throws ParseException {
+        cdyhcExample e1 = new cdyhcExample();
+        Criteria c = e1.createCriteria();
+        c.andYhc014GreaterThanOrEqualTo(sf.parse(sf1.format(time)+" 00:00:00"));
+        c.andYhc014LessThanOrEqualTo(sf.parse(sf1.format(time)+" 23:59:59"));
+        cdyhc yhc=new cdyhc();
+        yhc.setYhc008(time1);
+        yhcMapper.updateByExampleSelective(yhc,e1);
+    }
+    @Override
+    public void updateBycurentday1(Date time, Date time1, Integer gsid) throws ParseException {
+        cdyhcExample e1 = new cdyhcExample();
+        Criteria c = e1.createCriteria();
+        if(time!=null)c.andSql("(DATE_FORMAT(yhc014,'%Y-%m-%d')='"+sf1.format(time)+"')");
+        cdyhc yhc=new cdyhc();
+        yhc.setYhc008(time1);
+        yhc.setYhc014(time1);
+        yhcMapper.updateByExampleSelective(yhc,e1);
+    }
+
+    @Override
     public Float selectBygsidY(String time, Integer gsid, String fkzt, String zt) throws ParseException {
         cdyhcExample e1 = new cdyhcExample();
         Criteria c = e1.createCriteria();
@@ -211,20 +253,22 @@ public class CdyhcServiceImpl implements CdyhcService {
             c.andYhc008GreaterThanOrEqualTo(sf.parse(time+" 00:00:00"));
             c.andYhc008LessThanOrEqualTo(sf.parse(time+" 23:59:59"));
         }
+        c.andYhc005NotEqualTo("N");
         return yhcMapper.selectByExample(e1);
     }
 
-    public PageBean queryByPage(PageBean pageBean, cdyhcExample example) {
+    public PageBean queryByPage(PageBean pageBean, cdyhcExample e1, cduscExample e2) {
         int page = (int) pageBean.getCurrentPage();
         int size = pageBean.getPageSize();
         //record sum
-        int sum = (int) yhcMapper.countByExample(example);
+        int sum = (int) yhcMapper.countByExampleyh(e1,e2);
         //page count
         int count = sum % size == 0 ? sum / size : sum / size + 1;
         //check page
         page = page < 1 ? 1 : ((page > count) ? count : page);
         //query
-        List<cdyhc> list = yhcMapper.selectByExampleAndPage(example, new RowBounds((page - 1) * size, size));
+        List<cdyhc> list = yhcMapper.selectByExampleAndPageyh(e1,e2, new RowBounds((page - 1) * size, size));
+        pageBean.setZje(yhcMapper.countByExampleje1(e1,e2));
         //save to PageBean
         pageBean.setCurrentPage(page);
         pageBean.setPageCount(count);

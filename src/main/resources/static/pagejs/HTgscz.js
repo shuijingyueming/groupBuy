@@ -16,9 +16,14 @@ $(document).ready(function () {
     if($("#menuName", parent.document).val()!=""){
         $("#"+$("#menuName", parent.document).val(), parent.document).removeClass("active");
     }
+    if($("#lx").val()=="A"){
+        $("#menuName", parent.document).val("menu_d3");
+        $("#menu_d3", parent.document).addClass("active");
+    }else{
+        $("#menuName", parent.document).val("menu_d4");
+        $("#menu_d4", parent.document).addClass("active");
+    }
 
-    $("#menuName", parent.document).val("menu_d3");
-    $("#menu_d3", parent.document).addClass("active");
 
     pdyes($("#pages").val(), $("#counts").val());
 
@@ -74,17 +79,17 @@ function fanye(pageindex) {
 //翻页
 function uscfanye(pageindex){
     var params = [
-        ["fhlx",$("#fhlx").val()],
+        ["fhlx",$("#fhlx").val()],["lx",$("#lx").val()],
         ["pages",pageindex],
-        ["gsid",$("#gsid").val()],
+        ["gsid",$("#gsid").val()],["ygname",$("#ygname").val()],["name",$("#name").val()],
         ["ygid",$.trim($("#ygid").val())]];
     form_submit("toCo/tocz","post",params,"_self");
 }
 
 function xxcx(){
     var params = [
-        ["fhlx",$("#fhlx").val()],
-        ["gsid",$("#gsid").val()],
+        ["fhlx",$("#fhlx").val()],["lx",$("#lx").val()],
+        ["gsid",$("#gsid").val()],["ygname",$("#ygname").val()],["name",$("#name").val()],
         ["pages",$("#pages").val()],
         ["ygid",$.trim($("#ygid").val())]];
     form_submit("toCo/tocz","post",params,"_self");
@@ -95,8 +100,8 @@ function xgzt(id,uname,type){
     var r = confirm("确定修改此充值记录的状态吗？");
     if (r == true) {
         var params = [ ["id",id], ["zt","U"], ["type",type], ["uname",uname],
-            ["fhlx",$("#fhlx").val()],
-            ["gsid",$("#gsid").val()],
+            ["fhlx",$("#fhlx").val()],["lx",$("#lx").val()],
+            ["gsid",$("#gsid").val()],["ygname",$("#ygname").val()],["name",$("#name").val()],
             ["pages",$("#pages").val()],
             ["ygid",$.trim($("#ygid").val())]];
         form_submit("toCo/tocz","get",params,"_self");
@@ -107,8 +112,8 @@ function del(id,uname){
     var r = confirm("确定删除此充值记录吗？");
     if (r == true) {
         var params = [ ["id",id], ["zt","D"], ["uname",uname],
-            ["fhlx",$("#fhlx").val()],
-            ["gsid",$("#gsid").val()],
+            ["fhlx",$("#fhlx").val()],["lx",$("#lx").val()],
+            ["gsid",$("#gsid").val()],["ygname",$("#ygname").val()],["name",$("#name").val()],
             ["pages",$("#pages").val()],
             ["ygid",$.trim($("#ygid").val())]];
         form_submit("toCo/tocz","get",params,"_self");
@@ -124,8 +129,8 @@ function delete_item(){
     var r = confirm("确定删除这些充值记录吗？");
     if (r == true) {
         var params = [ ["id",checked_item], ["zt","AD"],
-            ["fhlx",$("#fhlx").val()],
-            ["gsid",$("#gsid").val()],
+            ["fhlx",$("#fhlx").val()],["lx",$("#lx").val()],
+            ["gsid",$("#gsid").val()],["ygname",$("#ygname").val()],["name",$("#name").val()],
             ["pages",$("#pages").val()],
             ["ygid",$.trim($("#ygid").val())]];
         form_submit("toCo/tocz","get",params,"_self");

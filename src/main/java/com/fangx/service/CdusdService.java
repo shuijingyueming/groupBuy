@@ -30,5 +30,11 @@ public interface CdusdService extends IService<cdusd> {
 
     List<cdusd> serachAll(String gsid);
 
-    List<cdusd> serachBytime(Integer weekDay);
+    List<cdusd> serachBytime(Integer weekDay, String lx, List<Integer> ids);
+
+    List<cdusd> serachBytime1(Integer weekDay, String lx, List<Integer> ids);
+
+    List<cdusd> selectBylx(String lx);
+
+
 }

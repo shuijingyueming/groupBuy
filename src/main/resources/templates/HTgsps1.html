@@ -35,6 +35,8 @@
 <input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
 <input type="hidden" th:value="${msg}" id="msg">
 <input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<input type="hidden" id="gsid1" name="gsid1" th:value="${pageobj.othersql3}" />
+<input type="hidden" id="mo" name="mo" th:value="${pageobj.othersql4}" />
 <body class="sidebar-mini fixed skin-blue">
 <div class="content-wrapper">
     <section class="content-header">
@@ -56,11 +58,15 @@
                         <input id="ptime" th:value="${pageobj.othersql2}" type="date" class="form-control"
                                placeholder="请输入配送日期">
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-12">
-                        <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control"
-                               placeholder="请输入企业名称">
+                    <div class="col-xl-3 col-lg-3 col-12">
+                        <th:block th:if="${fhlx==null||fhlx==''}">
+                            <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control" placeholder="请输入企业名称">
+                        </th:block>
+                        <th:block th:if="${fhlx!=null&&fhlx!=''}">
+                            <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control" placeholder="请输入企业名称" readonly>
+                        </th:block>
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-12">
+                    <div class="col-xl-2 col-lg-3 col-12"  th:style="${fhlx!=null&&fhlx!=''?'display: none;':''}">
                         <input id="phone" th:value="${pageobj.othersql1}" type="text" class="form-control"
                                placeholder="请输入企业电话">
                     </div>
@@ -77,10 +83,14 @@
                 <thead>
                 <tr>
                     <th style="max-width:40px;">序号</th>
-                    <th>配送日期</th>
+                    <th>现配送日期</th>
                     <th>企业名称</th>
                     <th>企业地址</th>
                     <th>企业电话</th>
+                    <th>人数</th>
+                    <th>总金额</th>
+                    <th>余额消费总金额</th>
+                    <th>支付消费总金额</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -92,6 +102,10 @@
                         <td th:text="${item.usd.usd002}"></td>
                         <td th:text="${item.usd.usd003}"></td>
                         <td th:text="${item.usd.usd004}"></td>
+                        <td th:text="${item.rs!=null?item.rs:0}"></td>
+                        <td th:text="${item.zze!=null?#numbers.formatDecimal(item.zze,1,'COMMA',2,'POINT'):0}"></td>
+                        <td th:text="${item.yze!=null?#numbers.formatDecimal(item.yze,1,'COMMA',2,'POINT'):0}"></td>
+                        <td th:text="${item.wze!=null?#numbers.formatDecimal(item.wze,1,'COMMA',2,'POINT'):0}"></td>
                         <td>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
                                 <button th:onclick="tops([[${item.yse002}]],[[${#dates.format(item.yse003,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
@@ -103,6 +117,8 @@
                     </th:block>
                 </th:block>
                 <tr th:case="false">
+                    <td></td><td></td>
+                    <td></td><td></td>
                     <td></td><td></td>
                     <td></td><td></td>
                     <td></td><td></td>

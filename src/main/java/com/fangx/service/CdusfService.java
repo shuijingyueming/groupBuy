@@ -39,4 +39,6 @@ public interface CdusfService extends IService<cdusf> {
     List<cdusf> selectByCG(String date, Integer flid);
 
     List<cdusf> serachAllgs(String gsid, String cpname);
+
+    void delete(Integer id);
 }

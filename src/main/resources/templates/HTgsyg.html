@@ -117,6 +117,7 @@
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'J6#')>=0}">
                                 <button th:onclick="tocz([[${item.usc001}]],[[${item.usc002}]])" type="button" class="btn btn-primary btn-sm btxz">充值</button>
+                                <button th:onclick="toql([[${item.usc001}]],[[${item.usc002}]])" type="button" class="btn btn-primary btn-sm btxz">清零</button>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'J7#')>=0}">
                                 <th:block th:if="${item.usc003=='B'}">
@@ -127,7 +128,8 @@
                                 </th:block>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
-                                <button th:onclick="toczjl([[${item.usc001}]])" type="button" class="btn btn-primary btn-sm btxz">充值管理</button>
+                                <button th:onclick="toczjl([[${item.usc001}]],'A')" type="button" class="btn btn-primary btn-sm btxz">充值管理</button>
+                                <button th:onclick="toczjl([[${item.usc001}]],'B')" type="button" class="btn btn-primary btn-sm btxz">清零管理</button>
                             </th:block>
                         </td>
                     </tr>

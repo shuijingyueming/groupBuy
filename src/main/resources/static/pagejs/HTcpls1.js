@@ -14,8 +14,8 @@ function getMonthDay(year, month) {
 }
 
 
-function tocp(date,lx){
-    var params = [["lx",lx],
+function tocp(date,fpfs,lx){
+    var params = [["lx",lx],["fpfs",fpfs],
         ["t",$.trim($("#t").val())],
         ["l",$.trim($("#l").val())],
         ["m1",$.trim($("#m1").val())],
@@ -51,10 +51,13 @@ function getEvents(y, m,d, s,t) {
                 dataType:'json',
                 success:function(data) {
                     var item = eval(data.item);
+                    console.log(getTime(item.d))
+                    console.log(item.zt)
+                    console.log(item.usdlist)
                     if(item.zt){
                         let usdlist=item.usdlist;
                         if(usdlist.length>0){
-                            let gtitle='公司('+usdlist.length+')';
+                            let gtitle='按周公司('+usdlist.length+')';
                             let htitle='';
                             for(let j=0;j<usdlist.length;j++){htitle+=usdlist[j].usd002+"  "}
                             list.push({
@@ -68,13 +71,45 @@ function getEvents(y, m,d, s,t) {
                             )
                             list.push(
                                 {
-                                    title: (item.tz?'(有调整)':'')+'菜品管理',
+                                    title: (item.tz?'(有调整)':'')+'按周菜品管理',
                                     start: da,
                                     allDay: true,
-                                    hclick:'tocp("'+getTime(da,'YY-MM-DD')+'","'+(i+1>d+7?'B':'A')+'")',
+                                    hclick:'tocp("'+getTime(da,'YY-MM-DD')+'","A","'+(i+1>d+7?'B':'A')+'")',
                                     // url: 'toDi/tocpls1cp?date='+getTime(da,'YY-MM-DD')+"&lx="+(i+1>d+7?'B':'A')+"&t="+$('#t').val()+"&l="+$('#l').val()+"&m1="+$('#m1').val(),
                                     backgroundColor:(item.tz?'#f56954': '#00c0ef'), //red
                                     borderColor: (item.tz?'#f56954': '#00c0ef') //red
+                                }
+
+                            )
+                        }
+
+                    }
+
+                    var item1 = eval(data.item1);
+                    if(item1.zt){
+                        let usdlist=item1.usdlist;
+                        if(usdlist.length>0){
+                            let gtitle='按月公司('+usdlist.length+')';
+                            let htitle='';
+                            for(let j=0;j<usdlist.length;j++){htitle+=usdlist[j].usd002+"  "}
+                            list.push({
+                                    title: gtitle,
+                                    htitle:htitle,
+                                    start: da,
+                                    allDay: true,
+                                    backgroundColor: '#00a65a', //red
+                                    borderColor: '#00a65a' //red
+                                }
+                            )
+                            list.push(
+                                {
+                                    title: (item1.tz?'(有调整)':'')+'按月菜品管理',
+                                    start: da,
+                                    allDay: true,
+                                    hclick:'tocp("'+getTime(da,'YY-MM-DD')+'","B","'+(m>getTime(new Date(),'d')+1?'B':'A')+'")',
+                                    // url: 'toDi/tocpls1cp?date='+getTime(da,'YY-MM-DD')+"&lx="+(i+1>d+7?'B':'A')+"&t="+$('#t').val()+"&l="+$('#l').val()+"&m1="+$('#m1').val(),
+                                    backgroundColor:(item1.tz?'#f56954': '#00c0ef'), //red
+                                    borderColor: (item1.tz?'#f56954': '#00c0ef') //red
                                 }
 
                             )

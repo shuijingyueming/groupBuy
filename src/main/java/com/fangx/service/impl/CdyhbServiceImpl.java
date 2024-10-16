@@ -70,6 +70,15 @@ public class CdyhbServiceImpl implements CdyhbService {
     }
 
     @Override
+    public List<Integer> seletebyid(Integer cpid) {
+        cdyhbExample e1 = new cdyhbExample();
+        Criteria c = e1.createCriteria();
+        c.andYhb002EqualTo(cpid);
+        e1.setOrderByClause("yhb001 desc");
+        return yhbMapper.selectByExampleid(e1);
+    }
+
+    @Override
     public void deletebyid(Integer cpid) {
         cdyhbExample e1 = new cdyhbExample();
         Criteria c = e1.createCriteria();

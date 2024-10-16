@@ -1,8 +1,6 @@
 package com.fangx.controller;
 
-import com.fangx.model.PubMessage;
-import com.fangx.model.cdlog;
-import com.fangx.model.cduse;
+import com.fangx.model.*;
 import com.fangx.pub.properConfig;
 import com.fangx.service.*;
 import com.fangx.until.EncrpytUtil;
@@ -100,12 +98,12 @@ public class BaseController {
     protected final static SimpleDateFormat DATE3 = new SimpleDateFormat("yyyy/MM/dd");
     protected final static SimpleDateFormat sdf1 = new SimpleDateFormat("yyMMddHHmmss");
 
-    protected final static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
     protected final static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM");
 
-    protected final static SimpleDateFormat sdf4 = new SimpleDateFormat("MM月");
+    protected final static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
+    protected final static SimpleDateFormat sdf4 = new SimpleDateFormat("MM");
+    protected final static SimpleDateFormat sdf5 = new SimpleDateFormat("dd");
 
-    protected final static SimpleDateFormat sdf5 = new SimpleDateFormat("yyyy年MM月");
     protected final static SimpleDateFormat sdf6 = new SimpleDateFormat("yyyy年MM月dd日");
 
     protected final static SimpleDateFormat sdf7 = new SimpleDateFormat("周w");
@@ -180,6 +178,26 @@ public class BaseController {
         HttpSession session = request.getSession();
         cduse use=useService.getByid(Decrypt(session.getAttribute("user").toString()));
         return use;
+    }
+
+    protected void setList(cdusb item,String date, List<cdusf> list){
+        //生成库存
+        cdyha yha=new cdyha();
+        for(cdusf usf:list){
+            cdysc ysc=date==null?null:yscService.selectBycpid(usf.getUsf001(),date, item.getUsb005());
+            yha.setYha002(usf.getUsf001());
+            yha.setYha003(item.getUsb001());
+            yha.setYha004(ysc!=null?ysc.getYsc006():(usf.getUsf010()!=null?usf.getUsf010():0));
+            yha.setYha005(usf.getUsf010()==null&ysc==null?"P":"C");
+            yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
+            yha.setYha009(ysc!=null?ysc.getYsc007():(usf.getUsf013().equals("C")?"B":"A"));
+            yhaService.insert(yha);
+            if(ysc!=null){
+                ysc.setYsc005("A");
+                yscService.update(ysc);
+//                                        yscService.delete(ysc.getYsc001());
+            }
+        }
     }
 
     protected void delsession(HttpSession session, String fhlx)throws Exception {
@@ -649,5 +667,32 @@ public class BaseController {
             ip = request.getRemoteAddr();
         }
         return ip;
+    }
+
+    protected static List<Integer> ListSort(List<Integer> list) {
+        // 通过Collections工具类sort方法传list排序
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                try {
+                    Integer dt1 = o1;
+                    Integer dt2 = o2;
+//                    System.out.println("o1:"+o1.toString());
+//                    System.out.println("02:"+o2.toString());
+//                    System.out.println();
+                    if (dt1 > dt2) {
+                        return 1;// 小的放前面（时间早的）
+                    } else if (dt1 == dt2) {
+                        return 0;//
+                    } else{
+                        return -1;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+        return list;
     }
 }

@@ -24,7 +24,7 @@ public class WXController extends BaseController {
      * 获取用户openid
      * 王新苗
      * @param code
-     * @return
+     * @returnqs
      * @throws Exception
      */
     @ResponseBody
@@ -163,60 +163,89 @@ public class WXController extends BaseController {
      * @throws Exception
      */
     @ResponseBody
-    @RequestMapping(value = "/wxqs1", method = RequestMethod.POST)
+    @RequestMapping(value = "/wxqs", method = RequestMethod.POST)
     public String wxqs1(HttpServletRequest request) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
         String gsid=request.getParameter("gsid");
         if(gsid!=null){
-            List<Integer> list=usbService.serachAllweek(Integer.valueOf(gsid));
+            cdusd usd=usdService.getByid(Integer.valueOf(gsid));
             Date d=new Date();
-            Calendar ca = Calendar.getInstance();
-            ca.setTime(d);
-            //在临时日期之间
-            ca.add(Calendar.DAY_OF_MONTH,1);
-            cdysb ysb=ysbService.selectBygs(DATE.format(ca.getTime()),list);
-            if(ysb!=null){
-                ca.setTime(ysb.getYsb003());
-                cdusb item=usbService.selectByzq(getWeekDay(ca));
-                result.put("item", item);
-            }else{
-                ca.add(Calendar.DAY_OF_MONTH,-1);
-                Integer i=getWeekDay(ca);
-                cdusb item=usbService.selectByweek(Integer.valueOf(gsid),i==7?0:i);
-                if(item==null)item=usbService.selectByweek1(Integer.valueOf(gsid),i==1?8:i);
-//            ca.add(Calendar.DAY_OF_MONTH,7+item.getUsb003()-i);
-//            result.put("date", ca.getTime());
-                result.put("item", item);
+            if(usd.getUsd011().equals("A")){
+                //按周
+                System.out.println("按周");
+                Calendar ca = Calendar.getInstance();
+                ca.setTime(d);
+                ca.set(Calendar.HOUR_OF_DAY, 12);
+                long current = System.currentTimeMillis();
+                long tomorrowzero1 = ca.getTimeInMillis();
+                long tomorrowzeroSeconds1 = (tomorrowzero1- current);
+//                System.out.println("离12点时间："+tomorrowzeroSeconds1+"秒");
+                if(tomorrowzeroSeconds1>0){
+                    //全部 在临时日期之间
+//                System.out.println("临时日期");
+                    cdysb ysb=ysbService.selectBygstime2(usd.getUsd001(),null,DATE.format(ca.getTime()), usd.getUsd011(),"A");
+                    ca.setTime(ysb.getYsb003());
+                    cdusb item=usbService.getByid(ysb.getYsb006());
+                    result.put("item", item);
+                    result.put("item1", ysb);
+                }
+                else{
+                    //全部 在临时日期之间
+//                System.out.println("已临时日期");
+                    ca.add(Calendar.DAY_OF_MONTH,1);
+                    cdysb ysb=ysbService.selectBygstime2(usd.getUsd001(),null,DATE.format(ca.getTime()), usd.getUsd011(),"A");
+                    ca.setTime(ysb.getYsb003());
+                    cdusb item=usbService.getByid(ysb.getYsb006());
+                    result.put("item", item);
+                    result.put("item1", ysb);
+                    cdysb ysb1=ysbService.selectBygstime4(usd.getUsd001(),null,DATE.format(ca.getTime()), usd.getUsd011(),"A");
+                    if(ysb1!=null&&!ysb1.getYsb001().equals(ysb.getYsb001()))result.put("date", ysb1.getYsb004());
+                }
+                List<cdusb> list1=usbService.serachAll(Integer.valueOf(gsid), usd.getUsd011());
+                result.put("list", list1);
             }
-            System.out.println("****");
-            List<cdusb> list1=usbService.serachAll(Integer.valueOf(gsid));
-            result.put("list", list1);
-        }/*else{
-            Date d=new Date();
-            Calendar ca = Calendar.getInstance();
-            ca.setTime(d);
-//            ca.add(Calendar.DAY_OF_MONTH,-3);
-            Integer i=getWeekDay(ca);
-            cdusb item=usbService.selectByweek(i==7?0:i);
-            if(item==null)item=usbService.selectByweek1(i==1?8:i);
-            ca.add(Calendar.DAY_OF_MONTH,7+item.getUsb003()-i);
-            result.put("date", ca.getTime());
-            result.put("item", item);
-            List<cdusb> list=usbService.serachAll();
-//            for(cdusb usb:list){
-//                usb.setUsb007(getWeek(usb.getUsb003()));
-//            }
-
-        }*/
+            else{
+                //按月
+                System.out.println("按月");
+                List<Integer> list=usbService.serachAllweek(Integer.valueOf(gsid));
+                Calendar ca = Calendar.getInstance();
+                ca.setTime(d);
+                ca.set(Calendar.HOUR_OF_DAY,12);
+                long current = System.currentTimeMillis();
+                long tomorrowzero1 = ca.getTimeInMillis();
+                long tomorrowzeroSeconds1 = (tomorrowzero1- current);
+//                System.out.println("离12点时间："+tomorrowzeroSeconds1+"秒");
+                if(tomorrowzeroSeconds1>0){
+                    cdysb ysb=ysbService.selectBygstime2(usd.getUsd001(),null,DATE.format(ca.getTime()), usd.getUsd011(),"A");
+                    ca.setTime(ysb.getYsb003());
+                    cdusb item=usbService.getByid(ysb.getYsb006());
+                    result.put("item", item);
+                    result.put("item1", ysb);
+                }
+                else{
+                    ca.add(Calendar.DAY_OF_MONTH, 1);
+                    cdysb ysb=ysbService.selectBygstime2(usd.getUsd001(),null,DATE.format(ca.getTime()), usd.getUsd011(),"A");
+                    ca.setTime(ysb.getYsb003());
+                    cdusb item=usbService.getByid(ysb.getYsb006());
+                    result.put("item", item);
+                    result.put("item1", ysb);
+                    cdysb ysb1=ysbService.selectBygstime4(usd.getUsd001(),null,DATE.format(ca.getTime()), usd.getUsd011(),"A");
+                    if(ysb1!=null&&!ysb1.getYsb001().equals(ysb.getYsb001()))result.put("date", ysb1.getYsb004());
+                }
+                List<cdusb> list1=usbService.serachAll(Integer.valueOf(gsid), usd.getUsd011());
+                result.put("list", list1);
+            }
+        }
         return JSON.toJSONString(result);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/wxqs", method = RequestMethod.POST)
+    @RequestMapping(value = "/wxqs1", method = RequestMethod.POST)
     public String wxqs(HttpServletRequest request) throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
         String gsid=request.getParameter("gsid");
         if(gsid!=null){
+            cdusd usd=usdService.getByid(Integer.valueOf(gsid));
             List<Integer> list=usbService.serachAllweek(Integer.valueOf(gsid));
             Date d=new Date();
             Calendar ca = Calendar.getInstance();
@@ -229,36 +258,36 @@ public class WXController extends BaseController {
             if(tomorrowzeroSeconds1>0){
                 //全部 在临时日期之间
 //                System.out.println("临时日期");
-                cdysb ysb=ysbService.selectBygs1(DATE.format(ca.getTime()),list);
+                cdysb ysb=ysbService.selectBygs1(DATE.format(ca.getTime()),list, null);
                 if(ysb!=null&&ysb.getYsb004()!=null){
                     ca.setTime(ysb.getYsb003());
-                    cdusb item=usbService.selectByzq(getWeekDay(ca));
+                    cdusb item=usbService.selectByzq(getWeekDay(ca), null);
                     result.put("item", item);
                 }
                 else{
                     //个别 在临时日期之间
-                    ysb=ysbService.selectBygs2(DATE.format(ca.getTime()),list, Integer.valueOf(gsid));
+                    ysb=ysbService.selectBygs2(DATE.format(ca.getTime()),list, Integer.valueOf(gsid), null);
                     if(ysb!=null&&ysb.getYsb004()!=null){
                         ca.setTime(ysb.getYsb003());
-                        cdusb item=usbService.selectByzq(getWeekDay(ca));
+                        cdusb item=usbService.selectByzq(getWeekDay(ca), null);
                         result.put("item", item);
                     }else{
                         Integer i=getWeekDay(ca);
-                        cdusb item=usbService.selectByweek5(Integer.valueOf(gsid),i==7?0:i, null);
-                        if(item==null)item=usbService.selectByweek6(Integer.valueOf(gsid),i==1?8:i, null);
+                        cdusb item=usbService.selectByweek5(Integer.valueOf(gsid),i==7?0:i, null, null);
+                        if(item==null)item=usbService.selectByweek6(Integer.valueOf(gsid),i==1?8:i, null, null);
                         System.out.println("期数");
                         ca.add(Calendar.DAY_OF_MONTH,item.getUsb003()-i);
-                        cdysb ysb1=ysbService.selectBygs3(DATE.format(ca.getTime()),Integer.valueOf(gsid));
+                        cdysb ysb1=ysbService.selectBygs3(DATE.format(ca.getTime()),Integer.valueOf(gsid), null);
                         if(ysb1!=null){
                             if(list.size()==1){
                                 Calendar ca1 = Calendar.getInstance();
                                 ca1.setTime(ysb1.getYsb003());
                                 ca1.add(Calendar.DAY_OF_MONTH, 7);
-                                item=usbService.getBytime(DATE.format(ca1.getTime()));
+                                item=usbService.getBytime(DATE.format(ca1.getTime()), null, null);
                             }else{
                                 Integer i1=item.getUsb001();
-                                item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i,i1);
-                                if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i,i1);
+                                item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i,i1, null);
+                                if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i,i1, null);
                             }
                         }
                         result.put("item", item);
@@ -268,36 +297,36 @@ public class WXController extends BaseController {
                 //全部 在临时日期之间
 //                System.out.println("已临时日期");
                 ca.add(Calendar.DAY_OF_MONTH,1);
-                cdysb ysb=ysbService.selectBygs1(DATE.format(ca.getTime()),list);//调换
+                cdysb ysb=ysbService.selectBygs1(DATE.format(ca.getTime()),list, null);//调换
                 if(ysb!=null&&ysb.getYsb004()!=null){
                     ca.setTime(ysb.getYsb003());
-                    cdusb item=usbService.selectByzq(getWeekDay(ca));
+                    cdusb item=usbService.selectByzq(getWeekDay(ca), null);
                     result.put("item", item);
                 }else{
                     //个别 在临时日期之间
-                    ysb=ysbService.selectBygs2(DATE.format(ca.getTime()),list, Integer.valueOf(gsid));//公司调换
+                    ysb=ysbService.selectBygs2(DATE.format(ca.getTime()),list, Integer.valueOf(gsid), null);//公司调换
                     if(ysb!=null&&ysb.getYsb004()!=null){
                         ca.setTime(ysb.getYsb003());
-                        cdusb item=usbService.selectByzq(getWeekDay(ca));
+                        cdusb item=usbService.selectByzq(getWeekDay(ca), null);
                         result.put("item", item);
                     }else{
                         ca.add(Calendar.DAY_OF_MONTH,-1);
                         Integer i=getWeekDay(ca);
-                        cdusb item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i, null);
-                        if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i, null);
+                        cdusb item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i, null, null);
+                        if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i, null, null);
                         ca.add(Calendar.DAY_OF_MONTH,item.getUsb003()-i);//应配送日期
-                        cdysb ysb1=ysbService.selectBygs3(DATE.format(ca.getTime()),Integer.valueOf(gsid));//所有不送
+                        cdysb ysb1=ysbService.selectBygs3(DATE.format(ca.getTime()),Integer.valueOf(gsid), null);//所有不送
                         System.out.println(i);
                         if(ysb1!=null){
                             if(list.size()==1){
                                 Calendar ca1 = Calendar.getInstance();
                                 ca1.setTime(ysb1.getYsb003());
                                 ca1.add(Calendar.DAY_OF_MONTH, 7);
-                                item=usbService.getBytime(DATE.format(ca1.getTime()));
+                                item=usbService.getBytime(DATE.format(ca1.getTime()), null, null);
                             }else{
                                 Integer i1=item.getUsb001();
-                                item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i,i1);
-                                if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i,i1);
+                                item=usbService.selectByweek3(Integer.valueOf(gsid),i==7?0:i,i1, null);
+                                if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i,i1, null);
                             }
                         }
 //                        System.out.println(item);
@@ -308,10 +337,10 @@ public class WXController extends BaseController {
                 Calendar ca1 = Calendar.getInstance();
                 ca1.setTime(d);
                 Integer i=getWeekDay(ca1);
-                cdusb item=usbService.selectByweek5(Integer.valueOf(gsid),i==7?0:i, null);
-                if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i, null);
+                cdusb item=usbService.selectByweek5(Integer.valueOf(gsid),i==7?0:i, null, null);
+                if(item==null)item=usbService.selectByweek4(Integer.valueOf(gsid),i==1?8:i, null, null);
                 ca1.add(Calendar.DAY_OF_MONTH,item.getUsb003()-i);
-                cdysb ysb1=ysbService.selectBygs6(DATE.format(ca1.getTime()),list);
+                cdysb ysb1=ysbService.selectBygs6(DATE.format(ca1.getTime()),list, null);
                 Calendar ca2 = Calendar.getInstance();
                 ca2.setTime(d);
                 ca2.add(Calendar.DAY_OF_MONTH, 1);
@@ -319,7 +348,7 @@ public class WXController extends BaseController {
                     result.put("date", ca1.getTime());
                 }
             }
-            List<cdusb> list1=usbService.serachAll(Integer.valueOf(gsid));
+            List<cdusb> list1=usbService.serachAll(Integer.valueOf(gsid), null);
             result.put("list", list1);
         }
         return JSON.toJSONString(result);
@@ -403,10 +432,16 @@ public class WXController extends BaseController {
                 for(cdush ush:list){
                     ush.setYha(yhaService.getByqscp(Integer.valueOf(request.getParameter("qsid")),ush.getUsh003()));
                     ush.getUsf().setUsg(usgService.getBycpgs(ush.getUsh003(), Integer.valueOf(request.getParameter("gsid"))));
+                    ush.setUsh005(ush.getUsf().getUsg()!=null?ush.getUsf().getUsg().getUsg005():ush.getUsf().getUsf006()!=null&& ush.getUsf().getUsf006()>0? ush.getUsf().getUsf006(): ush.getUsf().getUsf005());
+                    ush.setUsh006(ush.getUsh005()*ush.getUsh004());
+                    ushService.update(ush);
                 }
             }else{
                 for(cdush ush:list){
                     ush.getUsf().setUsg(usgService.getBycpgs(ush.getUsh003(), Integer.valueOf(request.getParameter("gsid"))));
+                    ush.setUsh005(ush.getUsf().getUsg()!=null?ush.getUsf().getUsg().getUsg005():ush.getUsf().getUsf006()!=null&& ush.getUsf().getUsf006()>0? ush.getUsf().getUsf006(): ush.getUsf().getUsf005());
+                    ush.setUsh006(ush.getUsh005()*ush.getUsh004());
+                    ushService.update(ush);
                 }
             }
             result.put("list", list);
@@ -452,6 +487,7 @@ public class WXController extends BaseController {
             item.setUsh004(sl);
             item.setUsh006(item.getUsh005()*item.getUsh004());
             item.setUsh007(Integer.valueOf(request.getParameter("yhid")));
+            item.setUsh009("Y");
             ushService.insert(item);
             result.put("id", item.getUsh001());
             result.put("item", item);
@@ -476,6 +512,7 @@ public class WXController extends BaseController {
         String zffs=request.getParameter("zffs");
         String zojia=request.getParameter("zojia");
         String date=request.getParameter("date");
+        String date1=request.getParameter("date1");
         String qsid=request.getParameter("qsid");
         cdusc usc=uscService.getByid(Integer.valueOf(yhid));
         cdyhc yhc=new cdyhc();
@@ -491,6 +528,8 @@ public class WXController extends BaseController {
         yhc.setYhc012("D"+TIME_ORDER.format(yhc.getYhc004()));
         usc.setUsc008(usc.getUsc008()-yhc.getYhc007());
         usc.setUsc011(usc.getUsc011()+yhc.getYhc007());
+        yhc.setYhc013(0.0f);
+        if(date1!=null)yhc.setYhc014(TIMEMIAO.parse(DATE.format(new Date(date1))+" 00:00:00"));
         yhcService.insert(yhc);
         uscService.update(usc);
         Calendar ca = Calendar.getInstance();//得到一个Calendar的实例
@@ -516,12 +555,13 @@ public class WXController extends BaseController {
             yhk.setYhk008(getWeekDay(ca));
             yhkService.insert(yhk);
         }
-        cdyse yse=yseService.selectByDS(DATE.format(new Date(date)),yhc.getYhc003());
+        cdyse yse=yseService.selectByDS(DATE.format(new Date(date)),DATE.format(new Date(date1)),yhc.getYhc003());
         if(yse==null){
             yse=new cdyse();
             yse.setYse001(UUID.randomUUID().toString().replace("-",""));
             yse.setYse002(yhc.getYhc003());
             yse.setYse003(TIMEMIAO.parse(DATE.format(new Date(date))+" 00:00:00"));
+            if(date1!=null)yse.setYse004(TIMEMIAO.parse(DATE.format(new Date(date1))+" 00:00:00"));
             yseService.insert(yse);
         }
         List<cdush> list=ushService.selectByyhidjs(Integer.valueOf(yhid),id);
@@ -580,6 +620,7 @@ public class WXController extends BaseController {
         yhc.setYhc009(bz);
         yhc.setYhc011(nonce_str);
         yhc.setYhc012("D"+TIME_ORDER.format(yhc.getYhc004()));
+        usc.setUsc013(0);
         yhcService.insert(yhc);
         List<cdush> list=ushService.selectByyhidjs(Integer.valueOf(yhid),id);
         for(cdush ush:list){
@@ -822,22 +863,23 @@ public class WXController extends BaseController {
         if(item.getYhc006().equals("P")){
             item.setYhc005("N");
             cdusc usc =uscService.getByid(item.getYhc002());
-            usc.setUsc008(usc.getUsc008()+item.getYhc007());
-            usc.setUsc011(usc.getUsc011()-item.getYhc007());
-
+            usc.setUsc008(usc.getUsc008()+item.getYhc007()-item.getYhc013());
+            usc.setUsc011(usc.getUsc011()-item.getYhc007()+item.getYhc013());
+            item.setYhc013(item.getYhc007());
             uscService.update(usc);
             yhcService.update(item);
             List<cdush> list=ushService.selectByyhidtk(item.getYhc001());
             if(list.size()>0&&list.get(0).getUsh008()!=null){
                 cdyhk yhk=yhkService.getByid(list.get(0).getUsh008());
                 if(item.getYhc006().equals("P")){
-                    yhk.setYhk005(yhk.getYhk005()-item.getYhc007());
+                    yhk.setYhk005(yhk.getYhk005()-item.getYhc007()+item.getYhc013());
                 }else{
-                    yhk.setYhk006(yhk.getYhk006()-item.getYhc007());
+                    yhk.setYhk006(yhk.getYhk006()-item.getYhc007()+item.getYhc013());
                 }
                 yhkService.update(yhk);
             }
             for(cdush ush:list){
+                ush.setUsh009("N");
                 cdusf usf=usfService.getByid(ush.getUsh003());
                 cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
                 if(yha.getYha005().equals("C")){
@@ -847,13 +889,16 @@ public class WXController extends BaseController {
                     usfService.update(usf);
                     yhaService.update(yha);
                 }
+                ushService.update(ush);
             }
             result.put("msg","1");
+
         }else{
             if(item.getYhc005().equals("A")){
                 item.setYhc005("N");
                 List<cdush> list=ushService.selectByyhidtk(item.getYhc001());
                 for(cdush ush:list){
+                    ush.setUsh009("N");
                     cdusf usf=usfService.getByid(ush.getUsh003());
                     cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
                     if(yha.getYha005().equals("C")){
@@ -863,6 +908,7 @@ public class WXController extends BaseController {
                         usfService.update(usf);
                         yhaService.update(yha);
                     }
+                    ushService.update(ush);
                 }
                 yhcService.update(item);
                 result.put("msg","1");
@@ -873,11 +919,22 @@ public class WXController extends BaseController {
                 if(result1.get("return_code").equals("SUCCESS")){
                     item.setYhc005("N");
                     cdusc usc =uscService.getByid(item.getYhc002());
-                    usc.setUsc010(usc.getUsc010()-item.getYhc007());
-                    usc.setUsc011(usc.getUsc011()-item.getYhc007());
+                    usc.setUsc008(usc.getUsc008()+item.getYhc007()-item.getYhc013());
+                    usc.setUsc011(usc.getUsc011()-item.getYhc007()+item.getYhc013());
+                    item.setYhc013(item.getYhc007());
+
                     uscService.update(usc);
                     List<cdush> list=ushService.selectByyhidtk(item.getYhc001());
+                    if(list.size()>0&&list.get(0).getUsh008()!=null) {
+                        cdyhk yhk = yhkService.getByid(list.get(0).getUsh008());
+                        if (item.getYhc006().equals("P")) {
+                            yhk.setYhk005(yhk.getYhk005() - item.getYhc007() + item.getYhc013());
+                        } else {
+                            yhk.setYhk006(yhk.getYhk006() - item.getYhc007() + item.getYhc013());
+                        }
+                    }
                     for(cdush ush:list){
+                        ush.setUsh009("N");
                         cdusf usf=usfService.getByid(ush.getUsh003());
                         cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),ush.getUsh003());
                         if(yha.getYha005().equals("C")){
@@ -887,6 +944,7 @@ public class WXController extends BaseController {
                             usfService.update(usf);
                             yhaService.update(yha);
                         }
+                        ushService.update(ush);
                     }
                     yhcService.update(item);
                     result.put("msg","1");
@@ -895,6 +953,104 @@ public class WXController extends BaseController {
                 }
             }
 
+        }
+        result.put("item", item);
+        return JSON.toJSONString(result);
+    }
+
+    /**
+     * 退款
+     * 王新苗
+     * @return
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/wxcptk", method = RequestMethod.POST)
+    public String wxcptk(HttpServletRequest request) throws Exception {
+        Map<String, Object> result = new HashMap<String, Object>();
+        cdyhc item =yhcService.getByid(request.getParameter("id"));
+        cdush item1 =ushService.getByid(request.getParameter("cpid"));
+        String qsid=request.getParameter("qsid");
+        if(item1.getUsh009()==null||item1.getUsh009().equals("Y")){
+            if(item.getYhc006().equals("P")){
+                item1.setUsh009("N");
+                cdusc usc =uscService.getByid(item.getYhc002());
+                usc.setUsc008(usc.getUsc008()+item1.getUsh005());
+                usc.setUsc011(usc.getUsc011()-item1.getUsh005());
+
+                cdyhk yhk=yhkService.getByid(item1.getUsh008());
+                if(item.getYhc006().equals("P")){
+                    yhk.setYhk005(yhk.getYhk005()-item1.getUsh005());
+                }else{
+                    yhk.setYhk006(yhk.getYhk006()-item1.getUsh005());
+                }
+                cdusf usf=usfService.getByid(item1.getUsh003());
+                cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),item1.getUsh003());
+                if(yha.getYha005().equals("C")){
+                    yha.setYha004(yha.getYha004()+item1.getUsh004());
+                    usf.setUsf008(usf.getUsf008()-item1.getUsh004());
+                    usf.setUsf009(usf.getUsf009()-item1.getUsh006());
+                    usfService.update(usf);
+                    yhaService.update(yha);
+                }
+                yhkService.update(yhk);
+                ushService.update(item1);
+                uscService.update(usc);
+                if(ushService.countByddid(item.getYhc001()))item.setYhc005("N");
+                item.setYhc013(item.getYhc013()!=null?item.getYhc013()+item1.getUsh005():item1.getUsh005());
+                yhcService.update(item);
+                result.put("msg","1");
+            }
+            else{
+                if(item.getYhc005().equals("A")){
+                    item1.setUsh009("N");
+                    cdusf usf=usfService.getByid(item1.getUsh003());
+                    cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),item1.getUsh003());
+                    if(yha.getYha005().equals("C")){
+                        yha.setYha004(yha.getYha004()+item1.getUsh004());
+                        usf.setUsf008(usf.getUsf008()-item1.getUsh004());
+                        usf.setUsf009(usf.getUsf009()-item1.getUsh006());
+                        usfService.update(usf);
+                        yhaService.update(yha);
+                    }
+                    ushService.update(item1);
+                    if(ushService.countByddid(item.getYhc001()))item.setYhc005("N");
+                    yhcService.update(item);
+                    result.put("msg","1");
+                }else{
+                    Map<String,Object> result1 = new HashMap<String, Object>();
+                    result1=gettk(item.getYhc010(),item1.getUsh005());
+//                System.out.println("---***--"+result1);
+                    if(result1.get("return_code").equals("SUCCESS")){
+                        item.setYhc005("N");
+                        cdusc usc =uscService.getByid(item.getYhc002());
+                        usc.setUsc008(usc.getUsc008()+item1.getUsh005());
+                        usc.setUsc011(usc.getUsc011()-item1.getUsh005());
+                        cdyhk yhk=yhkService.getByid(item1.getUsh008());
+                        yhk.setYhk006(yhk.getYhk006()-item1.getUsh005());
+                        item1.setUsh009("N");
+                        cdusf usf=usfService.getByid(item1.getUsh003());
+                        cdyha yha=yhaService.getByqscp(Integer.valueOf(qsid),item1.getUsh003());
+                        if(yha.getYha005().equals("C")){
+                            yha.setYha004(yha.getYha004()+item1.getUsh004());
+                            usf.setUsf008(usf.getUsf008()-item1.getUsh004());
+                            usf.setUsf009(usf.getUsf009()-item1.getUsh006());
+                            usfService.update(usf);
+                            yhaService.update(yha);
+                        }
+                        yhkService.update(yhk);
+                        ushService.update(item1);
+                        item.setYhc013(item.getYhc013()!=null?item.getYhc013()+item1.getUsh005():item1.getUsh005());
+                        uscService.update(usc);
+                        if(ushService.countByddid(item.getYhc001()))item.setYhc005("N");
+                        yhcService.update(item);
+                        result.put("msg","1");
+                    }else{
+                        result.put("msg","0");
+                    }
+                }
+
+            }
         }
         result.put("item", item);
         return JSON.toJSONString(result);

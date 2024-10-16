@@ -295,56 +295,65 @@ public class cdyscExample {
             return (Criteria) this;
         }
 
-        public Criteria andYsc004EqualTo(Date value) {
+        public Criteria andYsc004EqualTo(String value) {
             addCriterion("YSC004 =", value, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004NotEqualTo(Date value) {
+        public Criteria andYsc004NotEqualTo(String value) {
             addCriterion("YSC004 <>", value, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004GreaterThan(Date value) {
+        public Criteria andYsc004GreaterThan(String value) {
             addCriterion("YSC004 >", value, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004GreaterThanOrEqualTo(Date value) {
+        public Criteria andYsc004GreaterThanOrEqualTo(String value) {
             addCriterion("YSC004 >=", value, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004LessThan(Date value) {
+        public Criteria andYsc004LessThan(String value) {
             addCriterion("YSC004 <", value, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004LessThanOrEqualTo(Date value) {
+        public Criteria andYsc004LessThanOrEqualTo(String value) {
             addCriterion("YSC004 <=", value, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004In(List<Date> values) {
+        public Criteria andYsc004Like(String value) {
+            addCriterion("YSC004 like", value, "ysc004");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc004NotLike(String value) {
+            addCriterion("YSC004 not like", value, "ysc004");
+            return (Criteria) this;
+        }
+
+        public Criteria andYsc004In(List<String> values) {
             addCriterion("YSC004 in", values, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004NotIn(List<Date> values) {
+        public Criteria andYsc004NotIn(List<String> values) {
             addCriterion("YSC004 not in", values, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004Between(Date value1, Date value2) {
+        public Criteria andYsc004Between(String value1, String value2) {
             addCriterion("YSC004 between", value1, value2, "ysc004");
             return (Criteria) this;
         }
 
-        public Criteria andYsc004NotBetween(Date value1, Date value2) {
+        public Criteria andYsc004NotBetween(String value1, String value2) {
             addCriterion("YSC004 not between", value1, value2, "ysc004");
             return (Criteria) this;
         }
-
         public Criteria andYsc005IsNull() {
             addCriterion("YSC005 is null");
             return (Criteria) this;

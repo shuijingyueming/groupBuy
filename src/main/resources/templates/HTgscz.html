@@ -35,6 +35,8 @@
 <input type="hidden" th:value='${session.umsg.jsqx}' id="jsqx">
 <input type="hidden" th:value="${msg}" id="msg">
 <input type="hidden" id="fhlx" name="fhlx" th:value="${fhlx}" />
+<input type="hidden" id="ygid" name="ygid" th:value="${pageobj.othersql1}" />
+<input type="hidden" id="lx" name="lx" th:value="${pageobj.othersql5}" />
 <body class="sidebar-mini fixed skin-blue">
 <div class="content-wrapper">
     <section class="content-header">
@@ -53,12 +55,10 @@
             <form>
                 <div class="form-row"  th:style="${fhlx!=null&&#strings.indexOf(fhlx,'YG')>=0?'display:none':''}">
                     <div class="col-xl-2 col-lg-3 col-12" th:style="${fhlx!=null&&#strings.indexOf(fhlx,'YG')>=0?'display:none':'display:block'}">
-                        <select class="form-control" id="ygid" name="ygid" lay-filter="ygid" required>
-                            <option value="" selected>请选择员工</option>
-                            <th:block th:each="item,stat:${usclist}">
-                                <option th:selected="${#strings.toString(item.usc001)==pageobj.othersql1?true:false}" th:value="${item.usc001}" >[[${item.usc002}]]</option>
-                            </th:block>
-                        </select>
+                        <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control" placeholder="请输入员工名称">
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12" th:style="${fhlx!=null&&#strings.indexOf(fhlx,'YG')>=0?'display:none':'display:block'}">
+                        <input id="ygname" th:value="${pageobj.othersql3}" type="text" class="form-control" placeholder="请输入员工手机号">
                     </div>
                     <div class="col-xl-2 col-lg-3 col-12" th:style="${fhlx!=null&&#strings.indexOf(fhlx,'GS')>=0?'display:none':'display:block'}">
                         <select class="form-control" id="gsid" name="gsid" lay-filter="gsid" required>
@@ -82,8 +82,9 @@
                 <tr>
                     <th style="max-width:40px;">序号</th>
                     <th>员工名称</th>
+                    <th>员工手机号</th>
                     <th>企业名称</th>
-                    <th>充值金额</th>
+                    <th>金额</th>
                     <th>充值时间</th>
                 </tr>
                 </thead>
@@ -92,6 +93,7 @@
                     <tr th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
                         <td th:text="${item.usc!=null?item.usc.usc002:''}"></td>
+                        <td th:text="${item.usc!=null?item.usc.usc015:''}"></td>
                         <td th:text="${item.usd!=null?item.usd.usd002:''}"></td>
                         <td th:text="${item.yhd004}"></td>
                         <td th:text="${#dates.format(item.yhd005,'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -100,7 +102,7 @@
                 <tr th:case="false">
                     <td></td><td></td>
                     <td></td><td></td>
-                    <td></td>
+                    <td></td><td></td>
                 </tr>
                 </tbody>
             </table>

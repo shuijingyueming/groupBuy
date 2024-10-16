@@ -32,4 +32,8 @@ public interface cdysbMapper {
     List<cdysb> selectByExampleAndPage(cdysbExample example, RowBounds rowBounds);
 
     cdysb selectByPrimaryKey1(Integer id);
+
+    List<cdysb> selectByExample1(cdysbExample e1);
+
+    List<Integer> selectByExampleid(cdysbExample e1);
 }

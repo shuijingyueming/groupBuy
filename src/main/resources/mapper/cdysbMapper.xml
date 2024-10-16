@@ -7,11 +7,12 @@
     <result column="YSB003" jdbcType="TIMESTAMP" property="ysb003" />
     <result column="YSB004" jdbcType="TIMESTAMP" property="ysb004" />
     <result column="YSB005" jdbcType="CHAR" property="ysb005" />
-    <result column="YSB006" jdbcType="CHAR" property="ysb006" />
+    <result column="YSB006" jdbcType="INTEGER" property="ysb006" />
     <result column="YSB007" jdbcType="CHAR" property="ysb007" />
+    <result column="YSB008" jdbcType="CHAR" property="ysb008" />
   </resultMap>
   <resultMap id="BaseResultMap1" type="com.fangx.model.cdysb"  extends="BaseResultMap">
-    <collection  property="ysdlist"  column="YSB001"  select="com.fangx.dao.cdysdMapper.selectBypsid"/>
+    <collection  property="usd"  column="YSB002"  select="com.fangx.dao.cdusdMapper.selectByPrimaryKey"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    YSB001, YSB002, YSB003, YSB004, YSB005, YSB006, YSB007
+    YSB001, YSB002, YSB003, YSB004, YSB005, YSB006, YSB007, YSB008
   </sql>
   <select id="selectByExample" parameterType="com.fangx.model.cdysbExample" resultMap="BaseResultMap">
     select
@@ -106,10 +107,10 @@
   </delete>
   <insert id="insert" parameterType="com.fangx.model.cdysb">
     insert into cdysb (YSB001, YSB002, YSB003, 
-      YSB004, YSB005, YSB006, YSB007
+      YSB004, YSB005, YSB006, YSB007, YSB008
       )
     values (#{ysb001,jdbcType=INTEGER}, #{ysb002,jdbcType=INTEGER}, #{ysb003,jdbcType=TIMESTAMP}, 
-      #{ysb004,jdbcType=TIMESTAMP}, #{ysb005,jdbcType=CHAR}, #{ysb006,jdbcType=CHAR}, #{ysb007,jdbcType=CHAR}
+      #{ysb004,jdbcType=TIMESTAMP}, #{ysb005,jdbcType=CHAR}, #{ysb006,jdbcType=INTEGER}, #{ysb007,jdbcType=CHAR}, #{ysb008,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.fangx.model.cdysb" useGeneratedKeys="true" keyProperty="ysb001">
@@ -136,6 +137,9 @@
       <if test="ysb007 != null">
         YSB007,
       </if>
+      <if test="ysb008 != null">
+        YSB008,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="ysb001 != null">
@@ -154,10 +158,13 @@
         #{ysb005,jdbcType=CHAR},
       </if>
       <if test="ysb006 != null">
-        #{ysb006,jdbcType=CHAR},
+        #{ysb006,jdbcType=INTEGER},
       </if>
       <if test="ysb007 != null">
         #{ysb007,jdbcType=CHAR},
+      </if>
+      <if test="ysb008 != null">
+        #{ysb008,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -186,10 +193,13 @@
         YSB005 = #{record.ysb005,jdbcType=CHAR},
       </if>
       <if test="record.ysb006 != null">
-        YSB006 = #{record.ysb006,jdbcType=CHAR},
+        YSB006 = #{record.ysb006,jdbcType=INTEGER},
       </if>
       <if test="record.ysb007 != null">
         YSB007 = #{record.ysb007,jdbcType=CHAR},
+      </if>
+      <if test="record.ysb008 != null">
+        YSB008 = #{record.ysb008,jdbcType=CHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -203,8 +213,9 @@
       YSB003 = #{record.ysb003,jdbcType=TIMESTAMP},
       YSB004 = #{record.ysb004,jdbcType=TIMESTAMP},
       YSB005 = #{record.ysb005,jdbcType=CHAR},
-      YSB006 = #{record.ysb006,jdbcType=CHAR},
-    YSB007 = #{record.ysb007,jdbcType=CHAR}
+      YSB006 = #{record.ysb006,jdbcType=INTEGER},
+    YSB007 = #{record.ysb007,jdbcType=CHAR},
+    YSB008 = #{record.ysb008,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -223,10 +234,13 @@
         YSB005 = #{ysb005,jdbcType=CHAR},
       </if>
       <if test="ysb006 != null">
-        YSB006 = #{ysb006,jdbcType=CHAR},
+        YSB006 = #{ysb006,jdbcType=INTEGER},
       </if>
       <if test="ysb007 != null">
         YSB007 = #{ysb007,jdbcType=CHAR},
+      </if>
+      <if test="ysb008 != null">
+        YSB008 = #{ysb008,jdbcType=CHAR},
       </if>
     </set>
     where YSB001 = #{ysb001,jdbcType=INTEGER}
@@ -237,8 +251,9 @@
       YSB003 = #{ysb003,jdbcType=TIMESTAMP},
       YSB004 = #{ysb004,jdbcType=TIMESTAMP},
       YSB005 = #{ysb005,jdbcType=CHAR},
-      YSB006 = #{ysb006,jdbcType=CHAR},
-        YSB007 = #{ysb007,jdbcType=CHAR}
+      YSB006 = #{ysb006,jdbcType=INTEGER},
+        YSB007 = #{ysb007,jdbcType=CHAR},
+        YSB008 = #{ysb008,jdbcType=CHAR}
     where YSB001 = #{ysb001,jdbcType=INTEGER}
   </update>
   <select id="selectByExampleAndPage" resultMap="BaseResultMap1" parameterType="com.fangx.model.cdysbExample" flushCache="true" useCache="false">
@@ -261,5 +276,30 @@
     <include refid="Base_Column_List" />
     from cdysb
     where YSB001 = #{ysb001,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByExample1" parameterType="com.fangx.model.cdysbExample" resultMap="BaseResultMap1">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdysb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByExampleid" parameterType="com.fangx.model.cdysbExample" resultType="java.lang.Integer">
+    select YSB002 from cdysb
+   <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
   </select>
 </mapper>
