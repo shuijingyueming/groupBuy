@@ -279,9 +279,19 @@
     from cdush
     where USH002 = #{ush002,jdbcType=VARCHAR}
   </select>
-
+  <select id="selectByddid1" parameterType="java.lang.String" resultMap="BaseResultMap1">
+    select
+    <include refid="Base_Column_List" />
+    from cdush
+    where USH002 = #{ush002,jdbcType=VARCHAR} and ush009="Y" order by USH002
+  </select>
   <select id="selectByyhdd" parameterType="com.fangx.model.cdushExample" resultType="java.lang.Integer">
     select sum(ush004) from cdush left join cdyhc on cdush.ush002=cdyhc.yhc001
+    where YHC002 = #{yhid,jdbcType=INTEGER} and  ush003 = #{cpid,jdbcType=INTEGER} and DATE_FORMAT(yhc008,'%Y-%m-%d')= #{qsid,jdbcType=VARCHAR} and ush009="Y"
+  </select>
+
+  <select id="selectByyhdd1" parameterType="com.fangx.model.cdushExample" resultType="java.lang.Float">
+    select (sum(ush006)/sum(ush004)) from cdush left join cdyhc on cdush.ush002=cdyhc.yhc001
     where YHC002 = #{yhid,jdbcType=INTEGER} and  ush003 = #{cpid,jdbcType=INTEGER} and DATE_FORMAT(yhc008,'%Y-%m-%d')= #{qsid,jdbcType=VARCHAR} and ush009="Y"
   </select>
 

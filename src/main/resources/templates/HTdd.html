@@ -90,10 +90,11 @@
     <div class="card panel panel-default" id="wrapp">
         <div class="jsgrid collapse show p-4" data-parent="#accordion">
             <table id="ddexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-                <span style="float: right;margin-left: 10px;margin-top: 5px;">金额：[[${#numbers.formatDecimal(pageobj.zje,1,'COMMA',2,'POINT')}]]</span>
+                <span style="float: right;margin-left: 10px;margin-top: 5px;">金额：[[${#numbers.formatDecimal(pageobj.zje,1,'COMMA',1,'POINT')}]]</span>
                 <thead>
                 <tr>
                     <th style="max-width:40px;">序号</th>
+                    <th>订单编号</th>
                     <th>人员名称</th>
                     <th>手机号</th>
                     <th>公司名称</th>
@@ -110,12 +111,13 @@
                     <tr  th:each="item,stat:${pageobj.resultList}" style="border-bottom:1px solid #dee2e6;">
                         <!--<td><input type="checkbox" name="cbox" th:date-id="${item.yhc001}"/></td>-->
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
+                        <td th:text="${item.yhc012}"></td>
                         <td th:text="${item.usc.usc002}"></td>
                         <td th:text="${item.usc.usc015}"></td>
                         <td th:text="${item.usd.usd002}"></td>
                         <td th:text="${item.yhc006=='W'?'微信支付':(item.yhc006=='P'?'账户余额':'')}"></td>
-                        <td th:text="${#numbers.formatDecimal(item.yhc007,1,'COMMA',2,'POINT')}"></td>
-                        <!--                        <td th:text="${#numbers.formatDecimal(item.yhc007,1,'COMMA',2,'POINT')}-${#numbers.formatDecimal(item.yhc013,1,'COMMA',2,'POINT')}"></td>-->
+<!--                        <td th:text="${#numbers.formatDecimal(item.yhc007,1,'COMMA',1,'POINT')}"></td>-->
+                        <td th:text="${#numbers.formatDecimal(item.yhc007,1,'COMMA',1,'POINT')}-${#numbers.formatDecimal(item.yhc013,1,'COMMA',1,'POINT')}"></td>
                         <td th:text="${#dates.format(item.yhc004,'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td th:text="${#dates.format(item.yhc008,'yyyy-MM-dd')}"></td>
                         <td th:name="${'zt'+stat.index}" th:text="${item.yhc005=='Y'?'下单':(item.yhc005=='M'?'送货结单':(item.yhc005=='N'?'退单':(item.yhc005=='A'?'待付款':'')))}"></td>
@@ -133,7 +135,7 @@
                     <td></td> <td></td> <td></td>
                     <td></td> <td></td> <td></td>
                     <td></td> <td></td> <td></td>
-                    <td></td>
+                    <td></td> <td></td>
                 </tr>
                 </tbody>
             </table>

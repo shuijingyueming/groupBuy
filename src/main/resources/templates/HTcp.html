@@ -83,6 +83,21 @@
                         <input id="name" th:value="${pageobj.othersql}" type="text" class="form-control" placeholder="请输入菜品名称">
                     </div>
                     <div class="col-xl-2 col-lg-3 col-12">
+                        <select class="form-control" id="lx" name="lx" lay-filter="lx" required>
+                            <option value="" selected>状态</option>
+                            <option th:selected="${'A'==pageobj.othersql4?true:false}" th:value="A" >上架</option>
+                            <option th:selected="${'B'==pageobj.othersql4?true:false}" th:value="B" >推荐</option>
+                            <option th:selected="${'C'==pageobj.othersql4?true:false}" th:value="C" >下架</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
+                        <select class="form-control" id="xllx" name="xllx" lay-filter="xllx" required>
+                            <option value="" selected>销量状态</option>
+                            <option th:selected="${'A'==pageobj.othersql5?true:false}" th:value="A" >不推荐</option>
+                            <option th:selected="${'B'==pageobj.othersql5?true:false}" th:value="B" >推荐</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-12">
                         <select class="form-control" id="yjid" name="yjid" lay-filter="cpid" required>
                             <option value="" selected>请选择一级分类</option>
                             <th:block th:each="item,stat:${yhelist}">
@@ -158,14 +173,14 @@
                                 <th:block th:if="${item.usf013=='C'}">
                                     <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">上架</button>
                                 </th:block>
+                                <th:block th:if="${item.usf013!='C'}">
+                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['C']])" type="button" class="btn btn-primary btn-sm btxz">下架</button>
+                                </th:block>
                                 <th:block th:if="${item.usf013=='B'}">
                                     <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['A']])" type="button" class="btn btn-primary btn-sm btxz">不推荐</button>
                                 </th:block>
-                                <th:block th:if="${item.usf013!='B'}">
+                                <th:block th:if="${item.usf013=='C'}">
                                     <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['B']])" type="button" class="btn btn-primary btn-sm btxz">促销推荐</button>
-                                </th:block>
-                                <th:block th:if="${item.usf013!='C'}">
-                                    <button th:onclick="xgzt([[${item.usf001}]],[[${item.usf002}]],[['C']])" type="button" class="btn btn-primary btn-sm btxz">下架</button>
                                 </th:block>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'G8#')>=0}">

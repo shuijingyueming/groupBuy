@@ -45,5 +45,7 @@ public interface cdyhcMapper {
 
     Integer countByExamplers(cdyhcExample e1);
 
-    float countByExampleje1(@Param("cdyhcExample")cdyhcExample e1, @Param("cduscExample")cduscExample e2);
+    Float countByExampleje1(@Param("cdyhcExample")cdyhcExample e1, @Param("cduscExample")cduscExample e2);
+
+    List<cdyhc> selectByExample2(cdyhcExample e1);
 }

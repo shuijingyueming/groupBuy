@@ -94,8 +94,8 @@
                     <tr th:each="item,stat:${usdlist}" style="border-bottom:1px solid #dee2e6;">
                         <td th:text="${(pageobj.currentPage-1)*pageobj.pageSize+stat.index+1}"></td>
                         <td th:text="${item.usd002}"></td>
-                        <td th:text="${item.yze!=null?item.yze:0}"></td>
-                        <td th:text="${item.wze!=null?item.wze:0}"></td>
+                        <td th:text="${item.yze!=null?#numbers.formatDecimal(item.yze,1,'COMMA',1,'POINT'):0}"></td>
+                        <td th:text="${item.wze!=null?#numbers.formatDecimal(item.wze,1,'COMMA',1,'POINT'):0}"></td>
 <!--                        <td th:text="${item.usb!=null?item.usb.usb002:''}"></td>-->
                         <td>
                            <!-- <button th:onclick="toxq([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>-->

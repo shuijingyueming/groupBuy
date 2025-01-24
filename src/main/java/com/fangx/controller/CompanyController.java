@@ -54,6 +54,40 @@ public class CompanyController extends BaseController {
                     cduse use =useService.getByid(Integer.parseInt(request.getParameter("id")));
                     useService.update(use);
                     mav.addObject("msg","D");
+                }else if(request.getParameter("zt").equals("GQ")){
+                    addLog(getUse(request).getUse002(),"公司名字为：【" + request.getParameter("uname") + "】的员工账户清零");
+                    List<cdusc> list=uscService.serachAll(Integer.parseInt(request.getParameter("id")));
+                    for(cdusc item:list){
+                        cdyhd yhd=new cdyhd();
+                        yhd.setYhd001(UUID.randomUUID().toString().replace("-",""));
+                        yhd.setYhd002(item.getUsc001());
+                        yhd.setYhd003(item.getUsc005());
+                        yhd.setYhd004(item.getUsc008());
+                        yhd.setYhd005(new Date());
+                        yhd.setYhd006("B");
+                        yhdService.insert(yhd);
+                        item.setUsc008(0.0f);
+                        uscService.update(item);
+                    }
+                    mav.addObject("msg","C");
+                }else if(request.getParameter("zt").equals("CZ")){
+                    addLog(getUse(request).getUse002(),"公司名字为：【" + request.getParameter("uname") + "】的员工账户充值了【" + request.getParameter("num") + "元】");
+                    List<cdusc> list=uscService.serachAll(Integer.parseInt(request.getParameter("id")));
+                    Float num= Float.valueOf(request.getParameter("num"));
+                    for(cdusc item:list){
+                        cdyhd yhd=new cdyhd();
+                        yhd.setYhd001(UUID.randomUUID().toString().replace("-",""));
+                        yhd.setYhd002(item.getUsc001());
+                        yhd.setYhd003(item.getUsc005());
+                        yhd.setYhd004(num);
+                        yhd.setYhd005(new Date());
+                        yhd.setYhd006("A");
+                        yhdService.insert(yhd);
+                        item.setUsc008(item.getUsc008()+num);
+                        item.setUsc009(item.getUsc009()+num);
+                        uscService.update(item);
+                    }
+                    mav.addObject("msg","C");
                 }
             }
             PageBean pb = new PageBean();
@@ -443,6 +477,22 @@ public class CompanyController extends BaseController {
                         uscService.update(item);
                     }
                     mav.addObject("msg","C");
+                }else if(request.getParameter("zt").equals("QPL")){
+                    addLog(getUse(request).getUse002(),"员工账户批量清零");
+                    List<cdusc> list=uscService.getByids(request.getParameter("id"));
+                    for(cdusc item:list){
+                        cdyhd yhd=new cdyhd();
+                        yhd.setYhd001(UUID.randomUUID().toString().replace("-",""));
+                        yhd.setYhd002(item.getUsc001());
+                        yhd.setYhd003(item.getUsc005());
+                        yhd.setYhd004(item.getUsc008());
+                        yhd.setYhd005(new Date());
+                        yhd.setYhd006("B");
+                        yhdService.insert(yhd);
+                        item.setUsc008(0.0f);
+                        uscService.update(item);
+                    }
+                    mav.addObject("msg","C");
                 }
             }
             PageBean pb = new PageBean();
@@ -487,6 +537,7 @@ public class CompanyController extends BaseController {
                 mav.addObject("fhlx", request.getParameter("fhlx"));
             }
             delsession(session,request.getParameter("fh"));
+            pb.setPageSize(30);
             mav.addObject("pageobj", uscService.selectPageBean(pb));
             mav.addObject("usdlist", usdService.serachAll(null));
         }

@@ -74,25 +74,55 @@
         <div class="jsgrid collapse show p-4" data-parent="#accordion">
 <!--            <span style="float: right;margin-left: 10px;margin-top: 5px;">总金额：[[${zje}]]</span>-->
             <table id="gspsygexm" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-                <span style="float: right;margin-left: 10px;margin-top: 5px;">金额：[[${#numbers.formatDecimal(zje,1,'COMMA',2,'POINT')}]]</span>
+                <span style="float: right;margin-left: 10px;margin-top: 5px;">金额：[[${#numbers.formatDecimal(zje,1,'COMMA',1,'POINT')}]]</span>
                 <thead>
                 <tr>
                     <th style="max-width:40px;">序号</th>
                     <th>姓名</th>
-                    <th>电话</th>
                     <th>内容</th>
+                    <th>规格</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>单品总金额</th>
                     <th>金额</th>
+                    <th>电话</th>
                     <th>备注</th>
                 </tr>
                 </thead>
                 <tbody th:switch="${ yglist.size() gt 0 }">
                 <th:block th:case="true">
+
                     <tr th:each="item,stat:${yglist}" style="border-bottom:1px solid #dee2e6;">
                         <td th:text="${stat.index+1}"></td>
                         <td th:text="${item.usc002}"></td>
+                        <td>
+                        <block th:each="item1,stat1:${item.cplist}" style="border-bottom:1px solid #dee2e6;">
+                            [[${item1.usf.usf002+"×"+item1.ush004+""+item1.usf.usm.usm002}]]<br>
+                        </block>
+                        </td>
+                        <td>
+                            <block th:each="item1,stat1:${item.cplist}" style="border-bottom:1px solid #dee2e6;">
+                                [[${item1.usf.usf003}]]<br>
+                            </block>
+                        </td>
+                        <td>
+                            <block th:each="item1,stat1:${item.cplist}" style="border-bottom:1px solid #dee2e6;">
+                                [[${item1.ush005}]]<br>
+                            </block>
+                        </td>
+                        <td>
+                            <block th:each="item1,stat1:${item.cplist}" style="border-bottom:1px solid #dee2e6;">
+                                [[${item1.ush004}]]<br>
+                            </block>
+                        </td>
+                        <td>
+                            <block th:each="item1,stat1:${item.cplist}" style="border-bottom:1px solid #dee2e6;">
+                                [[${item1.ush006}]]<br>
+                            </block>
+                        </td>
+<!--                        <td th:text="${item.nr}"></td>-->
+                        <td th:text="${#numbers.formatDecimal(item.je,1,'COMMA',1,'POINT')}"></td>
                         <td th:text="${item.usc015}"></td>
-                        <td th:text="${item.nr}"></td>
-                        <td th:text="${#numbers.formatDecimal(item.je,1,'COMMA',2,'POINT')}"></td>
                         <td th:text="${item.bz}"></td>
                     </th:block>
                 </th:block>

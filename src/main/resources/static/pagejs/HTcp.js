@@ -5,7 +5,7 @@ function tolskc(cpid){
     var params = [ ["cpid",cpid], ["fh","CP"],
         ["pages",$("#pages").val()],
         ["yjid",$.trim($("#yjid").val())],
-        ["ejid",$.trim($("#ejid").val())],
+        ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocpls","post",params,"_self");
 }
@@ -109,7 +109,7 @@ function fanye(pageindex) {
 function usffanye(pageindex){
     var params = [["pages",pageindex],
         ["yjid",$.trim($("#yjid").val())],
-        ["ejid",$.trim($("#ejid").val())],
+        ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocp","post",params,"_self");
 }
@@ -117,7 +117,7 @@ function usffanye(pageindex){
 function xxcx(){
     var params = [ ["pages",$("#pages").val()],
         ["yjid",$.trim($("#yjid").val())],
-        ["ejid",$.trim($("#ejid").val())],
+        ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
         ["name",$.trim($("#name").val())]];
     form_submit("toDi/tocp","post",params,"_self");
 }
@@ -129,7 +129,7 @@ function xgzt(id,uname,type){
             ["TK","TK"],
             ["pages",$("#pages").val()],
             ["yjid",$.trim($("#yjid").val())],
-            ["ejid",$.trim($("#ejid").val())],
+            ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     }
@@ -141,7 +141,7 @@ function xgztx(id,uname,type){
         var params = [ ["id",id], ["zt","X"], ["uname",uname],["type",type],
             ["pages",$("#pages").val()],
             ["yjid",$.trim($("#yjid").val())],
-            ["ejid",$.trim($("#ejid").val())],
+            ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     }
@@ -154,7 +154,7 @@ function del(id,uname){
         var params = [ ["id",id], ["zt","D"], ["uname",uname],
             ["pages",$("#pages").val()],
             ["yjid",$.trim($("#yjid").val())],
-            ["ejid",$.trim($("#ejid").val())],
+            ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     }
@@ -171,7 +171,7 @@ function delete_item(){
         var params = [ ["id",checked_item], ["zt","AD"],
             ["pages",$("#pages").val()],
             ["yjid",$.trim($("#yjid").val())],
-            ["ejid",$.trim($("#ejid").val())],
+            ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     } else {
@@ -463,7 +463,7 @@ function save(id){
             success: function (res) {
                 var params = [["pages",$("#pages").val()],
                     ["yjid",$.trim($("#yjid").val())],
-                    ["ejid",$.trim($("#ejid").val())],
+                    ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
                     ["name",$.trim($("#name").val())]];
                 form_submit("toDi/tocp","post",params,"_self");
             }
@@ -514,7 +514,7 @@ function xgtj(){
             var params = [ ["id",$("#cpid").val()],["lx",$("input[name='t15']:checked").val()],["num",$("#t10").val()], ["zt","K"],
                 ["pages",$("#pages").val()],
                 ["yjid",$.trim($("#yjid").val())],
-                ["ejid",$.trim($("#ejid").val())],
+                ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
                 ["name",$.trim($("#name").val())]];
             form_submit("toDi/tocp","get",params,"_self");
         }
@@ -529,7 +529,7 @@ function todc(){
     if (r == true) {
         var params = [ ["type","E"],
             ["yjid",$.trim($("#yjid").val())],
-            ["ejid",$.trim($("#ejid").val())],
+            ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
             ["name",$.trim($("#name").val())]];
         form_submit("toDi/tocp","get",params,"_self");
     }
@@ -567,7 +567,7 @@ function daoruwj1() {
             if (data == 'A') {
                 var params = [["pages",$("#pages").val()],
                     ["yjid",$.trim($("#yjid").val())],
-                    ["ejid",$.trim($("#ejid").val())],
+                    ["ejid",$.trim($("#ejid").val())],["llx",$.trim($("#llx").val())],["xllx",$.trim($("#xllx").val())],
                     ["name",$.trim($("#name").val())]];
                 form_submit("toDi/tocp","get",params,"_self");
                 // });

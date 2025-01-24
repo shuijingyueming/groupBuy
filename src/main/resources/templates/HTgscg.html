@@ -94,6 +94,7 @@
                     <td style="width:80px">分类</td>
                     <td>产品名称</td>
                     <td style="width:80px">单位</td>
+                    <td style="width:80px">规格</td>
                     <td style="width:80px">订购量</td>
                    <!-- <td>备注</td>-->
                 </tr>
@@ -106,6 +107,7 @@
                             <td th:text="${stat.index==0?item1.yhe002:''}"></td>
                             <td th:text="${item.usf002}"></td>
                             <td th:text="${item.usm!=null?item.usm.usm002:''}"></td>
+                            <td th:text="${item.usf003}"></td>
                             <td th:text="${item.sl}"></td>
                             <!--<td></td>-->
                     </th:block>

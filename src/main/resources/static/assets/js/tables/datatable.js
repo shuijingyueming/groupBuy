@@ -179,8 +179,9 @@ $(document).ready(function () {
         buttons: $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J2#")>=0||$("#fhlx").val()!=""?[/*'excel','print',*/
             $("#fhlx").val()!=""?{text: '返回',action: function ( e, dt, node, config ) {reback();}}:undefined,
             $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J2#")>=0?{text: '新添加',action: function ( e, dt, node, config ) {edit();}}:undefined,
-            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J6#")>=0?{text: '公司清零',action: function ( e, dt, node, config ) {toqlgs();}}:undefined/*,
-            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A4#")>=0?{text: '批量删除',action: function ( e, dt, node, config ) {delete_item();}}:undefined*/
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J6#")>=0?{text: '批量清零',action: function ( e, dt, node, config ) {toqlpl();}}:undefined/*,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("A4#")>=0?{text: '批量删除',action: function ( e, dt, node, config ) {delete_item();}}:undefined,
+            $("#jsqx").val()=="admin"||$("#jsqx").val().indexOf("J6#")>=0?{text: '公司清零',action: function ( e, dt, node, config ) {toqlgs();}}:undefined*/
         ]:[],
         "columnDefs": [ {
             "orderable": false,

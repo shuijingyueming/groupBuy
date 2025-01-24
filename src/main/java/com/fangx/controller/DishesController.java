@@ -314,31 +314,32 @@ public class DishesController extends BaseController {
                     addLog(getUse(request).getUse002(),"修改了菜品名字为：【" + request.getParameter("uname") + "】的状态");
                     cdusf item =usfService.getByid(Integer.parseInt(request.getParameter("id")));
                     item.setUsf013(request.getParameter("type"));
+                    if(item.getUsf013().equals("C"))item.setUsf016("A");
                     usfService.update(item);
-                    if(!item.getUsf013().equals("B")&&request.getParameter("TK") != null &&request.getParameter("TK").equals("TK")){
-                        List<cdusb> list=usbService.serachAll(null, null);
-                        for(cdusb usb:list){
-                            cdyha yha=yhaService.getByqscp(usb.getUsb001(),item.getUsf001());
-                            if(yha==null){
-                                yha=new cdyha();
-                                yha.setYha002(item.getUsf001());
-                                yha.setYha003(usb.getUsb001());
-                                yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
-                                yha.setYha005(item.getUsf010()==null?"P":"C");
-                                yha.setYha006(0);
-                                yha.setYha009(item.getUsf013().equals("C")?"B":"A");
-                                yhaService.insert(yha);
-                            }else{
-                                yha.setYha002(item.getUsf001());
-                                yha.setYha003(usb.getUsb001());
-                                yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
-                                yha.setYha005(item.getUsf010()==null?"P":"C");
-                                yha.setYha006(0);
-                                yha.setYha009(item.getUsf013().equals("C")?"B":"A");
-                                yhaService.update(yha);
-                            }
+//                    if(!item.getUsf013().equals("B")&&request.getParameter("TK") != null &&request.getParameter("TK").equals("TK")){
+                    List<cdusb> list=usbService.serachAll(null, null);
+                    for(cdusb usb:list){
+                        cdyha yha=yhaService.getByqscp(usb.getUsb001(),item.getUsf001());
+                        if(yha==null){
+                            yha=new cdyha();
+                            yha.setYha002(item.getUsf001());
+                            yha.setYha003(usb.getUsb001());
+                            yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
+                            yha.setYha005(item.getUsf010()==null?"P":"C");
+                            yha.setYha006(0);
+                            yha.setYha009(item.getUsf013().equals("C")?"B":"A");
+                            yhaService.insert(yha);
+                        }else{
+                            yha.setYha002(item.getUsf001());
+                            yha.setYha003(usb.getUsb001());
+                            yha.setYha004(item.getUsf010()==null?0:item.getUsf010());
+                            yha.setYha005(item.getUsf010()==null?"P":"C");
+                            yha.setYha006(0);
+                            yha.setYha009(item.getUsf013().equals("C")?"B":"A");
+                            yhaService.update(yha);
                         }
                     }
+//                    }
                     mav.addObject("msg","C");
                 }
                 else if(request.getParameter("zt").equals("X")){
@@ -383,8 +384,15 @@ public class DishesController extends BaseController {
                 if (request.getParameter("ejid") != null && !request.getParameter("ejid").isEmpty()) {
                     pb.setOthersql3(request.getParameter("ejid"));
                 }
+                if (request.getParameter("llx") != null && !request.getParameter("llx").isEmpty()) {
+                    pb.setOthersql4(request.getParameter("lx"));
+                }
+                if (request.getParameter("xllx") != null && !request.getParameter("xllx").isEmpty()) {
+                    pb.setOthersql5(request.getParameter("xllx"));
+                }
             }
             delsession(session,request.getParameter("fh"));
+            pb.setPageSize(20);
             mav.addObject("pageobj", usfService.selectPageBean(pb));
             mav.addObject("usmlist", usmService.serachAll());
             mav.addObject("yhelist", yheService.serachAll(null));
@@ -453,17 +461,17 @@ public class DishesController extends BaseController {
             item.setUsf013("C");
             item.setUsf016("A");
             item = usfService.insert(item);
-            cdyha yha=new cdyha();
+            /*cdyha yha=new cdyha();
             yha.setYha002(item.getUsf001());
             yha.setYha004(0);
             yha.setYha006(0);
             yha.setYha008(0);
             yha.setYha005("A");
             yha.setYha009("B");
-            for(int i=1;i<8;i++){
+            for(int i=1;i<39;i++){
                 yha.setYha003(i);
                 yhaService.insert(yha);
-            }
+            }*/
 //            mav.addObject("msg", "I");
         }
         String path = request.getSession().getServletContext().getRealPath("/");
@@ -654,6 +662,7 @@ public class DishesController extends BaseController {
                 pb.setOthersql(request.getParameter("name"));
             }
             delsession(session,request.getParameter("fh"));
+            pb.setPageSize(20);
             mav.addObject("pageobj", usfService.selectPageBean1(pb));
         }
         mav.setViewName("HTqscp");

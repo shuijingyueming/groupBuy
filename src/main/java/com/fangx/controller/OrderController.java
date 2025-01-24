@@ -220,21 +220,17 @@ public class OrderController extends BaseController {
             for (cdusc usc:yglist1) {
                 List<cdyhc> ddlist=yhcService.selectByyhid1(usc.getUsc001(),date);
                 if (ddlist.size()>0){
-                    List<cdusf> cplist=usfService.selectByDD(usc.getUsc001(),date);
-                    String nr="";
-                    String bz="";
                     Float je=0.0f;
-                    for (int k = 0; k<cplist.size(); k++) {
-                        nr+=cplist.get(k).getUsf002()+"("+cplist.get(k).getSl().toString()+cplist.get(k).getUsm().getUsm002()+"["+cplist.get(k).getUsf003()+"]"+")";
-                        if(k<cplist.size()-1)nr+="+";
-                    }
+                    String bz="";
+                    List<cdush> list=new ArrayList<>();
                     for (int k = 0; k<ddlist.size(); k++) {
-                        je+=ddlist.get(k).getYhc007()-ddlist.get(k).getYhc013();
+                        je+=ddlist.get(k).getYhc007();
                         if(ddlist.get(k).getYhc009()!=null&&!ddlist.get(k).getYhc009().isEmpty())bz+=ddlist.get(k).getYhc009()+"#";
+                        list.addAll(ddlist.get(k).getUshlist());
                     }
+                    System.out.println(je+""+usc.getUsc002());
                     usc.setDdlist(ddlist);
-                    usc.setCplist(cplist);
-                    usc.setNr(nr);
+                    usc.setCplist(list);
                     usc.setBz(bz);
                     usc.setJe(je);
                     yglist.add(usc);

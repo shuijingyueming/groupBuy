@@ -63,6 +63,13 @@ $(document).ready(function () {
             form.submit();
         }
     });
+    $('#chkbox').change(function() {
+        let flag=this.checked;
+        $("[name='cbox']").each(function(){
+            this.attr("checked",flag);
+        });
+    })
+
 });
 
 //翻页
@@ -132,6 +139,26 @@ function toql(id,uname){
         form_submit("toCo/togsyg","get",params,"_self");
     }
 }
+
+//批量删除
+function toqlpl(){
+    checked_item ="#";
+    $("[name='cbox']").each(function(){
+        if(this.checked) checked_item+=$(this).attr("date-id")+"#";
+    });
+    var r = confirm("确定清零这些公司员工吗？");
+    if (r == true) {
+        var params = [ ["id",checked_item], ["zt","QPL"],
+            ["fhlx",$("#fhlx").val()],
+            ["gsid",$("#gsid").val()],
+            ["pages",$("#pages").val()],
+            ["name",$.trim($("#name").val())],
+            ["phone",$.trim($("#phone").val())]];
+        form_submit("toCo/togsyg","get",params,"_self");
+    } else {
+    }
+}
+
 
 function tocz(id,uname){
     var num = prompt("请输入充值金额","");

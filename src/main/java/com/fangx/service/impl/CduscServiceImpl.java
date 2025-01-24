@@ -119,6 +119,18 @@ public class CduscServiceImpl implements CduscService {
         return list.size() > 0 ? list.get(0) : null;
     }
 
+    @Override
+    public List<cdusc> getByids(String id) {
+        String[] ids=id.split("#");
+        @SuppressWarnings("unchecked")
+        List<Integer> list = (List<Integer>)(List<?>)Arrays.asList(ids);
+        list.removeAll(Collections.singleton(null));
+        cduscExample e1 = new cduscExample();
+        Criteria c = e1.createCriteria();
+        c.andUsc001In(list);
+        return uscMapper.selectByExample(e1);
+    }
+
     public PageBean queryByPage(PageBean pageBean, cduscExample example) {
         int page = (int) pageBean.getCurrentPage();
         int size = pageBean.getPageSize();

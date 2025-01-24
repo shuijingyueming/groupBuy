@@ -58,7 +58,7 @@ function todc(){
                 ["gsid",$.trim($("#gsid").val())],
                 ["name",$.trim($("#name").val())],
                 ["phone",$.trim($("#phone").val())]];
-            form_submit("toOr/topsyg","get",params,"_self");
+            form_submit("toOr/topsyg","get",params,"_blank");
         }
     }else{
         layui.use('layer', function(){

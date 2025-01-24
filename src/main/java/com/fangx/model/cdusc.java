@@ -34,7 +34,9 @@ public class cdusc {
     }
 
     private List<cdyhc> ddlist;
-    private List<cdusf> cplist;
+//    private List<cdusf> cplist;
+
+    private List<cdush> cplist;
 
     public List<cdyhc> getDdlist() {
         return ddlist;
@@ -44,11 +46,11 @@ public class cdusc {
         this.ddlist = ddlist;
     }
 
-    public List<cdusf> getCplist() {
+    public List<cdush> getCplist() {
         return cplist;
     }
 
-    public void setCplist(List<cdusf> cplist) {
+    public void setCplist(List<cdush> cplist) {
         this.cplist = cplist;
     }
 

@@ -108,7 +108,7 @@ public class BaseController {
 
     protected final static SimpleDateFormat sdf7 = new SimpleDateFormat("周w");
 
-    protected final static DecimalFormat numberdf1 = new DecimalFormat("#.##");
+    protected final static DecimalFormat numberdf1 = new DecimalFormat("#.#");
 
     /**
      * 输出流输出父级返回login
@@ -189,6 +189,7 @@ public class BaseController {
             yha.setYha003(item.getUsb001());
             yha.setYha004(ysc!=null?ysc.getYsc006():(usf.getUsf010()!=null?usf.getUsf010():0));
             yha.setYha005(usf.getUsf010()==null&ysc==null?"P":"C");
+            yha.setYha006(0);
             yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
             yha.setYha009(ysc!=null?ysc.getYsc007():(usf.getUsf013().equals("C")?"B":"A"));
             yhaService.insert(yha);

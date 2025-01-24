@@ -106,6 +106,10 @@
                                 <button th:onclick="toyg([[${item.usd001}]])" type="button" class="btn btn-primary btn-sm btxz">员工管理</button>
                             </th:block>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
+                                <button th:onclick="toczgs([[${item.usd001}]],[[${item.usd002}]])" type="button" class="btn btn-primary btn-sm btxz">公司充值</button>
+                                <button th:onclick="toqlgs([[${item.usd001}]],[[${item.usd002}]])" type="button" class="btn btn-primary btn-sm btxz">公司清零</button>
+                            </th:block>
+                            <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'K1#')>=0}">
                                 <button th:onclick="toczjl([[${item.usd001}]],'A')" type="button" class="btn btn-primary btn-sm btxz">充值管理</button>
                                 <button th:onclick="toczjl([[${item.usd001}]],'B')" type="button" class="btn btn-primary btn-sm btxz">清零管理</button>
                             </th:block>

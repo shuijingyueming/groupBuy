@@ -288,7 +288,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
         //线程获取微信的token
 
-    new Thread(){
+   new Thread(){
             public void run(){
                 while (true){
                     try {
@@ -314,7 +314,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 this.setName("dayddjd");
                 while (true) {
                     try {
-                        Thread.sleep(60000);
+                        Thread.sleep(6000);
                         long current = System.currentTimeMillis();// 当前时间毫秒数
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(new Date());
@@ -365,7 +365,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                                 }
                             }
                             if(flag){
-                                yhaService.deletebyid(item.getUsb001());
+                                yhaService.deleteByqsid(item.getUsb001());
                                 setList(item.getUsb001(),sf1.format(calendar.getTime()),item.getUsb005(),list);
                             }
                         }
@@ -382,7 +382,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                                     }
                                 }
                             }
-                            yhaService.deletebyid(usb.getUsb001());
+                            yhaService.deleteByqsid(usb.getUsb001());
                             usbService.delete(usb.getUsb001());
                         }
                         calendar.setTime(date);
@@ -424,8 +424,8 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                                 }
                             }
                             if(flag){
-                                yhaService.deletebyid(item.getUsb001());
-                               setList(item.getUsb001(),sf1.format(calendar.getTime()),item.getUsb005(),list);
+                                yhaService.deleteByqsid(item.getUsb001());
+                                setList(item.getUsb001(),sf1.format(calendar.getTime()),item.getUsb005(),list);
                             }
                         }
                         usb=usbService.getBytime(xiayue, "B", "A");
@@ -441,10 +441,10 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                                     }
                                 }
                             }
-                            yhaService.deletebyid(usb.getUsb001());
+                            yhaService.deleteByqsid(usb.getUsb001());
                             usbService.delete(usb.getUsb001());
                         }
-
+                        calendar.setTime(date);
                         long tomorrowzero = calendar.getTimeInMillis();
                         long tomorrowzeroSeconds = (tomorrowzero- current);
                         System.out.println("离结单时间："+tomorrowzeroSeconds+"秒");
@@ -464,6 +464,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             yha.setYha003(id);
             yha.setYha004(ysc!=null?ysc.getYsc006():(usf.getUsf010()!=null?usf.getUsf010():0));
             yha.setYha005(usf.getUsf010()==null&ysc==null?"P":"C");
+            yha.setYha006(0);
             yha.setYha008(ysc!=null?ysc.getYsc006():usf.getUsf010());
             yha.setYha009(ysc!=null?ysc.getYsc007():(usf.getUsf013().equals("C")?"B":"A"));
             yhaService.insert(yha);

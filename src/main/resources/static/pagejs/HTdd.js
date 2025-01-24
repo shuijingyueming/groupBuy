@@ -152,7 +152,7 @@ function toxq(id,index){
                 html+= '<span class="jspan">'+(item.yhc006=='W'?'微信支付':(item.yhc006=='P'?'账户余额':''))+'</span></div></div>';
                 html+= '<div class="col-md-5">';
                 html+= '<div class="form-group"><label class="layui-form-label">总金额：</label>';
-                html+= '<span class="jspan">'+(item.yhc007!=null?item.yhc007:'')+'</span></div></div>';
+                html+= '<span class="jspan">'+(item.yhc007!=null?(item.yhc013!=null?item.yhc007-item.yhc013:'item.yhc007'):'')+'</span></div></div>';
                 html+= '</div>';
                 html+= '';
                 html+= '<div class="row">';

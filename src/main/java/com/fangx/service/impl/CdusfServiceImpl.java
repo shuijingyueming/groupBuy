@@ -50,6 +50,8 @@ public class CdusfServiceImpl implements CdusfService {
         if(pb.getOthersql1()!=null) c.andUsf013EqualTo(pb.getOthersql1());
         if(pb.getOthersql2()!=null) c.andUsf011EqualTo(Integer.valueOf(pb.getOthersql2()));
         if(pb.getOthersql3()!=null) c.andUsf012EqualTo(Integer.valueOf(pb.getOthersql3()));
+        if(pb.getOthersql4()!=null) c.andUsf013EqualTo(pb.getOthersql4());
+        if(pb.getOthersql5()!=null) c.andUsf016EqualTo(pb.getOthersql5());
         if(pb.getOthersql10()!=null)c.andUsf013NotEqualTo(pb.getOthersql10());
         e1.setOrderByClause("usf001 desc");
         return queryByPage(pb, e1);
@@ -137,6 +139,7 @@ public class CdusfServiceImpl implements CdusfService {
         List<cdusf> list =new ArrayList<>();
         for(cdusf usf:list1){
             usf.setSl(ushMapper.selectByyhdd(yhid,qsid,usf.getUsf001()));
+            usf.setPrice(ushMapper.selectByyhdd1(yhid,qsid,usf.getUsf001()));
             if(usf.getSl()!=null&&usf.getSl()>0)list.add(usf);
         }
         return list;

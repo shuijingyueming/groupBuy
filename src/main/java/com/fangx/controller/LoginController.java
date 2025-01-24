@@ -157,46 +157,50 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/checkLogin")
     public ModelAndView checkLogin() throws Exception {
         ModelAndView mav = new ModelAndView();
-        HttpSession session = request.getSession();
-        String name = request.getParameter("username");
-        String pwd = request.getParameter("userpwd");
-        String ycode = request.getParameter("ycode");
-        name = EncrpytUtil.decode(name);
-        pwd = EncrpytUtil.decode(pwd);
-        // System.out.println(name+"---"+pwd);
-        boolean isok = true;
-        request.getHeader("");
-        //是否锁定账号
-        if (PubMessage.dlmap.get(name + "dnumn") != null && Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) >= 5) {
-            if (PubMessage.dlmap.get(name) == null) {
-                PubMessage.dlmap.put(name, sf.format(new Date()));
-                mav.addObject("error", "您因多次登录失败，已被锁定。");
-                isok = false;
-                mav.setViewName("HTlogin");
-            } else if (PubMessage.dlmap.get(name) != null) {
-                //判断是否过期
-                String dtaetime = PubMessage.dlmap.get(name).toString();
-                Date d1 = new Date();
-                Date d2 = sf.parse(dtaetime);
-                if ((d2.getTime() + 600000) < d1.getTime()) {
-                    isok = true;
-                    PubMessage.dlmap.remove(name);
-                    PubMessage.dlmap.put(name + "dnumn", 0);
-                } else {
+        if(new Date().after(DATE.parse("2025-03-05"))) {
+            mav.addObject("error", "体验已到期");
+            mav.setViewName("HTlogin");
+        }else{
+            HttpSession session = request.getSession();
+            String name = request.getParameter("username");
+            String pwd = request.getParameter("userpwd");
+            String ycode = request.getParameter("ycode");
+            name = EncrpytUtil.decode(name);
+            pwd = EncrpytUtil.decode(pwd);
+            // System.out.println(name+"---"+pwd);
+            boolean isok = true;
+            request.getHeader("");
+            //是否锁定账号
+            if (PubMessage.dlmap.get(name + "dnumn") != null && Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) >= 5) {
+                if (PubMessage.dlmap.get(name) == null) {
+                    PubMessage.dlmap.put(name, sf.format(new Date()));
+                    mav.addObject("error", "您因多次登录失败，已被锁定。");
                     isok = false;
                     mav.setViewName("HTlogin");
-                    session.setAttribute("dnumn", PubMessage.dlmap.get(name + "dnumn").toString());
-                    mav.addObject("error", "您因多次登录失败，已被锁定。");
-                }
+                } else if (PubMessage.dlmap.get(name) != null) {
+                    //判断是否过期
+                    String dtaetime = PubMessage.dlmap.get(name).toString();
+                    Date d1 = new Date();
+                    Date d2 = sf.parse(dtaetime);
+                    if ((d2.getTime() + 600000) < d1.getTime()) {
+                        isok = true;
+                        PubMessage.dlmap.remove(name);
+                        PubMessage.dlmap.put(name + "dnumn", 0);
+                    } else {
+                        isok = false;
+                        mav.setViewName("HTlogin");
+                        session.setAttribute("dnumn", PubMessage.dlmap.get(name + "dnumn").toString());
+                        mav.addObject("error", "您因多次登录失败，已被锁定。");
+                    }
 
+                }
             }
-        }
-        //  System.out.println(ycode+"----"+isok);
-        // System.out.println(PubMessage.dlmap.get(name+"bcode").toString());
-        if (isok) {
-            if (PubMessage.dlmap.get(name + "bcode") == null) {
-                mav.setViewName("HTlogin");
-            }else if (!ycode.toUpperCase().equals(PubMessage.dlmap.get(name + "bcode").toString())) { //todo
+            //  System.out.println(ycode+"----"+isok);
+            // System.out.println(PubMessage.dlmap.get(name+"bcode").toString());
+            if (isok) {
+                if (PubMessage.dlmap.get(name + "bcode") == null) {
+                    mav.setViewName("HTlogin");
+                }/*else if (!ycode.toUpperCase().equals(PubMessage.dlmap.get(name + "bcode").toString())) { //todo
                 if (PubMessage.dlmap.get(name + "dnumn") == null) PubMessage.dlmap.put(name + "dnumn", 1);
                 else
                     PubMessage.dlmap.put(name + "dnumn", Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) + 1);
@@ -209,50 +213,51 @@ public class LoginController extends BaseController {
                 session.setAttribute("dnumn", PubMessage.dlmap.get(name + "dnumn").toString());
                 mav.setViewName("HTlogin");
                 isok = false;
-            }else if (null != name && !name.trim().isEmpty() && null != pwd && !pwd.trim().isEmpty()) {
-                cduse use = useService.getLogin(name, EncrpytUtil.getSHA256(pwd));
-                //System.out.println(EncrpytUtil.getSHA256(pwd)+"-----");
-                if (null != use) {
-                    // 会话失效
-                    session.invalidate();
-                    // 会话重建
-                    PubMessage.dlmap.remove(name);
-                    PubMessage.dlmap.remove(name + "dnumn");
-                    PubMessage.dlmap.remove(name + "bcode");
-                    session = request.getSession(true);
-                    //用户id加密处理并保存
-                    String inputStr = use.getUse001() + "";
-                    byte[] encodedData = RSACoder.encryptByPublicKey(inputStr, EncrpytUtil.publicKey);
-                    session.setAttribute("user", RSACoder.encryptBASE64(encodedData));
-                    //用户信息
-                    user user = new user();
-                    user.setUname(use.getUse002());
-                    cdusa usa = usaService.getByid(use.getUse008());
-                    user.setJsqx(use.getUse002().equals("admin")?"admin":usa.getUsa004());
-                    session.setAttribute("umsg", user);
-                    mav.setViewName("redirect:/toHt/toHTindex");
-                    addLog(use.getUse002(), "登录管理系统");
-                    isok = true;
-                } else {
-                    if (PubMessage.dlmap.get(name + "dnumn") == null) PubMessage.dlmap.put(name + "dnumn", 1);
-                    else
-                        PubMessage.dlmap.put(name + "dnumn", Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) + 1);
+            }*/else if (null != name && !name.trim().isEmpty() && null != pwd && !pwd.trim().isEmpty()) {
+                    cduse use = useService.getLogin(name, EncrpytUtil.getSHA256(pwd));
+                    //System.out.println(EncrpytUtil.getSHA256(pwd)+"-----");
+                    if (null != use) {
+                        // 会话失效
+                        session.invalidate();
+                        // 会话重建
+                        PubMessage.dlmap.remove(name);
+                        PubMessage.dlmap.remove(name + "dnumn");
+                        PubMessage.dlmap.remove(name + "bcode");
+                        session = request.getSession(true);
+                        //用户id加密处理并保存
+                        String inputStr = use.getUse001() + "";
+                        byte[] encodedData = RSACoder.encryptByPublicKey(inputStr, EncrpytUtil.publicKey);
+                        session.setAttribute("user", RSACoder.encryptBASE64(encodedData));
+                        //用户信息
+                        user user = new user();
+                        user.setUname(use.getUse002());
+                        cdusa usa = usaService.getByid(use.getUse008());
+                        user.setJsqx(use.getUse002().equals("admin")?"admin":usa.getUsa004());
+                        session.setAttribute("umsg", user);
+                        mav.setViewName("redirect:/toHt/toHTindex");
+                        addLog(use.getUse002(), "登录管理系统");
+                        isok = true;
+                    } else {
+                        if (PubMessage.dlmap.get(name + "dnumn") == null) PubMessage.dlmap.put(name + "dnumn", 1);
+                        else
+                            PubMessage.dlmap.put(name + "dnumn", Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) + 1);
 
-                    if (Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) >= 5) {
-                        //保存一个时间
-                        PubMessage.dlmap.put(name, TIMEHOUR.format(new Date()));
+                        if (Integer.parseInt(PubMessage.dlmap.get(name + "dnumn").toString()) >= 5) {
+                            //保存一个时间
+                            PubMessage.dlmap.put(name, TIMEMIAO.format(new Date()));
+                        }
+                        session.setAttribute("dnumn", PubMessage.dlmap.get(name + "dnumn").toString());
+                        session.setAttribute("uname", name);
+                        mav.addObject("error", "用户名或密码错误");
+                        mav.setViewName("HTlogin");
+                        isok = false;
                     }
-                    session.setAttribute("dnumn", PubMessage.dlmap.get(name + "dnumn").toString());
-                    session.setAttribute("uname", name);
-                    mav.addObject("error", "用户名或密码错误");
+                } else {
                     mav.setViewName("HTlogin");
-                    isok = false;
                 }
-            } else {
-                mav.setViewName("HTlogin");
-            }
-            if (isok) {
-                PubMessage.dlmap.remove(name + "bcode");
+                if (isok) {
+                    PubMessage.dlmap.remove(name + "bcode");
+                }
             }
         }
         return mav;

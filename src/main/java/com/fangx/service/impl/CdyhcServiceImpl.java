@@ -254,7 +254,7 @@ public class CdyhcServiceImpl implements CdyhcService {
             c.andYhc008LessThanOrEqualTo(sf.parse(time+" 23:59:59"));
         }
         c.andYhc005NotEqualTo("N");
-        return yhcMapper.selectByExample(e1);
+        return yhcMapper.selectByExample2(e1);
     }
 
     public PageBean queryByPage(PageBean pageBean, cdyhcExample e1, cduscExample e2) {

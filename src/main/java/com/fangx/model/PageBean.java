@@ -3,13 +3,13 @@ package com.fangx.model;
 import java.util.List;
 
 public class PageBean {
-    private float zje;
+    private Float zje;
 
-    public float getZje() {
+    public Float getZje() {
         return zje;
     }
 
-    public void setZje(float zje) {
+    public void setZje(Float zje) {
         this.zje = zje;
     }
 

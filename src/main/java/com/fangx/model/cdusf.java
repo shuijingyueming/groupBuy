@@ -59,6 +59,16 @@ public class cdusf {
         this.sl = sl;
     }
 
+    private Float price;
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
     public cdusm getUsm() {
         return usm;
     }

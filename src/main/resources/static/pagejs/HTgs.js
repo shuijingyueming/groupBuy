@@ -40,6 +40,7 @@ function tops(gsid){
     form_submit("toCo/tops","post",params,"_self");
 }
 
+
 $(document).ready(function () {
     $('select[id=t4]').change(function() {
         const text = $("#t4").find("option:selected").text();
@@ -157,6 +158,34 @@ function xxcx(){
         ["name",$.trim($("#name").val())],
         ["phone",$.trim($("#phone").val())]];
     form_submit("toCo/togs","post",params,"_self");
+}
+
+function toqlgs(id,uname){
+        var r = confirm("确定清零此公司的员工吗？");
+        if (r == true) {
+            var params = [ ["id",id], ["zt","GQ"], ["uname",uname],
+                ["pages",$("#pages").val()],
+                ["name",$.trim($("#name").val())],
+                ["phone",$.trim($("#phone").val())]];
+            form_submit("toCo/togs","get",params,"_self");
+        }
+}
+function toczgs(id,uname){
+    var num = prompt("请输入充值金额","");
+    if (num>0) {
+        var params = [["num",num], ["id",id], ["zt","CZ"], ["uname",uname],
+            ["pages",$("#pages").val()],
+            ["name",$.trim($("#name").val())],
+            ["phone",$.trim($("#phone").val())]];
+        form_submit("toCo/togs","get",params,"_self");
+    }else if(num!=null&&num!=""&&num!=0){
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.ready(function(){
+                layer.msg("操作失误，请重新操作");
+            });
+        });
+    }
 }
 
 function todc(){

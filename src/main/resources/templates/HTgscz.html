@@ -41,7 +41,7 @@
 <div class="content-wrapper">
     <section class="content-header">
         <h1>
-            充值管理<small></small>
+            [[${pageobj.othersql5=='A'?'充值':'清零'}]]管理<small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="toHt/indexi"><i class="fa fa-dashboard"></i> 首页</a></li>
@@ -85,7 +85,7 @@
                     <th>员工手机号</th>
                     <th>企业名称</th>
                     <th>金额</th>
-                    <th>充值时间</th>
+                    <th>[[${pageobj.othersql5=='A'?'充值':'清零'}]]时间</th>
                 </tr>
                 </thead>
                 <tbody th:switch="${ pageobj.recordCount gt 0 }">

@@ -24,6 +24,9 @@
   <resultMap id="BaseResultMap2" type="com.fangx.model.cdyhc"  extends="BaseResultMap1">
     <collection  property="ushlist"  column="YHC001"  select="com.fangx.dao.cdushMapper.selectByddid"/>
   </resultMap>
+  <resultMap id="BaseResultMap3" type="com.fangx.model.cdyhc"  extends="BaseResultMap">
+    <collection  property="ushlist"  column="YHC001"  select="com.fangx.dao.cdushMapper.selectByddid1"/>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -472,7 +475,7 @@
     </if>
   </sql>
   <select id="countByExampleje" parameterType="com.fangx.model.cdyhcExample" resultType="java.lang.Float">
-    select SUM(YHC007-YHC013) from cdyhc
+    select SUM(YHC007) from cdyhc
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -498,5 +501,19 @@
         </foreach>
       </if>
     </where>
+  </select>
+  <select id="selectByExample2" parameterType="com.fangx.model.cdyhcExample" resultMap="BaseResultMap3">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cdyhc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
   </select>
 </mapper>

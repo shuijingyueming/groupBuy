@@ -62,6 +62,6 @@ function todc(id,date){
             ["ptime",$("#ptime").val()],["fhlx",$("#fhlx").val()],["gsid1",$("#gsid1").val()],["mo",$("#mo").val()],
             ["name",$.trim($("#name").val())],
             ["phone",$.trim($("#phone").val())]];
-        form_submit("toOr/tops1","get",params,"_self");
+        form_submit("toOr/tops1","get",params,"_blank");
     }
 }

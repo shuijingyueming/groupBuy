@@ -35,4 +35,6 @@ public interface CduscService extends IService<cdusc> {
     cdusc selectByPhone(String phone, String gsid);
 
     cdusc selectBygsid(String name, String phone, Integer gsid);
+
+    List<cdusc> getByids(String id);
 }

@@ -103,9 +103,9 @@
                         <td th:text="${item.usd.usd003}"></td>
                         <td th:text="${item.usd.usd004}"></td>
                         <td th:text="${item.rs!=null?item.rs:0}"></td>
-                        <td th:text="${item.zze!=null?#numbers.formatDecimal(item.zze,1,'COMMA',2,'POINT'):0}"></td>
-                        <td th:text="${item.yze!=null?#numbers.formatDecimal(item.yze,1,'COMMA',2,'POINT'):0}"></td>
-                        <td th:text="${item.wze!=null?#numbers.formatDecimal(item.wze,1,'COMMA',2,'POINT'):0}"></td>
+                        <td th:text="${item.zze!=null?#numbers.formatDecimal(item.zze,1,'COMMA',1,'POINT'):0}"></td>
+                        <td th:text="${item.yze!=null?#numbers.formatDecimal(item.yze,1,'COMMA',1,'POINT'):0}"></td>
+                        <td th:text="${item.wze!=null?#numbers.formatDecimal(item.wze,1,'COMMA',1,'POINT'):0}"></td>
                         <td>
                             <th:block th:if="${session.umsg.jsqx=='admin'||#strings.indexOf(session.umsg.jsqx,'M1#')>=0}">
                                 <button th:onclick="tops([[${item.yse002}]],[[${#dates.format(item.yse003,'yyyy-MM-dd')}]])" type="button" class="btn btn-primary btn-sm btxz">详情</button>
